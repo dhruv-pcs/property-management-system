@@ -1,7 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@images/*": ["public/images/*"],
+      "@styles-page/*": ["src/styles-page/*"],
+      "@pages/*": ["src/app/*"],
+      "@strings": ["src/constants/strings"],
+      "@patterns": ["src/constants/patterns"],
+      "@routes": ["src/constants/routes"],
+      "@endpoints/*": ["src/utils/endpoints/*"],
+      "@components/*": ["src/components/*"],
+      
     }
-  }
+  },
+  "include": ["src/**/*"]
 }
