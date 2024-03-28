@@ -1,8 +1,8 @@
-"use client";
+
 import React, { useState } from 'react';
 
 
-const sidebar = () => {
+const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -12,13 +12,13 @@ const sidebar = () => {
   return (
     <>
     
-      <div className={`container-fluid ${isOpen ? 'open' : ''}`}>
+      <div className={`container-fluid p-0 ${isOpen ? 'open' : ''}`}>
         <div className="row flex-nowrap">
-          <div className="bg-dark col-auto col-md-3 col-mg-3 min-vh-100 d-flex flex-column justify-content-between">
+          <div className="bg-dark  min-vh-100 d-flex flex-column justify-content-between">
             <div className="bg-dark p-2">
               <a className="d-flex text-decoration-none mt-1 align-items-center text-white">
                 <span class='fs-4 d-none d-sm-inline'>Logo</span>
-    <button className="sidebar-toggle bg-white" onClick={handleToggle}>Toggle Sidebar</button>
+    <button className=" bg-none" onClick={handleToggle}>X</button>
               </a>
               <ul class='nav nav-pills flex-column mt-4'>
                 <li class='nav-item py-2 py-sm-0 '>
@@ -138,4 +138,4 @@ const sidebar = () => {
   )
 }
 
-export default sidebar
+export default Sidebar

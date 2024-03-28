@@ -4,13 +4,9 @@ import { FaInstagramSquare } from "react-icons/fa";
 
 
 
-const footer = () => {
+const Footer = () => {
     return (
       <>
-         {/* <div className={styles.container}>
-        <div className={styles.logo}>Logo</div>
-        <div className={styles.text}>©️All right reserved.</div>
-        </div> */}
         <footer class="bg-body-tertiary text-center text-lg-start">
   <div class="text-center p-3">
     © 2024, Made with ❤️ by &nbsp;
@@ -29,4 +25,4 @@ const footer = () => {
     )
   }
   
-  export default footer
+  export default Footer
