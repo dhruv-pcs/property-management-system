@@ -1,9 +1,7 @@
 import React from 'react'
 
 const hello = () => {
-  return (
-    <div>hello</div>
-  )
+  return <div>hello</div>
 }
 
 export default hello
