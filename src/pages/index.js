@@ -1,7 +1,9 @@
-export default function Home() {
+import React from 'react'
+
+const index = () => {
   return (
-    <>
-  <h1 className='min-h-100vh'>hi</h1>
-    </>
+    <div>index</div>
   )
 }
+
+export default index
