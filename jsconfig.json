@@ -10,7 +10,7 @@
       "@routes": ["src/constants/routes"],
       "@endpoints/*": ["src/utils/endpoints/*"],
       "@components/*": ["src/components/*"],
-      
+      "@layout/*": ["src/layout/*"],
     }
   },
   "include": ["src/**/*"]
