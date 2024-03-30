@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+
+html,
+body,
+#root,
+.app,
+.content {
+  font-family: "Source Sance Pro", sans-serif;
+}
+
+body{
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-item:hover {
+  color: #3f51b5 !important; /* Change color according to your design */
+  background-color: transparent !important;
+}
+
+/* GoToTopButton.css */
+.go-top-btn {
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  border: none;
+  padding: 5px 5px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.go-top-btn:hover {
+  background-color: black;
+  color:white
+}
+
+.go-top-btn.show {
+  opacity: 1;
+}
+

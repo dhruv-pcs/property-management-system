@@ -11,6 +11,7 @@
       "@endpoints/*": ["src/utils/endpoints/*"],
       "@components/*": ["src/components/*"],
       "@layout/*": ["src/layout/*"],
+      "@theme/*": ["src/theme/*"]
     }
   },
   "include": ["src/**/*"]
