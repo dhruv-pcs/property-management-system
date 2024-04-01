@@ -60,7 +60,7 @@ const MyProSidebar = () => {
 
   return (
     <Box
-    className=''
+      className=''
       sx={{
         position: 'sticky',
         display: 'flex',
@@ -113,7 +113,7 @@ const MyProSidebar = () => {
             )}
           </MenuItem>
 
-          <Box paddingLeft={collapsed ? undefined : '0%' } sx={{ "& ul": { padding: "0px" } }}>
+          <Box paddingLeft={collapsed ? undefined : '0%'} sx={{ '& ul': { padding: '0px' } }}>
             <Item title='Dashboard' to='/' icon={<HomeOutlinedIcon />} selected={selected} setSelected={setSelected} />
 
             <Typography variant='h6' color={colors.grey[300]} sx={{ m: '15px 20px 5px 20px' }}>

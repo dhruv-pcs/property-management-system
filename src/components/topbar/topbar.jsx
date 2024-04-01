@@ -20,40 +20,46 @@ const Topbar = () => {
 
   return (
     <header>
-
-    <Box display='flex' justifyContent='space-between' p={1} position='sticky' top={0} zIndex={1000} backgroundColor={colors.primary[500]} boxShadow={'0 0 10px 0 rgba(0, 0, 0, 0.5)'}  >
-      <Box display='flex'>
-        {broken && (
-          <IconButton sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
-            <MenuOutlinedIcon />
+      <Box
+        display='flex'
+        justifyContent='space-between'
+        p={1}
+        position='sticky'
+        top={0}
+        zIndex={1000}
+        backgroundColor={colors.primary[500]}
+        boxShadow={'0 0 10px 0 rgba(0, 0, 0, 0.5)'}
+      >
+        <Box display='flex'>
+          {broken && (
+            <IconButton sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
+              <MenuOutlinedIcon />
+            </IconButton>
+          )}
+          <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
+            <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
+            <IconButton type='button'>
+              <SearchIcon />
+            </IconButton>
+          </Box>
+        </Box>
+        <Box display='flex'>
+          <IconButton onClick={colorMode.toggleColorMode}>
+            {theme.palette.mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
           </IconButton>
-        )}
-        <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
-          <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
-          <IconButton type='button'>
-            <SearchIcon />
+          <IconButton>
+            <NotificationsOutlinedIcon />
           </IconButton>
+          <IconButton>
+            <SettingsOutlinedIcon />
+          </IconButton>
+          <Link href='/profile'>
+            <IconButton>
+              <PersonOutlinedIcon />
+            </IconButton>
+          </Link>
         </Box>
       </Box>
-      <Box display='flex'>
-        <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <Link href="/profile">
-
-        <IconButton >
-          <PersonOutlinedIcon />
-        </IconButton>
-        </Link>
-      </Box>
-    </Box>
-          
     </header>
   )
 }
