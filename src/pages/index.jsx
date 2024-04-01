@@ -1,7 +1,10 @@
+import SidebarLayout from '@layout/sidebarlayout'
 import React from 'react'
 
 const index = () => {
+  
   return (
+    <SidebarLayout>
     <div className='text-wrap'>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque viverra justo nec ultrices dui sapien eget mi. Gravida neque convallis a cras. Ultricies tristique nulla aliquet enim tortor at auctor urna nunc. Aliquet eget sit amet tellus. Malesuada proin libero nunc consequat interdum varius sit amet. Mi eget mauris pharetra et ultrices neque ornare aenean. Ullamcorper sit amet risus nullam. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Felis imperdiet proin fermentum leo. In mollis nunc sed id semper risus in hendrerit. Aliquet eget sit amet tellus cras adipiscing enim. Libero enim sed faucibus turpis in eu mi. Lobortis mattis aliquam faucibus purus in massa tempor. Massa tincidunt nunc pulvinar sapien et ligula. Interdum posuere lorem ipsum dolor sit. In pellentesque massa placerat duis ultricies lacus sed turpis. Ligula ullamcorper malesuada proin libero nunc consequat interdum varius sit. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque.
 
@@ -80,6 +83,7 @@ Lorem ipsum dolor sit amet consectetur adipiscing. Molestie nunc non blandit mas
 Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque viverra. Nunc scelerisque viverra mauris in aliquam sem fringilla ut morbi. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Sed ullamcorper morbi tincidunt ornare massa. Sit amet facilisis magna etiam. Elementum integer enim neque volutpat. Morbi tincidunt ornare massa eget egestas. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Libero justo laoreet sit amet cursus sit. Pharetra magna ac placerat vestibulum lectus mauris ultrices eros. Enim facilisis gravida neque convallis a. Eget egestas purus viverra accumsan in nisl. Amet venenatis urna cursus eget nunc scelerisque viverra. Eget egestas purus viverra accumsan.
 
     </div>
+    </SidebarLayout>
   )
 }
 

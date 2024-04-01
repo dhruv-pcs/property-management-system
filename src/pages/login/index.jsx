@@ -1,10 +1,9 @@
-import { signIn } from 'next-auth/react';
+import React from 'react'
 
-export default function LoginPage() {
+const index = () => {
   return (
-    <div>
-      <h1>Login Page</h1>
-      <button onClick={() => signIn()}>Sign in</button>
-    </div>
-  );
+    <div>index</div>
+  )
 }
+
+export default index
