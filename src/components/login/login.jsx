@@ -5,7 +5,6 @@ import { TextField, Button, FormControl, InputAdornment, IconButton, Typography 
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import AuthWrapper from '@components/auth/loginauth'
 
 const Login = () => {
   const {
@@ -20,6 +19,8 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
+
+
 
   const onSubmit = async formData => {
     try {
@@ -104,4 +105,4 @@ const Login = () => {
   )
 }
 
-export default AuthWrapper(Login);
+export default Login

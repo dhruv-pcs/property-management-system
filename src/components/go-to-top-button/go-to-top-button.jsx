@@ -1,43 +1,42 @@
 // GoToTopButton.js
-import { ArrowUpward } from '@mui/icons-material';
-import React, { useState, useEffect } from 'react';
+import { ArrowUpward } from '@mui/icons-material'
+import React, { useState, useEffect } from 'react'
 
 const GoToTopButton = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
-        setIsVisible(true);
+        setIsVisible(true)
       } else {
-        setIsVisible(false);
+        setIsVisible(false)
       }
-    };
+    }
 
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility)
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
-  }, []);
+      window.removeEventListener('scroll', toggleVisibility)
+    }
+  }, [])
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
-    });
-  };
+    })
+  }
 
   return (
     <button
       className={`go-top-btn d-flex justify-content-center align-items-center rounded-circle ${isVisible ? 'show' : ''}`}
       onClick={scrollToTop}
-      
     >
       <ArrowUpward />
     </button>
-  );
-};
+  )
+}
 
-export default GoToTopButton;
+export default GoToTopButton
