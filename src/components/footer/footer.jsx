@@ -1,19 +1,19 @@
 import { Facebook, Instagram, LinkedIn } from '@mui/icons-material'
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import Link from 'next/link'
 import React from 'react'
-import { FaFacebook, FaLinkedin } from 'react-icons/fa'
-import { FaInstagramSquare } from 'react-icons/fa'
+
 
 const Footer = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+
+    
   return (
     <footer>
-
-  
   <Box style={{ backgroundColor: colors.primary[500] }} className="p-2 d-lg-flex justify-content-center align-content-center justify-content-lg-between " >
+
     <Box>   
         <div className='d-flex  justify-content-center'> 
 

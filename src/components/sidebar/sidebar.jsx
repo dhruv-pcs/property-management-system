@@ -19,7 +19,7 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import { usePathname, useRouter } from 'next/navigation'
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [hovered, setHovered] = useState(false)
