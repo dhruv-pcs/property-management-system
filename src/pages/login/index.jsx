@@ -26,7 +26,7 @@ const Login = () => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, formData)
       localStorage.setItem('token', response.data.data.token)
       localStorage.setItem('id', response.data.data.role_u_id)
-      console.log('response', response);
+      console.log('response', response)
 
       if ((response.status = 200)) {
         router.push('/')

@@ -1,14 +1,14 @@
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useTheme } from '@mui/material';
-import { tokens } from '@theme/theme';
-import axios from 'axios';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { Button, Card, Col, Row, Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import * as Images from 'src/constants/image.js';
+import { useTheme } from '@mui/material'
+import { tokens } from '@theme/theme'
+import axios from 'axios'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { Button, Card, Col, Row, Form } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import * as Images from 'src/constants/image.js'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -18,70 +18,67 @@ const schema = Yup.object().shape({
     /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
     'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
   ),
-  phone: Yup
-    .number()
+  phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.number(),
-  status: Yup.boolean().required('Admin status is required'),
-});
+  status: Yup.boolean().required('Admin status is required')
+})
 
 const Profile = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [userData, setUserData] = useState({});
-  
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
+  const [userData, setUserData] = useState({})
+
   // const [showPassword, setShowPassword] = useState(false);
-  const [editable, setEditable] = useState(false);
+  const [editable, setEditable] = useState(false)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    control,
+    control
   } = useForm({
-    resolver: yupResolver(schema), 
-  });
+    resolver: yupResolver(schema)
+  })
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
-        setUserData(response.data.data.data);
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        setUserData(response.data.data.data)
 
-        setValue('first_name', response.data.data.data.first_name);
-        setValue('last_name', response.data.data.data.last_name);
-        setValue('email', response.data.data.data.email);
-        setValue('phone', response.data.data.data.phone);
-        setValue('alternate_phone', response.data.data.data.alternate_phone);
-        setValue('city', response.data.data.data.city);
-        setValue('country', response.data.data.data.country);
-        setValue('pincode', response.data.data.data.pincode);
-        setValue('state', response.data.data.data.state);
-       
+        setValue('first_name', response.data.data.data.first_name)
+        setValue('last_name', response.data.data.data.last_name)
+        setValue('email', response.data.data.data.email)
+        setValue('phone', response.data.data.data.phone)
+        setValue('alternate_phone', response.data.data.data.alternate_phone)
+        setValue('city', response.data.data.data.city)
+        setValue('country', response.data.data.data.country)
+        setValue('pincode', response.data.data.data.pincode)
+        setValue('state', response.data.data.data.state)
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error fetching user data:', error)
       }
-    };
+    }
 
-    fetchData();
-  }, [setValue]);
+    fetchData()
+  }, [setValue])
 
-  useEffect(() => {
-  }, [userData]);
+  useEffect(() => {}, [userData])
 
-  const onSubmit = async (data) => {
-    setEditable(false);
-    
+  const onSubmit = async data => {
+    setEditable(false)
+
     const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },  
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
 
-   console.log('response', response);
-  };
+    console.log('response', response)
+  }
 
   return (
     <Row>
@@ -110,7 +107,6 @@ const Profile = () => {
                 <h5>Role: {userData?.role?.name}</h5>
                 <h5>Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
                 <h5>Contact Number: {userData?.phone}</h5>
-                
               </>
             )}
           </Card.Body>
@@ -123,7 +119,9 @@ const Profile = () => {
             Account Details
           </Card.Header>
           <Card.Body>
-            <Form onSubmit={handleSubmit(onSubmit)} control={control}> {/* Add control */}
+            <Form onSubmit={handleSubmit(onSubmit)} control={control}>
+              {' '}
+              {/* Add control */}
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -153,7 +151,6 @@ const Profile = () => {
                   </Form.Group>
                 </Col>
               </Row>
-
               <Row className='gx-3 mb-3'>
                 <Col md={12}>
                   <Form.Group className='mb-1'>
@@ -186,9 +183,7 @@ const Profile = () => {
                     {errors.password && <span className='text-danger'>{errors.password.message}</span>}
                   </Form.Group>
                 </Col> */}
-
               </Row>
-
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -207,44 +202,71 @@ const Profile = () => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Alternative Phone No:</Form.Label>
-                    <Form.Control type='tel' placeholder='Alternative phone number' {...register('alternate_phone')} readOnly={!editable} defaultValue={userData?.alternate_phone} />
+                    <Form.Control
+                      type='tel'
+                      placeholder='Alternative phone number'
+                      {...register('alternate_phone')}
+                      readOnly={!editable}
+                      defaultValue={userData?.alternate_phone}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
-
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>City</Form.Label>
-                    <Form.Control type='text'  defaultValue={userData?.city} placeholder='Enter your city' {...register('city')} readOnly={!editable} />
+                    <Form.Control
+                      type='text'
+                      defaultValue={userData?.city}
+                      placeholder='Enter your city'
+                      {...register('city')}
+                      readOnly={!editable}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>State</Form.Label>
-                    <Form.Control type='text'  defaultValue={userData?.state} placeholder='Enter your state' {...register('state')} readOnly={!editable} />
+                    <Form.Control
+                      type='text'
+                      defaultValue={userData?.state}
+                      placeholder='Enter your state'
+                      {...register('state')}
+                      readOnly={!editable}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
-
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Country</Form.Label>
-                    <Form.Control type='text' defaultValue={userData?.country} placeholder='Enter your country' {...register('country')} readOnly={!editable} />
+                    <Form.Control
+                      type='text'
+                      defaultValue={userData?.country}
+                      placeholder='Enter your country'
+                      {...register('country')}
+                      readOnly={!editable}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Pincode</Form.Label>
-                    <Form.Control type='text' defaultValue={userData?.pincode} placeholder='Enter your pincode' {...register('pincode')} readOnly={!editable} />
+                    <Form.Control
+                      type='text'
+                      defaultValue={userData?.pincode}
+                      placeholder='Enter your pincode'
+                      {...register('pincode')}
+                      readOnly={!editable}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
-
-                {/* {
+              {/* {
                   userData.role_u_id === "ROL1000000001" ? (
                     <>
                     </>
@@ -283,38 +305,31 @@ const Profile = () => {
                   )
                 }
          */}
-
-              {
-                userData.role_u_id === "ROL1000000001" ? (
-                  <>
-                  </>
-                ) : (
-                  <>
-
+              {userData.role_u_id === 'ROL1000000001' ? (
+                <></>
+              ) : (
+                <>
                   <div className='d-flex '>
+                    {userData && (
+                      <Button onClick={() => setEditable(!editable)} className='mb-3'>
+                        {editable ? 'Cancel' : 'Edit'}
+                      </Button>
+                    )}
 
-                {userData && (
-                  <Button onClick={() => setEditable(!editable)} className='mb-3'>
-                    {editable ? 'Cancel' : 'Edit'}
-                  </Button>
-                )}
-
-                {editable && (
-                  <Button className='ms-2 mb-3 h-fit' type='submit'>
-                    Save changes
-                  </Button>
-                )}
-              </div>
-                  </>
-                )
-              }
-              
+                    {editable && (
+                      <Button className='ms-2 mb-3 h-fit' type='submit'>
+                        Save changes
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
             </Form>
           </Card.Body>
         </Card>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
