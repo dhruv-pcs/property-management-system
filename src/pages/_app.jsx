@@ -10,8 +10,9 @@ import { ProSidebarProvider } from 'react-pro-sidebar'
 import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import Footer from '@components/footer/footer'
 import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
+import withAuth from '@components/auth/auth'
 
-export default function App({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
 
   const colors = tokens(theme.palette.mode)
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }) {
 
   if (isLoginPage) {
     return <Component {...pageProps} />
+    
   } else {
     return (
       <ColorModeContext.Provider value={colorMode}>
@@ -51,3 +53,5 @@ export default function App({ Component, pageProps }) {
     )
   }
 }
+
+export default withAuth(App);

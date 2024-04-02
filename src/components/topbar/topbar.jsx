@@ -9,7 +9,7 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import SearchIcon from '@mui/icons-material/Search'
 import { useProSidebar } from 'react-pro-sidebar'
 import Link from 'next/link'
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from '@mui/icons-material/Logout'
 import axios from 'axios'
 import Router from 'next/router'
 
@@ -19,13 +19,13 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext)
   const { toggleSidebar, broken } = useProSidebar()
 
-  const  handleLogout = async() => {
+  const handleLogout = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
-    
-    if(response.data.statusCode === 200){
-      localStorage.clear();
+
+    if (response.data.statusCode === 200) {
+      localStorage.clear()
       Router.push('/login')
     }
   }
@@ -66,9 +66,8 @@ const Topbar = () => {
           </Link>
 
           <IconButton onClick={() => handleLogout()}>
-            <LogoutIcon />  
-          </IconButton>  
-
+            <LogoutIcon />
+          </IconButton>
         </Box>
       </Box>
     </header>
