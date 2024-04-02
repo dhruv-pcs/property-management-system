@@ -8,17 +8,11 @@ import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
-import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
-import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
-import { Logout } from '@mui/icons-material';
+import { AccountBalanceWallet, AccountBalanceWalletTwoTone, Favorite, FmdGood, HomeWork, Logout, NaturePeople, Policy, PrivacyTip, RequestPageTwoTone, RequestQuote } from '@mui/icons-material';
 
 const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme();
@@ -72,7 +66,7 @@ const MyProSidebar = () => {
 
   useEffect(() => {
    
-    const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsImlhdCI6MTcxMjAzNjc2NSwiZXhwIjoxNzEyMTIzMTY1fQ.E-4Sgpz_9sqEpSKkh6zevMosdyVVhSRa6Qaeugi2W7I';
+    const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsImlhdCI6MTcxMjA0ODYxMiwiZXhwIjoxNzEyMTM1MDEyfQ.BC_eQUXchTlQ74C-pxH6wXmbOC3yJuYN0SccZFAr2dI';
 
     const fetchData = async () => {
       try {
@@ -158,23 +152,30 @@ const MyProSidebar = () => {
               User, Roles and permission
             </Typography>
             <Item title="Admin" to="/admin" icon={<PeopleOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title="Roles" to="/roles" icon={<ContactsOutlinedIcon />} selected={selected} setSelected={setSelected} />
+            <Item title="Role" to="/role" icon={<ContactsOutlinedIcon />} selected={selected} setSelected={setSelected} />
             <Item title="Permission" to="/permission" icon={<ReceiptOutlinedIcon />} selected={selected} setSelected={setSelected} />
+            <Item title="Role Permission" to="/rolepermission" icon={<PrivacyTip />} selected={selected} setSelected={setSelected} />
+            <Item title="Permission List" to="/permissionlist" icon={<Policy />} selected={selected} setSelected={setSelected} />
+
+
 
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 20px 5px 20px' }}>
-              Property, Owner, Tenants
+              Property, Owner, Customer
             </Typography>
-            <Item title="Property" to="/property" icon={<CalendarTodayOutlinedIcon />} selected={selected} setSelected={setSelected} />
+            <Item title="Property" to="/property" icon={<HomeWork />} selected={selected} setSelected={setSelected} />
+            <Item title="Property Allocate" to="/propertyallocate" icon={<FmdGood />} selected={selected} setSelected={setSelected} />
             <Item title="Owner" to="/owner" icon={<PersonOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title="Tenants" to="/tenants" icon={<HelpOutlineOutlinedIcon />} selected={selected} setSelected={setSelected} />
+            <Item title="Customer" to="/customer" icon={<NaturePeople />} selected={selected} setSelected={setSelected} />
+
 
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 20px 5px 20px' }}>
-              Charts
+              Wallet
             </Typography>
-            <Item title="Bar Chart" to="/bar" icon={<BarChartOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title="Pie Chart" to="/pie" icon={<PieChartOutlineOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title="Line Chart" to="/line" icon={<TimelineOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title="Geography Chart" to="/geography" icon={<MapOutlinedIcon />} selected={selected} setSelected={setSelected} />
+            <Item title="Customer Wishlist" to="/customerwishlist" icon={<Favorite/>} selected={selected} setSelected={setSelected} />
+            <Item title="Customer Wallet" to="/customerwallet" icon={<AccountBalanceWallet />} selected={selected} setSelected={setSelected} />
+            <Item title="Owner Wallet" to="/ownerwallet" icon={<AccountBalanceWalletTwoTone />} selected={selected} setSelected={setSelected} />
+            <Item title="Customer Wallet Transection" to="/customerwallettransection" icon={<RequestQuote />} selected={selected} setSelected={setSelected} />
+            <Item title="Owner Wallet Transection" to="/ownerwallettransection" icon={<RequestPageTwoTone />} selected={selected} setSelected={setSelected} />
           </Box>
           
         
