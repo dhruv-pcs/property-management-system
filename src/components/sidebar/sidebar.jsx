@@ -52,7 +52,7 @@ const MyProSidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [selected, setSelected] = useState('');
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
-  const [apiData, setApiData] = useState(null); 
+  const [setApiData] = useState(null); 
 
   const handleLogout = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
