@@ -1,11 +1,19 @@
-import SidebarLayout from '@layout/sidebarlayout';
+
 import React from 'react';
 import { Grid, Box, Typography} from '@mui/material';
+import Head from 'next/head'
 
 const Index = () => {
   
+
+
   return (
-    <SidebarLayout>
+    <>
+      <Head>
+        <title>Example Page</title>
+        <meta name='description' content='This is an example page description.' />
+      </Head>
+
     <div class='mt-3 mb-5'>
         <h1>Dashboard </h1>
       </div>
@@ -51,7 +59,9 @@ const Index = () => {
         </Grid>
         
       </Grid>
-    </SidebarLayout>
+     
+
+      </>
   );
 };
 
