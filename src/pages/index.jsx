@@ -1,20 +1,13 @@
-import SidebarLayout from '@layout/sidebarlayout'
 import Head from 'next/head'
 
 const index = () => {
-  
-
-
   return (
     <>
-  
-  <Head>
-  <title>Example Page</title>
-  <meta name="description" content="This is an example page description." />
- 
-</Head>
+      <Head>
+        <title>Example Page</title>
+        <meta name='description' content='This is an example page description.' />
+      </Head>
 
-    <SidebarLayout>
       <div className='text-wrap'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
         magna aliqua. Neque viverra justo nec ultrices dui sapien eget mi. Gravida neque convallis a cras. Ultricies
@@ -280,7 +273,6 @@ const index = () => {
         vestibulum lectus mauris ultrices eros. Enim facilisis gravida neque convallis a. Eget egestas purus viverra
         accumsan in nisl. Amet venenatis urna cursus eget nunc scelerisque viverra. Eget egestas purus viverra accumsan.
       </div>
-    </SidebarLayout>
     </>
   )
 }
