@@ -1,7 +1,6 @@
-import SidebarLayout from '@layout/sidebarlayout';
+
 import React from 'react';
 import { Grid, Box, Typography} from '@mui/material';
-import SidebarLayout from '@layout/sidebarlayout'
 import Head from 'next/head'
 
 const Index = () => {
@@ -17,7 +16,6 @@ const Index = () => {
  
 </Head>
 
-    <SidebarLayout>
     <div class='mt-3 mb-5'>
         <h1>Dashboard </h1>
       </div>
@@ -328,7 +326,8 @@ const Index = () => {
         vestibulum lectus mauris ultrices eros. Enim facilisis gravida neque convallis a. Eget egestas purus viverra
         accumsan in nisl. Amet venenatis urna cursus eget nunc scelerisque viverra. Eget egestas purus viverra accumsan.
       </div>
-    </SidebarLayout>
+
+      </>
   );
 };
 
