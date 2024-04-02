@@ -66,13 +66,11 @@ const MyProSidebar = () => {
 
   useEffect(() => {
    
-    const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsImlhdCI6MTcxMjA0ODYxMiwiZXhwIjoxNzEyMTM1MDEyfQ.BC_eQUXchTlQ74C-pxH6wXmbOC3yJuYN0SccZFAr2dI';
-
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://719a-2405-201-2006-7d89-4d8b-72b-8d59-7255.ngrok-free.app/api/module', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
           headers: {
-            Authorization: `Bearer ${authToken}`, 
+            Authorization: `Bearer ${localStorage.getItem('token')}`, 
           },
         });
 
