@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Loading from '@components/loading/loading'
 import { useRouter } from 'next/router'
 
-const AuthWrapper = (WrappedComponent) => {
-  return (props) => {
+const AuthWrapper = WrappedComponent => {
+  return props => {
     const [loading, setLoading] = useState(true)
     const [authenticated, setAuthenticated] = useState(false)
     const router = useRouter()
