@@ -1,7 +1,10 @@
+import SidebarLayout from '@layout/sidebarlayout';
+import React from 'react';
+import { Grid, Box, Typography} from '@mui/material';
 import SidebarLayout from '@layout/sidebarlayout'
 import Head from 'next/head'
 
-const index = () => {
+const Index = () => {
   
 
 
@@ -15,6 +18,51 @@ const index = () => {
 </Head>
 
     <SidebarLayout>
+    <div class='mt-3 mb-5'>
+        <h1>Dashboard </h1>
+      </div>
+
+      <Grid container spacing={5}>
+        <Grid item xs={12} sm={6} md={3}>
+          <Box bgcolor="primary.main" p={2}>
+            <Typography variant="h6" color="textSecondary">Admin</Typography>
+            <Typography>Welcome to the Admin, Where the Admin can view, add,update and delete the property. It can be verify the property </Typography>
+            <Typography>Welcome to the Admin, Where the Admin can view, add,update and delete the property. It can be verify the property </Typography>
+            
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Box bgcolor="primary.main" p={2}>
+            <Typography variant="h6" color="textSecondary">Owner</Typography>
+            <Typography>Welcome to the Owner, Where the owner can Buy and Sell the property. </Typography>
+            <Typography>Welcome to the Owner, Where the owner can Buy and Sell the property. </Typography>
+
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Box bgcolor="primary.main" p={2}>
+            <Typography variant="h6" color="textSecondary">Tenants</Typography>
+            <Typography>Welcome to the tenants, Where the tenants can Buy the property. The Tenants can be check the property views. </Typography>
+            <Typography>Welcome to the tenants, Where the tenants can Buy the property. The Tenants can be check the property views. </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Box bgcolor="primary.main" p={2}>
+            <Typography variant="h6" color="textSecondary">Property</Typography>
+            <Typography>Welcome to the Property, Where the Property could Buy and Sell by the owner and tenants. The property will be verify by the Admin </Typography>
+            <Typography>Welcome to the Property, Where the Property could Buy and Sell by the owner and tenants. The property will be verify by the Admin </Typography>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Box bgcolor="primary.main" p={2}>
+            <Typography variant="h6" color="textSecondary">About</Typography>
+            <Typography>Welcome to the Property, Where the Property could Buy and Sell by the owner and tenants. The property will be verify by the Admin </Typography>
+            <Typography>Welcome to the Property, Where the Property could Buy and Sell by the owner and tenants. The property will be verify by the Admin </Typography>
+          </Box>
+        </Grid>
+        
+      </Grid>
       <div className='text-wrap'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
         magna aliqua. Neque viverra justo nec ultrices dui sapien eget mi. Gravida neque convallis a cras. Ultricies
@@ -281,8 +329,7 @@ const index = () => {
         accumsan in nisl. Amet venenatis urna cursus eget nunc scelerisque viverra. Eget egestas purus viverra accumsan.
       </div>
     </SidebarLayout>
-    </>
-  )
-}
+  );
+};
 
-export default index
+export default Index;
