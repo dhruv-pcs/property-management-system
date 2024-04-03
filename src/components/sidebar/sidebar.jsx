@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
-import { Link } from 'next/link'
 import { tokens } from '@theme/theme'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
@@ -51,7 +50,6 @@ const Item = ({ title, to, icon, setSelected }) => {
       onMouseLeave={() => setHovered(false)}
       onClick={handleItemClick}
       icon={icon}
-      containerElement={<Link to={to} />}
     >
       <Typography>{title}</Typography>
     </MenuItem>
@@ -93,7 +91,7 @@ const MyProSidebar = () => {
         height: '100vh',
         top: 0,
         bottom: 0,
-        zIndex: 10000,
+        zIndex: 2,
         '& .sidebar': {
           border: 'none'
         },
@@ -142,9 +140,6 @@ const MyProSidebar = () => {
           <Box paddingLeft={collapsed ? undefined : '0%'} sx={{ '& ul': { padding: '0px' } }}>
             <Item title='Dashboard' to='/' icon={<HomeOutlinedIcon />} selected={selected} setSelected={setSelected} />
 
-            <Typography variant='h6' color={colors.grey[300]} sx={{ m: '15px 20px 5px 20px' }}>
-              User, Roles and permission
-            </Typography>
             <Item
               title='Admin'
               to='/admin'
@@ -181,9 +176,6 @@ const MyProSidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography variant='h6' color={colors.grey[300]} sx={{ m: '15px 20px 5px 20px' }}>
-              Property, Owner, Customer
-            </Typography>
             <Item title='Property' to='/property' icon={<HomeWork />} selected={selected} setSelected={setSelected} />
             <Item
               title='Property Allocate'
@@ -207,9 +199,6 @@ const MyProSidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography variant='h6' color={colors.grey[300]} sx={{ m: '15px 20px 5px 20px' }}>
-              Wallet
-            </Typography>
             <Item
               title='Customer Wishlist'
               to='/customerwishlist'

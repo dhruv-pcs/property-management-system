@@ -38,7 +38,7 @@ const Topbar = () => {
         p={1}
         position='sticky'
         top={0}
-        zIndex={1000}
+        zIndex={1}
         backgroundColor={colors.primary[500]}
         boxShadow={'0 0 10px 0 rgba(0, 0, 0, 0.5)'}
       >
