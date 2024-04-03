@@ -27,7 +27,6 @@ const App = ({ Component, pageProps }) => {
 
   if (isLoginPage) {
     return <Component {...pageProps} />
-    
   } else {
     return (
       <ColorModeContext.Provider value={colorMode}>
@@ -54,4 +53,4 @@ const App = ({ Component, pageProps }) => {
   }
 }
 
-export default withAuth(App);
+export default withAuth(App)
