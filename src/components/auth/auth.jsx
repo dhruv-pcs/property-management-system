@@ -6,21 +6,16 @@ const withAuth = WrappedComponent => {
   const AuthComponent = props => {
     const router = useRouter()
     const [authenticated, setAuthenticated] = useState(false)
-    
-   
 
     useEffect(() => {
-      
-      if(router.pathname === '/login') {
+      if (router.pathname === '/login') {
         setAuthenticated(true)
       }
 
       const token = localStorage.getItem('token')
-      if (token  ) {
+      if (token) {
         setAuthenticated(true)
-      }
-      else {
-        
+      } else {
         router.push('/login')
       }
     }, [router])
@@ -33,7 +28,6 @@ const withAuth = WrappedComponent => {
   }
 
   return AuthComponent
-
 }
 
 export default withAuth
