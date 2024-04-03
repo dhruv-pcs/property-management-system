@@ -1,8 +1,10 @@
 import React from 'react'
+import ViewAdmin from '../../components/admin/view-admin/view-admin.js'
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <div> <ViewAdmin/>
+    </div>
   )
 }
 
