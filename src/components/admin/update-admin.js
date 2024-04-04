@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
+import { tokens } from '@theme/theme'
+import { useTheme } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -21,8 +23,11 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({ user, isViewOnly = false }) => {
-  const [userData, setUserData] = useState({})
+const UpdateAdmin = ({ admin, isViewOnly }) => {
+
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
+
   const [editable, setEditable] = useState(false)
 
   const {
@@ -36,57 +41,33 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
   })
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(user)
-
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/oneAdmin/${user}`,
-          {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          }
-        )
-        console.log(response)
-
-        setUserData(response.data.data.adminData)
-        setValue('first_name', response.data.data.adminData.first_name)
-        setValue('last_name', response.data.data.adminData.last_name)
-        setValue('email', response.data.data.adminData.email)
-        setValue('phone', response.data.data.adminData.phone)
-        setValue('alternate_phone', response.data.data.adminData.alternate_phone)
-        setValue('city', response.data.data.adminData.city)
-        setValue('country', response.data.data.adminData.country)
-        setValue('pincode', response.data.data.adminData.pincode)
-        setValue('state', response.data.data.adminData.state)
-      } catch (error) {
-        console.error('Error fetching user data:', error)
-      }
-    }
-
-    fetchData()
+    console.log(admin)
+    setValue('first_name', admin.first_name)
+    setValue('last_name', admin.last_name)
+    setValue('email', admin.email)
+    setValue('phone', admin.phone)
+    setValue('alternate_phone', admin.alternate_phone)
+    setValue('city', admin.city)
+    setValue('country', admin.country)
+    setValue('pincode', admin.pincode)
+    setValue('state', admin.state)
   }, [setValue])
-
-  useEffect(() => {}, [userData])
 
   const onSubmit = async data => {
     setEditable(false)
 
-    const response = await axios.patch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/${user?.u_id}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsImlhdCI6MTcxMjA1Mzk1MywiZXhwIjoxNzEyMTQwMzUzfQ.zrY1whkWwIE2a8RG7L5fwBuRuYSXCNGGuvxkJlUx_sA`
-        }
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
+      headers: {
+        Authorization: `Bearer  ${localStorage.getItem('token')}`
       }
-    )
+    })
     console.log('response', response)
   }
 
   return (
     <Row>
       <Col xl={12}>
-        <Card className='mb-4'>
+      <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
             <Form onSubmit={handleSubmit(onSubmit)} control={control}>
               {' '}
@@ -99,7 +80,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                       type='text'
                       placeholder='Enter your first name'
                       {...register('first_name')}
-                      defaultValue={user?.first_name}
+                      defaultValue={admin?.first_name}
                       readOnly={!editable}
                     />
                     {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
@@ -113,7 +94,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                       type='text'
                       placeholder='Enter your last name'
                       {...register('last_name')}
-                      defaultValue={user?.last_name}
+                      defaultValue={admin?.last_name}
                       readOnly={!editable}
                     />
                     {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
@@ -128,7 +109,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                       type='email'
                       placeholder='Enter your email address'
                       {...register('email')}
-                      defaultValue={user?.email}
+                      defaultValue={admin?.email}
                       readOnly={!editable}
                     />
                     {errors.email && <span className='text-danger'>{errors.email.message}</span>}
@@ -162,7 +143,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                       placeholder='Enter your phone number'
                       {...register('phone')}
                       readOnly={!editable}
-                      defaultValue={user?.phone ? Number(user.phone) : ''}
+                      defaultValue={admin?.phone ? Number(admin.phone) : ''}
                     />
                     {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                   </Form.Group>
@@ -176,7 +157,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                       placeholder='Alternative phone number'
                       {...register('alternate_phone')}
                       readOnly={!editable}
-                      defaultValue={user?.alternate_phone}
+                      defaultValue={admin?.alternate_phone}
                     />
                   </Form.Group>
                 </Col>
@@ -187,7 +168,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                     <Form.Label>City</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={user?.city}
+                      defaultValue={admin?.city}
                       placeholder='Enter your city'
                       {...register('city')}
                       readOnly={!editable}
@@ -200,7 +181,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                     <Form.Label>State</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={user?.state}
+                      defaultValue={admin?.state}
                       placeholder='Enter your state'
                       {...register('state')}
                       readOnly={!editable}
@@ -214,7 +195,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                     <Form.Label>Country</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={user?.country}
+                      defaultValue={admin?.country}
                       placeholder='Enter your country'
                       {...register('country')}
                       readOnly={!editable}
@@ -227,7 +208,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                     <Form.Label>Pincode</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={user?.pincode}
+                      defaultValue={admin?.pincode}
                       placeholder='Enter your pincode'
                       {...register('pincode')}
                       readOnly={!editable}
@@ -235,7 +216,7 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              {user.role_u_id === 'ROL1000000001' ? (
+              {admin?.role_u_id === 'ROL1000000001' ? (
                 <></>
               ) : (
                 <>
@@ -251,8 +232,8 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                             id='active'
                             {...register('status', { required: true })}
                             value={true}
-                            defaultChecked={user?.status === true ? true : false}
-                            disabled={!editable}
+                            defaultChecked={admin?.status === true ? true : false}
+                            readOnly={!editable}
                           />
                           <Form.Check
                             inline
@@ -261,8 +242,8 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={user?.status === false ? false : true}
-                            disabled={!editable}
+                            defaultChecked={admin?.status === false ? false : true}
+                            readOnly={!editable}
                           />
                         </div>
                       </Form.Group>
@@ -270,22 +251,19 @@ const UpdateAdmin = ({ user, isViewOnly = false }) => {
                   </Row>
                 </>
               )}
-              {user.role_u_id === 'ROL1000000001' ? (
+              {admin?.role_u_id === 'ROL1000000001' ? (
                 <></>
               ) : (
                 <>
                   {!isViewOnly && (
                     <div className='d-flex'>
-                      {user && (
-                        <Button onClick={() => setEditable(!editable)} className='mb-3'>
-                          {editable ? 'Cancel' : 'Edit'}
-                        </Button>
-                      )}
-                      {editable && (
-                        <Button className='ms-2 mb-3 h-fit' type='submit'>
-                          Save changes
-                        </Button>
-                      )}
+                      <Button onClick={() => setEditable(!editable)} className='mb-3'>
+                        {editable ? 'Cancel' : 'Edit'}
+                      </Button>
+
+                      <Button className='ms-2 mb-3 h-fit' type='submit'>
+                        Save changes
+                      </Button>
                     </div>
                   )}
                 </>

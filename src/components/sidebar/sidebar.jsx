@@ -51,7 +51,6 @@ const Item = ({ title, to, icon, setSelected }) => {
       onMouseLeave={() => setHovered(false)}
       onClick={handleItemClick}
       icon={icon}
-      containerElement={<Link to={to} />}
     >
       <Typography>{title}</Typography>
     </MenuItem>

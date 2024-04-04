@@ -1,6 +1,6 @@
 import ViewOwner from '@components/owner/view-owner'
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
-import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography, useTheme } from '@mui/material'
+import { Dialog, DialogContent, DialogTitle, IconButton, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ const Owner = () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        
+
         setOwnerData(response.data.data.ownerData)
       } catch (error) {
         console.error(error)
@@ -263,7 +263,10 @@ const Owner = () => {
         >
           <Close />
         </IconButton>
-        <DialogContent  dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}>
+        <DialogContent
+          dividers
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
           <ViewOwner owner={selectedRow} />
         </DialogContent>
       </Dialog>

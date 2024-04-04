@@ -1,35 +1,19 @@
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useTheme } from '@mui/material'
+import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Button, Card, Col, Row, Form } from 'react-bootstrap'
+import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
 const schema = Yup.object().shape({
-  first_name: Yup.string().required('First name is required'),
-  last_name: Yup.string().required('Last name is required'),
-  email: Yup.string().email().required('Email is required'),
-  password: Yup.string().matches(
-    /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-    'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
-  ),
-  phone: Yup.string()
-    .required('Phone number is required')
-    .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
-  alternate_phone: Yup.string(),
-  status: Yup.boolean().required('Admin status is required'),
-  aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
+  name: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
-  gst_no: Yup.string().required('GST No is required'),
-  is_verified: Yup.boolean().required('Verification status is required'),
   landmark: Yup.string().required('Landmark is required'),
   street: Yup.string().required('Street is required')
 })
 
-const ViewOwner = ({ owner }) => {
+const AddProperty = ({ owner }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const editable = false
@@ -45,7 +29,7 @@ const ViewOwner = ({ owner }) => {
 
   return (
     <Row>
-      <Col xl={12}>
+      <Col xl={18}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
             <Form control={control}>
@@ -54,89 +38,85 @@ const ViewOwner = ({ owner }) => {
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>First name</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='Enter your first name'
-                      {...register('first_name')}
-                      defaultValue={owner?.first_name}
+                      placeholder='Enter your Name'
+                      {...register('name')}
+                      defaultValue={owner?.name}
                       readOnly={!editable}
                     />
-                    {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
+                    {errors.name && <span className='text-danger'>{errors.name.message}</span>}
                   </Form.Group>
                 </Col>
 
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter your last name'
-                      {...register('last_name')}
-                      defaultValue={owner?.last_name}
-                      readOnly={!editable}
-                    />
-                    {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={12}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                      type='email'
-                      placeholder='Enter your email address'
-                      {...register('email')}
-                      defaultValue={owner?.email}
-                      readOnly={!editable}
-                    />
-                    {errors.email && <span className='text-danger'>{errors.email.message}</span>}
-                  </Form.Group>
-                </Col>
-
-                {/* <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Password</Form.Label>
-                    <div className='input-group'>
-                      <Form.Control
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder='Password'
-                        {...register('password')}
-                        readOnly={!editable}
-                      />
-                      <Button variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </Button>
-                    </div>
-                    {errors.password && <span className='text-danger'>{errors.password.message}</span>}
-                  </Form.Group>
-                </Col> */}
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Phone number</Form.Label>
+                    <Form.Label>Rent</Form.Label>
                     <Form.Control
                       type='tel'
-                      placeholder='Enter your phone number'
+                      placeholder='Enter Rent'
+                      {...register('rent')}
+                      defaultValue={owner?.rent}
+                      readOnly={!editable}
+                    />
+                    {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className='gx-3 mb-3'>
+                <Col md={6}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>Rent-Type</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder=' Rent type'
+                      {...register('email')}
+                      defaultValue={owner?.rent_type}
+                      readOnly={!editable}
+                    />
+                    {errors.rent_type && <span className='text-danger'>{errors.rent_type.message}</span>}
+                  </Form.Group>
+                </Col>
+
+                <Col md={6}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>Landmark</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder='Enter Landmark'
+                      {...register('gst_no')}
+                      defaultValue={owner?.landmark}
+                      readOnly={!editable}
+                    />
+                    {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className='gx-3 mb-3'>
+                <Col md={6}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>Location</Form.Label>
+                    <Form.Control
+                      type='tel'
+                      placeholder='Enter Location'
                       {...register('phone')}
                       readOnly={!editable}
-                      defaultValue={owner?.phone ? Number(owner.phone) : ''}
+                      defaultValue={owner?.location ? Number(owner.location) : ''}
                     />
-                    {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
+                    {errors.location && <span className='text-danger'>{errors.location.message}</span>}
                   </Form.Group>
                 </Col>
 
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Alternative Phone No:</Form.Label>
+                    <Form.Label>Address</Form.Label>
                     <Form.Control
                       type='tel'
-                      placeholder='Alternative phone number'
-                      {...register('alternate_phone')}
+                      placeholder='Enter Address'
+                      {...register('address')}
                       readOnly={!editable}
-                      defaultValue={owner?.alternate_phone}
+                      defaultValue={owner?.address}
                     />
                   </Form.Group>
                 </Col>
@@ -198,15 +178,14 @@ const ViewOwner = ({ owner }) => {
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Aadhar Card No</Form.Label>
+                    <Form.Label>Pincode</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='Enter Aadhar Card No'
-                      {...register('aadhar_card_no')}
-                      defaultValue={owner?.aadhar_card_no}
+                      defaultValue={owner?.pincode}
+                      placeholder='Enter your pincode'
+                      {...register('pincode')}
                       readOnly={!editable}
                     />
-                    {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
                   </Form.Group>
                 </Col>
 
@@ -221,49 +200,6 @@ const ViewOwner = ({ owner }) => {
                       readOnly={!editable}
                     />
                     {errors.address && <span className='text-danger'>{errors.address.message}</span>}
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>GST No</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter GST No'
-                      {...register('gst_no')}
-                      defaultValue={owner?.gst_no}
-                      readOnly={!editable}
-                    />
-                    {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
-                  </Form.Group>
-                </Col>
-
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Verification Status</Form.Label>
-                    <div>
-                      <Form.Check
-                        inline
-                        label='Verified'
-                        type='radio'
-                        id='verified'
-                        {...register('is_verified', { required: true })}
-                        value={true}
-                        defaultChecked={(owner?.is_verified === true) & true}
-                        className='pointer-events-none'
-                      />
-                      <Form.Check
-                        inline
-                        label='Not Verified'
-                        type='radio'
-                        id='not_verified'
-                        {...register('is_verified', { required: true })}
-                        value={false}
-                        defaultChecked={owner?.is_verified === false && true}
-                        className='pointer-events-none'
-                      />
-                    </div>
                   </Form.Group>
                 </Col>
               </Row>
@@ -304,4 +240,4 @@ const ViewOwner = ({ owner }) => {
   )
 }
 
-export default ViewOwner
+export default AddProperty
