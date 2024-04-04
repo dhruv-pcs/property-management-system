@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import AuthWrapper from '@components/auth/loginauth'
+import defineAbilityFor from 'src/context/abilities'
 
 const Login = () => {
   const {
@@ -14,7 +15,6 @@ const Login = () => {
     formState: { errors }
   } = useForm()
   const [showPassword, setShowPassword] = useState(false)
-
   const router = useRouter()
 
   const togglePasswordVisibility = () => {
@@ -24,13 +24,11 @@ const Login = () => {
   const onSubmit = async formData => {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, formData)
+      const userPermissions = response.data.data
+      const ability = defineAbilityFor(userPermissions)
+      console.log('ability', ability)
       localStorage.setItem('token', response.data.data.token)
-      localStorage.setItem('id', response.data.data.role_u_id)
-      console.log('response', response)
-
-      if ((response.status = 200)) {
-        router.push('/')
-      }
+      router.push('/')
     } catch (error) {
       console.error('Error Login:', error)
     }
@@ -109,5 +107,4 @@ const Login = () => {
   )
 }
 
-// export default Login;
 export default AuthWrapper(Login)

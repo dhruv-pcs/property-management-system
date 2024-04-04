@@ -19,18 +19,19 @@ const Owner = () => {
   const [selectedRow, setSelectedRow] = useState('121')
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        console.log('response', response.data.data.ownerData)
-        setOwnerData(response.data.data.ownerData)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      console.log('response', response.data.data.ownerData)
+      setOwnerData(response.data.data.ownerData)
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  useEffect(() => {
     fetchData()
   }, [])
 
@@ -44,9 +45,9 @@ const Owner = () => {
     setSelectedRow(row)
   }
 
-  const handelDeletebutton = async () => {
+  const handelDeletebutton = async row => {
     setOpenDelete(!openDelete)
-    setSelectedRow()
+    setSelectedRow(row)
   }
 
   const handleOwnerDataUpdate = async () => {
@@ -324,7 +325,7 @@ const Owner = () => {
           className=''
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
         >
-          <EditOwner owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
+          <EditOwner handelEditbutton={handelEditbutton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>
       </Dialog>
 
@@ -392,7 +393,7 @@ const Owner = () => {
           className='d-flex justify-content-center'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
         >
-          <AddOwner onUpdate={handleOwnerDataUpdate}/>
+          <AddOwner handelAddbutton={handelAddbutton} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>
       </Dialog>
 
@@ -432,7 +433,7 @@ const Owner = () => {
               Cancel
             </Button>
             <Button
-              onClick={() => handelDeleteConfirmation()}
+              onClick={() => handelDeleteConfirmation(selectedRow)}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
             >

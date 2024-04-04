@@ -17,18 +17,20 @@ const schema = Yup.object().shape({
   alternate_phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  aadhar_card_no: Yup.number().required('Aadhar Card No is required'),
+  aadhar_card_no: Yup.number()
+    .required('Aadhar Card No is required')
+    .test('len', 'Phone number must be exactly 12 digits', val => val && val.toString().length === 12),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
   landmark: Yup.string().required('Landmark is required'),
   street: Yup.string().required('Street is required'),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
-  pincode: Yup.string().required('Pincode is required'),
+  pincode: Yup.number().required('Pincode is required'),
   country: Yup.string().required('Country is required')
 })
 
-const AddOwner = ({ onUpdate }) => {
+const AddOwner = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -48,9 +50,9 @@ const AddOwner = ({ onUpdate }) => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 201) {
         onUpdate()
-        setEditable(!editable)
+        handelAddbutton
       }
     } catch (error) {
       console.log('error', error)
