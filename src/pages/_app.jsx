@@ -11,6 +11,7 @@ import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import Footer from '@components/footer/footer'
 import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import withAuth from '@components/auth/auth'
+import { AbilityProvider } from 'src/context/AbilityContext'
 
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
@@ -27,9 +28,9 @@ const App = ({ Component, pageProps }) => {
 
   if (isLoginPage) {
     return <Component {...pageProps} />
-    
   } else {
     return (
+      <AbilityProvider user={user}>
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <ProSidebarProvider theme={theme}>
@@ -50,8 +51,9 @@ const App = ({ Component, pageProps }) => {
           </ProSidebarProvider>
         </ThemeProvider>
       </ColorModeContext.Provider>
+      </AbilityProvider>
     )
   }
 }
 
-export default withAuth(App);
+export default withAuth(App)
