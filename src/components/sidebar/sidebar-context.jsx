@@ -1,7 +1,6 @@
 import React, { useState, createContext, useContext } from 'react'
 import MyProSidebar from './sidebar'
 
-
 const SidebarContext = createContext({})
 
 export const MyProSidebarProvider = ({ children }) => {

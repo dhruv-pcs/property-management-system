@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar';
-import { Link } from 'next/link';
 import { tokens } from '@theme/theme';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -12,7 +11,8 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
-import { AccountBalanceWallet, AccountBalanceWalletTwoTone, Favorite, FmdGood, HomeWork, Logout, NaturePeople, Policy, PrivacyTip, RequestPageTwoTone, RequestQuote } from '@mui/icons-material';
+import { AccountBalanceWallet, Favorite, FmdGood, HomeWork, NaturePeople, 
+Policy, PrivacyTip, RequestQuote } from '@mui/icons-material';
 
 const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme();
@@ -40,7 +40,7 @@ const Item = ({ title, to, icon, setSelected }) => {
       onMouseLeave={() => setHovered(false)}
       onClick={handleItemClick}
       icon={icon}
-      containerElement={<Link to={to} />}
+    
     >
       <Typography>{title}</Typography>
     </MenuItem>
@@ -52,17 +52,8 @@ const MyProSidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [selected, setSelected] = useState('');
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
-  const [apiData,setApiData] = useState(null); 
+  const [setApiData] = useState(null); 
 
-  const handleLogout = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    });
-    if (response.data.statusCode === 200) {
-      localStorage.clear();
-      Router.push('/login');
-    }
-  };
 
   useEffect(() => {
    
@@ -81,7 +72,7 @@ const MyProSidebar = () => {
     };
 
     fetchData();
-  }, [apiData]); 
+  }, []); 
 
   return (
     <Box
@@ -166,17 +157,12 @@ const MyProSidebar = () => {
             </Typography>
             <Item title="Customer Wishlist" to="/customerwishlist" icon={<Favorite/>} selected={selected} setSelected={setSelected} />
             <Item title="Customer Wallet" to="/customerwallet" icon={<AccountBalanceWallet />} selected={selected} setSelected={setSelected} />
-            <Item title="Owner Wallet" to="/ownerwallet" icon={<AccountBalanceWalletTwoTone />} selected={selected} setSelected={setSelected} />
+            <Item title="Owner Wallet" to="/ownerwallet" icon={<AccountBalanceWallet />} selected={selected} setSelected={setSelected} />
             <Item title="Customer Wallet Transection" to="/customerwallettransection" icon={<RequestQuote />} selected={selected} setSelected={setSelected} />
-            <Item title="Owner Wallet Transection" to="/ownerwallettransection" icon={<RequestPageTwoTone />} selected={selected} setSelected={setSelected} />
+            <Item title="Owner Wallet Transection" to="/ownerwallettransection" icon={<RequestQuote />} selected={selected} setSelected={setSelected} />
           </Box>
           
-        
-          <Box paddingLeft={collapsed ? undefined : '0%'} sx={{ '& ul': { padding: '0px' } }}>
-            <IconButton onClick={handleLogout}>
-              <Logout />
-            </IconButton>
-          </Box>
+      
           
         </Menu>
       </Sidebar>
