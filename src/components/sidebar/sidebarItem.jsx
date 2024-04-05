@@ -28,7 +28,7 @@ const navigation = () => {
       title: 'Admin',
       icon: 'ri:admin-fill',
       path: '/admin',
-      subject: 'map-n-trips',
+      subject: 'Admin',
       action: 'read'
     },
     {
@@ -46,10 +46,10 @@ const navigation = () => {
       action: 'read'
     },
     {
-      title: 'Role Permission',
+      title: 'Role And Permission',
       icon: 'mdi:shield-star',
-      path: '/role-permission',
-      subject: 'role-permission',
+      path: '/role-and-permission',
+      subject: 'Role And Permission',
       action: 'read'
     },
     {
@@ -114,14 +114,14 @@ const navigation = () => {
       title: 'Owner Transaction',
       path: '/owner-wallet-transection',
       icon: 'ic:baseline-request-page',
-      subject: 'Customer Wallet',
+      subject: 'Customer Wallet Transection',
       action: 'read'
     },
     {
       title: 'Customer Transaction',
       path: '/customer-wallet-transection',
       icon: 'ic:twotone-request-page',
-      subject: 'Customer Transaction',
+      subject: 'Customer Wallet Transection',
       action: 'read'
     }
   ]
