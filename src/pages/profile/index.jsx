@@ -71,13 +71,17 @@ const Profile = () => {
   useEffect(() => {}, [userData])
 
   const onSubmit = async data => {
-    setEditable(false)
+    try {
+      console.log('data', data)
 
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
+      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
 
-    console.log('response', response)
+      console.log('response', response)
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   return (
@@ -266,45 +270,41 @@ const Profile = () => {
                   </Form.Group>
                 </Col>
               </Row>
-              {/* {
-                  userData.role_u_id === "ROL1000000001" ? (
-                    <>
-                    </>
-                  ) : (
-                    <>
-                          <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Admin</Form.Label>
-                    <div>
-                      <Form.Check
-                        inline
-                        label='Active'
-                        type='radio'
-                        id='active'
-                        {...register('status', { required: true })}
-                        value={true}
-                        defaultChecked={userData?.status === true ? true : false}
-                        disabled={!editable}
-                      />
-                      <Form.Check
-                        inline
-                        label='Inactive'
-                        type='radio'
-                        id='inactive'
-                        {...register('status', { required: true })}
-                        value={false}
-                        defaultChecked={userData?.status === false ? false : true}
-                        disabled={!editable}
-                      />
-                    </div>
-                  </Form.Group>
-                </Col>
-              </Row>
-                    </>
-                  )
-                }
-         */}
+              {userData.role_u_id === 'ROL1000000001' ? (
+                <></>
+              ) : (
+                <>
+                  <Row className='gx-3 mb-3'>
+                    <Col md={6}>
+                      <Form.Group className='mb-1'>
+                        <Form.Label>Admin</Form.Label>
+                        <div>
+                          <Form.Check
+                            inline
+                            label='Active'
+                            type='radio'
+                            id='active'
+                            {...register('status', { required: true })}
+                            value={true}
+                            defaultChecked={userData?.status === true ? true : false}
+                            disabled={!editable}
+                          />
+                          <Form.Check
+                            inline
+                            label='Inactive'
+                            type='radio'
+                            id='inactive'
+                            {...register('status', { required: true })}
+                            value={false}
+                            defaultChecked={userData?.status === false ? false : true}
+                            disabled={!editable}
+                          />
+                        </div>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </>
+              )}
               {userData.role_u_id === 'ROL1000000001' ? (
                 <></>
               ) : (
