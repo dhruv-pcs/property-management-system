@@ -1,8 +1,12 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@mui/material'
+import { Grid, Box, Typography, useTheme } from '@mui/material'
 import Head from 'next/head'
+import { tokens } from '@theme/theme'
 
 const Index = () => {
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
+
   return (
     <>
       <Head>
@@ -10,13 +14,13 @@ const Index = () => {
         <meta name='description' content='This is an example page description.' />
       </Head>
 
-      <div class='mt-3 mb-5'>
+      <div className='mt-3 mb-5'>
         <h1>Dashboard </h1>
       </div>
 
       <Grid container spacing={5}>
         <Grid item xs={12} sm={6} md={3}>
-          <Box bgcolor='primary.main' p={2}>
+          <Box sx={{ backgroundColor: colors.primary[500] }} p={2}>
             <Typography variant='h6' color='textSecondary'>
               Admin
             </Typography>
@@ -31,7 +35,7 @@ const Index = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Box bgcolor='primary.main' p={2}>
+          <Box sx={{ backgroundColor: colors.primary[500] }} p={2}>
             <Typography variant='h6' color='textSecondary'>
               Owner
             </Typography>
@@ -40,7 +44,7 @@ const Index = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Box bgcolor='primary.main' p={2}>
+          <Box sx={{ backgroundColor: colors.primary[500] }} p={2}>
             <Typography variant='h6' color='textSecondary'>
               Tenants
             </Typography>
@@ -55,7 +59,7 @@ const Index = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Box bgcolor='primary.main' p={2}>
+          <Box sx={{ backgroundColor: colors.primary[500] }} p={2}>
             <Typography variant='h6' color='textSecondary'>
               Property
             </Typography>
@@ -71,7 +75,7 @@ const Index = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={3}>
-          <Box bgcolor='primary.main' p={2}>
+          <Box sx={{ backgroundColor: colors.primary[500] }} p={2}>
             <Typography variant='h6' color='textSecondary'>
               About
             </Typography>

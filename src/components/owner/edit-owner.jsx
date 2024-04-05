@@ -1,54 +1,88 @@
-// import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
-import { Card, Col, Row, Form } from 'react-bootstrap'
+import { Card, Col, Row, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   email: Yup.string().email().required('Email is required'),
-  password: Yup.string().matches(
-    /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-    'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
-  ),
-  phone: Yup.string()
+  phone: Yup.number()
     .required('Phone number is required')
-    .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
-  alternate_phone: Yup.string(),
-  status: Yup.boolean().required('Admin status is required'),
+    .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
+  alternate_phone: Yup.number()
+    .required('Phone number is required')
+    .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
-  is_verified: Yup.boolean().required('Verification status is required'),
   landmark: Yup.string().required('Landmark is required'),
-  street: Yup.string().required('Street is required')
+  street: Yup.string().required('Street is required'),
+  city: Yup.string().required('City is required'),
+  state: Yup.string().required('State is required'),
+  pincode: Yup.string().required('Pincode is required'),
+  country: Yup.string().required('Country is required'),
+  status: Yup.boolean().required('Admin status is required'),
+  is_verified: Yup.boolean().required('Verification status is required')
 })
 
-const ViewOwner = ({ owner }) => {
+const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const editable = false
 
   const {
     register,
+    handleSubmit,
     formState: { errors },
-    control
+    control,
+    setValue
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('owner', owner)
+
+  useEffect(() => {
+    setValue('first_name', owner.first_name)
+    setValue('last_name', owner.last_name)
+    setValue('email', owner.email)
+    setValue('phone', owner.phone)
+    setValue('alternate_phone', owner.alternate_phone)
+    setValue('city', owner.city)
+    setValue('country', owner.country)
+    setValue('pincode', owner.pincode)
+    setValue('state', owner.state)
+    setValue('aadhar_card_no', owner.aadhar_card_no)
+    setValue('address', owner.address)
+    setValue('gst_no', owner.gst_no)
+    setValue('landmark', owner.landmark)
+    setValue('street', owner.street)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setValue])
+
+  const onSubmit = async data => {
+    try {
+      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+
+      if (response.status === 201) {
+        handelEditbutton()
+        onUpdate()
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
 
   return (
     <Row>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
-            <Form control={control}>
-              {' '}
-              {/* Add control */}
+            <Form onSubmit={handleSubmit(onSubmit)} control={control}>
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -58,7 +92,6 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter your first name'
                       {...register('first_name')}
                       defaultValue={owner?.first_name}
-                      readOnly={!editable}
                     />
                     {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                   </Form.Group>
@@ -72,12 +105,12 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter your last name'
                       {...register('last_name')}
                       defaultValue={owner?.last_name}
-                      readOnly={!editable}
                     />
                     {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -87,7 +120,6 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter your email address'
                       {...register('email')}
                       defaultValue={owner?.email}
-                      readOnly={!editable}
                     />
                     {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                   </Form.Group>
@@ -101,7 +133,6 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter GST No'
                       {...register('gst_no')}
                       defaultValue={owner?.gst_no}
-                      readOnly={!editable}
                     />
                     {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
                   </Form.Group>
@@ -115,7 +146,6 @@ const ViewOwner = ({ owner }) => {
                       type='tel'
                       placeholder='Enter your phone number'
                       {...register('phone')}
-                      readOnly={!editable}
                       defaultValue={owner?.phone ? Number(owner.phone) : ''}
                     />
                     {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
@@ -129,12 +159,12 @@ const ViewOwner = ({ owner }) => {
                       type='tel'
                       placeholder='Alternative phone number'
                       {...register('alternate_phone')}
-                      readOnly={!editable}
                       defaultValue={owner?.alternate_phone}
                     />
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -144,7 +174,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.city}
                       placeholder='Enter your city'
                       {...register('city')}
-                      readOnly={!editable}
                     />
                   </Form.Group>
                 </Col>
@@ -157,11 +186,11 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.state}
                       placeholder='Enter your state'
                       {...register('state')}
-                      readOnly={!editable}
                     />
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -171,7 +200,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.country}
                       placeholder='Enter your country'
                       {...register('country')}
-                      readOnly={!editable}
                     />
                   </Form.Group>
                 </Col>
@@ -184,11 +212,11 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.pincode}
                       placeholder='Enter your pincode'
                       {...register('pincode')}
-                      readOnly={!editable}
                     />
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -198,7 +226,6 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter Aadhar Card No'
                       {...register('aadhar_card_no')}
                       defaultValue={owner?.aadhar_card_no}
-                      readOnly={!editable}
                     />
                     {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
                   </Form.Group>
@@ -212,12 +239,12 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter Address'
                       {...register('address')}
                       defaultValue={owner?.address}
-                      readOnly={!editable}
                     />
                     {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
@@ -227,7 +254,6 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter Landmark'
                       {...register('landmark')}
                       defaultValue={owner?.landmark}
-                      readOnly={!editable}
                     />
                     {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                   </Form.Group>
@@ -241,64 +267,68 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter Street'
                       {...register('street')}
                       defaultValue={owner?.street}
-                      readOnly={!editable}
                     />
                     {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Active Status</Form.Label>
-                    <FormControl component='fieldset'>
-                      <RadioGroup
-                        row
-                        aria-label='status'
-                        defaultValue={owner?.status === true ? 'active' : 'not_active'}
+                    <Form.Label>Status</Form.Label>
+                    <div>
+                      <Form.Check
+                        inline
+                        label='Active'
+                        type='radio'
+                        id='active'
                         {...register('status', { required: true })}
-                      >
-                        <FormControlLabel
-                          value='active'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
-                          label='Active'
-                        />
-                        <FormControlLabel
-                          value='not_active'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
-                          label='Not Active'
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                        value={true}
+                        defaultChecked={owner?.status === true && true}
+                      />
+                      <Form.Check
+                        inline
+                        label='Inactive'
+                        type='radio'
+                        id='inactive'
+                        {...register('status', { required: true })}
+                        value={false}
+                        defaultChecked={owner?.status === false && true}
+                      />
+                    </div>
                   </Form.Group>
                 </Col>
-
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Verification Status</Form.Label>
-                    <FormControl component='fieldset'>
-                      <RadioGroup
-                        row
-                        aria-label='verification_status'
-                        className='pointer-events-none'
-                        defaultValue={owner?.is_verified === true ? 'verified' : 'not_verified'}
+                    <Form.Label>Status</Form.Label>
+                    <div>
+                      <Form.Check
+                        inline
+                        label='Verified'
+                        type='radio'
+                        id='verified'
                         {...register('is_verified', { required: true })}
-                      >
-                        <FormControlLabel
-                          value='verified'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
-                          label='Verified'
-                        />
-                        <FormControlLabel
-                          value='not_verified'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
-                          label='Not Verified'
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                        value={true}
+                        defaultChecked={owner?.is_verified === true && true}
+                      />
+                      <Form.Check
+                        inline
+                        label='Not Verified'
+                        type='radio'
+                        id='not_verified'
+                        {...register('is_verified', { required: true })}
+                        value={false}
+                        defaultChecked={owner?.is_verified === false && true}
+                      />
+                    </div>
                   </Form.Group>
                 </Col>
               </Row>
+
+              <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
+                Save changes
+              </Button>
             </Form>
           </Card.Body>
         </Card>
@@ -307,4 +337,4 @@ const ViewOwner = ({ owner }) => {
   )
 }
 
-export default ViewOwner
+export default EditOwner

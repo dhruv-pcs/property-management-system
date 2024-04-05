@@ -1,6 +1,8 @@
+import AddOwner from '@components/owner/add-owner'
+import EditOwner from '@components/owner/edit-owner'
 import ViewOwner from '@components/owner/view-owner'
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
-import { Dialog, DialogContent, DialogTitle, IconButton, useTheme } from '@mui/material'
+import { Button, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -10,32 +12,64 @@ const Owner = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [ownerData, setOwnerData] = useState([])
-  const [open, setOpen] = useState(false)
-  const [selectedRow, setSelectedRow] = useState(null)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openView, setOpenView] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+  const [selectedRow, setSelectedRow] = useState('121')
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      console.log('response', response.data.data.ownerData)
+      setOwnerData(response.data.data.ownerData)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-
-        setOwnerData(response.data.data.ownerData)
-      } catch (error) {
-        console.error(error)
-      }
-    }
     fetchData()
   }, [])
 
   const handelEditbutton = row => {
-    setOpen(!open)
+    setOpenEdit(!openEdit)
     setSelectedRow(row)
   }
 
   const handelViewbutton = row => {
-    setOpen(!open)
+    setOpenView(!openView)
     setSelectedRow(row)
+  }
+
+  const handelDeletebutton = async row => {
+    setOpenDelete(!openDelete)
+    setSelectedRow(row)
+  }
+
+  const handleOwnerDataUpdate = async () => {
+    await fetchData()
+  }
+
+  const handelAddbutton = () => {
+    setOpenAdd(!openAdd)
+  }
+
+  const handelDeleteConfirmation = async selectedRow => {
+    try {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/owner/${selectedRow.u_id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      if (response.data.statusCode === 200) {
+        setOpenDelete(!openDelete)
+        handleOwnerDataUpdate()
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   const columns = [
@@ -122,7 +156,7 @@ const Owner = () => {
           <button
             className='btn p-0  m-0 bg-none'
             style={{ color: colors.redAccent[600] }}
-            onClick={() => handelEditbutton(row)}
+            onClick={() => handelDeletebutton(row)}
           >
             <Delete />
           </button>
@@ -240,10 +274,67 @@ const Owner = () => {
           paginationRowsPerPageOptions={[1, 2, 5, 100]}
           pagination
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
+          noDataComponent={
+            <>
+              <div className='d-flex justify-content-center mt-5'>
+                <h5 style={{ color: colors.grey[100] }}>There is No Data Available</h5>
+              </div>
+            </>
+          }
+          actions={
+            <>
+              <Button
+                onClick={handelAddbutton}
+                className='btn fs-5 p-0 m-0'
+                style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+              >
+                Add
+              </Button>
+            </>
+          }
         />
       </div>
 
-      <Dialog onClose={handelViewbutton} aria-labelledby='customized-dialog-title' open={open}>
+      <Dialog
+        fullScreen={isSmallScreen}
+        onClose={handelEditbutton}
+        aria-labelledby='customized-dialog-title'
+        open={openEdit}
+      >
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Edit Owner
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelEditbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className=''
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
+          <EditOwner handelEditbutton={handelEditbutton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        fullScreen={isSmallScreen}
+        onClose={handelViewbutton}
+        aria-labelledby='customized-dialog-title'
+        open={openView}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -268,6 +359,87 @@ const Owner = () => {
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
         >
           <ViewOwner owner={selectedRow} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        fullScreen={isSmallScreen}
+        className='z-3'
+        onClose={handelAddbutton}
+        aria-labelledby='customized-dialog-title'
+        open={openAdd}
+      >
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Add Owner
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelAddbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
+          <AddOwner handelAddbutton={handelAddbutton} onUpdate={handleOwnerDataUpdate} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Delete Owner
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelDeletebutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex flex-column'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <h4>Are you sure you want to delete this Owner?</h4>
+
+          <div className='d-flex justify-content-between mt-5'>
+            <Button
+              onClick={handelDeletebutton}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handelDeleteConfirmation(selectedRow)}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
+            >
+              Delete
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </>
