@@ -30,7 +30,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const AddOwner = ({ onUpdate, handelAddbutton }) => {
+const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -47,16 +47,14 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
     console.log('data', data)
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, data, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/customer`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
-        toast.success('Owner added successfully')
       }
     } catch (error) {
-      onError('Failed to add owner')
       console.log('error', error)
     }
   }
@@ -214,4 +212,4 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
   )
 }
 
-export default AddOwner
+export default AddCustomer

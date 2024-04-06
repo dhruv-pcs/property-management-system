@@ -20,13 +20,16 @@ const Topbar = () => {
   const { toggleSidebar, broken } = useProSidebar()
 
   const handleLogout = async () => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
-
-    if (response.data.statusCode === 200) {
-      localStorage.clear()
-      Router.push('/login')
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      if (response.data.statusCode === 200) {
+        localStorage.clear()
+        Router.push('/login')
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 

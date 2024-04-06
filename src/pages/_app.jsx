@@ -44,11 +44,7 @@ const App = ({ Component, pageProps }) => {
         return false
       }
 
-      if (route === '/404' || route === '/login') {
-        return true
-      }
-
-      if (route === '/') {
+      if (route === '/' || route === '/404' || route === '/login' || route === '/profile') {
         return true
       }
 

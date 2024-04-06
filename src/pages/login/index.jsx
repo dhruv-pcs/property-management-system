@@ -6,6 +6,8 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import AuthWrapper from '@components/auth/loginauth'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = () => {
   const {
@@ -25,11 +27,11 @@ const Login = () => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, formData)
 
       const userData = response.data.data
-      console.log('userData', userData)
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)
       router.push('/')
     } catch (error) {
+      toast.error('Invalid Credentials')
       console.error('Error Login:', error)
     }
   }
@@ -103,6 +105,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   )
 }
