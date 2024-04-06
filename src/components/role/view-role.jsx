@@ -153,7 +153,7 @@ const fetchModule = async () => {
     useEffect(() => {
     fetchData(); 
     fetchModule();
-    },[])
+    },[fetchData])
      
 
 
