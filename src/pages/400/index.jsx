@@ -23,7 +23,7 @@ const UnauthorizedPage = () => {
     if (redirect) {
       router.back()
     }
-  }, [redirect])
+  }, [redirect, router])
 
   const handleClick = () => {
     router.back()

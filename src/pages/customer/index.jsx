@@ -8,8 +8,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
-const customer = () => {
-  
+const Customer = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [customerData, setCustomerData] = useState([])
@@ -25,7 +24,6 @@ const customer = () => {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/customer`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response.data.data.customerData)
       setCustomerData(response.data.data.customerData)
     } catch (error) {
       console.error(error)
@@ -326,7 +324,11 @@ const customer = () => {
           className=''
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
         >
-          <EditCustomer handelEditbutton={handelEditbutton} customer={selectedRow} onUpdate={handleCustomerDataUpdate} />
+          <EditCustomer
+            handelEditbutton={handelEditbutton}
+            customer={selectedRow}
+            onUpdate={handleCustomerDataUpdate}
+          />
         </DialogContent>
       </Dialog>
 
@@ -447,4 +449,4 @@ const customer = () => {
   )
 }
 
-export default customer
+export default Customer
