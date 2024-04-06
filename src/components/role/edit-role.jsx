@@ -22,6 +22,7 @@
 
     const EditRole = ({roleData, onUpdate, onClose}) => {
         const [data, setData] = useState([]);
+        // eslint-disable-next-line no-unused-vars
         const [userData, setUserData] = useState([]);
 
     const [permissions, setPermissions] = useState({});
