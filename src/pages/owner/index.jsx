@@ -24,7 +24,6 @@ const Owner = () => {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response.data.data.ownerData)
       setOwnerData(response.data.data.ownerData)
     } catch (error) {
       console.error(error)

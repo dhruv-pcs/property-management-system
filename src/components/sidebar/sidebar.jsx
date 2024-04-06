@@ -40,7 +40,8 @@ const MyProSidebar = () => {
   const [selected, setSelected] = useState('')
   const { collapseSidebar, toggleSidebar, broken } = useProSidebar()
   const navItem = navigation()
-  console.log('navigation', navItem)
+  const LocalData = localStorage.getItem('user')
+  const Local = JSON.parse(LocalData)
 
   return (
     <Box
@@ -96,36 +97,36 @@ const MyProSidebar = () => {
           </MenuItem>
 
           <Box paddingLeft={broken ? undefined : '0%'} sx={{ '& ul': { padding: '0px' } }}>
-            {navItem.map(item => {
-              console.log('item', item)
-
+            <Item
+              title='Dashboard'
+              to='/'
+              icon={'mdi:home-outline'}
+              selected={selected}
+              setSelected={setSelected}
+              key='dashboard'
+            />
+            {navItem.map((item, index) => {
               return (
-                <Item
-                  key={item.id}
-                  title={item.title}
-                  to={item.path}
-                  icon={item.icon}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
+                <div key={index}>
+                  {Local.map(local => {
+                    if (item.subject === local.module.alias_name) {
+                      return (
+                        <Item
+                          key={local.id}
+                          title={item.title}
+                          to={item.path}
+                          icon={item.icon}
+                          selected={selected}
+                          setSelected={setSelected}
+                        />
+                      )
+                    } else {
+                      return null
+                    }
+                  })}
+                </div>
               )
             })}
-
-            {/* <Item title='Dashboard' to='/' icon={<HomeOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title='Admin' to='/admin' icon={<PeopleOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title='Role' to='/role' icon={<ContactsOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title='Permission' to='/permission' icon={<ReceiptOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title='Role Permission' to='/rolepermission' icon={<PrivacyTip />} selected={selected} setSelected={setSelected} />
-            <Item title='Permission List' to='/permissionlist' icon={<Policy />} selected={selected} setSelected={setSelected} />
-            <Item title='Property' to='/property' icon={<HomeWork />} selected={selected} setSelected={setSelected} />
-            <Item title='Property Allocate' to='/propertyallocate' icon={<FmdGood />} selected={selected} setSelected={setSelected} />
-            <Item title='Owner' to='/owner' icon={<PersonOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title='Customer' to='/customer' icon={<NaturePeople />} selected={selected} setSelected={setSelected} />
-            <Item title='Customer Wishlist' to='/customerwishlist' icon={<Favorite />} selected={selected} setSelected={setSelected} />
-            <Item title='Customer Wallet' to='/customerwallet' icon={<AccountBalanceWallet />} selected={selected} setSelected={setSelected} />
-            <Item title='Owner Wallet' to='/ownerwallet' icon={<AccountBalanceWalletTwoTone />} selected={selected} setSelected={setSelected} />
-            <Item title='Customer Wallet Transection' to='/customerwallettransection' icon={<RequestQuote />} selected={selected} setSelected={setSelected} />
-            <Item title='Owner Wallet Transection' to='/ownerwallettransection' icon={<RequestPageTwoTone />} selected={selected} setSelected={setSelected} /> */}
           </Box>
         </Menu>
       </Sidebar>
