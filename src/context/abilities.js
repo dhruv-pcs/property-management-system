@@ -1,12 +1,11 @@
-import { AbilityBuilder } from '@casl/ability';
+import { AbilityBuilder } from '@casl/ability'
 
-export const defineAbilitiesFor = (user) => {
-  const { can, rules } = AbilityBuilder.extract();
-  
-  if(user?.isAdmin){
-    can('manage', 'all');
+export const defineAbilitiesFor = user => {
+  const { can, rules } = AbilityBuilder.extract()
+
+  if (user?.isAdmin) {
+    can('manage', 'all')
   }
-  
-  
-  return rules;
-};
+
+  return rules
+}

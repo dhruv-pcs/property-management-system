@@ -8,7 +8,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import navigation from './sidebarItem'
 import { Icon } from '@iconify/react'
 
-const Item = ({title, to, icon, setSelected }) => {
+const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
@@ -97,32 +97,37 @@ const MyProSidebar = () => {
           </MenuItem>
 
           <Box paddingLeft={broken ? undefined : '0%'} sx={{ '& ul': { padding: '0px' } }}>
-  <Item title='Dashboard' to='/' icon={'mdi:home-outline'} selected={selected} setSelected={setSelected} key="dashboard" />
-  {navItem.map((item,index) => {
-    return (
-      <div key={index}>
-        {Local.map(local => {
-          if (item.subject === local.module.alias_name) {
-            return (
-              <Item
-                key={local.id}
-                title={item.title}
-                to={item.path}
-                icon={item.icon}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )
-          } else {
-            return null
-          }
-        })}
-      </div>
-    )
-  })}
-</Box>
-  
-
+            <Item
+              title='Dashboard'
+              to='/'
+              icon={'mdi:home-outline'}
+              selected={selected}
+              setSelected={setSelected}
+              key='dashboard'
+            />
+            {navItem.map((item, index) => {
+              return (
+                <div key={index}>
+                  {Local.map(local => {
+                    if (item.subject === local.module.alias_name) {
+                      return (
+                        <Item
+                          key={local.id}
+                          title={item.title}
+                          to={item.path}
+                          icon={item.icon}
+                          selected={selected}
+                          setSelected={setSelected}
+                        />
+                      )
+                    } else {
+                      return null
+                    }
+                  })}
+                </div>
+              )
+            })}
+          </Box>
         </Menu>
       </Sidebar>
     </Box>

@@ -30,7 +30,7 @@ const schema = Yup.object().shape({
   is_verified: Yup.boolean().required('Verification status is required')
 })
 
-const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
+const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -45,29 +45,29 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
   })
 
   useEffect(() => {
-    setValue('first_name', owner.first_name)
-    setValue('last_name', owner.last_name)
-    setValue('email', owner.email)
-    setValue('phone', owner.phone)
-    setValue('alternate_phone', owner.alternate_phone)
-    setValue('city', owner.city)
-    setValue('country', owner.country)
-    setValue('pincode', owner.pincode)
-    setValue('state', owner.state)
-    setValue('aadhar_card_no', owner.aadhar_card_no)
-    setValue('address', owner.address)
-    setValue('gst_no', owner.gst_no)
-    setValue('landmark', owner.landmark)
-    setValue('street', owner.street)
+    setValue('first_name', customer.first_name)
+    setValue('last_name', customer.last_name)
+    setValue('email', customer.email)
+    setValue('phone', customer.phone)
+    setValue('alternate_phone', customer.alternate_phone)
+    setValue('city', customer.city)
+    setValue('country', customer.country)
+    setValue('pincode', customer.pincode)
+    setValue('state', customer.state)
+    setValue('aadhar_card_no', customer.aadhar_card_no)
+    setValue('address', customer.address)
+    setValue('gst_no', customer.gst_no)
+    setValue('landmark', customer.landmark)
+    setValue('street', customer.street)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
 
   const onSubmit = async data => {
     try {
-      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
+      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${customer.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response)
+
       if (response.status === 201) {
         handelEditbutton()
         onUpdate()
@@ -92,7 +92,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter your first name'
                         {...register('first_name')}
-                        defaultValue={owner?.first_name}
+                        defaultValue={customer?.first_name}
                       />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                     </Form.Group>
@@ -105,7 +105,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter your last name'
                         {...register('last_name')}
-                        defaultValue={owner?.last_name}
+                        defaultValue={customer?.last_name}
                       />
                       {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                     </Form.Group>
@@ -120,7 +120,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
-                        defaultValue={owner?.email}
+                        defaultValue={customer?.email}
                       />
                       {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
@@ -133,7 +133,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter GST No'
                         {...register('gst_no')}
-                        defaultValue={owner?.gst_no}
+                        defaultValue={customer?.gst_no}
                       />
                       {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
                     </Form.Group>
@@ -147,7 +147,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='tel'
                         placeholder='Enter your phone number'
                         {...register('phone')}
-                        defaultValue={owner?.phone ? Number(owner.phone) : ''}
+                        defaultValue={customer?.phone ? Number(customer.phone) : ''}
                       />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
@@ -160,7 +160,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='tel'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
-                        defaultValue={owner?.alternate_phone}
+                        defaultValue={customer?.alternate_phone}
                       />
                     </Form.Group>
                   </Col>
@@ -172,7 +172,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                       <Form.Label>City</Form.Label>
                       <Form.Control
                         type='text'
-                        defaultValue={owner?.city}
+                        defaultValue={customer?.city}
                         placeholder='Enter your city'
                         {...register('city')}
                       />
@@ -184,7 +184,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                       <Form.Label>State</Form.Label>
                       <Form.Control
                         type='text'
-                        defaultValue={owner?.state}
+                        defaultValue={customer?.state}
                         placeholder='Enter your state'
                         {...register('state')}
                       />
@@ -198,7 +198,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                       <Form.Label>Country</Form.Label>
                       <Form.Control
                         type='text'
-                        defaultValue={owner?.country}
+                        defaultValue={customer?.country}
                         placeholder='Enter your country'
                         {...register('country')}
                       />
@@ -210,7 +210,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                       <Form.Label>Pincode</Form.Label>
                       <Form.Control
                         type='text'
-                        defaultValue={owner?.pincode}
+                        defaultValue={customer?.pincode}
                         placeholder='Enter your pincode'
                         {...register('pincode')}
                       />
@@ -226,7 +226,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter Aadhar Card No'
                         {...register('aadhar_card_no')}
-                        defaultValue={owner?.aadhar_card_no}
+                        defaultValue={customer?.aadhar_card_no}
                       />
                       {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
                     </Form.Group>
@@ -239,7 +239,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter Address'
                         {...register('address')}
-                        defaultValue={owner?.address}
+                        defaultValue={customer?.address}
                       />
                       {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
@@ -254,7 +254,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter Landmark'
                         {...register('landmark')}
-                        defaultValue={owner?.landmark}
+                        defaultValue={customer?.landmark}
                       />
                       {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                     </Form.Group>
@@ -267,7 +267,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         type='text'
                         placeholder='Enter Street'
                         {...register('street')}
-                        defaultValue={owner?.street}
+                        defaultValue={customer?.street}
                       />
                       {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                     </Form.Group>
@@ -286,7 +286,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           id='active'
                           {...register('status', { required: true })}
                           value={true}
-                          defaultChecked={owner?.status === true && true}
+                          defaultChecked={customer?.status === true && true}
                         />
                         <Form.Check
                           inline
@@ -295,7 +295,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           id='inactive'
                           {...register('status', { required: true })}
                           value={false}
-                          defaultChecked={owner?.status === false && true}
+                          defaultChecked={customer?.status === false && true}
                         />
                       </div>
                     </Form.Group>
@@ -311,7 +311,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           id='verified'
                           {...register('is_verified', { required: true })}
                           value={true}
-                          defaultChecked={owner?.is_verified === true && true}
+                          defaultChecked={customer?.is_verified === true && true}
                         />
                         <Form.Check
                           inline
@@ -320,7 +320,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           id='not_verified'
                           {...register('is_verified', { required: true })}
                           value={false}
-                          defaultChecked={owner?.is_verified === false && true}
+                          defaultChecked={customer?.is_verified === false && true}
                         />
                       </div>
                     </Form.Group>
@@ -339,4 +339,4 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
   )
 }
 
-export default EditOwner
+export default EditCustomer
