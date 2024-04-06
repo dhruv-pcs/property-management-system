@@ -1,13 +1,13 @@
-import { useTheme } from '@mui/material';
-import { tokens } from '@theme/theme';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
+import { useTheme } from '@mui/material'
+import { tokens } from '@theme/theme'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import DataTable from 'react-data-table-component'
 
 const Permission = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [permissionData, setPermissionData] = useState([]);
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
+  const [permissionData, setPermissionData] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +27,9 @@ const Permission = () => {
   const columns = [
     {
       name: 'Name',
-      selector: row => row.module 
+      selector: row => row.module
     }
-  ];
+  ]
 
   const tableCustomStyles = {
     head: {
@@ -123,7 +123,7 @@ const Permission = () => {
         }
       }
     }
-  };
+  }
 
   return (
     <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
@@ -146,7 +146,7 @@ const Permission = () => {
         }
       />
     </div>
-  );
-};
+  )
+}
 
-export default Permission;
+export default Permission
