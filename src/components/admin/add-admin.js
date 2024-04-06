@@ -63,6 +63,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
         setRoles(response.data.data)
+        console.log('roles', response.data.data)
       } catch (error) {
         console.error('Failed to fetch roles', error)
       }

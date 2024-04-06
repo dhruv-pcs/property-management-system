@@ -1,5 +1,5 @@
 import UpdateAdmin from '../../components/admin/update-admin.js'
-import AddAdmin from '../../components/admin/add-new-admin.js'
+import AddAdmin from '../../components/admin/add-admin.js'
 
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Typography, Button, Box } from '@mui/material'
@@ -76,6 +76,7 @@ const Admin = () => {
 
   const handleViewButton = row => {
     fetchAdminDetails(row.u_id)
+    setShowDetailsModal(!showDetailsModal)
   }
 
   const handleEditButton = row => {
