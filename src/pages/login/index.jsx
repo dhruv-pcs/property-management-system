@@ -14,7 +14,6 @@ const Login = () => {
     formState: { errors }
   } = useForm()
   const [showPassword, setShowPassword] = useState(false)
-
   const router = useRouter()
 
   const togglePasswordVisibility = () => {
@@ -24,13 +23,12 @@ const Login = () => {
   const onSubmit = async formData => {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, formData)
-      localStorage.setItem('token', response.data.data.token)
-      localStorage.setItem('id', response.data.data.role_u_id)
-      console.log('response', response)
 
-      if ((response.status = 200)) {
-        router.push('/')
-      }
+      const userData = response.data.data
+      console.log('userData', userData)
+      localStorage.setItem('user', JSON.stringify(userData.permissionData))
+      localStorage.setItem('token', userData.token)
+      router.push('/')
     } catch (error) {
       console.error('Error Login:', error)
     }
@@ -109,5 +107,4 @@ const Login = () => {
   )
 }
 
-// export default Login;
 export default AuthWrapper(Login)
