@@ -1,243 +1,202 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
-useTheme,
-Table,
-TableBody,
-TableCell,
-TableContainer,
-TableHead,
-TableRow,
-Checkbox,
-TextField,
-useMediaQuery,
+  useTheme,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Checkbox,
+  TextField,
+  useMediaQuery
+} from '@mui/material'
+import { tokens } from '@theme/theme'
+import moduleData from './a.json'
 
-} from '@mui/material';
-import { tokens } from '@theme/theme';
-import moduleData from './a.json'; 
+const EditRole = ({ roleData }) => {
+  const [data, setData] = useState([])
+  const [userData, setUserData] = useState([])
 
+  const [permissions, setPermissions] = useState({})
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const colors = tokens(theme.palette.mode)
 
+  //   const fetchData = async () => {
+  //     try {
+  //       setUserData(moduleData.data.permissions);
+  //       console.log('data', moduleData);
+  //       const userPermissions = userData
+  //       const defaultPermissions = {};
 
-const EditRole = ({roleData}) => {
-    const [data, setData] = useState([]);
-    const [userData, setUserData] = useState([]);
+  //       moduleData.data.permissions.forEach(module => {
+  //         const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.module_u_id);
 
-const [permissions, setPermissions] = useState({});
-    const theme = useTheme();
-const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-const colors = tokens(theme.palette.mode);
+  //         defaultPermissions[module.module_u_id] = {
+  //           u_id: module.u_id,
+  //           selectAll: userHasPermissionForModule,
+  //           view: userData.view,
+  //           add:userData.add,
+  //           update: userData.update,
+  //           remove: userData.remove,
+  //           notification: userData.notification
+  //         };
+  //       });
 
+  //       // Set default permissions state
+  //       setPermissions(defaultPermissions);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-//   const fetchData = async () => {
-//     try {
-//       setUserData(moduleData.data.permissions);
-//       console.log('data', moduleData);
-//       const userPermissions = userData
-//       const defaultPermissions = {};
-
-//       moduleData.data.permissions.forEach(module => {
-//         const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.module_u_id);
-
-//         defaultPermissions[module.module_u_id] = {
-//           u_id: module.u_id,
-//           selectAll: userHasPermissionForModule,
-//           view: userData.view,
-//           add:userData.add,
-//           update: userData.update,
-//           remove: userData.remove,
-//           notification: userData.notification
-//         };
-//       });
-
-//       // Set default permissions state
-//       setPermissions(defaultPermissions);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-
-const fetchData = async () => {
+  const fetchData = async () => {
     try {
-    setUserData(moduleData.data.permissions); 
-    const userPermissions = userData; 
-    const defaultPermissions = {};
+      setUserData(moduleData.data.permissions)
+      const userPermissions = userData
+      const defaultPermissions = {}
 
-    userData?.forEach(module => {
-        const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.module_u_id);
+      userData?.forEach(module => {
+        const userHasPermissionForModule = userPermissions.some(
+          permission => permission.module_u_id === module.module_u_id
+        )
 
         defaultPermissions[module.module_u_id] = {
-        u_id: module.u_id,
-        selectAll: userHasPermissionForModule,
-        view: userHasPermissionForModule,
-        add: userHasPermissionForModule,
-        update: userHasPermissionForModule,
-        delete: userHasPermissionForModule,
-        notification: userHasPermissionForModule
-        };
-    });
+          u_id: module.u_id,
+          selectAll: userHasPermissionForModule,
+          view: userHasPermissionForModule,
+          add: userHasPermissionForModule,
+          update: userHasPermissionForModule,
+          delete: userHasPermissionForModule,
+          notification: userHasPermissionForModule
+        }
+      })
 
-    setPermissions(defaultPermissions);
+      setPermissions(defaultPermissions)
     } catch (error) {
-    console.error(error);
+      console.error(error)
     }
-};
+  }
 
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+  //         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+  //       })
+  //       setUserData(response.data.data.permissions);
 
-//   const fetchData = async () => {
-//     try {
-//       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
-//         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-//       })
-//       setUserData(response.data.data.permissions);
+  //       // Set default permissions based on user's current permissions
+  //       const userPermissions = response.data.data.permissions;
+  //       const defaultPermissions = {};
 
-//       // Set default permissions based on user's current permissions
-//       const userPermissions = response.data.data.permissions;
-//       const defaultPermissions = {};
-    
-//       // Loop through modules and set default permissions
-//       data.forEach(module => {
-//         defaultPermissions[module.u_id] = {
-//           u_id: module.u_id,
-//           selectAll: userPermissions.some(permission => permission.module_id === module.u_id), // Check if user has any permission for this module
-//           view: false, // Default to false
-//           add: false, // Default to false
-//           update: false, // Default to false
-//           delete: false, // Default to false
-//           notification: false, // Default to false
-//           imageUrl: images[Math.floor(Math.random() * images.length)] // Not sure where 'images' variable is defined in your code, please replace it accordingly
-//         };
-//       });
-//       setPermissions(defaultPermissions);
-//     } catch (error) {
-//       console.error(error)
-//     }
-// }
+  //       // Loop through modules and set default permissions
+  //       data.forEach(module => {
+  //         defaultPermissions[module.u_id] = {
+  //           u_id: module.u_id,
+  //           selectAll: userPermissions.some(permission => permission.module_id === module.u_id), // Check if user has any permission for this module
+  //           view: false, // Default to false
+  //           add: false, // Default to false
+  //           update: false, // Default to false
+  //           delete: false, // Default to false
+  //           notification: false, // Default to false
+  //           imageUrl: images[Math.floor(Math.random() * images.length)] // Not sure where 'images' variable is defined in your code, please replace it accordingly
+  //         };
+  //       });
+  //       setPermissions(defaultPermissions);
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  // }
 
-
-const fetchModule = async () => {
+  const fetchModule = async () => {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        });
-        setData(response.data.data.moduleData);
-        const userPermissions = response.data.data.permissions;
-        
-      
-        const defaultPermissions = {};
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      setData(response.data.data.moduleData)
+      const userPermissions = response.data.data.permissions
 
-        response.data.data.moduleData.forEach(module => {
-            const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id);
-            defaultPermissions[module.u_id] = {
-                u_id: module.u_id,
-                selectAll: userHasPermissionForModule,
-                view: userHasPermissionForModule,
-                add: userHasPermissionForModule,
-                update: userHasPermissionForModule,
-                delete: userHasPermissionForModule,
-                notification: userHasPermissionForModule
-            };
-            console.log('defaultPermissions', defaultPermissions);
-        });
+      const defaultPermissions = {}
 
-        // Set default permissions state
-        setPermissions(defaultPermissions);
+      response.data.data.moduleData.forEach(module => {
+        const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id)
+        defaultPermissions[module.u_id] = {
+          u_id: module.u_id,
+          selectAll: userHasPermissionForModule,
+          view: userHasPermissionForModule,
+          add: userHasPermissionForModule,
+          update: userHasPermissionForModule,
+          delete: userHasPermissionForModule,
+          notification: userHasPermissionForModule
+        }
+        console.log('defaultPermissions', defaultPermissions)
+      })
+
+      // Set default permissions state
+      setPermissions(defaultPermissions)
     } catch (error) {
-        console.error(error);
+      console.error(error)
     }
-};
+  }
 
+  useEffect(() => {
+    fetchData()
+    fetchModule()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-
-
-    useEffect(() => {
-    fetchData(); 
-    fetchModule();
-    },[fetchData])
-     
-
-
-
-   
-    
-    
-
-return (
+  return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
-    <TextField
-        label='Role Name'
-        value={roleData.name}
-        className='pointer-events-none'
-        fullWidth
-        margin='normal'
-       
-    />
-   
-    <TableContainer>
+      <TextField label='Role Name' value={roleData.name} className='pointer-events-none' fullWidth margin='normal' />
+
+      <TableContainer>
         <Table>
-        <TableHead>
+          <TableHead>
             <TableRow className='text-center '>
-            <TableCell sx={{ width: '40%' }}>Module Name</TableCell>
-            <TableCell sx={{ width: '20%' }}>Select All</TableCell>
-            <TableCell sx={{ width: '10%' }}>View</TableCell>
-            <TableCell sx={{ width: '10%' }}>Add</TableCell>
-            <TableCell sx={{ width: '10%' }}>Update</TableCell>
-            <TableCell sx={{ width: '10%' }}>Delete</TableCell>
-            <TableCell sx={{ width: '10%' }}>Notification</TableCell>
+              <TableCell sx={{ width: '40%' }}>Module Name</TableCell>
+              <TableCell sx={{ width: '20%' }}>Select All</TableCell>
+              <TableCell sx={{ width: '10%' }}>View</TableCell>
+              <TableCell sx={{ width: '10%' }}>Add</TableCell>
+              <TableCell sx={{ width: '10%' }}>Update</TableCell>
+              <TableCell sx={{ width: '10%' }}>Delete</TableCell>
+              <TableCell sx={{ width: '10%' }}>Notification</TableCell>
             </TableRow>
-        </TableHead>
+          </TableHead>
         </Table>
-    </TableContainer>
-    <TableContainer className='overflow-auto' style={{ maxHeight: 400 }}>
+      </TableContainer>
+      <TableContainer className='overflow-auto' style={{ maxHeight: 400 }}>
         <Table>
-        <TableBody>
+          <TableBody>
             {data.map((item, index) => (
-            <TableRow key={index} className=''>
+              <TableRow key={index} className=''>
                 <TableCell>{item.alias_name}</TableCell>
                 <TableCell>
-                <Checkbox
-                    checked={permissions[item.u_id]?.selectAll || false}
-                
-                />
+                  <Checkbox checked={permissions[item.u_id]?.selectAll || false} />
                 </TableCell>
                 <TableCell>
-                <Checkbox
-                    checked={permissions[item.u_id]?.view || false}
-                    
-                />
+                  <Checkbox checked={permissions[item.u_id]?.view || false} />
                 </TableCell>
                 <TableCell>
-                <Checkbox
-                    checked={permissions[item.u_id]?.add || false}
-                   
-                />
+                  <Checkbox checked={permissions[item.u_id]?.add || false} />
                 </TableCell>
                 <TableCell>
-                <Checkbox
-                    checked={permissions[item.u_id]?.update || false}
-                    
-                />
+                  <Checkbox checked={permissions[item.u_id]?.update || false} />
                 </TableCell>
                 <TableCell>
-                <Checkbox
-                    checked={permissions[item.u_id]?.delete || false}
-                    
-                />
+                  <Checkbox checked={permissions[item.u_id]?.delete || false} />
                 </TableCell>
                 <TableCell>
-                <Checkbox
-                    checked={permissions[item.u_id]?.notification || false}
-                  
-                />
+                  <Checkbox checked={permissions[item.u_id]?.notification || false} />
                 </TableCell>
-            </TableRow>
+              </TableRow>
             ))}
-        </TableBody>
+          </TableBody>
         </Table>
-    </TableContainer>
-   
+      </TableContainer>
     </div>
-)
+  )
 }
 
 export default EditRole

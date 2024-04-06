@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
   useTheme,
   Table,
@@ -12,29 +12,28 @@ import {
   Button,
   TextField,
   FormHelperText,
-  useMediaQuery,
-
-} from '@mui/material';
-import { tokens } from '@theme/theme';
+  useMediaQuery
+} from '@mui/material'
+import { tokens } from '@theme/theme'
 
 const AddRole = ({ onUpdate, onClose }) => {
-  const [data, setData] = useState([]);
-  const [permissions, setPermissions] = useState({});
-  const [selectAll, setSelectAll] = useState(false);
-  const [roleName, setRoleName] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(false); 
-    const theme = useTheme();
+  const [data, setData] = useState([])
+  const [permissions, setPermissions] = useState({})
+  const [selectAll, setSelectAll] = useState(false)
+  const [roleName, setRoleName] = useState('')
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const colors = tokens(theme.palette.mode);
+  const colors = tokens(theme.palette.mode)
 
   const fetchData = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
-      setData(response.data.data.moduleData);
+      })
+      setData(response.data.data.moduleData)
 
-      const initialPermissions = {};
+      const initialPermissions = {}
       response.data.data.moduleData.forEach(module => {
         initialPermissions[module.u_id] = {
           u_id: module.u_id,
@@ -44,17 +43,17 @@ const AddRole = ({ onUpdate, onClose }) => {
           update: false,
           delete: false,
           notification: false
-        };
-      });
-      setPermissions(initialPermissions);
+        }
+      })
+      setPermissions(initialPermissions)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const handlePermissionChange = (moduleName, permissionType, value) => {
     if (permissionType === 'view' && !value) {
@@ -69,8 +68,8 @@ const AddRole = ({ onUpdate, onClose }) => {
           notification: false,
           selectAll: false
         }
-      };
-      setPermissions(updatedPermissions);
+      }
+      setPermissions(updatedPermissions)
     } else {
       setPermissions(prevPermissions => ({
         ...prevPermissions,
@@ -78,9 +77,9 @@ const AddRole = ({ onUpdate, onClose }) => {
           ...prevPermissions[moduleName],
           [permissionType]: value
         }
-      }));
+      }))
     }
-  };
+  }
 
   const handleSelectAllChange = (moduleName, value) => {
     setPermissions(prevPermissions => ({
@@ -94,13 +93,13 @@ const AddRole = ({ onUpdate, onClose }) => {
         delete: value,
         notification: value
       }
-    }));
-  };
+    }))
+  }
 
   const handleGlobalSelectAllChange = value => {
-    setSelectAll(value);
+    setSelectAll(value)
 
-    const updatedPermissions = {};
+    const updatedPermissions = {}
     Object.keys(permissions).forEach(moduleName => {
       updatedPermissions[moduleName] = {
         ...permissions[moduleName],
@@ -110,54 +109,54 @@ const AddRole = ({ onUpdate, onClose }) => {
         update: value,
         delete: value,
         notification: value
-      };
-    });
-    setPermissions(updatedPermissions);
-  };
+      }
+    })
+    setPermissions(updatedPermissions)
+  }
 
   const handleSubmit = async () => {
     try {
-      setFormSubmitted(true); // Set form submission status to true
-      const permissionsPayload = [];
+      setFormSubmitted(true) // Set form submission status to true
+      const permissionsPayload = []
 
       Object.keys(permissions).forEach(moduleId => {
-        const moduleData = permissions[moduleId];
+        const moduleData = permissions[moduleId]
 
         const selectedPermissions = Object.keys(moduleData)
           .filter(permission => permission !== 'u_id' && permission !== 'selectAll' && moduleData[permission])
           .map(permission => ({
             [permission]: moduleData[permission]
-          }));
+          }))
         if (selectedPermissions.length > 0) {
           const modulePayload = {
             u_id: moduleId,
             ...Object.assign({}, ...selectedPermissions)
-          };
-          permissionsPayload.push(modulePayload);
+          }
+          permissionsPayload.push(modulePayload)
         }
-      });
+      })
 
       const payload = {
         roleName: roleName,
         modules: permissionsPayload
-      };
+      }
 
       if (roleName.trim() === '') {
         // If role name is empty, prevent form submission
-        return;
+        return
       }
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      })
       if (response.status === 201) {
-        onUpdate();
-        onClose();
+        onUpdate()
+        onClose()
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error)
     }
-  };
+  }
 
   return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
@@ -168,7 +167,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         fullWidth
         margin='normal'
         required
-        error={formSubmitted && roleName.trim() === ''}  
+        error={formSubmitted && roleName.trim() === ''}
       />
       {formSubmitted && roleName.trim() === '' && (
         <FormHelperText error>Please enter a role name</FormHelperText> // Show error message
@@ -247,7 +246,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         Save Permissions
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default AddRole;
+export default AddRole

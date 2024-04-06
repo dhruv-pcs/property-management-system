@@ -16,7 +16,7 @@ const Property = () => {
   const [selectedRow, setSelectedRow] = useState('121')
 
   useEffect(() => {
-    const fetchData = async () => { 
+    const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -192,7 +192,7 @@ const Property = () => {
         <DataTable
           columns={columns}
           data={propertyData}
-          title='Property List'  
+          title='Property List'
           customStyles={tableCustomStyles}
           fixedHeader
           fixedHeaderScrollHeight='600px'
@@ -215,7 +215,7 @@ const Property = () => {
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
               >
-                Add Property   
+                Add Property
               </Button>
 
               <Dialog
@@ -228,7 +228,7 @@ const Property = () => {
                   sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
                   className='fw-bold fs-3'
                   id='customized-dialog-title'
-                > 
+                >
                   Add Property
                 </DialogTitle>
                 <IconButton
@@ -280,7 +280,7 @@ const Property = () => {
                 </DialogContent>
               </Dialog>
             </>
-          }   
+          }
         />
       </div>
     </>
