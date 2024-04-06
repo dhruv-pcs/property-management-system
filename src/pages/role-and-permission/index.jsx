@@ -20,10 +20,16 @@ const Role_Permission = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
+  const images = [
+    '/images/user1.jpg',
+    '/images/user2.jpg',
+    '/images/user3.jpg',
+    '/images/user4.jpg',
+    '/images/user5.jpg',
+    '/images/user6.jpg'
+  ]
 
-  const images = ['/images/user1.jpg', '/images/user2.jpg', '/images/user3.jpg', '/images/user4.jpg', '/images/user5.jpg',  '/images/user6.jpg'];
-
-  const randomIndex = Math.floor(Math.random() * images.length);
+  const randomIndex = Math.floor(Math.random() * images.length)
 
   const fetchData = async () => {
     try {
@@ -58,7 +64,7 @@ const Role_Permission = () => {
     setOpenAdd(!openAdd)
   }
 
-  const handleEditButton = (Data) => {
+  const handleEditButton = Data => {
     setOpenEdit(!openEdit)
     setSelectedRow(Data)
   }
@@ -85,18 +91,28 @@ const Role_Permission = () => {
 
         <div className='container-fluid'>
           <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols g-2'>
-            {role.map((item,index) => (
+            {role.map((item, index) => (
               <div key={item.id} className='col p-2'>
                 <div style={{ backgroundColor: colors.blueAccent[1000], height: '150px' }} className='rounded-2  p-2'>
                   <div className='d-flex justify-content-between'>
                     <h4 className='text-capitalize'>{item.name}</h4>
-                    <Image src={images[randomIndex * index % images.length  ]} alt='' width='50' height='50' className='rounded-circle' />
+                    <Image
+                      src={images[(randomIndex * index) % images.length]}
+                      alt=''
+                      width='50'
+                      height='50'
+                      className='rounded-circle'
+                    />
                   </div>
 
                   {item.u_id !== 'ROL1000000001' && (
                     <div className='mt-5 d-flex justify-content-between'>
                       {/* Edit */}
-                      <button onClick={() => handleEditButton(item)} className='btn fs-5 p-0' style={{ color: colors.grey[100], border: 'none' }}>
+                      <button
+                        onClick={() => handleEditButton(item)}
+                        className='btn fs-5 p-0'
+                        style={{ color: colors.grey[100], border: 'none' }}
+                      >
                         <Icon icon='mdi:edit' style={{ width: '24px', height: '24px' }} />
                       </button>
 
@@ -155,7 +171,6 @@ const Role_Permission = () => {
         </div>
       </div>
 
-
       <Dialog onClose={handleDeleteButton} aria-labelledby='customized-dialog-title' open={openDelete}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
@@ -202,7 +217,6 @@ const Role_Permission = () => {
         </DialogContent>
       </Dialog>
 
-
       <Dialog
         fullScreen={isSmallScreen}
         onClose={handleViewButton}
@@ -235,7 +249,6 @@ const Role_Permission = () => {
           <ViewRole roleData={selectedRow} />
         </DialogContent>
       </Dialog>
-
 
       <Dialog
         fullScreen={isSmallScreen}
@@ -270,8 +283,6 @@ const Role_Permission = () => {
           <AddRole onClose={handleAddButton} onUpdate={handleFetch} />
         </DialogContent>
       </Dialog>
-
-     
 
       <Dialog
         fullScreen={isSmallScreen}

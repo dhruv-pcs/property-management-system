@@ -5,7 +5,7 @@ import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
- 
+
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -13,7 +13,7 @@ const schema = Yup.object().shape({
   password: Yup.string().matches(
     /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
     'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
-  ),  
+  ),
   phone: Yup.string()
     .required('Phone number is required')
     .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
@@ -26,12 +26,12 @@ const schema = Yup.object().shape({
   landmark: Yup.string().required('Landmark is required'),
   street: Yup.string().required('Street is required')
 })
-  
+
 const EditProperty = ({ property }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const editable = false
- 
+
   const {
     register,
     formState: { errors },
@@ -41,8 +41,7 @@ const EditProperty = ({ property }) => {
   })
   console.log('property', property)
 
-  
-  return (  
+  return (
     <Row>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
@@ -51,7 +50,7 @@ const EditProperty = ({ property }) => {
               {' '}
               {/* Add control */}
               <Row className='gx-3 mb-3'>
-                <Col md={6}>          
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -214,7 +213,6 @@ const EditProperty = ({ property }) => {
                   </Form.Group>
                 </Col>
               </Row>
-
               <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
                 Save changes
               </Button>

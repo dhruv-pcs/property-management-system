@@ -66,16 +66,14 @@ const Admin = () => {
     }
   }
 
-
   const handleAddButton = () => {
-    showAddModal(true) 
-  };
-  
+    showAddModal(true)
+  }
+
   const handleAdminDataUpdate = async () => {
     await fetchData()
   }
-  
-  
+
   const handleViewButton = row => {
     fetchAdminDetails(row.u_id)
   }
@@ -96,8 +94,6 @@ const Admin = () => {
   const handleCloseAddModal = () => {
     setShowAddModal(false)
   }
-
-   
 
   const columns = [
     {
@@ -309,7 +305,7 @@ const Admin = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <AddAdmin  handelAddbutton={handleAddButton} onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
+          <AddAdmin handelAddbutton={handleAddButton} onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
         </DialogContent>
       </Dialog>
 
