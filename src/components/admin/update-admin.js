@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({ admin, isViewOnly }) => {
+const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -52,15 +52,31 @@ const UpdateAdmin = ({ admin, isViewOnly }) => {
     setValue('state', admin.state)
   }, [setValue, admin])
 
+  // const onSubmit = async data => {
+  //   setEditable(false)
+
+  //   const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
+  //     headers: {
+  //       Authorization: `Bearer  ${localStorage.getItem('token')}`
+  //     }
+  //   })
+  //   console.log('response', response)
+  // }
+
   const onSubmit = async data => {
     setEditable(false)
+    try {
+      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
 
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
-      headers: {
-        Authorization: `Bearer  ${localStorage.getItem('token')}`
+      if (response.status === 201) {
+        handleAdminDataUpdate()
+        onUpdate()
       }
-    })
-    console.log('response', response)
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   return (

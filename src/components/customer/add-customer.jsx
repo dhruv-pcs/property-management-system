@@ -14,9 +14,11 @@ const schema = Yup.object().shape({
   phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.number()
-    .required('Phone number is required')
-    .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
+  alternate_phone: Yup.number().test(
+    'len',
+    'Phone number must be exactly 10 digits',
+    val => val && val.toString().length === 10
+  ),
   aadhar_card_no: Yup.number()
     .required('Aadhar Card No is required')
     .test('len', 'Phone number must be exactly 12 digits', val => val && val.toString().length === 12),
@@ -44,6 +46,11 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
+    data.pincode = parseInt(data.pincode)
+    data.aadhar_card_no = parseInt(data.aadhar_card_no)
+    data.phone = parseInt(data.phone)
+    data.alternate_phone = parseInt(data.alternate_phone)
+
     console.log('data', data)
 
     try {

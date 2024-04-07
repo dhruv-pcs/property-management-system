@@ -56,7 +56,6 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
         toast.success('Owner added successfully')
       }
     } catch (error) {
-      onError('Failed to add owner')
       console.log('error', error)
     }
   }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { TextField, Button, FormControl, InputAdornment, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -8,6 +7,8 @@ import Head from 'next/head'
 import AuthWrapper from '@components/auth/loginauth'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
   const {
@@ -84,7 +85,7 @@ const Login = () => {
                         endAdornment: (
                           <InputAdornment position='end'>
                             <IconButton onClick={togglePasswordVisibility} edge='end'>
-                              {showPassword ? <FaEyeSlash /> : <FaEye />}
+                              {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
                             </IconButton>
                           </InputAdornment>
                         )

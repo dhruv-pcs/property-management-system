@@ -7,21 +7,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
 const schema = Yup.object().shape({
-  first_name: Yup.string().required('First name is required'),
-  last_name: Yup.string().required('Last name is required'),
-  email: Yup.string().email().required('Email is required'),
-  password: Yup.string().matches(
-    /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-    'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
-  ),
-  phone: Yup.string()
-    .required('Phone number is required')
-    .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
-  alternate_phone: Yup.string(),
-  status: Yup.boolean().required('Admin status is required'),
-  aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
+  name: Yup.string().required('First name is required'),
+  rent: Yup.string().required('Last name is required'),
   address: Yup.string().required('Address is required'),
-  gst_no: Yup.string().required('GST No is required'),
   is_verified: Yup.boolean().required('Verification status is required'),
   landmark: Yup.string().required('Landmark is required'),
   street: Yup.string().required('Street is required')
@@ -39,7 +27,7 @@ const ViewProperty = ({ property }) => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('property', property)
+  console.log('Property', property)
 
   return (
     <Row>
@@ -64,7 +52,7 @@ const ViewProperty = ({ property }) => {
                   </Form.Group>
                 </Col>
 
-                <Col md={3}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Rent</Form.Label>
                     <Form.Control
@@ -77,7 +65,9 @@ const ViewProperty = ({ property }) => {
                     {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
                   </Form.Group>
                 </Col>
-                <Col md={3}>
+              </Row>
+              <Row className='gx-3 mb-3'>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Rent-Type</Form.Label>
                     <Form.Control
@@ -90,8 +80,6 @@ const ViewProperty = ({ property }) => {
                     {errors.rent_type && <span className='text-danger'>{errors.rent_type.message}</span>}
                   </Form.Group>
                 </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Landmark</Form.Label>
@@ -105,6 +93,8 @@ const ViewProperty = ({ property }) => {
                     {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                   </Form.Group>
                 </Col>
+              </Row>
+              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Location</Form.Label>
@@ -118,8 +108,6 @@ const ViewProperty = ({ property }) => {
                     {errors.location && <span className='text-danger'>{errors.location.message}</span>}
                   </Form.Group>
                 </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Address</Form.Label>
@@ -132,6 +120,20 @@ const ViewProperty = ({ property }) => {
                     />
                   </Form.Group>
                 </Col>
+              </Row>
+              <Row className='gx-3 mb-3'>
+                <Col md={6}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      type='text'
+                      defaultValue={property?.city}
+                      placeholder='Enter your city'
+                      {...register('city')}
+                      readOnly={!editable}
+                    />
+                  </Form.Group>
+                </Col>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>City</Form.Label>
@@ -146,20 +148,7 @@ const ViewProperty = ({ property }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-                <Col md={4}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                      type='text'
-                      defaultValue={property?.city}
-                      placeholder='Enter your city'
-                      {...register('city')}
-                      readOnly={!editable}
-                    />
-                  </Form.Group>
-                </Col>
-
-                <Col md={4}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>State</Form.Label>
                     <Form.Control
@@ -171,7 +160,7 @@ const ViewProperty = ({ property }) => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Country</Form.Label>
                     <Form.Control
