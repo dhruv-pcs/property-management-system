@@ -3,9 +3,9 @@ import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { mockBarData } from './mockData'
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const ResponsiveBar = dynamic(() => import("@nivo/bar").then(m => m.ResponsiveBar), { ssr: false });
+const ResponsiveBar = dynamic(() => import('@nivo/bar').then(m => m.ResponsiveBar), { ssr: false })
 
 const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme()

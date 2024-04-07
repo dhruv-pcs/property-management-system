@@ -284,12 +284,12 @@ const Admin = () => {
           pagination
           subHeaderComponent={
             <Button
-            onClick={handleAddAdmin}
-            className='btn fs-5 p-0 m-0'
-            style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
-          >
-            Add
-          </Button>
+              onClick={handleAddAdmin}
+              className='btn fs-5 p-0 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+            >
+              Add
+            </Button>
           }
         />
       </div>

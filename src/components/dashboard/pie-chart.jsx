@@ -3,9 +3,9 @@ import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { mockPieData } from '../data/mockData'
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const ResponsivePie = dynamic(() => import("@nivo/pie").then(m => m.ResponsivePie), { ssr: false });
+const ResponsivePie = dynamic(() => import('@nivo/pie').then(m => m.ResponsivePie), { ssr: false })
 
 const PieChart = () => {
   const theme = useTheme()

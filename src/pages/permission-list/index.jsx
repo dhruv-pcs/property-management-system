@@ -31,19 +31,18 @@ const Permission = () => {
       case 'super-admin':
         return colors.redAccent[600]
       default:
-        return generateRandomColor();
+        return generateRandomColor()
     }
   }
 
   const generateRandomColor = () => {
     // Generate random hex color between #4cceac to #3da58a
-    const min = parseInt('3da58a', 16);
-    const max = parseInt('4cceac', 16);
-    const randomColor = '#' + Math.floor(Math.random() * (max - min + 1) + min).toString(16);
+    const min = parseInt('3da58a', 16)
+    const max = parseInt('4cceac', 16)
+    const randomColor = '#' + Math.floor(Math.random() * (max - min + 1) + min).toString(16)
 
-    return randomColor;
+    return randomColor
   }
-
 
   const columns = [
     {
@@ -56,7 +55,13 @@ const Permission = () => {
       cell: row => (
         <div className='d-flex gap-2'>
           {row.role.map((role, index) => (
-            <div className='fw-bold  d-flex jstify-content-center align-items-center  px-2 py-1 rounded-pill text-capitalize' key={index} style={{ backgroundColor: getRoleBackgroundColor(role) }}>{role}</div>
+            <div
+              className='fw-bold  d-flex jstify-content-center align-items-center  px-2 py-1 rounded-pill text-capitalize'
+              key={index}
+              style={{ backgroundColor: getRoleBackgroundColor(role) }}
+            >
+              {role}
+            </div>
           ))}
         </div>
       )
@@ -156,7 +161,6 @@ const Permission = () => {
       }
     }
   }
-
 
   return (
     <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>

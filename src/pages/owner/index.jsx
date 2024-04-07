@@ -17,6 +17,7 @@ const Owner = () => {
   const [openAdd, setOpenAdd] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [selectedRow, setSelectedRow] = useState('121')
+
   // const [perPage, setPerPage] = useState(10)
   // const [currentPage, setCurrentPage] = useState(1)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -288,7 +289,6 @@ const Owner = () => {
           //         onChangePage={handlePageChange}
           className='scrollbar'
           subHeader
-         
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
           noDataComponent={
             <>

@@ -8,9 +8,11 @@ import TrafficIcon from '@mui/icons-material/Traffic'
 import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
 import LineChart from '@components/dashboard/line-chart'
+
 // import ProgressCircle from '@components/dashboard/progress-circle'
 // import GeographyChart from '@components/dashboard/geography-chart'
 import { tokens } from '@theme/theme'
+
 // import { mockTransactions } from '@components/dashboard/mockData'
 // import BarChart from '@components/dashboard/bar-chart'
 
@@ -31,8 +33,6 @@ const Dashboard = () => {
         m='10px 0'
       >
         <Header title='DASHBOARD' subtitle='Welcome to your dashboard' />
-
-      
       </Box>
 
       {/* GRID & CHARTS */}
@@ -40,7 +40,7 @@ const Dashboard = () => {
         <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box
             width='100%'
-            className='d-flex justify-content-center align-items-center rounded-2' 
+            className='d-flex justify-content-center align-items-center rounded-2'
             backgroundColor={colors.primary[500]}
             display='flex'
             alignItems='center'
@@ -58,7 +58,7 @@ const Dashboard = () => {
         <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box
             width='100%'
-            className='d-flex justify-content-center align-items-center rounded-2' 
+            className='d-flex justify-content-center align-items-center rounded-2'
             backgroundColor={colors.primary[500]}
             display='flex'
             alignItems='center'
@@ -76,7 +76,7 @@ const Dashboard = () => {
         <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box
             width='100%'
-            className='d-flex justify-content-center align-items-center rounded-2' 
+            className='d-flex justify-content-center align-items-center rounded-2'
             backgroundColor={colors.primary[500]}
             display='flex'
             alignItems='center'
@@ -94,7 +94,7 @@ const Dashboard = () => {
         <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box
             width='100%'
-            className='d-flex justify-content-center align-items-center rounded-2' 
+            className='d-flex justify-content-center align-items-center rounded-2'
             backgroundColor={colors.primary[500]}
             display='flex'
             alignItems='center'
@@ -110,10 +110,8 @@ const Dashboard = () => {
           </Box>
         </Grid>
 
-        
-
         <Grid xs={12} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid xs={12} md={11} >
+          <Grid xs={12} md={11}>
             <Box backgroundColor={colors.primary[400]}>
               <Box mt='25px' p='0 30px' display='flex' justifyContent='space-between' alignItems='center'>
                 <Box>
@@ -135,8 +133,8 @@ const Dashboard = () => {
               </Box>
             </Box>
           </Grid>
-            
-            {/* <div  className='col-1  d-md-flex justify-content-between '>
+
+          {/* <div  className='col-1  d-md-flex justify-content-between '>
 
             <Box backgroundColor={colors.primary[400]} p='30px'>
               <Typography variant='h5' fontWeight='600'>
@@ -166,7 +164,7 @@ const Dashboard = () => {
           
         </div> */}
         </Grid>
-        
+
         {/* <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
           <Box backgroundColor={colors.primary[400]} maxHeight='100vh' overflow='auto' m='25px 0 0 0'>
             {/* <Box

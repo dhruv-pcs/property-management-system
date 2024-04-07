@@ -3,10 +3,9 @@ import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { mockLineData } from './mockData'
 
+import dynamic from 'next/dynamic'
 
-import dynamic from "next/dynamic";
-
-const ResponsiveLine = dynamic(() => import("@nivo/line").then(m => m.ResponsiveLine), { ssr: false });
+const ResponsiveLine = dynamic(() => import('@nivo/line').then(m => m.ResponsiveLine), { ssr: false })
 
 const LineChart = ({ isDashboard = false }) => {
   const theme = useTheme()

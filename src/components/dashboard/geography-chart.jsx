@@ -4,9 +4,9 @@ import { mockGeographyData } from './mockData'
 import { geoFeatures } from './mock-Geo-Features'
 import { tokens } from '@theme/theme'
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const ResponsiveChoropleth = dynamic(() => import("@nivo/geo").then(m => m.ResponsiveChoropleth), { ssr: false });
+const ResponsiveChoropleth = dynamic(() => import('@nivo/geo').then(m => m.ResponsiveChoropleth), { ssr: false })
 
 const GeographyChart = ({ isDashboard = false }) => {
   const theme = useTheme()
