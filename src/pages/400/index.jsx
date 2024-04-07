@@ -11,13 +11,13 @@ const UnauthorizedPage = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setRedirect(true)
-    }, 5000)
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setRedirect(true)
+  //   }, 5000)
 
-    return () => clearTimeout(timer)
-  }, [])
+  //   return () => clearTimeout(timer)
+  // }, [])
 
   useEffect(() => {
     if (redirect) {

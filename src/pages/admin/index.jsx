@@ -349,7 +349,7 @@ const Admin = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <UpdateAdmin admin={selectedRow} onClose={handleCloseEditModal} isViewOnly={false} />
+          <UpdateAdmin admin={selectedRow} onClose={handleCloseEditModal} isViewOnly={false} onUpdate={handleAdminDataUpdate}/>
         </DialogContent>
       </Dialog>
 

@@ -13,7 +13,7 @@ const schema = Yup.object().shape({
   street: Yup.string().required('Street is required')
 })
 
-const AddProperty = ({ owner }) => {
+const AddProperty = ({ property }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const editable = false
@@ -25,7 +25,7 @@ const AddProperty = ({ owner }) => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('owner', owner)
+  console.log('property', property)
 
   return (
     <Row>
@@ -43,7 +43,7 @@ const AddProperty = ({ owner }) => {
                       type='text'
                       placeholder='Enter your Name'
                       {...register('name')}
-                      defaultValue={owner?.name}
+                      defaultValue={property?.name}
                       readOnly={!editable}
                     />
                     {errors.name && <span className='text-danger'>{errors.name.message}</span>}
@@ -57,7 +57,7 @@ const AddProperty = ({ owner }) => {
                       type='tel'
                       placeholder='Enter Rent'
                       {...register('rent')}
-                      defaultValue={owner?.rent}
+                      defaultValue={property?.rent}
                       readOnly={!editable}
                     />
                     {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
@@ -72,7 +72,7 @@ const AddProperty = ({ owner }) => {
                       type='text'
                       placeholder=' Rent type'
                       {...register('email')}
-                      defaultValue={owner?.rent_type}
+                      defaultValue={property?.rent_type}
                       readOnly={!editable}
                     />
                     {errors.rent_type && <span className='text-danger'>{errors.rent_type.message}</span>}
@@ -86,7 +86,7 @@ const AddProperty = ({ owner }) => {
                       type='text'
                       placeholder='Enter Landmark'
                       {...register('gst_no')}
-                      defaultValue={owner?.landmark}
+                      defaultValue={property?.landmark}
                       readOnly={!editable}
                     />
                     {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
@@ -102,7 +102,7 @@ const AddProperty = ({ owner }) => {
                       placeholder='Enter Location'
                       {...register('phone')}
                       readOnly={!editable}
-                      defaultValue={owner?.location ? Number(owner.location) : ''}
+                      defaultValue={property?.location}
                     />
                     {errors.location && <span className='text-danger'>{errors.location.message}</span>}
                   </Form.Group>
@@ -116,7 +116,7 @@ const AddProperty = ({ owner }) => {
                       placeholder='Enter Address'
                       {...register('address')}
                       readOnly={!editable}
-                      defaultValue={owner?.address}
+                      defaultValue={property?.address}
                     />
                   </Form.Group>
                 </Col>
@@ -127,7 +127,7 @@ const AddProperty = ({ owner }) => {
                     <Form.Label>City</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={owner?.city}
+                      defaultValue={property?.city}
                       placeholder='Enter your city'
                       {...register('city')}
                       readOnly={!editable}
@@ -140,7 +140,7 @@ const AddProperty = ({ owner }) => {
                     <Form.Label>State</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={owner?.state}
+                      defaultValue={property?.state}
                       placeholder='Enter your state'
                       {...register('state')}
                       readOnly={!editable}
@@ -154,7 +154,7 @@ const AddProperty = ({ owner }) => {
                     <Form.Label>Country</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={owner?.country}
+                      defaultValue={property?.country}
                       placeholder='Enter your country'
                       {...register('country')}
                       readOnly={!editable}
@@ -167,7 +167,7 @@ const AddProperty = ({ owner }) => {
                     <Form.Label>Pincode</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={owner?.pincode}
+                      defaultValue={property?.pincode}
                       placeholder='Enter your pincode'
                       {...register('pincode')}
                       readOnly={!editable}
@@ -181,7 +181,7 @@ const AddProperty = ({ owner }) => {
                     <Form.Label>Pincode</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={owner?.pincode}
+                      defaultValue={property?.pincode}
                       placeholder='Enter your pincode'
                       {...register('pincode')}
                       readOnly={!editable}
@@ -196,7 +196,7 @@ const AddProperty = ({ owner }) => {
                       type='text'
                       placeholder='Enter Address'
                       {...register('address')}
-                      defaultValue={owner?.address}
+                      defaultValue={property?.address}
                       readOnly={!editable}
                     />
                     {errors.address && <span className='text-danger'>{errors.address.message}</span>}
@@ -211,7 +211,7 @@ const AddProperty = ({ owner }) => {
                       type='text'
                       placeholder='Enter Landmark'
                       {...register('landmark')}
-                      defaultValue={owner?.landmark}
+                      defaultValue={property?.landmark}
                       readOnly={!editable}
                     />
                     {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
@@ -225,7 +225,7 @@ const AddProperty = ({ owner }) => {
                       type='text'
                       placeholder='Enter Street'
                       {...register('street')}
-                      defaultValue={owner?.street}
+                      defaultValue={property?.street}
                       readOnly={!editable}
                     />
                     {errors.street && <span className='text-danger'>{errors.street.message}</span>}
