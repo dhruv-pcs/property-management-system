@@ -282,12 +282,6 @@ const Owner = () => {
           fixedHeader
           fixedHeaderScrollHeight='600px'
           pagination
-          
-          // paginationTotalRows={totalRows}
-          //         paginationRowsPerPageOptions={[10, 25, 50, 100]}
-          //         paginationServer
-          //         onChangeRowsPerPage={handlePerRowsChange}
-          //         onChangePage={handlePageChange}
           className='scrollbar'
           subHeader
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
