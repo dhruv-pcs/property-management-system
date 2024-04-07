@@ -24,26 +24,10 @@ const Permission = () => {
     fetchData()
   }, [])
 
-  const getRoleBackgroundColor = role => {
-    switch (role) {
-      case 'admin':
-        return colors.greenAccent[600]
-      case 'super-admin':
-        return colors.redAccent[600]
-      default:
-        return colors.primary[400]
-    }
-  }
-
   const columns = [
     {
       name: 'Name',
       selector: row => row.module
-    },
-    {
-      name: 'Assign to',
-      selector: row => row.role.join('   ,   '),
-      cell: row => <div style={{ backgroundColor: getRoleBackgroundColor(row.role) }}>{row.role.join(', ')}</div>
     }
   ]
 
