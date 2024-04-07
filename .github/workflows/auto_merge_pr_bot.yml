@@ -1,0 +1,25 @@
+name: Auto merge PR - Bot
+
+on:
+  pull_request:
+    types: [labeled]
+    branches:
+      - 'dev'
+
+jobs:
+  check_label:
+    runs-on: ubuntu-latest
+    name: Check for Label
+    if: contains( github.event.label.name, '🤖JARVIS')
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Pull request needs to be auto merge
+        run: echo Auto Merge Pull Request!
+
+      - name: Merge Pull Request
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.PRAGNESH_TOKEN }}
+          number: ${{ github.event.pull_request.number }}
+          method: merge
