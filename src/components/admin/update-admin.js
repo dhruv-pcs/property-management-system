@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({ admin, isViewOnly , onUpdate, handleAdminDataUpdate}) => {
+const UpdateAdmin = ({admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
 
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
@@ -41,17 +41,19 @@ const UpdateAdmin = ({ admin, isViewOnly , onUpdate, handleAdminDataUpdate}) => 
   })
 
   useEffect(() => {
-    console.log(admin)
-    setValue('first_name', admin.first_name)
-    setValue('last_name', admin.last_name)
-    setValue('email', admin.email)
-    setValue('phone', admin.phone)
-    setValue('alternate_phone', admin.alternate_phone)
-    setValue('city', admin.city)
-    setValue('country', admin.country)
-    setValue('pincode', admin.pincode)
-    setValue('state', admin.state)
-  }, [setValue])
+    if (admin) {
+      setValue('first_name', admin.first_name);
+      setValue('last_name', admin.last_name);
+      setValue('email', admin.email);
+      setValue('phone', admin.phone);
+      setValue('alternate_phone', admin.alternate_phone);
+      setValue('city', admin.city);
+      setValue('country', admin.country);
+      setValue('pincode', admin.pincode);
+      setValue('state', admin.state);
+    }
+  }, [admin, setValue]);
+  
 
   // const onSubmit = async data => {
   //   setEditable(false)
@@ -73,7 +75,7 @@ const UpdateAdmin = ({ admin, isViewOnly , onUpdate, handleAdminDataUpdate}) => 
       })
 
       if (response.status === 201) {
-        handleAdminDataUpdate()
+        handelEditbutton()
         onUpdate()
       }
     } catch (error) {

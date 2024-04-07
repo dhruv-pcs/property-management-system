@@ -353,7 +353,7 @@ const Property = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete Owner
+          Delete Property
         </DialogTitle>
         <IconButton
           aria-label='close'

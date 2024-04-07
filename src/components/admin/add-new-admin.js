@@ -68,7 +68,8 @@ useEffect(() => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
-    setRoles(response.data.data);
+        const filteredRoles = response.data.data.filter(role => role.name !== 'super-admin');
+        setRoles(filteredRoles);
       } catch (error) {
         console.error('Failed to fetch roles', error);
       }

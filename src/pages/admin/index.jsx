@@ -2,7 +2,7 @@ import UpdateAdmin from '../../components/admin/update-admin.js'
 import AddAdmin from '../../components/admin/add-new-admin.js'
 
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
-import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Typography, Button, Box } from '@mui/material'
+import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button, useMediaQuery } from '@mui/material'
 
 import { tokens } from '@theme/theme'
 import axios from 'axios'
@@ -15,12 +15,12 @@ const Admin = () => {
 
   const [adminData, setAdminData] = useState([])
   const [selectedRow, setSelectedRow] = useState(null)
-  const [selectedAdmin, setSelectedAdmin] = useState(null)
-  const [showDetailsModal, setShowDetailsModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showAddModal, setShowAddModal] = useState(false)
-  const [userToDelete, setUserToDelete] = useState(null)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openView, setOpenView] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,19 +37,6 @@ const Admin = () => {
     fetchData()
   }, [])
 
-  const fetchAdminDetails = async u_id => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/oneAdmin/${u_id}`)
-      if (response.data && response.data.data && response.data.data.adminData) {
-        setSelectedAdmin(response.data.data.adminData)
-        setShowDetailsModal(true)
-      } else {
-        console.error('No admin data found for ID:', u_id)
-      }
-    } catch (error) {
-      console.error('Error fetching admin details:', error)
-    }
-  }
 
   const handleDelete = async userId => {
     try {
@@ -58,8 +45,8 @@ const Admin = () => {
       })
 
       setAdminData(current => current.filter(user => user.u_id !== userId))
-      setShowDeleteModal(false)
-      setUserToDelete(null)
+      setOpenDelete(!openDelete)
+      handleAdminDataUpdate()
       console.log('User deleted successfully')
     } catch (error) {
       console.error('Error deleting user:', error)
@@ -75,17 +62,14 @@ const Admin = () => {
     await fetchData()
   }
   
-  const handleViewButton = row => {
-    fetchAdminDetails(row.u_id)
-  }
-
-  const handleEditButton = row => {
+  const handelViewbutton = row => {
+    setOpenView(!openView)
     setSelectedRow(row)
-    setShowEditModal(true)
   }
 
-  const handleCloseEditModal = () => {
-    setShowEditModal(false)
+  const handelEditbutton = row => {
+    setOpenEdit(!openEdit)
+    setSelectedRow(row)
   }
 
   const handleAddAdmin = () => {
@@ -96,7 +80,11 @@ const Admin = () => {
     setShowAddModal(false)
   }
 
-   
+  const handelDeletebutton = async row => {
+    setOpenDelete(!openDelete)
+    setSelectedRow(row)
+  }
+
 
   const columns = [
     {
@@ -152,7 +140,7 @@ const Admin = () => {
           <button
             className='btn p-0 m-0 bg-none'
             style={{ color: colors.grey[100], cursor: 'pointer' }}
-            onClick={() => handleViewButton(row)}
+            onClick={() => handelViewbutton(row)}
             aria-label='View'
           >
             <Visibility />
@@ -160,16 +148,12 @@ const Admin = () => {
 
           {!row.is_superadmin && (
             <button
-              className='btn p-0 m-0 bg-none'
-              style={{ color: colors.grey[100], cursor: 'pointer' }}
-              onClick={() => {
-                setShowDeleteModal(true)
-                setUserToDelete(row.u_id)
-              }}
-              aria-label='Delete'
-            >
-              <Delete />
-            </button>
+            className='btn p-0  m-0 bg-none'
+            style={{ color: colors.redAccent[600] }}
+            onClick={() => handelDeletebutton(row)}
+          >
+            <Delete />
+          </button>
           )}
         </div>
       )
@@ -312,80 +296,115 @@ const Admin = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={showDetailsModal} onClose={handleCloseEditModal}>
+      <Dialog
+        fullScreen={isSmallScreen}
+        onClose={handelViewbutton}
+        aria-labelledby='customized-dialog-title'
+        open={openView}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
           View Admin
-          <IconButton
-            aria-label='close'
-            onClick={handleCloseEditModal}
-            sx={{ position: 'absolute', right: 16, top: 20, color: colors.grey[100] }}
-          >
-            <Close />
-          </IconButton>
         </DialogTitle>
-        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <UpdateAdmin admin={selectedAdmin} isViewOnly={true} onClose={handleCloseEditModal} onUpdate={handleAdminDataUpdate} />
+        <IconButton
+          aria-label='close'
+          onClick={handelViewbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
+          <UpdateAdmin admin={selectedRow} isViewOnly={true} />
         </DialogContent>
       </Dialog>
 
-      <Dialog open={showEditModal} onClose={handleCloseEditModal}>
+      <Dialog
+        onClose={handelEditbutton}
+        aria-labelledby='customized-dialog-title'
+        open={openEdit}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
           Edit Admin
-          <IconButton
-            aria-label='close'
-            onClick={handleCloseEditModal}
-            sx={{ position: 'absolute', right: 16, top: 20, color: colors.grey[100] }}
-          >
-            <Close />
-          </IconButton>
         </DialogTitle>
-        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <UpdateAdmin admin={selectedRow} onClose={handleCloseEditModal} isViewOnly={false} onUpdate={handleAdminDataUpdate}/>
+        <IconButton
+          aria-label='close'
+          onClick={handelEditbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className=''
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
+          <UpdateAdmin handelEditbutton={handelEditbutton} admin={selectedRow} isViewOnly={false} onUpdate={handleAdminDataUpdate} />
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        onClose={() => setShowDeleteModal(false)}
-        open={showDeleteModal}
-        aria-labelledby='delete-dialog-title'
-        aria-describedby='delete-dialog-description'
-      >
-        <DialogTitle id='delete-dialog-title' sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          Confirm Delete
-          <IconButton
-            aria-label='close'
-            onClick={() => {
-              setShowDeleteModal(true)
-              setUserToDelete(row.u_id)
-            }}
-            sx={{ position: 'absolute', right: 8, top: 8, color: colors.grey[100] }}
-          >
-            <Close />
-          </IconButton>
+      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Delete Owner
         </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelDeletebutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
         <DialogContent
           dividers
+          className='d-flex flex-column'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-          id='delete-dialog-description'
         >
-          <Typography>Are you sure you want to delete this user?</Typography>
-          <Typography>You won't be able to revert this!</Typography>
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button onClick={() => setShowDeleteModal(false)} sx={{ mr: 1 }}>
+          <h4>Are you sure you want to delete this Owner?</h4>
+
+          <div className='d-flex justify-content-between mt-5'>
+            <Button
+              onClick={handelDeletebutton}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+            >
               Cancel
             </Button>
-            <Button onClick={() => handleDelete(userToDelete)} color='error'>
-              Yes, Delete it!
+            <Button
+              onClick={() => handleDelete(selectedRow)}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
+            >
+              Delete
             </Button>
-          </Box>
+          </div>
         </DialogContent>
       </Dialog>
     </>
