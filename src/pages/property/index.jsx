@@ -282,9 +282,10 @@ const Property = () => {
                   className='d-flex justify-content-center'
                   sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
                 >
-                  <AddProperty />
+                  <AddProperty handelAddbutton={handelAddbutton} onUpdate={handlePropertyDataUpdate}  />
                 </DialogContent>
               </Dialog>
+              
               <Dialog
         onClose={handelEditbutton}
         aria-labelledby='customized-dialog-title'

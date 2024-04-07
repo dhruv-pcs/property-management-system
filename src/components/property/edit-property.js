@@ -58,16 +58,16 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${property.u_id}}`, data, {
+      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${property.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.status === 201) {
+      if (response.status === 201) { 
         handelEditbutton()
         onUpdate()
       }
-      console.log('response', response.data.data.adminData)
+      console.log('response', response.data)
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error.response ? error.response.data : error)
     }
   }
       
