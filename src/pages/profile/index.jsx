@@ -8,7 +8,7 @@ import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import * as Images from 'src/constants/image.js'
+import Head from 'next/head'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -82,6 +82,11 @@ const Profile = () => {
 
   return (
     <>
+      <Head>
+        <title>Profile Page</title>
+        <meta name='description' content='Profile Page' />
+      </Head>
+
       <Row>
         <Col xl={4}>
           <Card className='mb-4 mb-xl-0' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
@@ -92,7 +97,7 @@ const Profile = () => {
               <div className='d-flex justify-content-center'>
                 <Image
                   className='img-account-profile  rounded-circle mb-2 img-fluid'
-                  src={Images.Image.Img1}
+                  src={'/images/profile/img1.png'}
                   alt=''
                   width={200}
                   height={200}

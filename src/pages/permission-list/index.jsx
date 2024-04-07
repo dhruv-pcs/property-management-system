@@ -1,8 +1,9 @@
 import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import Head from 'next/head'
 
 const Permission = () => {
   const theme = useTheme()
@@ -163,26 +164,32 @@ const Permission = () => {
   }
 
   return (
-    <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
-      <DataTable
-        columns={columns}
-        data={permissionData}
-        title='Permission List'
-        customStyles={tableCustomStyles}
-        fixedHeader
-        fixedHeaderScrollHeight='600px'
-        className='scrollbar'
-        subHeader
-        paginationRowsPerPageOptions={[1, 2, 5, 100]}
-        pagination
-        subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
-        noDataComponent={
-          <div className='d-flex justify-content-center mt-5'>
-            <h5 style={{ color: colors.grey[100] }}>There is No Data Available</h5>
-          </div>
-        }
-      />
-    </div>
+    <>
+      <Head>
+        <title>Permission List Page</title>
+        <meta name='description' content='Permission List Page' />
+      </Head>
+      <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
+        <DataTable
+          columns={columns}
+          data={permissionData}
+          title='Permission List'
+          customStyles={tableCustomStyles}
+          fixedHeader
+          fixedHeaderScrollHeight='600px'
+          className='scrollbar'
+          subHeader
+          paginationRowsPerPageOptions={[1, 2, 5, 100]}
+          pagination
+          subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
+          noDataComponent={
+            <div className='d-flex justify-content-center mt-5'>
+              <h5 style={{ color: colors.grey[100] }}>There is No Data Available</h5>
+            </div>
+          }
+        />
+      </div>
+    </>
   )
 }
 

@@ -5,8 +5,9 @@ import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import Head from 'next/head'
 
 const Customer = () => {
   const theme = useTheme()
@@ -260,6 +261,11 @@ const Customer = () => {
 
   return (
     <>
+      <Head>
+        <title>Customer Page</title>
+        <meta name='description' content='Customer Page' />
+      </Head>
+
       <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}

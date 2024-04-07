@@ -9,7 +9,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
-import Header from '@components/dashboard/header'
 
 const Login = () => {
   const {
@@ -45,10 +44,6 @@ const Login = () => {
         <meta name='description' content='Login Page' />
       </Head>
 
-      <div className='d-flex justify-content-center align-content-center'>
-
-      <Header title='Welcome to EstateEase' subtitle='' />
-    </div>
       <div className='container d-flex justify-content-center align-items-center vh-100'>
         <div className='card w-lg-50'>
           <div className='card-header'>
