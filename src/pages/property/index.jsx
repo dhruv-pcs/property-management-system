@@ -222,7 +222,7 @@ const Property = () => {
   return (
     <>
       <Head>
-        <title>Property Page</title>
+        <title>Property</title>
         <meta name='description' content='Property Page' />
       </Head>
 

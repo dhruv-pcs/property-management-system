@@ -262,7 +262,7 @@ const Customer = () => {
   return (
     <>
       <Head>
-        <title>Customer Page</title>
+        <title>Customer</title>
         <meta name='description' content='Customer Page' />
       </Head>
 

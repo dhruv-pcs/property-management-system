@@ -83,7 +83,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title>Profile Page</title>
+        <title>Profile</title>
         <meta name='description' content='Profile Page' />
       </Head>
 

@@ -275,7 +275,7 @@ const Owner = () => {
   return (
     <>
       <Head>
-        <title>Owner Page</title>
+        <title>Owner</title>
         <meta name='description' content='Owner Page' />
       </Head>
 

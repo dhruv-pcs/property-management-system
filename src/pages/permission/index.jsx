@@ -129,7 +129,7 @@ const Permission = () => {
   return (
     <>
       <Head>
-        <title>Permission Page</title>
+        <title>Permission</title>
         <meta name='description' content='Permission Page' />
       </Head>
 

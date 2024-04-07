@@ -166,7 +166,7 @@ const Permission = () => {
   return (
     <>
       <Head>
-        <title>Permission List Page</title>
+        <title>Permission List</title>
         <meta name='description' content='Permission List Page' />
       </Head>
       <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>

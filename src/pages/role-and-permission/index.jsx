@@ -84,7 +84,7 @@ const Role_Permission = () => {
   return (
     <>
       <Head>
-        <title>Role & Permission Page</title>
+        <title>Role & Permission</title>
         <meta name='description' content='Role & Permission Page' />
       </Head>
 
