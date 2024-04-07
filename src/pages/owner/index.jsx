@@ -282,6 +282,7 @@ const Owner = () => {
           fixedHeader
           fixedHeaderScrollHeight='600px'
           pagination
+          
           // paginationTotalRows={totalRows}
           //         paginationRowsPerPageOptions={[10, 25, 50, 100]}
           //         paginationServer
