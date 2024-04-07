@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material'
+import { Box, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
@@ -8,11 +8,11 @@ import TrafficIcon from '@mui/icons-material/Traffic'
 import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
 import LineChart from '@components/dashboard/line-chart'
-import ProgressCircle from '@components/dashboard/progress-circle'
-import GeographyChart from '@components/dashboard/geography-chart'
+// import ProgressCircle from '@components/dashboard/progress-circle'
+// import GeographyChart from '@components/dashboard/geography-chart'
 import { tokens } from '@theme/theme'
-import { mockTransactions } from '@components/dashboard/mockData'
-import BarChart from '@components/dashboard/bar-chart'
+// import { mockTransactions } from '@components/dashboard/mockData'
+// import BarChart from '@components/dashboard/bar-chart'
 
 const Dashboard = () => {
   const theme = useTheme()

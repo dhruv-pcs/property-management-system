@@ -17,6 +17,8 @@ const Owner = () => {
   const [openAdd, setOpenAdd] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [selectedRow, setSelectedRow] = useState('121')
+  // const [perPage, setPerPage] = useState(10)
+  // const [currentPage, setCurrentPage] = useState(1)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const fetchData = async () => {
@@ -24,6 +26,7 @@ const Owner = () => {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+
       setOwnerData(response.data.data.ownerData)
     } catch (error) {
       console.error(error)
@@ -70,6 +73,15 @@ const Owner = () => {
       console.log('error', error)
     }
   }
+
+  // const handlePageChange = page => {
+  //   setCurrentPage(page)
+  // }
+
+  // const handlePerRowsChange = async (newPerPage, page) => {
+  //   setPerPage(newPerPage)
+  //   setCurrentPage(page)
+  // }
 
   const columns = [
     {
@@ -170,7 +182,7 @@ const Owner = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -179,7 +191,7 @@ const Owner = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -189,13 +201,13 @@ const Owner = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
     subHeader: {
       style: {
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -205,7 +217,7 @@ const Owner = () => {
         justifyContent: 'start',
         fontSize: '16px',
         fontWeight: '400',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -214,13 +226,13 @@ const Owner = () => {
         fontSize: '30px',
         fontWeight: 700,
         paddingLeft: '0px 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
     rows: {
       style: {
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -230,12 +242,12 @@ const Owner = () => {
         alignItems: 'center',
         justifyContent: 'center',
         color: colors.grey[100],
-        backgroundColor: colors.primary[400]
+        backgroundColor: colors.primary[500]
       }
     },
     pagination: {
       style: {
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       },
       pageButtonsStyle: {
@@ -260,7 +272,7 @@ const Owner = () => {
 
   return (
     <>
-      <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
+      <div className='p-3 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
           data={ownerData}
@@ -268,10 +280,15 @@ const Owner = () => {
           customStyles={tableCustomStyles}
           fixedHeader
           fixedHeaderScrollHeight='600px'
+          pagination
+          // paginationTotalRows={totalRows}
+          //         paginationRowsPerPageOptions={[10, 25, 50, 100]}
+          //         paginationServer
+          //         onChangeRowsPerPage={handlePerRowsChange}
+          //         onChangePage={handlePageChange}
           className='scrollbar'
           subHeader
-          paginationRowsPerPageOptions={[1, 2, 5, 100]}
-          pagination
+         
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
           noDataComponent={
             <>

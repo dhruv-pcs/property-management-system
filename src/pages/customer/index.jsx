@@ -170,7 +170,7 @@ const Customer = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -179,7 +179,7 @@ const Customer = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -189,13 +189,13 @@ const Customer = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
     subHeader: {
       style: {
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -205,7 +205,7 @@ const Customer = () => {
         justifyContent: 'start',
         fontSize: '16px',
         fontWeight: '400',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -214,13 +214,13 @@ const Customer = () => {
         fontSize: '30px',
         fontWeight: 700,
         paddingLeft: '0px 8px',
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
     rows: {
       style: {
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       }
     },
@@ -230,12 +230,12 @@ const Customer = () => {
         alignItems: 'center',
         justifyContent: 'center',
         color: colors.grey[100],
-        backgroundColor: colors.primary[400]
+        backgroundColor: colors.primary[500]
       }
     },
     pagination: {
       style: {
-        backgroundColor: colors.primary[400],
+        backgroundColor: colors.primary[500],
         color: colors.grey[100]
       },
       pageButtonsStyle: {
@@ -260,7 +260,7 @@ const Customer = () => {
 
   return (
     <>
-      <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
+      <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
           data={customerData}
