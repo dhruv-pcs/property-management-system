@@ -33,17 +33,19 @@ const Admin = () => {
     fetchData()
   }, [])
 
-  const handleDelete = async userId => {
+  const handleDelete = async row => {
+    console.log('row', row);
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userId}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${row.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      setAdminData(current => current.filter(user => user.u_id !== userId))
+
       setOpenDelete(!openDelete)
       handleAdminDataUpdate()
     } catch (error) {
       console.error('Error deleting user:', error)
     }
+    
   }
 
   const handleAddButton = () => {

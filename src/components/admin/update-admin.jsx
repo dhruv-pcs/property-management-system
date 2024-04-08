@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { tokens } from '@theme/theme'
-import { useTheme, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -23,10 +23,9 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
+const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [editable, setEditable] = useState(false)
 
   const {
@@ -63,7 +62,6 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
       if (response.status === 201) {
         handelEditbutton()
         onUpdate()
-        onClose()
       }
     } catch (error) {
       console.log('error', error)
@@ -71,7 +69,7 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
   }
 
   return (
-    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
+    <Row>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -238,8 +236,8 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
                             id='active'
                             {...register('status', { required: true })}
                             value={true}
-                            defaultChecked={admin?.status === true ? true : false}
-                            readOnly={!editable}
+                            defaultChecked={admin?.status  === true && true }
+                            disabled={!editable}
                           />
                           <Form.Check
                             inline
@@ -248,8 +246,8 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={admin?.status === false && true}
-                            readOnly={!editable}
+                            defaultChecked={admin?.status === false && false }
+                            disabled={!editable}
                           />
                         </div>
                       </Form.Group>
