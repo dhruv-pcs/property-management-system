@@ -14,9 +14,11 @@ const schema = Yup.object().shape({
   phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.number()
-    .required('Phone number is required')
-    .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
+  alternate_phone: Yup.number().test(
+    'len',
+    'Phone number must be exactly 10 digits',
+    val => val && val.toString().length === 10
+  ),
   aadhar_card_no: Yup.number()
     .required('Aadhar Card No is required')
     .test('len', 'Phone number must be exactly 12 digits', val => val && val.toString().length === 12),
@@ -30,7 +32,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const AddOwner = ({ onUpdate, handelAddbutton }) => {
+const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -44,16 +46,20 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
+    data.pincode = parseInt(data.pincode)
+    data.aadhar_card_no = parseInt(data.aadhar_card_no)
+    data.phone = parseInt(data.phone)
+    data.alternate_phone = parseInt(data.alternate_phone)
+
     console.log('data', data)
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, data, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/customer`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
-        toast.success('Owner added successfully')
       }
     } catch (error) {
       console.log('error', error)
@@ -213,4 +219,4 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
   )
 }
 
-export default AddOwner
+export default AddCustomer

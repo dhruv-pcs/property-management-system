@@ -14,9 +14,9 @@ const schema = Yup.object().shape({
 
   // password: Yup.string().matches(
   //   /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-  //   'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter' 
+  //   'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
   // ),
-  phone: Yup.number()  
+  phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.number(),
@@ -67,7 +67,6 @@ const UpdateAdmin = ({admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
   // }
 
   const onSubmit = async data => {
-
     setEditable(false)
     try {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
@@ -86,7 +85,7 @@ const UpdateAdmin = ({admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
   return (
     <Row>
       <Col xl={12}>
-      <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
+        <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
             <Form onSubmit={handleSubmit(onSubmit)} control={control}>
               {' '}

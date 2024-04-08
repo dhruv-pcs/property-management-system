@@ -72,105 +72,100 @@ const Profile = () => {
 
   const onSubmit = async data => {
     try {
-      console.log('data', data)
-
-      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-
-      console.log('response', response)
     } catch (error) {
       console.log('error', error)
     }
   }
 
   return (
-    <Row>
-      <Col xl={4}>
-        <Card className='mb-4 mb-xl-0' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
-          <Card.Header style={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-            Profile Picture
-          </Card.Header>
-          <Card.Body className=''>
-            <div className='d-flex justify-content-center'>
-              <Image
-                className='img-account-profile  rounded-circle mb-2 img-fluid'
-                src={Images.Image.Img1}
-                alt=''
-                width={200}
-                height={200}
-              />
-            </div>
+    <>
+      <Row>
+        <Col xl={4}>
+          <Card className='mb-4 mb-xl-0' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
+            <Card.Header style={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
+              Profile Picture
+            </Card.Header>
+            <Card.Body className=''>
+              <div className='d-flex justify-content-center'>
+                <Image
+                  className='img-account-profile  rounded-circle mb-2 img-fluid'
+                  src={Images.Image.Img1}
+                  alt=''
+                  width={200}
+                  height={200}
+                />
+              </div>
 
-            {userData && (
-              <>
-                <h5>
-                  Name: {userData?.first_name} {userData?.last_name}
-                </h5>
-                <h5>Email: {userData?.email}</h5>
-                <h5>Role: {userData?.role?.name}</h5>
-                <h5>Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
-                <h5>Contact Number: {userData?.phone}</h5>
-              </>
-            )}
-          </Card.Body>
-        </Card>
-      </Col>
+              {userData && (
+                <>
+                  <h5>
+                    Name: {userData?.first_name} {userData?.last_name}
+                  </h5>
+                  <h5>Email: {userData?.email}</h5>
+                  <h5>Role: {userData?.role?.name}</h5>
+                  <h5>Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
+                  <h5>Contact Number: {userData?.phone}</h5>
+                </>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
 
-      <Col xl={8}>
-        <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
-          <Card.Header style={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-            Account Details
-          </Card.Header>
-          <Card.Body>
-            <Form onSubmit={handleSubmit(onSubmit)} control={control}>
-              {' '}
-              {/* Add control */}
-              <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter your first name'
-                      {...register('first_name')}
-                      defaultValue={userData?.first_name}
-                      readOnly={!editable}
-                    />
-                    {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
-                  </Form.Group>
-                </Col>
+        <Col xl={8}>
+          <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
+            <Card.Header style={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
+              Account Details
+            </Card.Header>
+            <Card.Body>
+              <Form onSubmit={handleSubmit(onSubmit)} control={control}>
+                <Row className='gx-3 mb-3'>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>First name</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='Enter your first name'
+                        {...register('first_name')}
+                        defaultValue={userData?.first_name}
+                        readOnly={!editable}
+                      />
+                      {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
+                    </Form.Group>
+                  </Col>
 
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter your last name'
-                      {...register('last_name')}
-                      defaultValue={userData?.last_name}
-                      readOnly={!editable}
-                    />
-                    {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={12}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                      type='email'
-                      placeholder='Enter your email address'
-                      {...register('email')}
-                      defaultValue={userData?.email}
-                      readOnly={!editable}
-                    />
-                    {errors.email && <span className='text-danger'>{errors.email.message}</span>}
-                  </Form.Group>
-                </Col>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Last name</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='Enter your last name'
+                        {...register('last_name')}
+                        defaultValue={userData?.last_name}
+                        readOnly={!editable}
+                      />
+                      {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className='gx-3 mb-3'>
+                  <Col md={12}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Email address</Form.Label>
+                      <Form.Control
+                        type='email'
+                        placeholder='Enter your email address'
+                        {...register('email')}
+                        defaultValue={userData?.email}
+                        readOnly={!editable}
+                      />
+                      {errors.email && <span className='text-danger'>{errors.email.message}</span>}
+                    </Form.Group>
+                  </Col>
 
-                {/* <Col md={6}>
+                  {/* <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Password</Form.Label>
                     <div className='input-group'>
@@ -187,148 +182,115 @@ const Profile = () => {
                     {errors.password && <span className='text-danger'>{errors.password.message}</span>}
                   </Form.Group>
                 </Col> */}
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Phone number</Form.Label>
-                    <Form.Control
-                      type='tel'
-                      placeholder='Enter your phone number'
-                      {...register('phone')}
-                      readOnly={!editable}
-                      defaultValue={userData?.phone ? Number(userData.phone) : ''}
-                    />
-                    {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
-                  </Form.Group>
-                </Col>
+                </Row>
+                <Row className='gx-3 mb-3'>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Phone number</Form.Label>
+                      <Form.Control
+                        type='tel'
+                        placeholder='Enter your phone number'
+                        {...register('phone')}
+                        readOnly={!editable}
+                        defaultValue={userData?.phone ? Number(userData.phone) : ''}
+                      />
+                      {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
+                    </Form.Group>
+                  </Col>
 
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Alternative Phone No:</Form.Label>
-                    <Form.Control
-                      type='tel'
-                      placeholder='Alternative phone number'
-                      {...register('alternate_phone')}
-                      readOnly={!editable}
-                      defaultValue={userData?.alternate_phone}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                      type='text'
-                      defaultValue={userData?.city}
-                      placeholder='Enter your city'
-                      {...register('city')}
-                      readOnly={!editable}
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Alternative Phone No:</Form.Label>
+                      <Form.Control
+                        type='tel'
+                        placeholder='Alternative phone number'
+                        {...register('alternate_phone')}
+                        readOnly={!editable}
+                        defaultValue={userData?.alternate_phone}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className='gx-3 mb-3'>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        type='text'
+                        defaultValue={userData?.city}
+                        placeholder='Enter your city'
+                        {...register('city')}
+                        readOnly={!editable}
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>State</Form.Label>
-                    <Form.Control
-                      type='text'
-                      defaultValue={userData?.state}
-                      placeholder='Enter your state'
-                      {...register('state')}
-                      readOnly={!editable}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Country</Form.Label>
-                    <Form.Control
-                      type='text'
-                      defaultValue={userData?.country}
-                      placeholder='Enter your country'
-                      {...register('country')}
-                      readOnly={!editable}
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>State</Form.Label>
+                      <Form.Control
+                        type='text'
+                        defaultValue={userData?.state}
+                        placeholder='Enter your state'
+                        {...register('state')}
+                        readOnly={!editable}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className='gx-3 mb-3'>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        type='text'
+                        defaultValue={userData?.country}
+                        placeholder='Enter your country'
+                        {...register('country')}
+                        readOnly={!editable}
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Pincode</Form.Label>
-                    <Form.Control
-                      type='text'
-                      defaultValue={userData?.pincode}
-                      placeholder='Enter your pincode'
-                      {...register('pincode')}
-                      readOnly={!editable}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              {userData.role_u_id === 'ROL1000000001' ? (
-                <></>
-              ) : (
-                <>
-                  <Row className='gx-3 mb-3'>
-                    <Col md={6}>
-                      <Form.Group className='mb-1'>
-                        <Form.Label>Admin</Form.Label>
-                        <div>
-                          <Form.Check
-                            inline
-                            label='Active'
-                            type='radio'
-                            id='active'
-                            {...register('status', { required: true })}
-                            value={true}
-                            defaultChecked={userData?.status === true ? true : false}
-                            disabled={!editable}
-                          />
-                          <Form.Check
-                            inline
-                            label='Inactive'
-                            type='radio'
-                            id='inactive'
-                            {...register('status', { required: true })}
-                            value={false}
-                            defaultChecked={userData?.status === false ? false : true}
-                            disabled={!editable}
-                          />
-                        </div>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                </>
-              )}
-              {userData.role_u_id === 'ROL1000000001' ? (
-                <></>
-              ) : (
-                <>
-                  <div className='d-flex '>
-                    {userData && (
-                      <Button onClick={() => setEditable(!editable)} className='mb-3'>
-                        {editable ? 'Cancel' : 'Edit'}
-                      </Button>
-                    )}
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Pincode</Form.Label>
+                      <Form.Control
+                        type='text'
+                        defaultValue={userData?.pincode}
+                        placeholder='Enter your pincode'
+                        {...register('pincode')}
+                        readOnly={!editable}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                    {editable && (
-                      <Button className='ms-2 mb-3 h-fit' type='submit'>
-                        Save changes
-                      </Button>
-                    )}
-                  </div>
-                </>
-              )}
-            </Form>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
+                {userData.role_u_id === 'ROL1000000001' ? (
+                  <></>
+                ) : (
+                  <>
+                    <div className='d-flex '>
+                      {userData && (
+                        <Button onClick={() => setEditable(!editable)} className='mb-3'>
+                          {editable ? 'Cancel' : 'Edit'}
+                        </Button>
+                      )}
+
+                      {editable && (
+                        <Button className='ms-2 mb-3 h-fit' type='submit'>
+                          Save changes
+                        </Button>
+                      )}
+                    </div>
+                  </>
+                )}
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </>
   )
 }
 

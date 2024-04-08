@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
 import * as Yup from 'yup'
 import axios from 'axios'
- 
+
 const schema = Yup.object().shape({
   name: Yup.string().required('First name is required'),
   rent: Yup.string().required('Rent is required'),
@@ -16,13 +16,13 @@ const schema = Yup.object().shape({
   landmark: Yup.string().required('Landmark is required'),
   street: Yup.string().required('Street is required'),
   longitude: Yup.string().required('Rent is required'),
-  latitude: Yup.string().required('Rent is required'),
+  latitude: Yup.string().required('Rent is required')
 })
 
 const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-     
+
   const {
     register,
     handleSubmit,
@@ -61,7 +61,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${property.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.status === 201) { 
+      if (response.status === 201) {
         handelEditbutton()
         onUpdate()
       }
@@ -70,17 +70,17 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
       console.log('error', error.response ? error.response.data : error)
     }
   }
-      
-  return (  
+
+  return (
     <Row>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)} control={control}>
+            <Form onSubmit={handleSubmit(onSubmit)} control={control}>
               {' '}
               {/* Add control */}
               <Row className='gx-3 mb-3'>
-                <Col md={6}>          
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -169,7 +169,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-              <Col md={6}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Property Number</Form.Label>
                     <Form.Control
@@ -177,7 +177,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                       placeholder='Enter Landmark'
                       {...register('property_number')}
                       defaultValue={property?.property_number}
-                    />   
+                    />
                     {errors.property_number && <span className='text-danger'>{errors.property_number.message}</span>}
                   </Form.Group>
                 </Col>
@@ -192,8 +192,8 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                     />
                   </Form.Group>
                 </Col>
-                </Row>
-                <Row className='gx-3 mb-3'>
+              </Row>
+              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>District</Form.Label>
@@ -218,7 +218,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-              <Col md={6}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Country</Form.Label>
                     <Form.Control
@@ -242,8 +242,8 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                     {errors.pin_code && <span className='text-danger'>{errors.pin_code.message}</span>}
                   </Form.Group>
                 </Col>
-                </Row>
-                <Row className='gx-3 mb-3'>
+              </Row>
+              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Latitue</Form.Label>
@@ -251,7 +251,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                       type='tel'
                       placeholder='Enter Latitude'
                       {...register('latitude')}
-                      defaultValue={property?.latitude }
+                      defaultValue={property?.latitude}
                     />
                     {errors.latitude && <span className='text-danger'>{errors.latitude.message}</span>}
                   </Form.Group>
@@ -263,14 +263,13 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                       type='tel'
                       placeholder='Enter Longitude'
                       {...register('longitude')}
-                      defaultValue={property?.longitude }
+                      defaultValue={property?.longitude}
                     />
                     {errors.longitude && <span className='text-danger'>{errors.longitude.message}</span>}
                   </Form.Group>
                 </Col>
-                  
-                </Row>
-                <Row className='gx-3 mb-3'>
+              </Row>
+              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Is Property Verified??</Form.Label>

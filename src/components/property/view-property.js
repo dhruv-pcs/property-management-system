@@ -59,7 +59,7 @@ const ViewProperty = ({ property }) => {
                       type='tel'
                       placeholder='Enter Rent'
                       {...register('rent')}
-                      defaultValue={property?.rent }
+                      defaultValue={property?.rent}
                       readOnly={!editable}
                     />
                     {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
@@ -67,7 +67,7 @@ const ViewProperty = ({ property }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-              <Col md={6}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Rent-Type</Form.Label>
                     <Form.Control
@@ -95,7 +95,7 @@ const ViewProperty = ({ property }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-              <Col md={6}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Location</Form.Label>
                     <Form.Control
@@ -122,7 +122,7 @@ const ViewProperty = ({ property }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-              <Col md={6}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>City</Form.Label>
                     <Form.Control
@@ -148,7 +148,7 @@ const ViewProperty = ({ property }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-              <Col md={6}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>State</Form.Label>
                     <Form.Control
