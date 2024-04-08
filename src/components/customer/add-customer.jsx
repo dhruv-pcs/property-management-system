@@ -28,9 +28,7 @@ const schema = Yup.object().shape({
   state: Yup.string().required('State is required'),
   pincode: Yup.number().required('Pincode is required'),
   country: Yup.string().required('Country is required')
- 
 })
-
 
 const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
@@ -47,8 +45,8 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
-    data.otp = "123456"
-    
+    data.otp = '123456'
+
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/customer`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }

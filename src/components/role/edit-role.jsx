@@ -65,10 +65,10 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   }
 
   useEffect(() => {
-    fetchData();
-    fetchPermissions(); // Add fetchPermissions to the dependency array
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // No dependencies
+    fetchData()
+    fetchPermissions() // Add fetchPermissions to the dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // No dependencies
 
   const handlePermissionChange = (moduleName, permissionType, value) => {
     if (permissionType === 'view' && !value) {
@@ -182,11 +182,11 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   //   try {
   //     setFormSubmitted(true); // Set form submission status to true
   //     const permissionsPayload = [];
-  
+
   //     Object.keys(permissions).forEach((moduleId) => {
   //       const moduleData = permissions[moduleId];
   //       const selectedPermissions = {};
-  
+
   //       Object.keys(moduleData).forEach((permission) => {
   //         if (permission === 'delete') {
   //           selectedPermissions['remove'] = moduleData[permission];
@@ -194,10 +194,9 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   //           selectedPermissions[permission] = moduleData[permission];
   //         }
   //       });
-  
+
   //       if (Object.keys(selectedPermissions).length > 0) {
 
-         
   //         console.log('moduleId', moduleId);
 
   //         const modulePayload = {
@@ -208,18 +207,18 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   //         permissionsPayload.push(modulePayload);
   //       }
   //     });
-  
+
   //     const payload = {
   //       roleName: roleName,
   //       permissions: permissionsPayload,
   //     };
-  
+
   //     if (roleName.trim() === '') {
   //       return;
   //     }
-  
+
   //     console.log('payload', payload);
-  
+
   //     // const response = await axios.patch(
   //     //   `${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`,
   //     //   payload,
@@ -237,10 +236,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   //     console.error('Error:', error);
   //   }
   // };
-  
-  
-  
-  
 
   return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
@@ -253,9 +248,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
         required
         error={formSubmitted && roleName.trim() === ''}
       />
-      {formSubmitted && roleName.trim() === '' && (
-        <FormHelperText error>Please enter a role name</FormHelperText>
-      )}
+      {formSubmitted && roleName.trim() === '' && <FormHelperText error>Please enter a role name</FormHelperText>}
       <Checkbox checked={selectAll} onChange={e => handleGlobalSelectAllChange(e.target.checked)} />
       Select All Permissions
       <TableContainer>

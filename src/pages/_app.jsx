@@ -12,7 +12,6 @@ import Footer from '@components/footer/footer'
 import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import withAuth from '@components/auth/auth'
 
-
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
   const colors = tokens(theme.palette.mode)
@@ -67,9 +66,8 @@ const App = ({ Component, pageProps }) => {
     //     </ColorModeContext.Provider>
     //   )
     // }
-    console.log('hasAccess', hasAccess);
-    if(!hasAccess){
-     
+    console.log('hasAccess', hasAccess)
+    if (!hasAccess) {
       router.push('/400')
     }
 
