@@ -127,7 +127,7 @@ const Admin = () => {
             <button
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
-              onClick={() => handleEditButton(row)}
+              onClick={() => handelEditbutton(row)}
               aria-label='Edit'
             >
               <Edit />
@@ -137,7 +137,7 @@ const Admin = () => {
           <button
             className='btn p-0 m-0 bg-none'
             style={{ color: colors.grey[100], cursor: 'pointer' }}
-            onClick={() => handelViewbutton(row)}
+            onClick={() => handelEditbutton(row)}
             aria-label='View'
           >
             <Visibility />

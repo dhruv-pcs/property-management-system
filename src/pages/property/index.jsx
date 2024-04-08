@@ -89,7 +89,6 @@ const Property = () => {
       name: 'Address',
       selector: row => row.address
     },
-
     {
       name: 'District',
       selector: row => row.district
