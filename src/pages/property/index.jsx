@@ -24,7 +24,6 @@ const Property = () => {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log(response)
       setPropertyData(response.data.data.adminData)
     } catch (error) {
       console.error(error)
@@ -89,7 +88,6 @@ const Property = () => {
       name: 'Address',
       selector: row => row.address
     },
-
     {
       name: 'District',
       selector: row => row.district
@@ -358,7 +356,7 @@ const Property = () => {
                   className='fw-bold fs-3'
                   id='customized-dialog-title'
                 >
-                  Delete Owner
+                  Delete Property
                 </DialogTitle>
                 <IconButton
                   aria-label='close'

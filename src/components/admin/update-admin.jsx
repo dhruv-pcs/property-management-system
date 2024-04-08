@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { tokens } from '@theme/theme'
-import { useTheme, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -23,10 +23,9 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
+const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [editable, setEditable] = useState(false)
 
   const {
@@ -40,28 +39,18 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
   })
 
   useEffect(() => {
-    console.log(admin)
-    setValue('first_name', admin?.first_name)
-    setValue('last_name', admin?.last_name)
-    setValue('email', admin?.email)
-    setValue('phone', admin?.phone)
-    setValue('alternate_phone', admin?.alternate_phone)
-    setValue('city', admin?.city)
-    setValue('country', admin?.country)
-    setValue('pincode', admin?.pincode)
-    setValue('state', admin?.state)
-  }, [setValue, admin])
-
-  // const onSubmit = async data => {
-  //   setEditable(false)
-
-  //   const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
-  //     headers: {
-  //       Authorization: `Bearer  ${localStorage.getItem('token')}`
-  //     }
-  //   })
-  //   console.log('response', response)
-  // }
+    if (admin) {
+      setValue('first_name', admin.first_name)
+      setValue('last_name', admin.last_name)
+      setValue('email', admin.email)
+      setValue('phone', admin.phone)
+      setValue('alternate_phone', admin.alternate_phone)
+      setValue('city', admin.city)
+      setValue('country', admin.country)
+      setValue('pincode', admin.pincode)
+      setValue('state', admin.state)
+    }
+  }, [admin, setValue])
 
   const onSubmit = async data => {
     setEditable(false)
@@ -71,8 +60,8 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
       })
 
       if (response.status === 201) {
+        handelEditbutton()
         onUpdate()
-        onClose()
       }
     } catch (error) {
       console.log('error', error)
@@ -80,7 +69,7 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
   }
 
   return (
-    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
+    <Row>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -247,8 +236,8 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
                             id='active'
                             {...register('status', { required: true })}
                             value={true}
-                            defaultChecked={admin?.status === true ? true : false}
-                            readOnly={!editable}
+                            defaultChecked={admin?.status  === true && true }
+                            disabled={!editable}
                           />
                           <Form.Check
                             inline
@@ -257,8 +246,8 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={admin?.status === false && true}
-                            readOnly={!editable}
+                            defaultChecked={admin?.status === false && false }
+                            disabled={!editable}
                           />
                         </div>
                       </Form.Group>
@@ -272,17 +261,23 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
                 <>
                   {!isViewOnly && (
                     <div className='d-flex'>
-                      <Button  style={{ backgroundColor: colors.blueAccent[600] }} onClick={() => setEditable(!editable)} className='mb-3'>
+                      <Button
+                        onClick={() => setEditable(!editable)}
+                        className='mb-3'
+                        style={{ backgroundColor: colors.blueAccent[600] }}
+                      >
                         {editable ? 'Cancel' : 'Edit'}
                       </Button>
 
-                      <Button
-                        type='submit'
-                        style={{ backgroundColor: colors.blueAccent[600] }}
-                        className='ms-2 mb-3 h-fit'
-                      >
-                        Save changes
-                      </Button>
+                      {editable && (
+                        <Button
+                          className='ms-2 mb-3 h-fit'
+                          type='submit'
+                          style={{ backgroundColor: colors.blueAccent[600] }}
+                        >
+                          Save changes
+                        </Button>
+                      )}
                     </div>
                   )}
                 </>
