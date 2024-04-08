@@ -23,8 +23,7 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
-
+const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -42,18 +41,17 @@ const UpdateAdmin = ({admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
 
   useEffect(() => {
     if (admin) {
-      setValue('first_name', admin.first_name);
-      setValue('last_name', admin.last_name);
-      setValue('email', admin.email);
-      setValue('phone', admin.phone);
-      setValue('alternate_phone', admin.alternate_phone);
-      setValue('city', admin.city);
-      setValue('country', admin.country);
-      setValue('pincode', admin.pincode);
-      setValue('state', admin.state);
+      setValue('first_name', admin.first_name)
+      setValue('last_name', admin.last_name)
+      setValue('email', admin.email)
+      setValue('phone', admin.phone)
+      setValue('alternate_phone', admin.alternate_phone)
+      setValue('city', admin.city)
+      setValue('country', admin.country)
+      setValue('pincode', admin.pincode)
+      setValue('state', admin.state)
     }
-  }, [admin, setValue]);
-  
+  }, [admin, setValue])
 
   // const onSubmit = async data => {
   //   setEditable(false)

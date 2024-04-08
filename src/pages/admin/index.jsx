@@ -1,5 +1,5 @@
-import UpdateAdmin from '../../components/admin/update-admin.js'
-import AddAdmin from '../../components/admin/add-admin.js'
+import UpdateAdmin from '@components/admin/update-admin.js'
+import AddAdmin from '@components/admin/add-admin.js'
 
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button, useMediaQuery } from '@mui/material'
@@ -8,7 +8,6 @@ import { tokens } from '@theme/theme'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import Head from 'next/head'
 
 const Admin = () => {
   const theme = useTheme()
@@ -21,7 +20,6 @@ const Admin = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +35,6 @@ const Admin = () => {
     }
     fetchData()
   }, [])
-
 
   const handleDelete = async userId => {
     try {
@@ -62,12 +59,8 @@ const Admin = () => {
     await fetchData()
   }
 
-  const handleViewButton = row => {
-    fetchAdminDetails(row.u_id)
-    setShowDetailsModal(!showDetailsModal)
-  }
-
-  const handleEditButton = row => {
+  const handelViewbutton = row => {
+    setOpenView(!openView)
     setSelectedRow(row)
   }
 
@@ -82,6 +75,11 @@ const Admin = () => {
 
   const handleCloseAddModal = () => {
     setShowAddModal(false)
+  }
+
+  const handelDeletebutton = async row => {
+    setOpenDelete(!openDelete)
+    setSelectedRow(row)
   }
 
   const columns = [
@@ -146,12 +144,12 @@ const Admin = () => {
 
           {!row.is_superadmin && (
             <button
-            className='btn p-0  m-0 bg-none'
-            style={{ color: colors.redAccent[600] }}
-            onClick={() => handelDeletebutton(row)}
-          >
-            <Delete />
-          </button>
+              className='btn p-0  m-0 bg-none'
+              style={{ color: colors.redAccent[600] }}
+              onClick={() => handelDeletebutton(row)}
+            >
+              <Delete />
+            </button>
           )}
         </div>
       )
@@ -164,7 +162,7 @@ const Admin = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
@@ -173,7 +171,7 @@ const Admin = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
@@ -183,13 +181,13 @@ const Admin = () => {
         fontSize: '20px',
         fontWeight: 'bold',
         paddingLeft: '0 8px',
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
     subHeader: {
       style: {
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
@@ -199,7 +197,7 @@ const Admin = () => {
         justifyContent: 'start',
         fontSize: '16px',
         fontWeight: '400',
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
@@ -208,13 +206,13 @@ const Admin = () => {
         fontSize: '30px',
         fontWeight: 700,
         paddingLeft: '0px 8px',
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
     rows: {
       style: {
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       }
     },
@@ -224,12 +222,12 @@ const Admin = () => {
         alignItems: 'center',
         justifyContent: 'center',
         color: colors.grey[100],
-        backgroundColor: colors.primary[500]
+        backgroundColor: colors.primary[400]
       }
     },
     pagination: {
       style: {
-        backgroundColor: colors.primary[500],
+        backgroundColor: colors.primary[400],
         color: colors.grey[100]
       },
       pageButtonsStyle: {
@@ -254,12 +252,7 @@ const Admin = () => {
 
   return (
     <>
-      <Head>
-        <title>Admin</title>
-        <meta name='description' content='Admin Page' />
-      </Head>
-
-      <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
+      <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
           columns={columns}
           data={adminData}
@@ -272,13 +265,9 @@ const Admin = () => {
           paginationRowsPerPageOptions={[1, 2, 5, 100]}
           pagination
           subHeaderComponent={
-            <Button
-              onClick={handleAddAdmin}
-              className='btn fs-5 p-0 m-0'
-              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
-            >
-              Add
-            </Button>
+            <button type='button' className='btn btn-primary' onClick={handleAddAdmin}>
+              Add Admin
+            </button>
           }
         />
       </div>
@@ -316,21 +305,27 @@ const Admin = () => {
         >
           View Admin
         </DialogTitle>
-        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <UpdateAdmin
-            admin={selectedAdmin}
-            isViewOnly={true}
-            onClose={handleCloseEditModal}
-            onUpdate={handleAdminDataUpdate}
-          />
+        <IconButton
+          aria-label='close'
+          onClick={handelViewbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
+          <UpdateAdmin admin={selectedRow} isViewOnly={true} />
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        onClose={handelEditbutton}
-        aria-labelledby='customized-dialog-title'
-        open={openEdit}
-      >
+      <Dialog onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -338,10 +333,26 @@ const Admin = () => {
         >
           Edit Admin
         </DialogTitle>
-        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
+        <IconButton
+          aria-label='close'
+          onClick={handelEditbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className=''
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+        >
           <UpdateAdmin
+            handelEditbutton={handelEditbutton}
             admin={selectedRow}
-            onClose={handleCloseEditModal}
             isViewOnly={false}
             onUpdate={handleAdminDataUpdate}
           />

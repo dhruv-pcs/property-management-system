@@ -352,31 +352,31 @@ const Property = () => {
               </Dialog>
 
               <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
-        <DialogTitle
-          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
-          className='fw-bold fs-3'
-          id='customized-dialog-title'
-        >
-          Delete Property
-        </DialogTitle>
-        <IconButton
-          aria-label='close'
-          onClick={handelDeletebutton}
-          sx={{
-            position: 'absolute',
-            right: 16,
-            top: 20,
-            color: colors.grey[100]
-          }}
-        >
-          <Close />
-        </IconButton>
-        <DialogContent
-          dividers
-          className='d-flex flex-column'
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-        >
-          <h4>Are you sure you want to delete this Owner?</h4>
+                <DialogTitle
+                  sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+                  className='fw-bold fs-3'
+                  id='customized-dialog-title'
+                >
+                  Delete Property
+                </DialogTitle>
+                <IconButton
+                  aria-label='close'
+                  onClick={handelDeletebutton}
+                  sx={{
+                    position: 'absolute',
+                    right: 16,
+                    top: 20,
+                    color: colors.grey[100]
+                  }}
+                >
+                  <Close />
+                </IconButton>
+                <DialogContent
+                  dividers
+                  className='d-flex flex-column'
+                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+                >
+                  <h4>Are you sure you want to delete this Owner?</h4>
 
                   <div className='d-flex justify-content-between mt-5'>
                     <Button
