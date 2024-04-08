@@ -12,15 +12,15 @@ const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   email: Yup.string().email().required('Email is required'),
-  phone: Yup.number()
+  phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.number(),
+  alternate_phone: Yup.string(),
   pincode: Yup.number(),
   role_u_id: Yup.string().required('Role is required')
 })
 
-const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
+const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
@@ -139,7 +139,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Phone number</Form.Label>
-                    <Form.Control type='tel' placeholder='Enter your phone number' {...register('phone')} />
+                    <Form.Control type='text' placeholder='Enter your phone number' {...register('phone')} />
                     {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                   </Form.Group>
                 </Col>
@@ -147,7 +147,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Alternative Phone No:</Form.Label>
-                    <Form.Control type='tel' placeholder='Alternative phone number' {...register('alternate_phone')} />
+                    <Form.Control type='text' placeholder='Alternative phone number' {...register('alternate_phone')} />
                   </Form.Group>
                 </Col>
               </Row>
@@ -157,7 +157,6 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                     <Form.Label>City</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={user?.city}
                       placeholder='Enter your city'
                       {...register('city')}
                     />
@@ -185,7 +184,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button variant='primary' type='submit'>
+              <Button variant='primary' type='submit' style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}>
                 Add Admin
               </Button>
             </Form>

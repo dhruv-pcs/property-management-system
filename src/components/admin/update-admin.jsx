@@ -26,7 +26,6 @@ const schema = Yup.object().shape({
 const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-
   const [editable, setEditable] = useState(false)
 
   const {
@@ -271,17 +270,22 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                 <></>
               ) : (
                 <>
-                  {!isViewOnly && (
-                    <div className='d-flex'>
-                      <Button onClick={() => setEditable(!editable)} className='mb-3'>
-                        {editable ? 'Cancel' : 'Edit'}
-                      </Button>
+                {!isViewOnly && (
+  <div className='d-flex'>
+    
+    <Button onClick={() => setEditable(!editable)} className='mb-3' style={{ backgroundColor: colors.blueAccent[600] }}>
+      {editable ? 'Cancel' : 'Edit'}
+    </Button>
 
-                      <Button className='ms-2 mb-3 h-fit' type='submit'>
-                        Save changes
-                      </Button>
-                    </div>
-                  )}
+   
+    {editable && (
+      <Button className='ms-2 mb-3 h-fit' type='submit' style={{ backgroundColor: colors.blueAccent[600] }}>
+        Save changes
+      </Button>
+    )}
+  </div>
+)}
+
                 </>
               )}
             </Form>

@@ -22,7 +22,6 @@ const Admin = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
  
-  useEffect(() => { 
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, {
@@ -34,8 +33,11 @@ const Admin = () => {
         console.error(error)
       }
     }
-    fetchData()
-  }, [])
+   
+    useEffect(() => {
+      fetchData()
+    }, [])
+  
 
   const handleDelete = async userId => {
     try {
@@ -57,7 +59,7 @@ const Admin = () => {
   }
 
   const handleAdminDataUpdate = async () => {
-    await fetchData()
+     await fetchData()
   }
 
   const handelViewbutton = row => {
@@ -133,15 +135,16 @@ const Admin = () => {
               <Edit />
             </button>
           )}
-
+          {!row.is_superadmin && (
           <button
             className='btn p-0 m-0 bg-none'
             style={{ color: colors.grey[100], cursor: 'pointer' }}
-            onClick={() => handelEditbutton(row)}
+            onClick={() => handelViewbutton(row)}
             aria-label='View'
           >
             <Visibility />
           </button>
+          )}
 
           {!row.is_superadmin && (
             <button
@@ -272,8 +275,8 @@ const Admin = () => {
           paginationRowsPerPageOptions={[1, 2, 5, 100]}
           pagination
           subHeaderComponent={
-            <button type='button' className='btn btn-primary' onClick={handleAddAdmin}>
-              Add Admin
+            <button type='button' className='btn btn-primary' onClick={handleAddAdmin} style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}>
+              ADD 
             </button>
           }
         />
