@@ -43,6 +43,7 @@ const Login = () => {
         <title>Login</title>
         <meta name='description' content='Login Page' />
       </Head>
+
       <div className='container d-flex justify-content-center align-items-center vh-100'>
         <div className='card w-lg-50'>
           <div className='card-header'>

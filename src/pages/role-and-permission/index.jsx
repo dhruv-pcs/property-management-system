@@ -8,6 +8,7 @@ import { Close } from '@mui/icons-material'
 import ViewRole from '@components/role/view-role'
 import AddRole from '@components/role/add-role'
 import EditRole from '@components/role/edit-role'
+import Head from 'next/head'
 
 const Role_Permission = () => {
   const [role, setRole] = useState([])
@@ -82,6 +83,11 @@ const Role_Permission = () => {
 
   return (
     <>
+      <Head>
+        <title>Role & Permission</title>
+        <meta name='description' content='Role & Permission Page' />
+      </Head>
+
       <div>
         <h1>Role & Permission</h1>
         <p>

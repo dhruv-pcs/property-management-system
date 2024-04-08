@@ -8,6 +8,7 @@ import { tokens } from '@theme/theme'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import Head from 'next/head'
 
 const Admin = () => {
   const theme = useTheme()
@@ -253,6 +254,11 @@ const Admin = () => {
 
   return (
     <>
+      <Head>
+        <title>Admin</title>
+        <meta name='description' content='Admin Page' />
+      </Head>
+
       <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}

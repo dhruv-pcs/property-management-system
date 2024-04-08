@@ -7,6 +7,7 @@ import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme } from
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import DataTable from 'react-data-table-component'
 import { tokens } from '@theme/theme'
+import Head from 'next/head'
 
 const Property = () => {
   const theme = useTheme()
@@ -220,6 +221,11 @@ const Property = () => {
 
   return (
     <>
+      <Head>
+        <title>Property</title>
+        <meta name='description' content='Property Page' />
+      </Head>
+
       <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
