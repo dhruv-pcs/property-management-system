@@ -40,28 +40,18 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
   })
 
   useEffect(() => {
-    console.log(admin)
-    setValue('first_name', admin?.first_name)
-    setValue('last_name', admin?.last_name)
-    setValue('email', admin?.email)
-    setValue('phone', admin?.phone)
-    setValue('alternate_phone', admin?.alternate_phone)
-    setValue('city', admin?.city)
-    setValue('country', admin?.country)
-    setValue('pincode', admin?.pincode)
-    setValue('state', admin?.state)
-  }, [setValue, admin])
-
-  // const onSubmit = async data => {
-  //   setEditable(false)
-
-  //   const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {
-  //     headers: {
-  //       Authorization: `Bearer  ${localStorage.getItem('token')}`
-  //     }
-  //   })
-  //   console.log('response', response)
-  // }
+    if (admin) {
+      setValue('first_name', admin.first_name)
+      setValue('last_name', admin.last_name)
+      setValue('email', admin.email)
+      setValue('phone', admin.phone)
+      setValue('alternate_phone', admin.alternate_phone)
+      setValue('city', admin.city)
+      setValue('country', admin.country)
+      setValue('pincode', admin.pincode)
+      setValue('state', admin.state)
+    }
+  }, [admin, setValue])
 
   const onSubmit = async data => {
     setEditable(false)
@@ -71,6 +61,7 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
       })
 
       if (response.status === 201) {
+        handelEditbutton()
         onUpdate()
         onClose()
       }
@@ -272,17 +263,23 @@ const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
                 <>
                   {!isViewOnly && (
                     <div className='d-flex'>
-                      <Button  style={{ backgroundColor: colors.blueAccent[600] }} onClick={() => setEditable(!editable)} className='mb-3'>
+                      <Button
+                        onClick={() => setEditable(!editable)}
+                        className='mb-3'
+                        style={{ backgroundColor: colors.blueAccent[600] }}
+                      >
                         {editable ? 'Cancel' : 'Edit'}
                       </Button>
 
-                      <Button
-                        type='submit'
-                        style={{ backgroundColor: colors.blueAccent[600] }}
-                        className='ms-2 mb-3 h-fit'
-                      >
-                        Save changes
-                      </Button>
+                      {editable && (
+                        <Button
+                          className='ms-2 mb-3 h-fit'
+                          type='submit'
+                          style={{ backgroundColor: colors.blueAccent[600] }}
+                        >
+                          Save changes
+                        </Button>
+                      )}
                     </div>
                   )}
                 </>
