@@ -178,10 +178,6 @@ const Permission = () => {
           fixedHeader
           fixedHeaderScrollHeight='600px'
           className='scrollbar'
-          subHeader
-          paginationRowsPerPageOptions={[1, 2, 5, 100]}
-          pagination
-          subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
           noDataComponent={
             <div className='d-flex justify-content-center mt-5'>
               <h5 style={{ color: colors.grey[100] }}>There is No Data Available</h5>

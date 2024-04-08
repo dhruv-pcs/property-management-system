@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import EditProperty from '@components/property/edit-property.js'
+import EditProperty from '@components/property/edit-property'
 import AddProperty from '@components/property/add-property'
 import ViewProperty from '@components/property/view-property'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme } from '@mui/material'
@@ -284,7 +284,7 @@ const Property = () => {
                 <DialogContent
                   dividers
                   className='d-flex justify-content-center'
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
                 >
                   <AddProperty handelAddbutton={handelAddbutton} onUpdate={handlePropertyDataUpdate} />
                 </DialogContent>
@@ -312,8 +312,8 @@ const Property = () => {
                 </IconButton>
                 <DialogContent
                   dividers
-                  className=''
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+                  className='d-flex justify-content-center'
+                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
                 >
                   <EditProperty
                     handelEditbutton={handelEditbutton}
@@ -345,7 +345,8 @@ const Property = () => {
                 </IconButton>
                 <DialogContent
                   dividers
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+                  className='d-flex justify-content-center'
+                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
                 >
                   <ViewProperty property={selectedRow} />
                 </DialogContent>

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
 const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [showPassword, setShowPassword] = useState(false)
   const [roles, setRoles] = useState([])
 
@@ -73,7 +73,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
   }, [])
 
   return (
-    <Row>
+    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -185,7 +185,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button variant='primary' type='submit'>
+              <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
                 Add Admin
               </Button>
             </Form>

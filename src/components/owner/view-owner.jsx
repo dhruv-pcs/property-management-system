@@ -1,5 +1,5 @@
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme } from '@mui/material'
+import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
@@ -32,6 +32,8 @@ const ViewOwner = ({ owner }) => {
   const colors = tokens(theme.palette.mode)
   const editable = false
 
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   const {
     register,
     formState: { errors },
@@ -42,7 +44,7 @@ const ViewOwner = ({ owner }) => {
   console.log('owner', owner)
 
   return (
-    <Row>
+    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>

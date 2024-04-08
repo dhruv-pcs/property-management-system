@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { tokens } from '@theme/theme'
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -26,7 +26,7 @@ const schema = Yup.object().shape({
 const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [editable, setEditable] = useState(false)
 
   const {
@@ -41,15 +41,15 @@ const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => 
 
   useEffect(() => {
     console.log(admin)
-    setValue('first_name', admin.first_name)
-    setValue('last_name', admin.last_name)
-    setValue('email', admin.email)
-    setValue('phone', admin.phone)
-    setValue('alternate_phone', admin.alternate_phone)
-    setValue('city', admin.city)
-    setValue('country', admin.country)
-    setValue('pincode', admin.pincode)
-    setValue('state', admin.state)
+    setValue('first_name', admin?.first_name)
+    setValue('last_name', admin?.last_name)
+    setValue('email', admin?.email)
+    setValue('phone', admin?.phone)
+    setValue('alternate_phone', admin?.alternate_phone)
+    setValue('city', admin?.city)
+    setValue('country', admin?.country)
+    setValue('pincode', admin?.pincode)
+    setValue('state', admin?.state)
   }, [setValue, admin])
 
   // const onSubmit = async data => {
@@ -80,7 +80,7 @@ const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => 
   }
 
   return (
-    <Row>
+    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -276,7 +276,11 @@ const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => 
                         {editable ? 'Cancel' : 'Edit'}
                       </Button>
 
-                      <Button className='ms-2 mb-3 h-fit' type='submit'>
+                      <Button
+                        type='submit'
+                        style={{ backgroundColor: colors.blueAccent[600] }}
+                        className='ms-2 mb-3 h-fit'
+                      >
                         Save changes
                       </Button>
                     </div>

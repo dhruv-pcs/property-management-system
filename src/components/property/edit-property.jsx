@@ -1,5 +1,5 @@
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useTheme, Button } from '@mui/material'
+import { useTheme, Button, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
@@ -22,6 +22,7 @@ const schema = Yup.object().shape({
 const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -72,7 +73,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
   }
 
   return (
-    <Row>
+    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -296,7 +297,11 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
+              <Button
+                type='submit'
+                style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                className='ms-2 mb-3 fs-6 h-fit'
+              >
                 Save changes
               </Button>
             </Form>

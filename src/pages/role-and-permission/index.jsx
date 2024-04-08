@@ -183,7 +183,7 @@ const Role_Permission = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete Owner
+          Delete Role
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -234,7 +234,7 @@ const Role_Permission = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          View Owner
+          View Role
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -248,10 +248,7 @@ const Role_Permission = () => {
         >
           <Close />
         </IconButton>
-        <DialogContent
-          dividers
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
-        >
+        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
           <ViewRole roleData={selectedRow} />
         </DialogContent>
       </Dialog>
@@ -267,7 +264,7 @@ const Role_Permission = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Add Owner
+          Add Role
         </DialogTitle>
         <IconButton
           aria-label='close'
