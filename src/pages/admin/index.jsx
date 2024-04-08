@@ -1,13 +1,14 @@
-import UpdateAdmin from '../../components/admin/update-admin.js'
-import AddAdmin from '../../components/admin/add-admin.js'
+import UpdateAdmin from '../../components/admin/update-admin'
+import AddAdmin from '../../components/admin/add-admin'
 
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
-import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Typography, Button, Box } from '@mui/material'
+import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button } from '@mui/material'
 
 import { tokens } from '@theme/theme'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import Head from 'next/head'
 
 const Admin = () => {
   const theme = useTheme()
@@ -22,18 +23,20 @@ const Admin = () => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [userToDelete, setUserToDelete] = useState(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        console.log('response', response.data.data.adminData)
-        setAdminData(response.data.data.adminData)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      console.log('response', response.data.data.adminData)
+      setAdminData(response.data.data.adminData)
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  useEffect(() => {
+ 
     fetchData()
   }, [])
 
@@ -56,11 +59,8 @@ const Admin = () => {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-
-      setAdminData(current => current.filter(user => user.u_id !== userId))
       setShowDeleteModal(false)
-      setUserToDelete(null)
-      console.log('User deleted successfully')
+      fetchData()
     } catch (error) {
       console.error('Error deleting user:', error)
     }
@@ -79,9 +79,13 @@ const Admin = () => {
     setShowDetailsModal(!showDetailsModal)
   }
 
+  const handleCloseDetailsModal = () => {
+    setShowDetailsModal(false)
+  }
+
   const handleEditButton = row => {
     setSelectedRow(row)
-    setShowEditModal(true)
+    setShowEditModal(!showEditModal)
   }
 
   const handleCloseEditModal = () => {
@@ -136,7 +140,19 @@ const Admin = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          {!row.is_superadmin && (
+          <> 
+          {
+            !row.is_superadmin && (
+              <>
+               <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100], cursor: 'pointer' }}
+              onClick={() => handleViewButton(row)}
+              aria-label='Edit'
+            >
+              <Visibility />
+            </button>
+
             <button
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
@@ -145,21 +161,10 @@ const Admin = () => {
             >
               <Edit />
             </button>
-          )}
 
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100], cursor: 'pointer' }}
-            onClick={() => handleViewButton(row)}
-            aria-label='View'
-          >
-            <Visibility />
-          </button>
-
-          {!row.is_superadmin && (
             <button
               className='btn p-0 m-0 bg-none'
-              style={{ color: colors.grey[100], cursor: 'pointer' }}
+              style={{ color: colors.redAccent[500], cursor: 'pointer' }}
               onClick={() => {
                 setShowDeleteModal(true)
                 setUserToDelete(row.u_id)
@@ -168,7 +173,12 @@ const Admin = () => {
             >
               <Delete />
             </button>
-          )}
+              </>
+
+            )
+          }
+           
+          </>
         </div>
       )
     }
@@ -270,6 +280,11 @@ const Admin = () => {
 
   return (
     <>
+      <Head>
+        <title>Admin</title>
+        <meta name='description' content='Admin Page' />
+      </Head>
+
       <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
@@ -314,7 +329,7 @@ const Admin = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={showDetailsModal} onClose={handleCloseEditModal}>
+      <Dialog open={showDetailsModal} onClose={handleCloseDetailsModal}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -323,17 +338,17 @@ const Admin = () => {
           View Admin
           <IconButton
             aria-label='close'
-            onClick={handleCloseEditModal}
+            onClick={handleCloseDetailsModal}
             sx={{ position: 'absolute', right: 16, top: 20, color: colors.grey[100] }}
           >
             <Close />
           </IconButton>
         </DialogTitle>
-        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
+        <DialogContent  dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
           <UpdateAdmin
             admin={selectedAdmin}
             isViewOnly={true}
-            onClose={handleCloseEditModal}
+            onClose={handleCloseDetailsModal}
             onUpdate={handleAdminDataUpdate}
           />
         </DialogContent>
@@ -365,6 +380,58 @@ const Admin = () => {
       </Dialog>
 
       <Dialog
+        onClose={() => setShowDeleteModal(false)}
+        aria-labelledby='customized-dialog-title'
+        open={showDeleteModal}
+      >
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Delete Admin
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={() => {
+            setShowDeleteModal(false)
+          }}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex flex-column'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <h4>Are you sure you want to delete this Admin?</h4>
+
+          <div className='d-flex justify-content-between mt-5'>
+            <Button
+              onClick={() => setShowDeleteModal(false)}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handleDelete(userToDelete)}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
+            >
+              Delete
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* <Dialog
         onClose={() => setShowDeleteModal(false)}
         open={showDeleteModal}
         aria-labelledby='delete-dialog-title'
@@ -399,7 +466,7 @@ const Admin = () => {
             </Button>
           </Box>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </>
   )
 }

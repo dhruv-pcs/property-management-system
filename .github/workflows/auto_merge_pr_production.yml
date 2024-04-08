@@ -1,0 +1,35 @@
+name: Auto Merge Production
+
+on:
+  pull_request:
+    types: [labeled]
+    branches:
+      - 'main'
+
+jobs:
+  check_label:
+    runs-on: ubuntu-latest
+    name: Check for user
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get allowed users from secrets
+        id: get_users
+        run: echo "::set-output name=allowed_users::${{ secrets.ALLOWED_USERS }}"
+
+      - name: Check if pull request user is allowed
+        id: check_user
+        run: echo "::set-output name=is_allowed::${{ contains(steps.get_users.outputs.allowed_users, github.event.pull_request.user.login) }}"
+
+      - name: Pull request needs to be auto-merge
+        if: steps.check_user.outputs.is_allowed == 'true'
+        run: echo Auto Merge Pull Request!
+
+      - name: Merge Pull Request
+        if: steps.check_user.outputs.is_allowed == 'true'
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.PRAGNESH_TOKEN }}
+          number: ${{ github.event.pull_request.number }}
+          method: merge

@@ -8,6 +8,7 @@ import { Close } from '@mui/icons-material'
 import ViewRole from '@components/role/view-role'
 import AddRole from '@components/role/add-role'
 import EditRole from '@components/role/edit-role'
+import Head from 'next/head'
 
 const Role_Permission = () => {
   const [role, setRole] = useState([])
@@ -82,6 +83,11 @@ const Role_Permission = () => {
 
   return (
     <>
+      <Head>
+        <title>Role & Permission</title>
+        <meta name='description' content='Role & Permission Page' />
+      </Head>
+
       <div>
         <h1>Role & Permission</h1>
         <p>
@@ -177,7 +183,7 @@ const Role_Permission = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete Owner
+          Delete Role
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -228,7 +234,7 @@ const Role_Permission = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          View Owner
+          View Role
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -242,10 +248,7 @@ const Role_Permission = () => {
         >
           <Close />
         </IconButton>
-        <DialogContent
-          dividers
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
-        >
+        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
           <ViewRole roleData={selectedRow} />
         </DialogContent>
       </Dialog>
@@ -261,7 +264,7 @@ const Role_Permission = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Add Owner
+          Add Role
         </DialogTitle>
         <IconButton
           aria-label='close'

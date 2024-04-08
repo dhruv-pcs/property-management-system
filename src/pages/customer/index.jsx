@@ -5,8 +5,9 @@ import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import Head from 'next/head'
 
 const Customer = () => {
   const theme = useTheme()
@@ -62,7 +63,7 @@ const Customer = () => {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${selectedRow.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 201) {
         setOpenDelete(!openDelete)
         handleCustomerDataUpdate()
       }
@@ -260,6 +261,11 @@ const Customer = () => {
 
   return (
     <>
+      <Head>
+        <title>Customer</title>
+        <meta name='description' content='Customer Page' />
+      </Head>
+
       <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
@@ -321,8 +327,8 @@ const Customer = () => {
         </IconButton>
         <DialogContent
           dividers
-          className=''
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <EditCustomer
             handelEditbutton={handelEditbutton}
@@ -359,7 +365,8 @@ const Customer = () => {
         </IconButton>
         <DialogContent
           dividers
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <ViewCustomer customer={selectedRow} />
         </DialogContent>
@@ -394,7 +401,7 @@ const Customer = () => {
         <DialogContent
           dividers
           className='d-flex justify-content-center'
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <AddCustomer handelAddbutton={handelAddbutton} onUpdate={handleCustomerDataUpdate} />
         </DialogContent>

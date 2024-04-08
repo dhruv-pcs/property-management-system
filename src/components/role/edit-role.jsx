@@ -15,13 +15,9 @@ import {
   useMediaQuery
 } from '@mui/material'
 import { tokens } from '@theme/theme'
-import moduleData from './a.json'
 
 const EditRole = ({ roleData, onUpdate, onClose }) => {
   const [data, setData] = useState([])
-  // eslint-disable-next-line no-unused-vars
-  const [userData, setUserData] = useState([])
-
   const [permissions, setPermissions] = useState({})
   const [selectAll, setSelectAll] = useState(false)
   const [roleName, setRoleName] = useState(roleData?.name)
@@ -30,105 +26,26 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const colors = tokens(theme.palette.mode)
 
-  //   const fetchData = async () => {
-  //     try {
-  //       setUserData(moduleData.data.permissions);
-  //       console.log('data', moduleData);
-  //       const userPermissions = userData
-  //       const defaultPermissions = {};
-
-  //       moduleData.data.permissions.forEach(module => {
-  //         const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.module_u_id);
-
-  //         defaultPermissions[module.module_u_id] = {
-  //           u_id: module.u_id,
-  //           selectAll: userHasPermissionForModule,
-  //           view: userData.view,
-  //           add:userData.add,
-  //           update: userData.update,
-  //           remove: userData.remove,
-  //           notification: userData.notification
-  //         };
-  //       });
-
-  //       // Set default permissions state
-  //       setPermissions(defaultPermissions);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
   const fetchData = async () => {
-    try {
-      setUserData(moduleData.data.permissions) // Set user data
-
-      console.log('userData', moduleData.data.permissions)
-      const userPermissions = moduleData.data.permissions // Access user data directly
-      const defaultPermissions = {}
-
-      moduleData.data.permissions.forEach(module => {
-        const userHasPermissionForModule = userPermissions.some(
-          permission => permission.module_u_id === module.module_u_id
-        )
-
-        defaultPermissions[module.module_u_id] = {
-          u_id: module.u_id,
-          selectAll: userHasPermissionForModule,
-          view: userHasPermissionForModule,
-          add: userHasPermissionForModule,
-          update: userHasPermissionForModule,
-          delete: userHasPermissionForModule,
-          notification: userHasPermissionForModule
-        }
-      })
-
-      setPermissions(defaultPermissions)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
-  //         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-  //       })
-  //       setUserData(response.data.data.permissions);
-
-  //       // Set default permissions based on user's current permissions
-  //       const userPermissions = response.data.data.permissions;
-  //       const defaultPermissions = {};
-
-  //       // Loop through modules and set default permissions
-  //       data.forEach(module => {
-  //         defaultPermissions[module.u_id] = {
-  //           u_id: module.u_id,
-  //           selectAll: userPermissions.some(permission => permission.module_id === module.u_id), // Check if user has any permission for this module
-  //           view: false, // Default to false
-  //           add: false, // Default to false
-  //           update: false, // Default to false
-  //           delete: false, // Default to false
-  //           notification: false, // Default to false
-  //           imageUrl: images[Math.floor(Math.random() * images.length)] // Not sure where 'images' variable is defined in your code, please replace it accordingly
-  //         };
-  //       });
-  //       setPermissions(defaultPermissions);
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  // }
-
-  const fetchModule = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setData(response.data.data.moduleData)
-      const userPermissions = response.data.data.permissions
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
+  const fetchPermissions = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      const userPermissions = response.data.data.permissions
       const defaultPermissions = {}
 
-      response.data.data.moduleData.forEach(module => {
+      data.forEach(module => {
         const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id)
         defaultPermissions[module.u_id] = {
           u_id: module.u_id,
@@ -139,10 +56,8 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
           delete: userHasPermissionForModule,
           notification: userHasPermissionForModule
         }
-        console.log('defaultPermissions', defaultPermissions)
       })
 
-      // Set default permissions state
       setPermissions(defaultPermissions)
     } catch (error) {
       console.error(error)
@@ -150,9 +65,10 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   }
 
   useEffect(() => {
-    fetchData()
-    fetchModule()
-  }, [])
+    fetchData();
+    fetchPermissions(); // Add fetchPermissions to the dependency array
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // No dependencies
 
   const handlePermissionChange = (moduleName, permissionType, value) => {
     if (permissionType === 'view' && !value) {
@@ -262,6 +178,70 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     }
   }
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     setFormSubmitted(true); // Set form submission status to true
+  //     const permissionsPayload = [];
+  
+  //     Object.keys(permissions).forEach((moduleId) => {
+  //       const moduleData = permissions[moduleId];
+  //       const selectedPermissions = {};
+  
+  //       Object.keys(moduleData).forEach((permission) => {
+  //         if (permission === 'delete') {
+  //           selectedPermissions['remove'] = moduleData[permission];
+  //         } else if (permission !== 'u_id' && permission !== 'selectAll') {
+  //           selectedPermissions[permission] = moduleData[permission];
+  //         }
+  //       });
+  
+  //       if (Object.keys(selectedPermissions).length > 0) {
+
+         
+  //         console.log('moduleId', moduleId);
+
+  //         const modulePayload = {
+  //           u_id: moduleId,
+  //           ...selectedPermissions,
+  //         };
+
+  //         permissionsPayload.push(modulePayload);
+  //       }
+  //     });
+  
+  //     const payload = {
+  //       roleName: roleName,
+  //       permissions: permissionsPayload,
+  //     };
+  
+  //     if (roleName.trim() === '') {
+  //       return;
+  //     }
+  
+  //     console.log('payload', payload);
+  
+  //     // const response = await axios.patch(
+  //     //   `${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`,
+  //     //   payload,
+  //     //   {
+  //     //     headers: {
+  //     //       Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //     //     },
+  //     //   }
+  //     // );
+  //     // if (response.status === 201) {
+  //     //   onUpdate();
+  //     //   onClose();
+  //     // }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
+  
+  
+  
+  
+
   return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
       <TextField
@@ -274,7 +254,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
         error={formSubmitted && roleName.trim() === ''}
       />
       {formSubmitted && roleName.trim() === '' && (
-        <FormHelperText error>Please enter a role name</FormHelperText> // Show error message
+        <FormHelperText error>Please enter a role name</FormHelperText>
       )}
       <Checkbox checked={selectAll} onChange={e => handleGlobalSelectAllChange(e.target.checked)} />
       Select All Permissions

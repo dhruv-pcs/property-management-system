@@ -108,7 +108,7 @@ const MyProSidebar = () => {
             {navItem.map((item, index) => {
               return (
                 <div key={index}>
-                  {Local.map(local => {
+                  {Local?.map(local => {
                     if (item.subject === local.module.alias_name) {
                       return (
                         <Item
