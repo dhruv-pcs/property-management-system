@@ -376,7 +376,7 @@ const Admin = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete Owner
+          Delete Admin
         </DialogTitle>
         <IconButton
           aria-label='close'
