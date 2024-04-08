@@ -27,7 +27,6 @@ const ViewProperty = ({ property }) => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('Property', property)
 
   return (
     <Row>

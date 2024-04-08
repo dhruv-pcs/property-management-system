@@ -16,8 +16,8 @@ const schema = Yup.object().shape({
   description: Yup.string().required('Description is required'),
   district: Yup.string().required('District is required'),
   landmark: Yup.string().required('Landmark is required'),
-  latitude: Yup.number().required('Latitude is required'),
-  longitude: Yup.number().required('Longitude is required'),
+  latitude: Yup.string().required('Latitude is required'),
+  longitude: Yup.string().required('Longitude is required'),
   no_of_balconies: Yup.number().required('Number of balconies is required'),
   no_of_bathrooms: Yup.number().required('Number of bathrooms is required'),
   no_of_bedrooms: Yup.number().required('Number of bedrooms is required'),
@@ -51,22 +51,19 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
   const onSubmit = async data => {
     data.pin_code = Number(data.pin_code)
+    data.no_of_balconies = Number(data.no_of_balconies)
     data.no_of_bathrooms = Number(data.no_of_bathrooms)
     data.no_of_bedrooms = Number(data.no_of_bedrooms)
     data.no_of_rooms = Number(data.no_of_rooms)
     data.no_of_kitchen = Number(data.no_of_kitchen)
     data.property_age = Number(data.property_age)
-    data.latitude = Number(data.latitude)
-    data.longitude = Number(data.longitude)
-
+    data.currency = '₹'
     console.log('data', data)
-    data.currency = '$'
 
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response)
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
@@ -214,19 +211,26 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-                <Col md={6}>
+                <Col md={4}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Rooms</Form.Label>
-                    <Form.Control type='tel' placeholder='Enter Number of Bathrooms' {...register('no_of_rooms')} />
+                    <Form.Control type='tel' placeholder=' Number of Bathrooms' {...register('no_of_rooms')} />
                     {errors.no_of_rooms && <span className='text-danger'>{errors.no_of_rooms.message}</span>}
                   </Form.Group>
                 </Col>
 
-                <Col md={6}>
+                <Col md={4}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Kitchen</Form.Label>
-                    <Form.Control type='tel' placeholder='Enter Number of Bedrooms' {...register('no_of_kitchen')} />
+                    <Form.Control type='tel' placeholder=' Number of Bedrooms' {...register('no_of_kitchen')} />
                     {errors.no_of_kitchen && <span className='text-danger'>{errors.no_of_kitchen.message}</span>}
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>No. of Balconies</Form.Label>
+                    <Form.Control type='tel' placeholder=' Number of Balconies' {...register('no_of_balconies')} />
+                    {errors.no_of_balconies && <span className='text-danger'>{errors.no_of_balconies.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
@@ -234,7 +238,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Latitude</Form.Label>
-                    <Form.Control type='tel' step='any' placeholder='Latitude' {...register('latitude')} />
+                    <Form.Control type='text' placeholder='Latitude' {...register('latitude')} />
                     {errors.latitude && <span className='text-danger'>{errors.latitude.message}</span>}
                   </Form.Group>
                 </Col>
@@ -242,7 +246,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Longitude</Form.Label>
-                    <Form.Control type='tel' step='any' placeholder='Longitude' {...register('longitude')} />
+                    <Form.Control type='text' placeholder='Longitude' {...register('longitude')} />
                     {errors.longitude && <span className='text-danger'>{errors.longitude.message}</span>}
                   </Form.Group>
                 </Col>

@@ -20,11 +20,10 @@ const Property = () => {
   const [openEdit, setOpenEdit] = useState(false)
 
   const fetchData = async () => {
-    try { 
+    try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log(response)
       setPropertyData(response.data.data.adminData)
     } catch (error) {
       console.error(error)

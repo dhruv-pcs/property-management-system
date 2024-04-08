@@ -37,13 +37,11 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
-    console.log('data', data)
     data.language = 'English'
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log(response)
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
@@ -155,11 +153,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>City</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter your city'
-                      {...register('city')}
-                    />
+                    <Form.Control type='text' placeholder='Enter your city' {...register('city')} />
                   </Form.Group>
                 </Col>
 
@@ -184,7 +178,11 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button variant='primary' type='submit' style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}>
+              <Button
+                variant='primary'
+                type='submit'
+                style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+              >
                 Add Admin
               </Button>
             </Form>
