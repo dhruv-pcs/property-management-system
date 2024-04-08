@@ -124,14 +124,10 @@ const Dashboard = () => {
                       Revenue Generated
                     </Typography>
                     <Typography variant='h5' fontWeight='600' color={colors.greenAccent[500]}>
-                      $58,373,698
+                      $58,370
                     </Typography>
                   </Box>
-                  <Box>
-                    <IconButton>
-                      <DownloadOutlinedIcon sx={{ fontSize: '26px', color: colors.greenAccent[500] }} />
-                    </IconButton>
-                  </Box>
+                  
                 </Box>
                 <Box height='250px' m='-20px 0 0 0'>
                   <LineChart isDashboard={true} />
