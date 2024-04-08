@@ -1,5 +1,5 @@
-import UpdateAdmin from '@components/admin/update-admin.js'
-import AddAdmin from '@components/admin/add-admin.js'
+import UpdateAdmin from '@components/admin/update-admin'
+import AddAdmin from '@components/admin/add-admin'
 
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button, useMediaQuery } from '@mui/material'
@@ -21,8 +21,8 @@ const Admin = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
-  useEffect(() => {
+ 
+  useEffect(() => { 
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, {

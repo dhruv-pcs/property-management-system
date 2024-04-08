@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import EditProperty from '@components/property/edit-property.js'
+import EditProperty from '@components/property/edit-property'
 import AddProperty from '@components/property/add-property'
 import ViewProperty from '@components/property/view-property'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme } from '@mui/material'
@@ -20,7 +20,7 @@ const Property = () => {
   const [openEdit, setOpenEdit] = useState(false)
 
   const fetchData = async () => {
-    try {
+    try { 
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
