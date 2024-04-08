@@ -236,7 +236,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                             id='active'
                             {...register('status', { required: true })}
                             value={true}
-                            defaultChecked={admin?.status  === true && true }
+                            defaultChecked={admin?.status === true && true}
                             disabled={!editable}
                           />
                           <Form.Check
@@ -246,7 +246,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={admin?.status === false && false }
+                            defaultChecked={admin?.status === false && false}
                             disabled={!editable}
                           />
                         </div>

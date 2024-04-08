@@ -61,11 +61,10 @@ const ViewRole = ({ roleData }) => {
   }
 
   useEffect(() => {
-    fetchData();
-    fetchPermissions(); // Add fetchPermissions to the dependency array
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // No dependencies
-
+    fetchData()
+    fetchPermissions() // Add fetchPermissions to the dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // No dependencies
 
   return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
@@ -99,40 +98,22 @@ const ViewRole = ({ roleData }) => {
               <TableRow key={index} className=''>
                 <TableCell>{item.alias_name}</TableCell>
                 <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.selectAll || false}
-                    disabled
-                  />
+                  <Checkbox checked={permissions[item.u_id]?.selectAll || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.view || false}
-                    disabled
-                  />
+                  <Checkbox checked={permissions[item.u_id]?.view || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.add || false}
-                    disabled
-                  />
+                  <Checkbox checked={permissions[item.u_id]?.add || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.update || false}
-                    disabled
-                  />
+                  <Checkbox checked={permissions[item.u_id]?.update || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.delete || false}
-                    disabled
-                  />
+                  <Checkbox checked={permissions[item.u_id]?.delete || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.notification || false}
-                    disabled
-                  />
+                  <Checkbox checked={permissions[item.u_id]?.notification || false} disabled />
                 </TableCell>
               </TableRow>
             ))}

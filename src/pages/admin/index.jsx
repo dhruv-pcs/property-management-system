@@ -34,7 +34,7 @@ const Admin = () => {
   }, [])
 
   const handleDelete = async row => {
-    console.log('row', row);
+    console.log('row', row)
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${row.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -45,7 +45,6 @@ const Admin = () => {
     } catch (error) {
       console.error('Error deleting user:', error)
     }
-    
   }
 
   const handleAddButton = () => {
@@ -409,17 +408,3 @@ const Admin = () => {
 }
 
 export default Admin
-
-
-
-
-
-
-
-
-
-
-
-
-
-
