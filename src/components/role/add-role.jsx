@@ -154,7 +154,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         onClose()
       }
     } catch (error) {
-      console.error('Error:', error)
+      console.log('Error:', error)
     }
   }
 

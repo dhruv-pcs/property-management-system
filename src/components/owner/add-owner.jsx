@@ -44,8 +44,6 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
-    console.log('data', data)
-
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }

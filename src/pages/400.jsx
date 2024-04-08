@@ -15,8 +15,7 @@ const Unauthorized = () => {
     const timer = setTimeout(() => {
       setRedirect(true)
     }, 5000)
-    console.log('redirect', redirect);
-    
+
     return () => clearTimeout(timer)
   }, [])
 

@@ -18,6 +18,11 @@ const Admin = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+
+  const admin_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Admin')
+    .map(permission => permission)
 
   const fetchData = async () => {
     try {
@@ -34,7 +39,6 @@ const Admin = () => {
   }, [])
 
   const handleDelete = async row => {
-    console.log('row', row)
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${row.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -118,17 +122,7 @@ const Admin = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          {!row.is_superadmin && (
-            <button
-              className='btn p-0 m-0 bg-none'
-              style={{ color: colors.grey[100], cursor: 'pointer' }}
-              onClick={() => handelEditbutton(row)}
-              aria-label='Edit'
-            >
-              <Edit />
-            </button>
-          )}
-          {!row.is_superadmin && (
+          {!row.is_superadmin && admin_permission[0].view && (
             <button
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
@@ -138,7 +132,17 @@ const Admin = () => {
               <Visibility />
             </button>
           )}
-          {!row.is_superadmin && (
+          {!row.is_superadmin && admin_permission[0].update && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100], cursor: 'pointer' }}
+              onClick={() => handelEditbutton(row)}
+              aria-label='Edit'
+            >
+              <Edit />
+            </button>
+          )}
+          {!row.is_superadmin && admin_permission[0].remove && (
             <button
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
@@ -264,14 +268,16 @@ const Admin = () => {
           paginationRowsPerPageOptions={[1, 2, 5, 100]}
           pagination
           subHeaderComponent={
-            <button
-              type='button'
-              className='btn btn-primary'
-              onClick={handleAddAdmin}
-              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
-            >
-              ADD
-            </button>
+            admin_permission[0].add && (
+              <button
+                type='button'
+                className='btn btn-primary'
+                onClick={handleAddAdmin}
+                style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+              >
+                ADD
+              </button>
+            )
           }
         />
       </div>
@@ -365,7 +371,7 @@ const Admin = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete Owner
+          Delete Admin
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -384,7 +390,7 @@ const Admin = () => {
           className='d-flex flex-column'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <h4>Are you sure you want to delete this Owner?</h4>
+          <h4>Are you sure you want to delete this Admin?</h4>
           <div className='d-flex justify-content-between mt-5'>
             <Button
               onClick={handelDeletebutton}

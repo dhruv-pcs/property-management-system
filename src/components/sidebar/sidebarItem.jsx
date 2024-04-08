@@ -48,7 +48,7 @@ const navigation = () => {
       title: 'Customer',
       path: '/customer',
       icon: 'mdi:nature-people',
-      subject: 'Owner',
+      subject: 'Customer',
       action: 'read'
     }
   ]

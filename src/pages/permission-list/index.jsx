@@ -16,7 +16,6 @@ const Permission = () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/permission`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        console.log('response', response.data.data.permissionData)
         setPermissionData(response.data.data.permissionData)
       } catch (error) {
         console.error(error)

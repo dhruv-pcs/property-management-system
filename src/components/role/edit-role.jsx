@@ -164,8 +164,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
         return
       }
 
-      console.log('payload', payload)
-
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
@@ -197,7 +195,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
 
   //       if (Object.keys(selectedPermissions).length > 0) {
 
-  //         console.log('moduleId', moduleId);
+  //
 
   //         const modulePayload = {
   //           u_id: moduleId,
@@ -216,8 +214,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
   //     if (roleName.trim() === '') {
   //       return;
   //     }
-
-  //     console.log('payload', payload);
 
   //     // const response = await axios.patch(
   //     //   `${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`,
