@@ -236,8 +236,8 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                             id='active'
                             {...register('status', { required: true })}
                             value={true}
-                            defaultChecked={admin?.status === true ? true : false}
-                            readOnly={!editable}
+                            defaultChecked={admin?.status  === true && true }
+                            disabled={!editable}
                           />
                           <Form.Check
                             inline
@@ -246,8 +246,8 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={admin?.status === false ? false : true}
-                            readOnly={!editable}
+                            defaultChecked={admin?.status === false && false }
+                            disabled={!editable}
                           />
                         </div>
                       </Form.Group>

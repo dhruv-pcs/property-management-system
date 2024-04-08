@@ -63,7 +63,7 @@ const Customer = () => {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${selectedRow.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 201) {
         setOpenDelete(!openDelete)
         handleCustomerDataUpdate()
       }
@@ -327,8 +327,8 @@ const Customer = () => {
         </IconButton>
         <DialogContent
           dividers
-          className=''
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <EditCustomer
             handelEditbutton={handelEditbutton}
@@ -365,7 +365,8 @@ const Customer = () => {
         </IconButton>
         <DialogContent
           dividers
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <ViewCustomer customer={selectedRow} />
         </DialogContent>
@@ -400,7 +401,7 @@ const Customer = () => {
         <DialogContent
           dividers
           className='d-flex justify-content-center'
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <AddCustomer handelAddbutton={handelAddbutton} onUpdate={handleCustomerDataUpdate} />
         </DialogContent>

@@ -339,8 +339,8 @@ const Owner = () => {
         </IconButton>
         <DialogContent
           dividers
-          className=''
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <EditOwner handelEditbutton={handelEditbutton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>
@@ -373,7 +373,8 @@ const Owner = () => {
         </IconButton>
         <DialogContent
           dividers
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <ViewOwner owner={selectedRow} />
         </DialogContent>
@@ -408,7 +409,7 @@ const Owner = () => {
         <DialogContent
           dividers
           className='d-flex justify-content-center'
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <AddOwner handelAddbutton={handelAddbutton} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>

@@ -11,7 +11,7 @@ import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import Footer from '@components/footer/footer'
 import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import withAuth from '@components/auth/auth'
-import UnauthorizedPage from './400'
+
 
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
@@ -44,7 +44,7 @@ const App = ({ Component, pageProps }) => {
         return false
       }
 
-      if (route === '/404' || route === '/login' || route === '/profile') {
+      if (route === '/404' || route === '/400' || route === '/login' || route === '/profile') {
         return true
       }
 
@@ -56,15 +56,21 @@ const App = ({ Component, pageProps }) => {
     }
 
     const hasAccess = hasPermission(route)
-    if (!hasAccess) {
-      return (
-        <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <UnauthorizedPage />
-          </ThemeProvider>
-        </ColorModeContext.Provider>
-      )
+
+    // if (!hasAccess) {
+    //   return (
+    //     <ColorModeContext.Provider value={colorMode}>
+    //       <ThemeProvider theme={theme}>
+    //         <CssBaseline />
+    //         <Unauthorized />
+    //       </ThemeProvider>
+    //     </ColorModeContext.Provider>
+    //   )
+    // }
+    console.log('hasAccess', hasAccess);
+    if(!hasAccess){
+     
+      router.push('/400')
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
@@ -11,12 +11,14 @@ const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   email: Yup.string().email().required('Email is required'),
-  phone: Yup.number()
+  phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.number()
-    .required('Phone number is required')
-    .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
+  alternate_phone: Yup.string().test(
+    'len',
+    'Phone number must be exactly 10 digits',
+    val => val && val.toString().length === 10
+  ),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
@@ -33,6 +35,7 @@ const schema = Yup.object().shape({
 const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -64,7 +67,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${customer.u_id}`, data, {
+      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${customer.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
@@ -79,7 +82,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
   return (
     <>
-      <Row>
+      <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
         <Col xl={12}>
           <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
             <Card.Body>

@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
@@ -33,6 +33,7 @@ const schema = Yup.object().shape({
 const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -79,7 +80,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
   return (
     <>
-      <Row>
+      <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
         <Col xl={12}>
           <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
             <Card.Body>

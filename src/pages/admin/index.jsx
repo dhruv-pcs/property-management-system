@@ -1,9 +1,7 @@
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
-
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button, useMediaQuery } from '@mui/material'
-
 import { tokens } from '@theme/theme'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -13,7 +11,6 @@ import Head from 'next/head'
 const Admin = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-
   const [adminData, setAdminData] = useState([])
   const [selectedRow, setSelectedRow] = useState(null)
   const [showAddModal, setShowAddModal] = useState(false)
@@ -32,23 +29,23 @@ const Admin = () => {
       console.error(error)
     }
   }
-
   useEffect(() => {
     fetchData()
   }, [])
 
-  const handleDelete = async userId => {
+  const handleDelete = async row => {
+    console.log('row', row);
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userId}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${row.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
-      setAdminData(current => current.filter(user => user.u_id !== userId))
       setOpenDelete(!openDelete)
       handleAdminDataUpdate()
     } catch (error) {
       console.error('Error deleting user:', error)
     }
+    
   }
 
   const handleAddButton = () => {
@@ -142,7 +139,6 @@ const Admin = () => {
               <Visibility />
             </button>
           )}
-
           {!row.is_superadmin && (
             <button
               className='btn p-0  m-0 bg-none'
@@ -176,7 +172,6 @@ const Admin = () => {
         color: colors.grey[100]
       }
     },
-
     headCells: {
       style: {
         fontSize: '20px',
@@ -257,7 +252,6 @@ const Admin = () => {
         <title>Admin</title>
         <meta name='description' content='Admin Page' />
       </Head>
-
       <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
           columns={columns}
@@ -282,7 +276,6 @@ const Admin = () => {
           }
         />
       </div>
-
       <Dialog open={showAddModal} onClose={handleCloseAddModal}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
@@ -302,7 +295,6 @@ const Admin = () => {
           <AddAdmin handelAddbutton={handleAddButton} onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
         </DialogContent>
       </Dialog>
-
       <Dialog
         fullScreen={isSmallScreen}
         onClose={handelViewbutton}
@@ -335,7 +327,6 @@ const Admin = () => {
           <UpdateAdmin admin={selectedRow} isViewOnly={true} />
         </DialogContent>
       </Dialog>
-
       <Dialog onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
@@ -369,7 +360,6 @@ const Admin = () => {
           />
         </DialogContent>
       </Dialog>
-
       <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
@@ -396,7 +386,6 @@ const Admin = () => {
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <h4>Are you sure you want to delete this Owner?</h4>
-
           <div className='d-flex justify-content-between mt-5'>
             <Button
               onClick={handelDeletebutton}
@@ -420,3 +409,17 @@ const Admin = () => {
 }
 
 export default Admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+

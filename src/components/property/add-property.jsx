@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
@@ -39,6 +39,7 @@ const schema = Yup.object().shape({
 const AddProperty = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -74,7 +75,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
   }
 
   return (
-    <Row>
+    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
       <Col xl={18}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -315,15 +316,13 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              <div className='d-flex '>
-                <Button
-                  type='submit'
-                  className='w-100'
-                  style={{ backgroundColor: colors.blueAccent[500], color: colors.grey[100] }}
-                >
-                  Add
-                </Button>
-              </div>
+              <Button
+                type='submit'
+                style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                className='ms-2 mb-3 w-100 h-fit'
+              >
+                Add
+              </Button>
             </Form>
           </Card.Body>
         </Card>
