@@ -1,7 +1,6 @@
-import { Box, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material'
+import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import Head from 'next/head'
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
 import EmailIcon from '@mui/icons-material/Email'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import AddHome from '@mui/icons-material/AddHome'
@@ -127,7 +126,6 @@ const Dashboard = () => {
                       $58,370
                     </Typography>
                   </Box>
-                  
                 </Box>
                 <Box height='250px' m='-20px 0 0 0'>
                   <LineChart isDashboard={true} />
