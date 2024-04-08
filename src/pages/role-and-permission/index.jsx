@@ -21,6 +21,12 @@ const Role_Permission = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+
+  const role_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Role And Permission')
+    .map(permission => permission)
+
   const images = [
     '/images/user1.jpg',
     '/images/user2.jpg',
@@ -124,25 +130,29 @@ const Role_Permission = () => {
 
                       <div className=''>
                         {/* Delete */}
-                        <button
-                          onClick={() => handleDeleteButton(item)}
-                          className='btn fs-5 p-0'
-                          style={{ color: colors.grey[100], border: 'none', marginRight: '10px' }}
-                        >
-                          <Icon
-                            icon='mdi:delete'
-                            style={{ color: colors.redAccent[500], width: '24px', height: '24px' }}
-                          />
-                        </button>
+                        {role_permission[0].remove && (
+                          <button
+                            onClick={() => handleDeleteButton(item)}
+                            className='btn fs-5 p-0'
+                            style={{ color: colors.grey[100], border: 'none', marginRight: '10px' }}
+                          >
+                            <Icon
+                              icon='mdi:delete'
+                              style={{ color: colors.redAccent[500], width: '24px', height: '24px' }}
+                            />
+                          </button>
+                        )}
 
                         {/* View */}
-                        <button
-                          onClick={() => handleViewButton(item)}
-                          className='btn fs-5 p-0'
-                          style={{ color: colors.grey[100], border: 'none' }}
-                        >
-                          <Icon icon='mdi:eye' style={{ width: '24px', height: '24px' }} />
-                        </button>
+                        {role_permission[0].view && (
+                          <button
+                            onClick={() => handleViewButton(item)}
+                            className='btn fs-5 p-0'
+                            style={{ color: colors.grey[100], border: 'none' }}
+                          >
+                            <Icon icon='mdi:eye' style={{ width: '24px', height: '24px' }} />
+                          </button>
+                        )}
                       </div>
                     </div>
                   )}
@@ -156,21 +166,22 @@ const Role_Permission = () => {
                 className='rounded-2 p-2 d-flex justify-content-between'
               >
                 <h3>Add Admin</h3>
-
-                <Button
-                  onClick={handleAddButton}
-                  className='btn fs-5 p-0 '
-                  style={{
-                    color: colors.grey[100],
-                    backgroundColor: colors.greenAccent[600],
-                    border: 'none',
-                    borderRadius: '5px',
-                    width: 'fit-content',
-                    height: 'fit-content'
-                  }}
-                >
-                  Add
-                </Button>
+                {role_permission[0].add && (
+                  <Button
+                    onClick={handleAddButton}
+                    className='btn fs-5 p-0 '
+                    style={{
+                      color: colors.grey[100],
+                      backgroundColor: colors.greenAccent[600],
+                      border: 'none',
+                      borderRadius: '5px',
+                      width: 'fit-content',
+                      height: 'fit-content'
+                    }}
+                  >
+                    Add
+                  </Button>
+                )}
               </div>
             </div>
           </div>
