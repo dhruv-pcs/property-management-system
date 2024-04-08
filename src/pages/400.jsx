@@ -4,8 +4,9 @@ import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Head } from 'next/head'
 
-const UnauthorizedPage = () => {
+const Unauthorized = () => {
   const router = useRouter()
+
   const [redirect, setRedirect] = useState(false)
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
@@ -14,7 +15,8 @@ const UnauthorizedPage = () => {
     const timer = setTimeout(() => {
       setRedirect(true)
     }, 5000)
-
+    console.log('redirect', redirect);
+    
     return () => clearTimeout(timer)
   }, [])
 
@@ -31,7 +33,7 @@ const UnauthorizedPage = () => {
   return (
     <>
       <Head>
-        <title> Unauthorized </title>
+        <title>Unauthorized</title>
         <meta name='description' content='Unauthorized Page' />
       </Head>
 
@@ -50,4 +52,4 @@ const UnauthorizedPage = () => {
   )
 }
 
-export default UnauthorizedPage
+export default Unauthorized

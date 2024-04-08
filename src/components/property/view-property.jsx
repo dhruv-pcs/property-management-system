@@ -28,7 +28,6 @@ const ViewProperty = ({ property }) => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('Property', property)
 
   return (
     <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>

@@ -9,14 +9,15 @@ import axios from 'axios'
 const schema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
+  available_from: Yup.date().required('Available from is required'),
   bhk: Yup.string().required('BHK is required'),
   city: Yup.string().required('City is required'),
   country: Yup.string().required('Country is required'),
   description: Yup.string().required('Description is required'),
   district: Yup.string().required('District is required'),
   landmark: Yup.string().required('Landmark is required'),
-  latitude: Yup.number().required('Latitude is required'),
-  longitude: Yup.number().required('Longitude is required'),
+  latitude: Yup.string().required('Latitude is required'),
+  longitude: Yup.string().required('Longitude is required'),
   no_of_balconies: Yup.number().required('Number of balconies is required'),
   no_of_bathrooms: Yup.number().required('Number of bathrooms is required'),
   no_of_bedrooms: Yup.number().required('Number of bedrooms is required'),
@@ -31,7 +32,8 @@ const schema = Yup.object().shape({
   rent_type: Yup.string().required('Rent type is required'),
   state: Yup.string().required('State is required'),
   street: Yup.string().required('Street is required'),
-  ready_to_move: Yup.boolean().required('This field is required')
+  ready_to_move: Yup.boolean().required('This field is required'),
+  district: Yup.string().required('District is required')
 })
 
 const AddProperty = ({ onUpdate, handelAddbutton }) => {
@@ -49,7 +51,15 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
-    data.currency = '$'
+    data.pin_code = Number(data.pin_code)
+    data.no_of_balconies = Number(data.no_of_balconies)
+    data.no_of_bathrooms = Number(data.no_of_bathrooms)
+    data.no_of_bedrooms = Number(data.no_of_bedrooms)
+    data.no_of_rooms = Number(data.no_of_rooms)
+    data.no_of_kitchen = Number(data.no_of_kitchen)
+    data.property_age = Number(data.property_age)
+    data.currency = '₹'
+    console.log('data', data)
 
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, data, {
@@ -92,17 +102,16 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
+                    <Form.Label>Available From</Form.Label>
+                    <Form.Control type='date' placeholder='Select Date' {...register('available_from')} />
+                    {errors.available_from && <span className='text-danger'>{errors.available_from.message}</span>}
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className='mb-1'>
                     <Form.Label>Rent-Type</Form.Label>
                     <Form.Control type='text' placeholder=' Rent type' {...register('rent_type')} />
                     {errors.rent_type && <span className='text-danger'>{errors.rent_type.message}</span>}
-                  </Form.Group>
-                </Col>
-
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Landmark</Form.Label>
-                    <Form.Control type='text' placeholder='Enter Landmark' {...register('landmark')} />
-                    {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
@@ -162,9 +171,9 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 </Col>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control as='textarea' placeholder='Enter Description' {...register('description')} />
-                    {errors.description && <span className='text-danger'>{errors.description.message}</span>}
+                    <Form.Label>Landmark</Form.Label>
+                    <Form.Control type='text' placeholder='Enter Landmark' {...register('landmark')} />
+                    {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
@@ -203,10 +212,34 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
+                <Col md={4}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>No. of Rooms</Form.Label>
+                    <Form.Control type='tel' placeholder=' Number of Bathrooms' {...register('no_of_rooms')} />
+                    {errors.no_of_rooms && <span className='text-danger'>{errors.no_of_rooms.message}</span>}
+                  </Form.Group>
+                </Col>
+
+                <Col md={4}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>No. of Kitchen</Form.Label>
+                    <Form.Control type='tel' placeholder=' Number of Bedrooms' {...register('no_of_kitchen')} />
+                    {errors.no_of_kitchen && <span className='text-danger'>{errors.no_of_kitchen.message}</span>}
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>No. of Balconies</Form.Label>
+                    <Form.Control type='tel' placeholder=' Number of Balconies' {...register('no_of_balconies')} />
+                    {errors.no_of_balconies && <span className='text-danger'>{errors.no_of_balconies.message}</span>}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Latitude</Form.Label>
-                    <Form.Control type='tel' step='any' placeholder='Latitude' {...register('latitude')} />
+                    <Form.Control type='text' placeholder='Latitude' {...register('latitude')} />
                     {errors.latitude && <span className='text-danger'>{errors.latitude.message}</span>}
                   </Form.Group>
                 </Col>
@@ -214,7 +247,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Longitude</Form.Label>
-                    <Form.Control type='tel' step='any' placeholder='Longitude' {...register('longitude')} />
+                    <Form.Control type='text' placeholder='Longitude' {...register('longitude')} />
                     {errors.longitude && <span className='text-danger'>{errors.longitude.message}</span>}
                   </Form.Group>
                 </Col>
@@ -237,7 +270,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-                <Col md={12}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Property Area</Form.Label>
                     <Form.Control
@@ -248,18 +281,25 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                     {errors.property_area && <span className='text-danger'>{errors.property_area.message}</span>}
                   </Form.Group>
                 </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
-                <Col md={12}>
+
+                <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Available From</Form.Label>
-                    <Form.Control type='date' placeholder='Select Date' {...register('available_from')} />
-                    {errors.available_from && <span className='text-danger'>{errors.available_from.message}</span>}
+                    <Form.Label>District</Form.Label>
+                    <Form.Control type='text' placeholder='Enter District' {...register('district')} />
+                    {errors.district && <span className='text-danger'>{errors.district.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-                <Col md={12}>
+                <Col md={6}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control as='textarea' placeholder='Enter Description' {...register('description')} />
+                    {errors.description && <span className='text-danger'>{errors.description.message}</span>}
+                  </Form.Group>
+                </Col>
+
+                <Col md={6}>
                   <Form.Group>
                     <Form.Label>Ready to Move</Form.Label>
                     <div className='d-flex align-items-center'>

@@ -66,14 +66,10 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
   }, [setValue])
 
   const onSubmit = async data => {
-    console.log('data', data)
-    console.log('customer', customer.u_id)
     try {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${customer.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-
-      console.log('response', response)
 
       if (response.status === 201) {
         handelEditbutton()

@@ -6,24 +6,24 @@ import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useTheme, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   email: Yup.string().email().required('Email is required'),
-  phone: Yup.number()
+  phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.number(),
+  alternate_phone: Yup.string(),
   pincode: Yup.number(),
   role_u_id: Yup.string().required('Role is required')
 })
 
-const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
+const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   const [showPassword, setShowPassword] = useState(false)
   const [roles, setRoles] = useState([])
 
@@ -37,13 +37,11 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
   })
 
   const onSubmit = async data => {
-    console.log('data', data)
     data.language = 'English'
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log(response)
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
@@ -62,8 +60,8 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        setRoles(response.data.data)
-        console.log('roles', response.data.data)
+        const filteredRoles = response.data.data.filter(role => role.name !== 'super-admin')
+        setRoles(filteredRoles)
       } catch (error) {
         console.error('Failed to fetch roles', error)
       }
@@ -73,7 +71,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
   }, [])
 
   return (
-    <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
+    <Row>
       <Col xl={12}>
         <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
           <Card.Body>
@@ -139,7 +137,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Phone number</Form.Label>
-                    <Form.Control type='tel' placeholder='Enter your phone number' {...register('phone')} />
+                    <Form.Control type='text' placeholder='Enter your phone number' {...register('phone')} />
                     {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                   </Form.Group>
                 </Col>
@@ -147,7 +145,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Alternative Phone No:</Form.Label>
-                    <Form.Control type='tel' placeholder='Alternative phone number' {...register('alternate_phone')} />
+                    <Form.Control type='text' placeholder='Alternative phone number' {...register('alternate_phone')} />
                   </Form.Group>
                 </Col>
               </Row>
@@ -155,12 +153,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>City</Form.Label>
-                    <Form.Control
-                      type='text'
-                      defaultValue={user?.city}
-                      placeholder='Enter your city'
-                      {...register('city')}
-                    />
+                    <Form.Control type='text' placeholder='Enter your city' {...register('city')} />
                   </Form.Group>
                 </Col>
 
@@ -185,7 +178,11 @@ const AddAdmin = ({ onUpdate, handelAddbutton, user }) => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
+              <Button
+                variant='primary'
+                type='submit'
+                style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+              >
                 Add Admin
               </Button>
             </Form>
