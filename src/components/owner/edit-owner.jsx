@@ -68,7 +68,6 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response)
       if (response.status === 201) {
         handelEditbutton()
         onUpdate()

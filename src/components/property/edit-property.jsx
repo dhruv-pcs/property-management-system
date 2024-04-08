@@ -33,7 +33,6 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('property', property)
 
   useEffect(() => {
     setValue('name', property.name)

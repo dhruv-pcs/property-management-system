@@ -59,7 +59,6 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
     data.no_of_kitchen = Number(data.no_of_kitchen)
     data.property_age = Number(data.property_age)
     data.currency = '₹'
-    console.log('data', data)
 
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, data, {

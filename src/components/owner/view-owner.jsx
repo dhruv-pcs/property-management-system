@@ -41,7 +41,6 @@ const ViewOwner = ({ owner }) => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  console.log('owner', owner)
 
   return (
     <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>

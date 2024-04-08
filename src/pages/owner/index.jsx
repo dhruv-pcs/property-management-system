@@ -18,10 +18,13 @@ const Owner = () => {
   const [openAdd, setOpenAdd] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [selectedRow, setSelectedRow] = useState('121')
-
-  // const [perPage, setPerPage] = useState(10)
-  // const [currentPage, setCurrentPage] = useState(1)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+
+  const owner_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Owner')
+    .map(permission => permission)
 
   const fetchData = async () => {
     try {
@@ -152,27 +155,33 @@ const Owner = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100] }}
-            onClick={() => handelViewbutton(row)}
-          >
-            <Visibility />
-          </button>
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100] }}
-            onClick={() => handelEditbutton(row)}
-          >
-            <Edit />
-          </button>
-          <button
-            className='btn p-0  m-0 bg-none'
-            style={{ color: colors.redAccent[600] }}
-            onClick={() => handelDeletebutton(row)}
-          >
-            <Delete />
-          </button>
+          {owner_permission[0].view && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100] }}
+              onClick={() => handelViewbutton(row)}
+            >
+              <Visibility />
+            </button>
+          )}
+          {owner_permission[0].update && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100] }}
+              onClick={() => handelEditbutton(row)}
+            >
+              <Edit />
+            </button>
+          )}
+          {owner_permission[0].remove && (
+            <button
+              className='btn p-0  m-0 bg-none'
+              style={{ color: colors.redAccent[600] }}
+              onClick={() => handelDeletebutton(row)}
+            >
+              <Delete />
+            </button>
+          )}
         </div>
       )
     }
@@ -299,7 +308,7 @@ const Owner = () => {
             </>
           }
           actions={
-            <>
+            owner_permission[0].add && (
               <Button
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
@@ -307,7 +316,7 @@ const Owner = () => {
               >
                 Add
               </Button>
-            </>
+            )
           }
         />
       </div>

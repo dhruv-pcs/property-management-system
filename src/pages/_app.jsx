@@ -56,17 +56,6 @@ const App = ({ Component, pageProps }) => {
 
     const hasAccess = hasPermission(route)
 
-    // if (!hasAccess) {
-    //   return (
-    //     <ColorModeContext.Provider value={colorMode}>
-    //       <ThemeProvider theme={theme}>
-    //         <CssBaseline />
-    //         <Unauthorized />
-    //       </ThemeProvider>
-    //     </ColorModeContext.Provider>
-    //   )
-    // }
-    console.log('hasAccess', hasAccess)
     if (!hasAccess) {
       router.push('/400')
     }
