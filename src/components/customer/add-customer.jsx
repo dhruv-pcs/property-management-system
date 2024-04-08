@@ -19,9 +19,7 @@ const schema = Yup.object().shape({
     'Phone number must be exactly 10 digits',
     val => val && val.toString().length === 10
   ),
-  aadhar_card_no: Yup.string()
-    .required('Aadhar Card No is required')
-    .test('len', 'Phone number must be exactly 12 digits', val => val && val.toString().length === 12),
+  aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
   landmark: Yup.string().required('Landmark is required'),
@@ -30,7 +28,9 @@ const schema = Yup.object().shape({
   state: Yup.string().required('State is required'),
   pincode: Yup.number().required('Pincode is required'),
   country: Yup.string().required('Country is required')
+ 
 })
+
 
 const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
@@ -47,8 +47,8 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   })
 
   const onSubmit = async data => {
-    console.log('data', data)
-
+    data.otp = "123456"
+    
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/customer`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }

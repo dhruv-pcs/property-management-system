@@ -257,6 +257,7 @@ const ViewOwner = ({ owner }) => {
                       <RadioGroup
                         row
                         aria-label='status'
+                        className='pointer-events-none'
                         defaultValue={owner?.status === true ? 'active' : 'not_active'}
                         {...register('status', { required: true })}
                       >

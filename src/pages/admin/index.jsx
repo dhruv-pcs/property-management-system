@@ -23,18 +23,20 @@ const Admin = () => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [userToDelete, setUserToDelete] = useState(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        console.log('response', response.data.data.adminData)
-        setAdminData(response.data.data.adminData)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      console.log('response', response.data.data.adminData)
+      setAdminData(response.data.data.adminData)
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  useEffect(() => {
+ 
     fetchData()
   }, [])
 
@@ -138,8 +140,11 @@ const Admin = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          <>
-            <button
+          <> 
+          {
+            !row.is_superadmin && (
+              <>
+               <button
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
               onClick={() => handleViewButton(row)}
@@ -168,6 +173,11 @@ const Admin = () => {
             >
               <Delete />
             </button>
+              </>
+
+            )
+          }
+           
           </>
         </div>
       )
@@ -334,7 +344,7 @@ const Admin = () => {
             <Close />
           </IconButton>
         </DialogTitle>
-        <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
+        <DialogContent  dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
           <UpdateAdmin
             admin={selectedAdmin}
             isViewOnly={true}
@@ -379,7 +389,7 @@ const Admin = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete Owner
+          Delete Admin
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -400,7 +410,7 @@ const Admin = () => {
           className='d-flex flex-column'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <h4>Are you sure you want to delete this Owner?</h4>
+          <h4>Are you sure you want to delete this Admin?</h4>
 
           <div className='d-flex justify-content-between mt-5'>
             <Button

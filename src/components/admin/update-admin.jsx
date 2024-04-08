@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required')
 })
 
-const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => {
+const UpdateAdmin = ({ onClose ,admin, isViewOnly, onUpdate }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -71,8 +71,8 @@ const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => 
       })
 
       if (response.status === 201) {
-        handleAdminDataUpdate()
         onUpdate()
+        onClose()
       }
     } catch (error) {
       console.log('error', error)
@@ -257,7 +257,7 @@ const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => 
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={admin?.status === false ? false : true}
+                            defaultChecked={admin?.status === false && true}
                             readOnly={!editable}
                           />
                         </div>
@@ -272,7 +272,7 @@ const UpdateAdmin = ({ admin, isViewOnly, onUpdate, handleAdminDataUpdate }) => 
                 <>
                   {!isViewOnly && (
                     <div className='d-flex'>
-                      <Button onClick={() => setEditable(!editable)} className='mb-3'>
+                      <Button  style={{ backgroundColor: colors.blueAccent[600] }} onClick={() => setEditable(!editable)} className='mb-3'>
                         {editable ? 'Cancel' : 'Edit'}
                       </Button>
 

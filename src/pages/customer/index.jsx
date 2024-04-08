@@ -63,7 +63,7 @@ const Customer = () => {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${selectedRow.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 201) {
         setOpenDelete(!openDelete)
         handleCustomerDataUpdate()
       }

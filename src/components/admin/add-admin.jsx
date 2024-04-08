@@ -12,7 +12,7 @@ const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   email: Yup.string().email().required('Email is required'),
-  phone: Yup.number()
+  phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.number(),
