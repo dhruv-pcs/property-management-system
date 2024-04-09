@@ -25,6 +25,8 @@ const Property = () => {
     ?.filter(permission => permission.module.alias_name === 'Property')
     .map(permission => permission)
 
+    console.log('property_permission', property_permission);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
@@ -386,7 +388,7 @@ const Property = () => {
           className='d-flex flex-column'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <h4>Are you sure you want to delete this Owner?</h4>
+          <h4>Are you sure you want to delete this Property?</h4>
 
           <div className='d-flex justify-content-between mt-5'>
             <Button

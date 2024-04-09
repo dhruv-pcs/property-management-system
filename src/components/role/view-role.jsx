@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   useTheme,
   Table,
@@ -11,60 +11,63 @@ import {
   Checkbox,
   TextField,
   useMediaQuery
-} from '@mui/material'
-import { tokens } from '@theme/theme'
+} from '@mui/material';
+import { tokens } from '@theme/theme';
 
 const ViewRole = ({ roleData }) => {
-  const [data, setData] = useState([])
-  const [permissions, setPermissions] = useState({})
-  const [roleName, setRoleName] = useState(roleData?.name)
-  const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const colors = tokens(theme.palette.mode)
+  const [data, setData] = useState([]);
+  const [permissions, setPermissions] = useState({});
+  const [roleName, setRoleName] = useState(roleData?.name);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const colors = tokens(theme.palette.mode);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      setData(response.data.data.moduleData)
+      });
+      setData(response.data.data.moduleData);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-
-  const fetchPermissions = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      const userPermissions = response.data.data.permissions
-      const defaultPermissions = {}
-
-      data.forEach(module => {
-        const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id)
-        defaultPermissions[module.u_id] = {
-          u_id: module.u_id,
-          selectAll: userHasPermissionForModule,
-          view: userHasPermissionForModule,
-          add: userHasPermissionForModule,
-          update: userHasPermissionForModule,
-          delete: userHasPermissionForModule,
-          notification: userHasPermissionForModule
-        }
-      })
-
-      setPermissions(defaultPermissions)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  };
 
   useEffect(() => {
-    fetchData()
-    fetchPermissions() // Add fetchPermissions to the dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // No dependencies
+    const fetchPermissions = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+        const userPermissions = response.data.data.permissions;
+        const defaultPermissions = {};
+        data.forEach(module => {
+          const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id);
+          defaultPermissions[module.u_id] = {
+            u_id: module.u_id,
+            selectAll: userHasPermissionForModule,
+            view: userHasPermissionForModule,
+            add: userHasPermissionForModule,
+            update: userHasPermissionForModule,
+            delete: userHasPermissionForModule,
+            notification: userHasPermissionForModule
+          };
+        });
+
+        setPermissions(defaultPermissions);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const fetchDataAndPermissions = async () => {
+      await fetchData();
+      await fetchPermissions();
+    };
+  
+    fetchDataAndPermissions();
+  }, [roleData, data]);
 
   return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
@@ -98,22 +101,40 @@ const ViewRole = ({ roleData }) => {
               <TableRow key={index} className=''>
                 <TableCell>{item.alias_name}</TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.selectAll || false} disabled />
+                  <Checkbox
+                    checked={permissions[item.u_id]?.selectAll || false}
+                    disabled
+                  />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.view || false} disabled />
+                  <Checkbox
+                    checked={permissions[item.u_id]?.view || false}
+                    disabled
+                  />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.add || false} disabled />
+                  <Checkbox
+                    checked={permissions[item.u_id]?.add || false}
+                    disabled
+                  />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.update || false} disabled />
+                  <Checkbox
+                    checked={permissions[item.u_id]?.update || false}
+                    disabled
+                  />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.delete || false} disabled />
+                  <Checkbox
+                    checked={permissions[item.u_id]?.delete || false}
+                    disabled
+                  />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.notification || false} disabled />
+                  <Checkbox
+                    checked={permissions[item.u_id]?.notification || false}
+                    disabled
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -121,7 +142,7 @@ const ViewRole = ({ roleData }) => {
         </Table>
       </TableContainer>
     </div>
-  )
-}
+  );
+};
 
-export default ViewRole
+export default ViewRole;

@@ -64,11 +64,19 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     }
   }
 
+  
   useEffect(() => {
-    fetchData()
-    fetchPermissions() // Add fetchPermissions to the dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // No dependencies
+    const fetchDataAndPermissions = async () => {
+      await fetchData();
+      await fetchPermissions();
+    };
+  
+    fetchDataAndPermissions();
+  }, [roleData, data]); 
+
+
+
+
 
   const handlePermissionChange = (moduleName, permissionType, value) => {
     if (permissionType === 'view' && !value) {
