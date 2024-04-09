@@ -25,7 +25,7 @@ const Property = () => {
     ?.filter(permission => permission.module.alias_name === 'Property')
     .map(permission => permission)
 
-    console.log('property_permission', property_permission);
+  console.log('property_permission', property_permission)
 
   const fetchData = async () => {
     try {
