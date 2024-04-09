@@ -71,7 +71,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     }
 
     fetchDataAndPermissions()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roleData, data])
 
   const handlePermissionChange = (moduleName, permissionType, value) => {

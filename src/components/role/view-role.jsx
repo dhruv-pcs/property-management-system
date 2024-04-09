@@ -49,7 +49,7 @@ const ViewRole = ({ roleData }) => {
             view: userHasPermissionForModule,
             add: userHasPermissionForModule,
             update: userHasPermissionForModule,
-            delete: userHasPermissionForModule,
+            remove: userHasPermissionForModule,
             notification: userHasPermissionForModule
           }
         })
@@ -112,7 +112,7 @@ const ViewRole = ({ roleData }) => {
                   <Checkbox checked={permissions[item.u_id]?.update || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.delete || false} disabled />
+                  <Checkbox checked={permissions[item.u_id]?.remove || false} disabled />
                 </TableCell>
                 <TableCell>
                   <Checkbox checked={permissions[item.u_id]?.notification || false} disabled />

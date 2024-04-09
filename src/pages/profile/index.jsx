@@ -101,6 +101,7 @@ const Profile = () => {
                   alt=''
                   width={200}
                   height={200}
+                  loading='lazy'
                 />
               </div>
 
@@ -277,13 +278,21 @@ const Profile = () => {
                   <>
                     <div className='d-flex '>
                       {userData && (
-                        <Button onClick={() => setEditable(!editable)} className='mb-3'>
+                        <Button
+                          style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                          onClick={() => setEditable(!editable)}
+                          className='mb-3'
+                        >
                           {editable ? 'Cancel' : 'Edit'}
                         </Button>
                       )}
 
                       {editable && (
-                        <Button className='ms-2 mb-3 h-fit' type='submit'>
+                        <Button
+                          style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                          className='ms-2 mb-3 h-fit'
+                          type='submit'
+                        >
                           Save changes
                         </Button>
                       )}

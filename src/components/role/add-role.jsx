@@ -41,7 +41,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           view: false,
           add: false,
           update: false,
-          delete: false,
+          remove: false,
           notification: false
         }
       })
@@ -64,7 +64,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           view: false,
           add: false,
           update: false,
-          delete: false,
+          remove: false,
           notification: false,
           selectAll: false
         }
@@ -90,7 +90,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         view: value,
         add: value,
         update: value,
-        delete: value,
+        remove: value,
         notification: value
       }
     }))
@@ -107,7 +107,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         view: value,
         add: value,
         update: value,
-        delete: value,
+        remove: value,
         notification: value
       }
     })
@@ -225,7 +225,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                 </TableCell>
                 <TableCell>
                   <Checkbox
-                    checked={permissions[item.u_id]?.delete || false}
+                    checked={permissions[item.u_id]?.remove || false}
                     onChange={e => handlePermissionChange(item.u_id, 'delete', e.target.checked)}
                     disabled={!permissions[item.u_id]?.view || selectAll}
                   />
