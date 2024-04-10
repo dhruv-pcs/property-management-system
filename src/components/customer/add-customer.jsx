@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios'
 
-
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -16,20 +15,25 @@ const schema = Yup.object().shape({
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.string().when('phone', {
-    is: (phone) => phone && phone.length === 10,
-    then: Yup.string().matches(/^\d{10}$/, 'Alternate phone number must be exactly 10 digits')
-      .test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function(value) {
-        const phoneValue = this.parent.phone;
-        
-        return value !== phoneValue;
+    is: phone => phone && phone.length === 10,
+    then: Yup.string()
+      .matches(/^\d{10}$/, 'Alternate phone number must be exactly 10 digits')
+      .test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function (value) {
+        const phoneValue = this.parent.phone
+
+        return value !== phoneValue
       }),
-      otherwise: Yup.string()
-      .test('isTenDigits', 'Alternate phone number must be exactly 10 digits', val => val && val.toString().length === 10)
-      .test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function(value) {
-        const phoneValue = this.parent.phone;
-        
-        return value !== phoneValue;
-      }),
+    otherwise: Yup.string()
+      .test(
+        'isTenDigits',
+        'Alternate phone number must be exactly 10 digits',
+        val => val && val.toString().length === 10
+      )
+      .test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function (value) {
+        const phoneValue = this.parent.phone
+
+        return value !== phoneValue
+      })
   }),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
@@ -40,8 +44,7 @@ const schema = Yup.object().shape({
   state: Yup.string().required('State is required'),
   pincode: Yup.number().required('Pincode is required'),
   country: Yup.string().required('Country is required')
-});
-
+})
 
 const AddCustomer = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()

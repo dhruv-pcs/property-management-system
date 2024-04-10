@@ -23,6 +23,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  console.log('property:', property)
 
   const {
     register,
@@ -61,6 +62,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${property.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+
       if (response.status === 201) {
         handelEditbutton()
         onUpdate()
@@ -269,6 +271,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
+                {console.log(property?.is_verified)}
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Is Property Verified??</Form.Label>

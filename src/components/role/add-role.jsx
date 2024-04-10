@@ -123,7 +123,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         const moduleData = permissions[moduleId]
 
         const selectedPermissions = Object.keys(moduleData)
-          .filter(permission => permission !== 'u_id' && permission !== 'selectAll' && moduleData[permission])
+          .filter(permission => permission !== 'selectAll')
           .map(permission => ({
             [permission]: moduleData[permission]
           }))
@@ -145,6 +145,8 @@ const AddRole = ({ onUpdate, onClose }) => {
         // If role name is empty, prevent form submission
         return
       }
+
+      console.log('payload:', payload)
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }

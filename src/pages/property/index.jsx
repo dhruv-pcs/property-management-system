@@ -25,8 +25,6 @@ const Property = () => {
     ?.filter(permission => permission.module.alias_name === 'Property')
     .map(permission => permission)
 
-  console.log('property_permission', property_permission)
-
   const fetchData = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {

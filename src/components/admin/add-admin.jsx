@@ -16,17 +16,21 @@ const schema = Yup.object().shape({
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.string().when('phone', {
-    is: (phone) => phone && phone.length === 10,
-    then: () => Yup.string().test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function(value) {
-      const phoneValue = this.parent.phone;
+    is: phone => phone && phone.length === 10,
+    then: () =>
+      Yup.string().test(
+        'notEqualToPhone',
+        'Alternate phone number cannot be the same as phone number',
+        function (value) {
+          const phoneValue = this.parent.phone
 
-      return value !== phoneValue;
-    }),
+          return value !== phoneValue
+        }
+      )
   }),
   pincode: Yup.number(),
   role_u_id: Yup.string().required('Role is required')
-});
-
+})
 
 const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
@@ -46,7 +50,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
 
   const onSubmit = async data => {
     data.language = 'English'
-    console.log('data', data);
+    console.log('data', data)
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
