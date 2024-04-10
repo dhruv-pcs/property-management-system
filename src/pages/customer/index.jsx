@@ -8,6 +8,8 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Customer = () => {
   const theme = useTheme()
@@ -33,6 +35,7 @@ const Customer = () => {
       })
       setCustomerData(response.data.data.customerData)
     } catch (error) {
+      toast.error('Error Fetching Data')
       console.error(error)
     }
   }
@@ -72,8 +75,10 @@ const Customer = () => {
       if (response.data.statusCode === 201) {
         setOpenDelete(!openDelete)
         handleCustomerDataUpdate()
+        toast.success('Customer Deleted Successfully')
       }
     } catch (error) {
+      toast.error('Error Deleting Customer')
       console.log('error', error)
     }
   }
@@ -464,6 +469,7 @@ const Customer = () => {
           </div>
         </DialogContent>
       </Dialog>
+      <ToastContainer />
     </>
   )
 }

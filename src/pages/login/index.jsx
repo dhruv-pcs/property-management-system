@@ -28,8 +28,10 @@ const Login = () => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, formData)
 
       const userData = response.data.data
+      console.log('User Data:', userData)
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)
+      localStorage.setItem('Role', userData.roleID)
       router.push('/')
     } catch (error) {
       toast.error('Invalid Credentials')

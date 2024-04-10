@@ -16,8 +16,8 @@ const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
-  const LocalData = localStorage.getItem('user')
-  const Local = JSON.parse(LocalData)
+  let LocalData = localStorage.getItem('user')
+  let Local = JSON.parse(LocalData)
 
   useEffect(() => {
     const importBootstrap = async () => {
@@ -50,6 +50,7 @@ const App = ({ Component, pageProps }) => {
       if (route === '/') {
         return true
       }
+      console.log('Local', Local)
 
       return Local.some(item => `/${item.module.name}` === route)
     }

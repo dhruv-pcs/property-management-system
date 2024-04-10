@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Permission = () => {
   const theme = useTheme()
@@ -18,6 +20,7 @@ const Permission = () => {
         })
         setPermissionData(response.data.data.permissionData)
       } catch (error) {
+        toast.error('Error Fetching Data')
         console.error(error)
       }
     }
@@ -184,6 +187,7 @@ const Permission = () => {
           }
         />
       </div>
+      <ToastContainer />
     </>
   )
 }
