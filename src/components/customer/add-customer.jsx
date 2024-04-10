@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -62,8 +64,10 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
+        toast.success('Customer added successfully')
       }
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log('error', error)
     }
   }
@@ -128,6 +132,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                           validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
                         })}
                       />
+                      {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -218,6 +223,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
+      <ToastContainer />
     </>
   )
 }

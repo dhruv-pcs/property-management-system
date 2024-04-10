@@ -109,7 +109,7 @@ const MyProSidebar = () => {
               return (
                 <div key={index}>
                   {Local?.map(local => {
-                    if (item.subject === local.module.alias_name) {
+                    if (local.view && item.subject === local.module.alias_name) {
                       return (
                         <Item
                           key={local.id}

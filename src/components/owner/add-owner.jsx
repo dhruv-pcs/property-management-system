@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -54,6 +56,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
         toast.success('Owner added successfully')
       }
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log('error', error)
     }
   }
@@ -207,6 +210,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
+      <ToastContainer />
     </>
   )
 }

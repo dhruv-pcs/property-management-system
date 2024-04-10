@@ -8,6 +8,8 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Owner = () => {
   const theme = useTheme()
@@ -73,8 +75,10 @@ const Owner = () => {
       if (response.data.statusCode === 200) {
         setOpenDelete(!openDelete)
         handleOwnerDataUpdate()
+        toast.success('Owner Deleted Successfully')
       }
     } catch (error) {
+      toast.error('Error Deleting Owner')
       console.log('error', error)
     }
   }
@@ -470,6 +474,7 @@ const Owner = () => {
           </div>
         </DialogContent>
       </Dialog>
+      <ToastContainer />
     </>
   )
 }

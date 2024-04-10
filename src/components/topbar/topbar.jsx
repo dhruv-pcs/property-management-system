@@ -12,6 +12,8 @@ import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
 import axios from 'axios'
 import Router from 'next/router'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Topbar = () => {
   const theme = useTheme()
@@ -29,51 +31,55 @@ const Topbar = () => {
         Router.push('/login')
       }
     } catch (error) {
+      toast.error('Something went wrong')
       console.log(error)
     }
   }
 
   return (
-    <header>
-      <Box
-        display='flex'
-        justifyContent='space-between'
-        p={1}
-        position='sticky'
-        top={0}
-        zIndex={1}
-        backgroundColor={colors.primary[500]}
-        boxShadow={'0 0 10px 0 rgba(0, 0, 0, 0.5)'}
-      >
-        <Box display='flex'>
-          {broken && (
-            <IconButton sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
-              <MenuOutlinedIcon />
+    <>
+      <header>
+        <Box
+          display='flex'
+          justifyContent='space-between'
+          p={1}
+          position='sticky'
+          top={0}
+          zIndex={1}
+          backgroundColor={colors.primary[500]}
+          boxShadow={'0 0 10px 0 rgba(0, 0, 0, 0.5)'}
+        >
+          <Box display='flex'>
+            {broken && (
+              <IconButton sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
+                <MenuOutlinedIcon />
+              </IconButton>
+            )}
+            <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
+              <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
+              <IconButton type='button'>
+                <SearchIcon />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box display='flex'>
+            <IconButton onClick={colorMode.toggleColorMode}>
+              {theme.palette.mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
             </IconButton>
-          )}
-          <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
-            <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
-            <IconButton type='button'>
-              <SearchIcon />
+            <Link href='/profile'>
+              <IconButton>
+                <PersonOutlinedIcon />
+              </IconButton>
+            </Link>
+
+            <IconButton onClick={() => handleLogout()}>
+              <LogoutIcon />
             </IconButton>
           </Box>
         </Box>
-        <Box display='flex'>
-          <IconButton onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
-          </IconButton>
-          <Link href='/profile'>
-            <IconButton>
-              <PersonOutlinedIcon />
-            </IconButton>
-          </Link>
-
-          <IconButton onClick={() => handleLogout()}>
-            <LogoutIcon />
-          </IconButton>
-        </Box>
-      </Box>
-    </header>
+      </header>
+      <ToastContainer />
+    </>
   )
 }
 
