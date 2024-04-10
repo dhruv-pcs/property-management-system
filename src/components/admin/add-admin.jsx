@@ -15,7 +15,19 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.string(),
+  alternate_phone: Yup.string().when('phone', {
+    is: phone => phone && phone.length === 10,
+    then: () =>
+      Yup.string().test(
+        'notEqualToPhone',
+        'Alternate phone number cannot be the same as phone number',
+        function (value) {
+          const phoneValue = this.parent.phone
+
+          return value !== phoneValue
+        }
+      )
+  }),
   pincode: Yup.number(),
   role_u_id: Yup.string().required('Role is required')
 })
@@ -38,6 +50,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
 
   const onSubmit = async data => {
     data.language = 'English'
+    console.log('data', data)
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -145,7 +158,14 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>Alternative Phone No:</Form.Label>
-                    <Form.Control type='text' placeholder='Alternative phone number' {...register('alternate_phone')} />
+                    <Form.Control
+                      type='text'
+                      placeholder='Alternative phone number'
+                      {...register('alternate_phone', {
+                        validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
+                      })}
+                    />
+                    {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>

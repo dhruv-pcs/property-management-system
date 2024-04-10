@@ -41,7 +41,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           view: false,
           add: false,
           update: false,
-          delete: false,
+          remove: false,
           notification: false
         }
       })
@@ -64,7 +64,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           view: false,
           add: false,
           update: false,
-          delete: false,
+          remove: false,
           notification: false,
           selectAll: false
         }
@@ -90,7 +90,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         view: value,
         add: value,
         update: value,
-        delete: value,
+        remove: value,
         notification: value
       }
     }))
@@ -107,7 +107,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         view: value,
         add: value,
         update: value,
-        delete: value,
+        remove: value,
         notification: value
       }
     })
@@ -123,7 +123,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         const moduleData = permissions[moduleId]
 
         const selectedPermissions = Object.keys(moduleData)
-          .filter(permission => permission !== 'u_id' && permission !== 'selectAll' && moduleData[permission])
+          .filter(permission => permission !== 'selectAll')
           .map(permission => ({
             [permission]: moduleData[permission]
           }))
@@ -145,6 +145,8 @@ const AddRole = ({ onUpdate, onClose }) => {
         // If role name is empty, prevent form submission
         return
       }
+
+      console.log('payload:', payload)
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -225,7 +227,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                 </TableCell>
                 <TableCell>
                   <Checkbox
-                    checked={permissions[item.u_id]?.delete || false}
+                    checked={permissions[item.u_id]?.remove || false}
                     onChange={e => handlePermissionChange(item.u_id, 'delete', e.target.checked)}
                     disabled={!permissions[item.u_id]?.view || selectAll}
                   />

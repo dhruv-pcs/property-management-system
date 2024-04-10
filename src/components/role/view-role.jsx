@@ -33,38 +33,40 @@ const ViewRole = ({ roleData }) => {
     }
   }
 
-  const fetchPermissions = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      const userPermissions = response.data.data.permissions
-      const defaultPermissions = {}
-
-      data.forEach(module => {
-        const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id)
-        defaultPermissions[module.u_id] = {
-          u_id: module.u_id,
-          selectAll: userHasPermissionForModule,
-          view: userHasPermissionForModule,
-          add: userHasPermissionForModule,
-          update: userHasPermissionForModule,
-          delete: userHasPermissionForModule,
-          notification: userHasPermissionForModule
-        }
-      })
-
-      setPermissions(defaultPermissions)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   useEffect(() => {
-    fetchData()
-    fetchPermissions() // Add fetchPermissions to the dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // No dependencies
+    const fetchPermissions = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        const userPermissions = response.data.data.permissions
+        const defaultPermissions = {}
+        data.forEach(module => {
+          const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id)
+          defaultPermissions[module.u_id] = {
+            u_id: module.u_id,
+            selectAll: userHasPermissionForModule,
+            view: userHasPermissionForModule,
+            add: userHasPermissionForModule,
+            update: userHasPermissionForModule,
+            remove: userHasPermissionForModule,
+            notification: userHasPermissionForModule
+          }
+        })
+
+        setPermissions(defaultPermissions)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    const fetchDataAndPermissions = async () => {
+      await fetchData()
+      await fetchPermissions()
+    }
+
+    fetchDataAndPermissions()
+  }, [roleData, data])
 
   return (
     <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
@@ -110,7 +112,7 @@ const ViewRole = ({ roleData }) => {
                   <Checkbox checked={permissions[item.u_id]?.update || false} disabled />
                 </TableCell>
                 <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.delete || false} disabled />
+                  <Checkbox checked={permissions[item.u_id]?.remove || false} disabled />
                 </TableCell>
                 <TableCell>
                   <Checkbox checked={permissions[item.u_id]?.notification || false} disabled />

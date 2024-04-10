@@ -246,7 +246,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                             id='inactive'
                             {...register('status', { required: true })}
                             value={false}
-                            defaultChecked={admin?.status === false && false}
+                            defaultChecked={admin?.status === false && true}
                             disabled={!editable}
                           />
                         </div>
