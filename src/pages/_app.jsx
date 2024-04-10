@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
 import '@styles-page/globals.css'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
@@ -43,22 +42,24 @@ const App = ({ Component, pageProps }) => {
         return false
       }
 
-      if (route === '/404' || route === '/400' || route === '/login' || route === '/profile') {
+      if (route === '/404' || route === '/unauthorized' || route === '/login' || route === '/profile') {
         return true
       }
 
       if (route === '/') {
         return true
       }
-      console.log('Local', Local)
+      console.log('LOCAL', Local)
 
-      return Local.some(item => `/${item.module.name}` === route)
+      return Local.some(item => {
+        if (item.view) return `/${item.module.name}` === route
+      })
     }
 
     const hasAccess = hasPermission(route)
 
     if (!hasAccess) {
-      router.push('/400')
+      router.push('/unauthorized')
     }
 
     return (
