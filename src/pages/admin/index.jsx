@@ -265,7 +265,7 @@ const Admin = () => {
           fixedHeaderScrollHeight='600px'
           className='scrollbar'
           subHeader
-          paginationRowsPerPageOptions={[1, 2, 5, 100]}
+          paginationRowsPerPageOptions={[10, 25, 50, 100]}
           pagination
           subHeaderComponent={
             admin_permission[0].add && (

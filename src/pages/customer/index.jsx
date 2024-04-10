@@ -288,7 +288,7 @@ const Customer = () => {
           fixedHeaderScrollHeight='600px'
           className='scrollbar'
           subHeader
-          paginationRowsPerPageOptions={[1, 2, 5, 100]}
+          paginationRowsPerPageOptions={[10, 25, 50, 100]}
           pagination
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
           noDataComponent={

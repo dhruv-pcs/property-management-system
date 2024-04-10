@@ -292,7 +292,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                         id='not_verified'
                         {...register('is_verified', { required: true })}
                         value={false}
-                        defaultChecked={property?.is_verified === false && true}
+                        defaultChecked={!property?.is_verified && true}
                       />
                     </div>
                   </Form.Group>
