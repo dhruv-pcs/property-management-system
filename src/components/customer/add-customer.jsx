@@ -16,24 +16,16 @@ const schema = Yup.object().shape({
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.string().when('phone', {
     is: phone => phone && phone.length === 10,
-    then: Yup.string()
-      .matches(/^\d{10}$/, 'Alternate phone number must be exactly 10 digits')
-      .test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function (value) {
-        const phoneValue = this.parent.phone
+    then: () =>
+      Yup.string().test(
+        'notEqualToPhone',
+        'Alternate phone number cannot be the same as phone number',
+        function (value) {
+          const phoneValue = this.parent.phone
 
-        return value !== phoneValue
-      }),
-    otherwise: Yup.string()
-      .test(
-        'isTenDigits',
-        'Alternate phone number must be exactly 10 digits',
-        val => val && val.toString().length === 10
+          return value !== phoneValue
+        }
       )
-      .test('notEqualToPhone', 'Alternate phone number cannot be the same as phone number', function (value) {
-        const phoneValue = this.parent.phone
-
-        return value !== phoneValue
-      })
   }),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
@@ -132,8 +124,9 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label>Alternative Phone No:</Form.Label>
                       <Form.Control
                         type='tel'
-                        placeholder='Alternative phone number'
-                        {...register('alternate_phone')}
+                        {...register('alternate_phone', {
+                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
+                        })}
                       />
                     </Form.Group>
                   </Col>

@@ -50,7 +50,6 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
 
   const onSubmit = async data => {
     data.language = 'English'
-    console.log('data', data)
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -61,9 +60,6 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
       }
     } catch (error) {
       console.log('error', error)
-      if (error.response) {
-        console.error('Error details:', error.response.data)
-      }
     }
   }
 
@@ -76,7 +72,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
         const filteredRoles = response.data.data.filter(role => role.name !== 'super-admin')
         setRoles(filteredRoles)
       } catch (error) {
-        console.error('Failed to fetch roles', error)
+        console.log('Failed to fetch roles', error)
       }
     }
 
