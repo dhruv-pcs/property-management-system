@@ -214,7 +214,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Rooms</Form.Label>
-                    <Form.Control type='tel' placeholder=' Number of Bathrooms' {...register('no_of_rooms')} />
+                    <Form.Control type='tel' placeholder=' Number of Rooms' {...register('no_of_rooms')} />
                     {errors.no_of_rooms && <span className='text-danger'>{errors.no_of_rooms.message}</span>}
                   </Form.Group>
                 </Col>
@@ -222,7 +222,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Kitchen</Form.Label>
-                    <Form.Control type='tel' placeholder=' Number of Bedrooms' {...register('no_of_kitchen')} />
+                    <Form.Control type='tel' placeholder=' Number of Kitchen' {...register('no_of_kitchen')} />
                     {errors.no_of_kitchen && <span className='text-danger'>{errors.no_of_kitchen.message}</span>}
                   </Form.Group>
                 </Col>

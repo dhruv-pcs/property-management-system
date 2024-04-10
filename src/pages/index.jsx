@@ -7,13 +7,7 @@ import AddHome from '@mui/icons-material/AddHome'
 import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
 import LineChart from '@components/dashboard/line-chart'
-
-// import ProgressCircle from '@components/dashboard/progress-circle'
-// import GeographyChart from '@components/dashboard/geography-chart'
 import { tokens } from '@theme/theme'
-
-// import { mockTransactions } from '@components/dashboard/mockData'
-// import BarChart from '@components/dashboard/bar-chart'
 
 const Dashboard = () => {
   const theme = useTheme()
@@ -128,82 +122,15 @@ const Dashboard = () => {
                   </Box>
                 </Box>
                 <Box height='250px' m='-20px 0 0 0'>
-                  <LineChart isDashboard={true} />
+                  <LineChart isDashboard={true}  />
                 </Box>
               </Box>
             </Grid>
 
-            {/* <div  className='col-1  d-md-flex justify-content-between '>
-
-            <Box backgroundColor={colors.primary[400]} p='30px'>
-              <Typography variant='h5' fontWeight='600'>
-                Campaign
-              </Typography>
-              <Box display='flex' flexDirection='column' alignItems='center' mt='25px'>
-                <ProgressCircle size='125' />
-                <Typography variant='h5' color={colors.greenAccent[500]} sx={{ mt: '15px' }}>
-                  $48,352 revenue generated
-                </Typography>
-                <Typography>Includes extra misc expenditures and costs</Typography>
-              </Box>
-            </Box>
-
-            
-            <Box backgroundColor={colors.primary[400]} padding='30px'>
-              <Typography variant='h5' fontWeight='600' sx={{ marginBottom: '15px' }}>
-                Geography Based Traffic
-              </Typography>
-              <Box height='200px'>
-                <GeographyChart isDashboard={true} />
-              </Box>
-            </Box>
           
-          
-          
-          
-        </div> */}
           </Grid>
 
-          {/* <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
-          <Box backgroundColor={colors.primary[400]} maxHeight='100vh' overflow='auto' m='25px 0 0 0'>
-            {/* <Box
-              display='flex'
-              justifyContent='space-between'
-              alignItems='center'
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              color={colors.grey[100]}
-              p='15px'
-            >
-              <Typography variant='h5' fontWeight='600' color={colors.grey[100]}>
-                Resent Transaction
-              </Typography>
-            </Box>
-            {mockTransactions.map((transaction, i) => {
-              return (
-                <Box
-                  key={`${transaction}-${i}`}
-                  display='flex'
-                  justifyContent='space-between'
-                  alignItems='center'
-                  borderBottom={`4px solid ${colors.primary[500]}`}
-                  p='15px'
-                >
-                  <Box>
-                    <Typography variant='h5' fontWeight='600' color={colors.greenAccent[100]}>
-                      {transaction.txId}
-                    </Typography>
-                    <Typography color={colors.grey[100]}>{transaction.user}</Typography>
-                  </Box>
-                  <Box color={colors.grey[100]}>{transaction.date}</Box>
-                  <Box color={colors.greenAccent[500]} p='5px 10px' borderRadius='4px'>
-                    ${transaction.cost}
-                  </Box>
-                </Box>
-              )
-            })} 
-          </Box>
-        </Grid> 
-        */}
+         
         </Grid>
       </Box>
     </>
