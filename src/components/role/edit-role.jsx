@@ -133,7 +133,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response)
 
       if (response.status === 201) {
         onUpdate()

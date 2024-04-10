@@ -25,7 +25,6 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  console.log('property:', property)
 
   const {
     register,

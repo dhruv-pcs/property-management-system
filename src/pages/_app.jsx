@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
 import '@styles-page/globals.css'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
@@ -50,7 +49,6 @@ const App = ({ Component, pageProps }) => {
       if (route === '/') {
         return true
       }
-      console.log('Local', Local)
 
       return Local.some(item => `/${item.module.name}` === route)
     }
