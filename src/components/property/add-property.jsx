@@ -211,7 +211,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 </Col>
               </Row>
               <Row className='gx-3 mb-3'>
-                <Col md={4}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Rooms</Form.Label>
                     <Form.Control type='tel' placeholder=' Number of Bathrooms' {...register('no_of_rooms')} />
@@ -219,35 +219,42 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Form.Group>
                 </Col>
 
-                <Col md={4}>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Kitchen</Form.Label>
                     <Form.Control type='tel' placeholder=' Number of Bedrooms' {...register('no_of_kitchen')} />
                     {errors.no_of_kitchen && <span className='text-danger'>{errors.no_of_kitchen.message}</span>}
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+              </Row>
+              <Row className='gx-3 mb-3'>
+                <Col md={6}>
                   <Form.Group className='mb-1'>
                     <Form.Label>No. of Balconies</Form.Label>
                     <Form.Control type='tel' placeholder=' Number of Balconies' {...register('no_of_balconies')} />
                     {errors.no_of_balconies && <span className='text-danger'>{errors.no_of_balconies.message}</span>}
                   </Form.Group>
                 </Col>
-              </Row>
-              <Row className='gx-3 mb-3'>
                 <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Latitude</Form.Label>
-                    <Form.Control type='text' placeholder='Latitude' {...register('latitude')} />
-                    {errors.latitude && <span className='text-danger'>{errors.latitude.message}</span>}
-                  </Form.Group>
-                </Col>
-
-                <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Longitude</Form.Label>
-                    <Form.Control type='text' placeholder='Longitude' {...register('longitude')} />
-                    {errors.longitude && <span className='text-danger'>{errors.longitude.message}</span>}
+                  <Form.Group>
+                    <Form.Label>Ready to Move</Form.Label>
+                    <div className='d-flex align-items-center'>
+                      <Form.Check
+                        type='radio'
+                        label='True'
+                        value='true'
+                        {...register('ready_to_move')}
+                        className='me-2'
+                      />
+                      <Form.Check
+                        type='radio'
+                        defaultChecked
+                        label='False'
+                        value='false'
+                        {...register('ready_to_move')}
+                      />
+                    </div>
+                    {errors.ready_to_move && <span className='text-danger'>{errors.ready_to_move.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
@@ -292,26 +299,26 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
               <Row className='gx-3 mb-3'>
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control as='textarea' placeholder='Enter Description' {...register('description')} />
-                    {errors.description && <span className='text-danger'>{errors.description.message}</span>}
+                    <Form.Label>Latitude</Form.Label>
+                    <Form.Control type='text' placeholder='Latitude' {...register('latitude')} />
+                    {errors.latitude && <span className='text-danger'>{errors.latitude.message}</span>}
                   </Form.Group>
                 </Col>
 
                 <Col md={6}>
-                  <Form.Group>
-                    <Form.Label>Ready to Move</Form.Label>
-                    <div className='d-flex align-items-center'>
-                      <Form.Check
-                        type='radio'
-                        label='True'
-                        value='true'
-                        {...register('ready_to_move')}
-                        className='me-2'
-                      />
-                      <Form.Check type='radio' label='False' value='false' {...register('ready_to_move')} />
-                    </div>
-                    {errors.ready_to_move && <span className='text-danger'>{errors.ready_to_move.message}</span>}
+                  <Form.Group className='mb-1'>
+                    <Form.Label>Longitude</Form.Label>
+                    <Form.Control type='text' placeholder='Longitude' {...register('longitude')} />
+                    {errors.longitude && <span className='text-danger'>{errors.longitude.message}</span>}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className='gx-3 mb-3'>
+                <Col md={12}>
+                  <Form.Group className='mb-1'>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control as='textarea' placeholder='Enter Description' {...register('description')} />
+                    {errors.description && <span className='text-danger'>{errors.description.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>

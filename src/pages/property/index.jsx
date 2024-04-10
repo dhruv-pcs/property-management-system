@@ -386,7 +386,7 @@ const Property = () => {
           className='d-flex flex-column'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <h4>Are you sure you want to delete this Owner?</h4>
+          <h4>Are you sure you want to delete this Property?</h4>
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
