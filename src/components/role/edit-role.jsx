@@ -255,11 +255,11 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Button variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
+        <Button aria-label='Save' variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
           Save Permissions
         </Button>
       </div>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

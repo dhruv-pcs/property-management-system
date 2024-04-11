@@ -152,6 +152,7 @@ const Customer = () => {
         <div className='d-flex gap-2'>
           {customer_permission[0]?.view && (
             <button
+              aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
               onClick={() => handelViewbutton(row)}
@@ -161,6 +162,7 @@ const Customer = () => {
           )}
           {customer_permission[0]?.update && (
             <button
+              aria-label='Edit'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
               onClick={() => handelEditbutton(row)}
@@ -170,6 +172,7 @@ const Customer = () => {
           )}
           {customer_permission[0]?.remove && (
             <button
+              aria-label='Delete'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
               onClick={() => handelDeletebutton(row)}
@@ -306,6 +309,7 @@ const Customer = () => {
           actions={
             customer_permission[0]?.add && (
               <Button
+                aria-label='Add'
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
@@ -469,7 +473,7 @@ const Customer = () => {
           </div>
         </DialogContent>
       </Dialog>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

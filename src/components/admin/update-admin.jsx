@@ -67,7 +67,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
         toast.success('Admin updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error updating admin')
       console.log('error', error)
     }
   }
@@ -267,6 +267,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     {!isViewOnly && (
                       <div className='d-flex'>
                         <Button
+                          aria-label='Edit'
                           onClick={() => setEditable(!editable)}
                           className='mb-3'
                           style={{ backgroundColor: colors.blueAccent[600] }}
@@ -276,6 +277,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
 
                         {editable && (
                           <Button
+                            aria-label='Save'
                             className='ms-2 mb-3 h-fit'
                             type='submit'
                             style={{ backgroundColor: colors.blueAccent[600] }}
@@ -292,7 +294,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

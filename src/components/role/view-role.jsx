@@ -13,116 +13,107 @@ import {
   useMediaQuery
 } from '@mui/material'
 import { tokens } from '@theme/theme'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const ViewRole = ({ roleData }) => {
-  const [data, setData] = useState([])
+  const [moduleData, setModuleData] = useState([])
   const [permissions, setPermissions] = useState({})
-  const [roleName, setRoleName] = useState(roleData?.name)
+  const [roleName, setRoleName] = useState('')
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const colors = tokens(theme.palette.mode)
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      setData(response.data.data.moduleData)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   useEffect(() => {
-    const fetchPermissions = async () => {
+    const fetchModuleData = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+        if (!roleData || !roleData.u_id) {
+          console.error('Role data is missing or incomplete')
+
+          return
+        }
+
+        const roleResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        const userPermissions = response.data.data.permissions
-        const defaultPermissions = {}
-        data.forEach(module => {
-          const userHasPermissionForModule = userPermissions.some(permission => permission.module_u_id === module.u_id)
-          defaultPermissions[module.u_id] = {
-            u_id: module.u_id,
-            selectAll: userHasPermissionForModule,
-            view: userHasPermissionForModule,
-            add: userHasPermissionForModule,
-            update: userHasPermissionForModule,
-            remove: userHasPermissionForModule,
-            notification: userHasPermissionForModule
+        setRoleName(roleResponse.data.data.roleName)
+        const rolePermissions = roleResponse.data.data.permissions
+
+        const initialPermissions = {}
+        const moduleData = []
+        rolePermissions.forEach(permission => {
+          const moduleId = permission.u_id
+          if (!initialPermissions[moduleId]) {
+            initialPermissions[moduleId] = {
+              selectAll:
+                permission.view && permission.add && permission.update && permission.remove && permission.notification,
+              view: permission.view,
+              add: permission.add,
+              update: permission.update,
+              remove: permission.remove,
+              notification: permission.notification
+            }
+            moduleData.push(permission)
           }
         })
-
-        setPermissions(defaultPermissions)
+        setPermissions(initialPermissions)
+        setModuleData(moduleData)
       } catch (error) {
+        toast.error('Error fetching role data')
         console.error(error)
       }
     }
-
-    const fetchDataAndPermissions = async () => {
-      await fetchData()
-      await fetchPermissions()
-    }
-
-    fetchDataAndPermissions()
-  }, [roleData, data])
+    fetchModuleData()
+  }, [roleData])
 
   return (
-    <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
-      <TextField
-        label='Role Name'
-        value={roleName}
-        onChange={e => setRoleName(e.target.value)}
-        fullWidth
-        margin='normal'
-        disabled // Disable editing the role name
-      />
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow className='text-center '>
-              <TableCell sx={{ width: '40%' }}>Module Name</TableCell>
-              <TableCell sx={{ width: '20%' }}>Select All</TableCell>
-              <TableCell sx={{ width: '10%' }}>View</TableCell>
-              <TableCell sx={{ width: '10%' }}>Add</TableCell>
-              <TableCell sx={{ width: '10%' }}>Update</TableCell>
-              <TableCell sx={{ width: '10%' }}>Delete</TableCell>
-              <TableCell sx={{ width: '10%' }}>Notification</TableCell>
-            </TableRow>
-          </TableHead>
-        </Table>
-      </TableContainer>
-      <TableContainer className='overflow-auto' style={{ maxHeight: 400 }}>
-        <Table>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index} className=''>
-                <TableCell>{item.alias_name}</TableCell>
-                <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.selectAll || false} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.view || false} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.add || false} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.update || false} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.remove || false} disabled />
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={permissions[item.u_id]?.notification || false} disabled />
-                </TableCell>
+    <>
+      <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
+        <TextField label='Role Name' value={roleName} fullWidth margin='normal' disabled />
+
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className='text-center'>
+                <TableCell sx={{ width: '40%' }}>Module Name</TableCell>
+                <TableCell sx={{ width: '20%' }}>Select All</TableCell>
+                <TableCell sx={{ width: '10%' }}>View</TableCell>
+                <TableCell sx={{ width: '10%' }}>Add</TableCell>
+                <TableCell sx={{ width: '10%' }}>Update</TableCell>
+                <TableCell sx={{ width: '10%' }}>Delete</TableCell>
+                <TableCell sx={{ width: '10%' }}>Notification</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            </TableHead>
+            <TableBody>
+              {moduleData.map(item => (
+                <TableRow key={item.u_id}>
+                  <TableCell>{item.module.alias_name}</TableCell>
+                  <TableCell>
+                    <Checkbox checked={permissions[item.u_id]?.selectAll || false} disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox checked={permissions[item.u_id]?.view || false} disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox checked={permissions[item.u_id]?.add || false} disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox checked={permissions[item.u_id]?.update || false} disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox checked={permissions[item.u_id]?.remove || false} disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox checked={permissions[item.u_id]?.notification || false} disabled />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+      <ToastContainer />
+    </>
   )
 }
 

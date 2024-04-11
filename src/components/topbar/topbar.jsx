@@ -51,34 +51,34 @@ const Topbar = () => {
         >
           <Box display='flex'>
             {broken && (
-              <IconButton sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
+              <IconButton aria-label='Menu' sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
                 <MenuOutlinedIcon />
               </IconButton>
             )}
             <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
               <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
-              <IconButton type='button'>
+              <IconButton aria-label='Search' type='button'>
                 <SearchIcon />
               </IconButton>
             </Box>
           </Box>
           <Box display='flex'>
-            <IconButton onClick={colorMode.toggleColorMode}>
+            <IconButton aria-label='Mode' onClick={colorMode.toggleColorMode}>
               {theme.palette.mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
             </IconButton>
-            <Link href='/profile'>
+            <Link aria-label='Profile' href='/profile'>
               <IconButton>
                 <PersonOutlinedIcon />
               </IconButton>
             </Link>
 
-            <IconButton onClick={() => handleLogout()}>
+            <IconButton aria-label='Logout' onClick={() => handleLogout()}>
               <LogoutIcon />
             </IconButton>
           </Box>
         </Box>
       </header>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

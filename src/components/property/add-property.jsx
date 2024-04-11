@@ -72,7 +72,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
         toast.success('Property added successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error adding property')
       console.log('error', error)
     }
   }
@@ -336,6 +336,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Col>
                 </Row>
                 <Button
+                  aria-label='Add'
                   type='submit'
                   style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                   className='ms-2 mb-3 w-100 h-fit'
@@ -347,7 +348,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

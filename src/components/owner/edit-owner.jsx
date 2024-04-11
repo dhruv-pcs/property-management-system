@@ -76,7 +76,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
         toast.success('Owner updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error updating owner')
       console.log('error', error)
     }
   }
@@ -331,7 +331,12 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                   </Col>
                 </Row>
 
-                <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
+                <Button
+                  aria-label='save'
+                  type='submit'
+                  style={{ backgroundColor: colors.blueAccent[600] }}
+                  className='ms-2 mb-3 h-fit'
+                >
                   Save changes
                 </Button>
               </Form>
@@ -339,7 +344,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

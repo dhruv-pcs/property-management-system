@@ -19,6 +19,7 @@ const Footer = () => {
         <Box>
           <div className='d-flex  justify-content-center'>
             <Link
+              aria-label='Codentic Software'
               className='ms-1 text-decoration-none'
               style={{ color: colors.grey[100] }}
               href={'https://www.codenticsoftware.com/'}
@@ -28,15 +29,15 @@ const Footer = () => {
           </div>
         </Box>
         <Box className='d-flex justify-content-center'>
-          <Link href='https://www.facebook.com/codentic.software'>
+          <Link aria-label='Facebook' href='https://www.facebook.com/codentic.software'>
             <Facebook style={{ color: colors.grey[100] }} />
           </Link>
           &nbsp;
-          <Link href='https://www.linkedin.com/company/codentic-software'>
+          <Link aria-label='LinkedIn' href='https://www.linkedin.com/company/codentic-software'>
             <LinkedIn style={{ color: colors.grey[100] }} />
           </Link>
           &nbsp;
-          <Link href='https://www.instagram.com/codentic.software/'>
+          <Link aria-label='Instagram' href='https://www.instagram.com/codentic.software/'>
             <Instagram style={{ color: colors.grey[100] }} />
           </Link>
           &nbsp;

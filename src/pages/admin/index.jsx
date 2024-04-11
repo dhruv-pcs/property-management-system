@@ -55,10 +55,6 @@ const Admin = () => {
     }
   }
 
-  const handleAddButton = () => {
-    showAddModal(true)
-  }
-
   const handleAdminDataUpdate = async () => {
     await fetchData()
   }
@@ -128,10 +124,10 @@ const Admin = () => {
         <div className='d-flex gap-2'>
           {!row.is_superadmin && admin_permission[0].view && (
             <button
+              aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
               onClick={() => handelViewbutton(row)}
-              aria-label='View'
             >
               <Visibility />
             </button>
@@ -151,6 +147,7 @@ const Admin = () => {
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
               onClick={() => handelDeletebutton(row)}
+              aria-label='Delete'
             >
               <Delete />
             </button>
@@ -301,7 +298,7 @@ const Admin = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <AddAdmin handelAddbutton={handleAddButton} onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
+          <AddAdmin onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
         </DialogContent>
       </Dialog>
       <Dialog
@@ -413,7 +410,7 @@ const Admin = () => {
           </div>
         </DialogContent>
       </Dialog>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

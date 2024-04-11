@@ -70,7 +70,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
         toast.success('Property updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error updating property')
       console.log('error', error.response ? error.response.data : error)
     }
   }
@@ -303,6 +303,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                 </Row>
                 <Button
+                  aria-label='Save changes'
                   type='submit'
                   style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                   className='ms-2 mb-3 fs-6 h-fit'
@@ -314,7 +315,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

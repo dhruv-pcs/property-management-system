@@ -56,7 +56,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
         toast.success('Owner added successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error("Owner can't be added")
       console.log('error', error)
     }
   }
@@ -198,6 +198,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
 
                 <div className='d-flex '>
                   <Button
+                    aria-label='Add'
                     type='submit'
                     className='w-100'
                     style={{ backgroundColor: colors.blueAccent[500], color: colors.grey[100] }}
@@ -210,7 +211,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }
