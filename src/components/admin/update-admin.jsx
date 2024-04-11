@@ -67,7 +67,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
         toast.success('Admin updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error updating admin')
       console.log('error', error)
     }
   }
@@ -292,7 +292,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

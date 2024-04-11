@@ -259,7 +259,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
           Save Permissions
         </Button>
       </div>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

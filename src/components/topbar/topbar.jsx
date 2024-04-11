@@ -78,7 +78,7 @@ const Topbar = () => {
           </Box>
         </Box>
       </header>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

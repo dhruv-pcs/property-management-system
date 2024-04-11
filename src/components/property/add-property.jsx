@@ -72,7 +72,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
         toast.success('Property added successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error adding property')
       console.log('error', error)
     }
   }
@@ -347,7 +347,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }
