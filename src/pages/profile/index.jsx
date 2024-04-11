@@ -11,6 +11,7 @@ import * as Yup from 'yup'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import ProfileImage from '../../../public/images/profile/Img1.png'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -100,7 +101,7 @@ const Profile = () => {
               <div className='d-flex justify-content-center'>
                 <Image
                   className='img-account-profile  rounded-circle mb-2 img-fluid'
-                  src={'/images/profile/img1.png'}
+                  src={ProfileImage}
                   alt=''
                   width={200}
                   height={200}
@@ -308,7 +309,7 @@ const Profile = () => {
         </Col>
       </Row>
 
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

@@ -67,7 +67,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
         toast.success('Customer added successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error("Customer can't be added")
       console.log('error', error)
     }
   }
@@ -223,7 +223,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

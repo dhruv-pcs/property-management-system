@@ -56,7 +56,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
         toast.success('Owner added successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error("Owner can't be added")
       console.log('error', error)
     }
   }
@@ -210,7 +210,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

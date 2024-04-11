@@ -76,7 +76,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
         toast.success('Owner updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error updating owner')
       console.log('error', error)
     }
   }
@@ -339,7 +339,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }
