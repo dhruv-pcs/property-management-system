@@ -8,6 +8,8 @@ import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import DataTable from 'react-data-table-component'
 import { tokens } from '@theme/theme'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Property = () => {
   const theme = useTheme()
@@ -18,6 +20,12 @@ const Property = () => {
   const [selectedRow, setSelectedRow] = useState('121')
   const [openDelete, setOpenDelete] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
+
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+
+  const property_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Property')
+    .map(permission => permission)
 
   const fetchData = async () => {
     try {
@@ -65,8 +73,10 @@ const Property = () => {
       if (response.data.statusCode === 200) {
         setOpenDelete(!openDelete)
         handlePropertyDataUpdate()
+        toast.success('Property deleted successfully!')
       }
     } catch (error) {
+      toast.error('Something went wrong')
       console.log('error', error)
     }
   }
@@ -96,27 +106,33 @@ const Property = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100] }}
-            onClick={() => handelViewbutton(row)}
-          >
-            <Visibility />
-          </button>
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100] }}
-            onClick={() => handelEditbutton(row)}
-          >
-            <Edit />
-          </button>
-          <button
-            className='btn p-0  m-0 bg-none'
-            style={{ color: colors.redAccent[600] }}
-            onClick={() => handelDeletebutton(row)}
-          >
-            <Delete />
-          </button>
+          {property_permission[0].view && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100] }}
+              onClick={() => handelViewbutton(row)}
+            >
+              <Visibility />
+            </button>
+          )}
+          {property_permission[0].update && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100] }}
+              onClick={() => handelEditbutton(row)}
+            >
+              <Edit />
+            </button>
+          )}
+          {property_permission[0].remove && (
+            <button
+              className='btn p-0  m-0 bg-none'
+              style={{ color: colors.redAccent[600] }}
+              onClick={() => handelDeletebutton(row)}
+            >
+              <Delete />
+            </button>
+          )}
         </div>
       )
     }
@@ -234,7 +250,7 @@ const Property = () => {
           fixedHeaderScrollHeight='600px'
           className='scrollbar'
           subHeader
-          paginationRowsPerPageOptions={[1, 2, 5, 100]}
+          paginationRowsPerPageOptions={[10, 25, 50, 100]}
           pagination
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
           noDataComponent={
@@ -245,7 +261,7 @@ const Property = () => {
             </>
           }
           actions={
-            <>
+            property_permission[0].add && (
               <Button
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
@@ -253,152 +269,149 @@ const Property = () => {
               >
                 Add
               </Button>
-
-              <Dialog
-                className='z-3'
-                onClose={handelAddbutton}
-                aria-labelledby='customized-dialog-title'
-                open={openAdd}
-              >
-                <DialogTitle
-                  sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                  className='fw-bold fs-3'
-                  id='customized-dialog-title'
-                >
-                  Add Property
-                </DialogTitle>
-                <IconButton
-                  aria-label='close'
-                  onClick={handelAddbutton}
-                  sx={{
-                    position: 'absolute',
-                    right: 16,
-                    top: 20,
-                    color: colors.grey[100]
-                  }}
-                >
-                  <Close />
-                </IconButton>
-                <DialogContent
-                  dividers
-                  className='d-flex justify-content-center'
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                >
-                  <AddProperty handelAddbutton={handelAddbutton} onUpdate={handlePropertyDataUpdate} />
-                </DialogContent>
-              </Dialog>
-
-              <Dialog onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
-                <DialogTitle
-                  sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                  className='fw-bold fs-3'
-                  id='customized-dialog-title'
-                >
-                  Edit Property
-                </DialogTitle>
-                <IconButton
-                  aria-label='close'
-                  onClick={handelEditbutton}
-                  sx={{
-                    position: 'absolute',
-                    right: 16,
-                    top: 20,
-                    color: colors.grey[100]
-                  }}
-                >
-                  <Close />
-                </IconButton>
-                <DialogContent
-                  dividers
-                  className='d-flex justify-content-center'
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                >
-                  <EditProperty
-                    handelEditbutton={handelEditbutton}
-                    property={selectedRow}
-                    onUpdate={handlePropertyDataUpdate}
-                  />
-                </DialogContent>
-              </Dialog>
-
-              <Dialog onClose={handelViewbutton} aria-labelledby='customized-dialog-title' open={openView}>
-                <DialogTitle
-                  sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                  className='fw-bold fs-3'
-                  id='customized-dialog-title'
-                >
-                  View Property
-                </DialogTitle>
-                <IconButton
-                  aria-label='close'
-                  onClick={handelViewbutton}
-                  sx={{
-                    position: 'absolute',
-                    right: 16,
-                    top: 20,
-                    color: colors.grey[100]
-                  }}
-                >
-                  <Close />
-                </IconButton>
-                <DialogContent
-                  dividers
-                  className='d-flex justify-content-center'
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                >
-                  <ViewProperty property={selectedRow} />
-                </DialogContent>
-              </Dialog>
-
-              <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
-                <DialogTitle
-                  sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                  className='fw-bold fs-3'
-                  id='customized-dialog-title'
-                >
-                  Delete Property
-                </DialogTitle>
-                <IconButton
-                  aria-label='close'
-                  onClick={handelDeletebutton}
-                  sx={{
-                    position: 'absolute',
-                    right: 16,
-                    top: 20,
-                    color: colors.grey[100]
-                  }}
-                >
-                  <Close />
-                </IconButton>
-                <DialogContent
-                  dividers
-                  className='d-flex flex-column'
-                  sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-                >
-                  <h4>Are you sure you want to delete this Owner?</h4>
-
-                  <div className='d-flex justify-content-between mt-5'>
-                    <Button
-                      onClick={handelDeletebutton}
-                      className='btn fs-5 px-2 m-0'
-                      style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={() => handelDeleteConfirmation(selectedRow)}
-                      className='btn fs-5 px-2 m-0'
-                      style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </>
+            )
           }
         />
       </div>
+
+      <Dialog className='z-3' onClose={handelAddbutton} aria-labelledby='customized-dialog-title' open={openAdd}>
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Add Property
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelAddbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <AddProperty handelAddbutton={handelAddbutton} onUpdate={handlePropertyDataUpdate} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Edit Property
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelEditbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <EditProperty
+            handelEditbutton={handelEditbutton}
+            property={selectedRow}
+            onUpdate={handlePropertyDataUpdate}
+          />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog onClose={handelViewbutton} aria-labelledby='customized-dialog-title' open={openView}>
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          View Property
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelViewbutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <ViewProperty property={selectedRow} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Delete Property
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelDeletebutton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex flex-column'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <h4>Are you sure you want to delete this Property?</h4>
+
+          <div className='d-flex justify-content-between mt-5'>
+            <Button
+              onClick={handelDeletebutton}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handelDeleteConfirmation(selectedRow)}
+              className='btn fs-5 px-2 m-0'
+              style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
+            >
+              Delete
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <ToastContainer />
     </>
   )
 }

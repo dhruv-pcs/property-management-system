@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -14,11 +16,19 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.string().test(
-    'len',
-    'Phone number must be exactly 10 digits',
-    val => val && val.toString().length === 10
-  ),
+  alternate_phone: Yup.string().when('phone', {
+    is: phone => phone && phone.length === 10,
+    then: () =>
+      Yup.string().test(
+        'notEqualToPhone',
+        'Alternate phone number cannot be the same as phone number',
+        function (value) {
+          const phoneValue = this.parent.phone
+
+          return value !== phoneValue
+        }
+      )
+  }),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
@@ -54,8 +64,10 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
       if (response.data.statusCode === 201) {
         onUpdate()
         handelAddbutton()
+        toast.success('Customer added successfully')
       }
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log('error', error)
     }
   }
@@ -116,9 +128,11 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label>Alternative Phone No:</Form.Label>
                       <Form.Control
                         type='tel'
-                        placeholder='Alternative phone number'
-                        {...register('alternate_phone')}
+                        {...register('alternate_phone', {
+                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
+                        })}
                       />
+                      {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -209,6 +223,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
+      <ToastContainer />
     </>
   )
 }

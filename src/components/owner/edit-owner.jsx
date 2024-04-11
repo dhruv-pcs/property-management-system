@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { useEffect } from 'react'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -68,12 +70,13 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      console.log('response', response)
       if (response.status === 201) {
         handelEditbutton()
         onUpdate()
+        toast.success('Owner updated successfully')
       }
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log('error', error)
     }
   }
@@ -336,6 +339,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
           </Card>
         </Col>
       </Row>
+      <ToastContainer />
     </>
   )
 }

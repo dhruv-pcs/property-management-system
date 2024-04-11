@@ -13,6 +13,27 @@ const LineChart = ({ isDashboard = false }) => {
 
   return (
     <ResponsiveLine
+      crosshairType='null'
+      role='application'
+      lineWidth={2}
+      layers={['grid', 'axes', 'points', 'areas', 'slices', 'mesh', 'legends', 'tooltip', 'crosshair', 'lines']}
+      fill={[]}
+      defs={[]}
+      enableCrosshair={true}
+      animate={true}
+      debugSlices={false}
+      enableSlices={false}
+      debugMesh={false}
+      isInteractive={true}
+      areaBaselineValue={0}
+      areaBlendMode='normal'
+      areaOpacity={0.1}
+      enableArea
+      enablePointLabel={false}
+      enablePoints={true}
+      pointLabelYOffset={-12}
+      label={false}
+      pointSize={10}
       theme={{
         axis: {
           domain: {
@@ -83,11 +104,9 @@ const LineChart = ({ isDashboard = false }) => {
       }}
       enableGridX={false}
       enableGridY={!isDashboard}
-      pointSize={10}
       pointColor={{ theme: 'background' }}
       pointBorderWidth={2}
       pointBorderColor={{ from: 'serieColor' }}
-      pointLabelYOffset={-12}
       useMesh={true}
       legends={[
         {

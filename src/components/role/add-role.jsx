@@ -15,6 +15,8 @@ import {
   useMediaQuery
 } from '@mui/material'
 import { tokens } from '@theme/theme'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const AddRole = ({ onUpdate, onClose }) => {
   const [data, setData] = useState([])
@@ -41,7 +43,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           view: false,
           add: false,
           update: false,
-          delete: false,
+          remove: false,
           notification: false
         }
       })
@@ -64,7 +66,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           view: false,
           add: false,
           update: false,
-          delete: false,
+          remove: false,
           notification: false,
           selectAll: false
         }
@@ -90,7 +92,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         view: value,
         add: value,
         update: value,
-        delete: value,
+        remove: value,
         notification: value
       }
     }))
@@ -107,7 +109,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         view: value,
         add: value,
         update: value,
-        delete: value,
+        remove: value,
         notification: value
       }
     })
@@ -116,14 +118,14 @@ const AddRole = ({ onUpdate, onClose }) => {
 
   const handleSubmit = async () => {
     try {
-      setFormSubmitted(true) // Set form submission status to true
+      setFormSubmitted(true)
       const permissionsPayload = []
 
       Object.keys(permissions).forEach(moduleId => {
         const moduleData = permissions[moduleId]
 
         const selectedPermissions = Object.keys(moduleData)
-          .filter(permission => permission !== 'u_id' && permission !== 'selectAll' && moduleData[permission])
+          .filter(permission => permission !== 'selectAll')
           .map(permission => ({
             [permission]: moduleData[permission]
           }))
@@ -152,100 +154,105 @@ const AddRole = ({ onUpdate, onClose }) => {
       if (response.status === 201) {
         onUpdate()
         onClose()
+        toast.success('Role created successfully')
       }
     } catch (error) {
-      console.error('Error:', error)
+      toast.error('Failed to create role')
+      console.log('Error:', error)
     }
   }
 
   return (
-    <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
-      <TextField
-        label='Role Name'
-        value={roleName}
-        onChange={e => setRoleName(e.target.value)}
-        fullWidth
-        margin='normal'
-        required
-        error={formSubmitted && roleName.trim() === ''}
-      />
-      {formSubmitted && roleName.trim() === '' && (
-        <FormHelperText error>Please enter a role name</FormHelperText> // Show error message
-      )}
-      <Checkbox checked={selectAll} onChange={e => handleGlobalSelectAllChange(e.target.checked)} />
-      Select All Permissions
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow className='text-center '>
-              <TableCell sx={{ width: '40%' }}>Module Name</TableCell>
-              <TableCell sx={{ width: '20%' }}>Select All</TableCell>
-              <TableCell sx={{ width: '10%' }}>View</TableCell>
-              <TableCell sx={{ width: '10%' }}>Add</TableCell>
-              <TableCell sx={{ width: '10%' }}>Update</TableCell>
-              <TableCell sx={{ width: '10%' }}>Delete</TableCell>
-              <TableCell sx={{ width: '10%' }}>Notification</TableCell>
-            </TableRow>
-          </TableHead>
-        </Table>
-      </TableContainer>
-      <TableContainer className='overflow-auto' style={{ maxHeight: 400 }}>
-        <Table>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index} className=''>
-                <TableCell>{item.alias_name}</TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.selectAll || false}
-                    disabled={selectAll}
-                    onChange={e => handleSelectAllChange(item.u_id, e.target.checked)}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.view || false}
-                    disabled={selectAll}
-                    onChange={e => handlePermissionChange(item.u_id, 'view', e.target.checked)}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.add || false}
-                    onChange={e => handlePermissionChange(item.u_id, 'add', e.target.checked)}
-                    disabled={!permissions[item.u_id]?.view || selectAll}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.update || false}
-                    onChange={e => handlePermissionChange(item.u_id, 'update', e.target.checked)}
-                    disabled={!permissions[item.u_id]?.view || selectAll}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.delete || false}
-                    onChange={e => handlePermissionChange(item.u_id, 'delete', e.target.checked)}
-                    disabled={!permissions[item.u_id]?.view || selectAll}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={permissions[item.u_id]?.notification || false}
-                    onChange={e => handlePermissionChange(item.u_id, 'notification', e.target.checked)}
-                    disabled={!permissions[item.u_id]?.view || selectAll}
-                  />
-                </TableCell>
+    <>
+      <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
+        <TextField
+          label='Role Name'
+          value={roleName}
+          onChange={e => setRoleName(e.target.value)}
+          fullWidth
+          margin='normal'
+          required
+          error={formSubmitted && roleName.trim() === ''}
+        />
+        {formSubmitted && roleName.trim() === '' && (
+          <FormHelperText error>Please enter a role name</FormHelperText> // Show error message
+        )}
+        <Checkbox checked={selectAll} onChange={e => handleGlobalSelectAllChange(e.target.checked)} />
+        Select All Permissions
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className='text-center '>
+                <TableCell sx={{ width: '40%' }}>Module Name</TableCell>
+                <TableCell sx={{ width: '20%' }}>Select All</TableCell>
+                <TableCell sx={{ width: '10%' }}>View</TableCell>
+                <TableCell sx={{ width: '10%' }}>Add</TableCell>
+                <TableCell sx={{ width: '10%' }}>Update</TableCell>
+                <TableCell sx={{ width: '10%' }}>Delete</TableCell>
+                <TableCell sx={{ width: '10%' }}>Notification</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
-        Save Permissions
-      </Button>
-    </div>
+            </TableHead>
+          </Table>
+        </TableContainer>
+        <TableContainer className='overflow-auto' style={{ maxHeight: 400 }}>
+          <Table>
+            <TableBody>
+              {data.map((item, index) => (
+                <TableRow key={index} className=''>
+                  <TableCell>{item.alias_name}</TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={permissions[item.u_id]?.selectAll || false}
+                      disabled={selectAll}
+                      onChange={e => handleSelectAllChange(item.u_id, e.target.checked)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={permissions[item.u_id]?.view || false}
+                      disabled={selectAll}
+                      onChange={e => handlePermissionChange(item.u_id, 'view', e.target.checked)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={permissions[item.u_id]?.add || false}
+                      onChange={e => handlePermissionChange(item.u_id, 'add', e.target.checked)}
+                      disabled={!permissions[item.u_id]?.view || selectAll}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={permissions[item.u_id]?.update || false}
+                      onChange={e => handlePermissionChange(item.u_id, 'update', e.target.checked)}
+                      disabled={!permissions[item.u_id]?.view || selectAll}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={permissions[item.u_id]?.remove || false}
+                      onChange={e => handlePermissionChange(item.u_id, 'delete', e.target.checked)}
+                      disabled={!permissions[item.u_id]?.view || selectAll}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={permissions[item.u_id]?.notification || false}
+                      onChange={e => handlePermissionChange(item.u_id, 'notification', e.target.checked)}
+                      disabled={!permissions[item.u_id]?.view || selectAll}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Button variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
+          Save Permissions
+        </Button>
+      </div>
+      <ToastContainer />
+    </>
   )
 }
 

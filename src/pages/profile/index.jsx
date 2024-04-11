@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -76,6 +78,7 @@ const Profile = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
     } catch (error) {
+      toast.error('Error Fetching Data')
       console.log('error', error)
     }
   }
@@ -101,6 +104,7 @@ const Profile = () => {
                   alt=''
                   width={200}
                   height={200}
+                  loading='lazy'
                 />
               </div>
 
@@ -277,13 +281,21 @@ const Profile = () => {
                   <>
                     <div className='d-flex '>
                       {userData && (
-                        <Button onClick={() => setEditable(!editable)} className='mb-3'>
+                        <Button
+                          style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                          onClick={() => setEditable(!editable)}
+                          className='mb-3'
+                        >
                           {editable ? 'Cancel' : 'Edit'}
                         </Button>
                       )}
 
                       {editable && (
-                        <Button className='ms-2 mb-3 h-fit' type='submit'>
+                        <Button
+                          style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                          className='ms-2 mb-3 h-fit'
+                          type='submit'
+                        >
                           Save changes
                         </Button>
                       )}
@@ -295,6 +307,8 @@ const Profile = () => {
           </Card>
         </Col>
       </Row>
+
+      <ToastContainer />
     </>
   )
 }

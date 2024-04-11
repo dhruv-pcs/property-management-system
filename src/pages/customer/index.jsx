@@ -8,6 +8,8 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Customer = () => {
   const theme = useTheme()
@@ -20,6 +22,12 @@ const Customer = () => {
   const [selectedRow, setSelectedRow] = useState('121')
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+
+  const customer_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Customer')
+    .map(permission => permission)
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/customer`, {
@@ -27,6 +35,7 @@ const Customer = () => {
       })
       setCustomerData(response.data.data.customerData)
     } catch (error) {
+      toast.error('Error Fetching Data')
       console.error(error)
     }
   }
@@ -66,8 +75,10 @@ const Customer = () => {
       if (response.data.statusCode === 201) {
         setOpenDelete(!openDelete)
         handleCustomerDataUpdate()
+        toast.success('Customer Deleted Successfully')
       }
     } catch (error) {
+      toast.error('Error Deleting Customer')
       console.log('error', error)
     }
   }
@@ -139,27 +150,33 @@ const Customer = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100] }}
-            onClick={() => handelViewbutton(row)}
-          >
-            <Visibility />
-          </button>
-          <button
-            className='btn p-0 m-0 bg-none'
-            style={{ color: colors.grey[100] }}
-            onClick={() => handelEditbutton(row)}
-          >
-            <Edit />
-          </button>
-          <button
-            className='btn p-0  m-0 bg-none'
-            style={{ color: colors.redAccent[600] }}
-            onClick={() => handelDeletebutton(row)}
-          >
-            <Delete />
-          </button>
+          {customer_permission[0]?.view && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100] }}
+              onClick={() => handelViewbutton(row)}
+            >
+              <Visibility />
+            </button>
+          )}
+          {customer_permission[0]?.update && (
+            <button
+              className='btn p-0 m-0 bg-none'
+              style={{ color: colors.grey[100] }}
+              onClick={() => handelEditbutton(row)}
+            >
+              <Edit />
+            </button>
+          )}
+          {customer_permission[0]?.remove && (
+            <button
+              className='btn p-0  m-0 bg-none'
+              style={{ color: colors.redAccent[600] }}
+              onClick={() => handelDeletebutton(row)}
+            >
+              <Delete />
+            </button>
+          )}
         </div>
       )
     }
@@ -276,7 +293,7 @@ const Customer = () => {
           fixedHeaderScrollHeight='600px'
           className='scrollbar'
           subHeader
-          paginationRowsPerPageOptions={[1, 2, 5, 100]}
+          paginationRowsPerPageOptions={[10, 25, 50, 100]}
           pagination
           subHeaderComponent={<input type='text' placeholder='Search' className='w-25 form-control mt-3' />}
           noDataComponent={
@@ -287,7 +304,7 @@ const Customer = () => {
             </>
           }
           actions={
-            <>
+            customer_permission[0]?.add && (
               <Button
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
@@ -295,7 +312,7 @@ const Customer = () => {
               >
                 Add
               </Button>
-            </>
+            )
           }
         />
       </div>
@@ -452,6 +469,7 @@ const Customer = () => {
           </div>
         </DialogContent>
       </Dialog>
+      <ToastContainer />
     </>
   )
 }

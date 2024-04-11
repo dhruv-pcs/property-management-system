@@ -30,6 +30,7 @@ const Login = () => {
       const userData = response.data.data
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)
+      localStorage.setItem('Role', userData.roleID)
       router.push('/')
     } catch (error) {
       toast.error('Invalid Credentials')
