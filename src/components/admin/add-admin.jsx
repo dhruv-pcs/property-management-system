@@ -124,7 +124,7 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                           placeholder='Password'
                           {...register('password')}
                         />
-                        <Button variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
+                        <Button aria-label='Show password' variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </Button>
                       </div>
@@ -199,8 +199,9 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   </Col>
                 </Row>
                 <Button
-                  variant='primary'
                   type='submit'
+                  aria-label='Add Admin'
+                  variant='primary'
                   style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                 >
                   Add Admin

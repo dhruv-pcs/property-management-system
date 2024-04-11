@@ -14,7 +14,7 @@ export default function Unauthorized() {
       >
         <h1>Unauthorized</h1>
         <p>You are not authorized to access this page.</p>
-        <Link href='/' className='btn btn-light' style={{ backgroundColor: colors.greenAccent[500] }}>
+        <Link aria-label='Dashboard' href='/' className='btn btn-light' style={{ backgroundColor: colors.greenAccent[500] }}>
           Go to Dashboard
         </Link>
       </div>

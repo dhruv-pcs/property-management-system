@@ -90,7 +90,7 @@ const MyProSidebar = () => {
               <Typography variant='h3' color={colors.grey[100]}>
                 EstateEase
               </Typography>
-              <IconButton onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}>
+              <IconButton aria-label='close' onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}>
                 <CloseOutlinedIcon />
               </IconButton>
             </Box>
