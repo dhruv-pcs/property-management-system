@@ -198,6 +198,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
 
                 <div className='d-flex '>
                   <Button
+                    aria-label='Add'
                     type='submit'
                     className='w-100'
                     style={{ backgroundColor: colors.blueAccent[500], color: colors.grey[100] }}
