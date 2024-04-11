@@ -7,6 +7,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Admin = () => {
   const theme = useTheme()
@@ -46,8 +48,10 @@ const Admin = () => {
 
       setOpenDelete(!openDelete)
       handleAdminDataUpdate()
+      toast.success('User deleted successfully!')
     } catch (error) {
-      console.error('Error deleting user:', error)
+      toast.error('Error deleting User:', error)
+      console.error('Error deleting User:', error)
     }
   }
 
@@ -409,6 +413,7 @@ const Admin = () => {
           </div>
         </DialogContent>
       </Dialog>
+      <ToastContainer />
     </>
   )
 }

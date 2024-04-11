@@ -9,6 +9,8 @@ import ViewRole from '@components/role/view-role'
 import AddRole from '@components/role/add-role'
 import EditRole from '@components/role/edit-role'
 import Head from 'next/head'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Role_Permission = () => {
   const [role, setRole] = useState([])
@@ -45,6 +47,7 @@ const Role_Permission = () => {
       })
       setRole(response.data.data)
     } catch (error) {
+      toast.error('Error Fetching Data')
       console.error(error)
     }
   }
@@ -77,13 +80,19 @@ const Role_Permission = () => {
   }
 
   const handelDeleteConfirmation = async Data => {
-    const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${Data.u_id}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
+    try {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${Data.u_id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
 
-    if (response.data.statusCode === 200) {
-      setOpenDelete(!openDelete)
-      handleFetch()
+      if (response.data.statusCode === 200) {
+        setOpenDelete(!openDelete)
+        handleFetch()
+        toast.success('Role Deleted Successfully')
+      }
+    } catch (error) {
+      toast.error('Error Deleting Role')
+      console.error(error)
     }
   }
 
@@ -331,6 +340,8 @@ const Role_Permission = () => {
           <EditRole roleData={selectedRow} onClose={handleEditButton} onUpdate={handleFetch} />
         </DialogContent>
       </Dialog>
+
+      <ToastContainer />
     </>
   )
 }

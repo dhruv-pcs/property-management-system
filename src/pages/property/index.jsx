@@ -8,6 +8,8 @@ import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import DataTable from 'react-data-table-component'
 import { tokens } from '@theme/theme'
 import Head from 'next/head'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Property = () => {
   const theme = useTheme()
@@ -71,8 +73,10 @@ const Property = () => {
       if (response.data.statusCode === 200) {
         setOpenDelete(!openDelete)
         handlePropertyDataUpdate()
+        toast.success('Property deleted successfully!')
       }
     } catch (error) {
+      toast.error('Something went wrong')
       console.log('error', error)
     }
   }
@@ -406,6 +410,8 @@ const Property = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <ToastContainer />
     </>
   )
 }
