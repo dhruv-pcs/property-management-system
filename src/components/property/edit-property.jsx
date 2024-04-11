@@ -70,7 +70,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
         toast.success('Property updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error('Error updating property')
       console.log('error', error.response ? error.response.data : error)
     }
   }
@@ -314,7 +314,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

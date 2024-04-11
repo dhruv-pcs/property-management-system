@@ -187,7 +187,7 @@ const Permission = () => {
           }
         />
       </div>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

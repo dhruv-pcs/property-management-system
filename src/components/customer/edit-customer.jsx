@@ -79,7 +79,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
         toast.success('Customer updated successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error("Customer can't be updated")
       console.log('error', error)
     }
   }
@@ -342,7 +342,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

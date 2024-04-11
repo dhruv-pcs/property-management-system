@@ -34,10 +34,9 @@ const schema = Yup.object().shape({
   role_u_id: Yup.string().required('Role is required')
 })
 
-const AddAdmin = ({ onUpdate, handelAddbutton }) => {
+const AddAdmin = ({ onUpdate, onClose }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-
   const [showPassword, setShowPassword] = useState(false)
   const [roles, setRoles] = useState([])
 
@@ -58,11 +57,11 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        onClose()
         toast.success('Admin added successfully')
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error("Admin Can't be created")
       console.log('error', error)
     }
   }
@@ -211,7 +210,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
           </Card>
         </Col>
       </Row>
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }

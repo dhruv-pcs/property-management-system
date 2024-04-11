@@ -341,7 +341,7 @@ const Role_Permission = () => {
         </DialogContent>
       </Dialog>
 
-      <ToastContainer />
+      <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
 }
