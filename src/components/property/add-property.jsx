@@ -335,7 +335,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Button 
+                <Button
                   aria-label='Add'
                   type='submit'
                   style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}

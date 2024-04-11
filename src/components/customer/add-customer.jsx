@@ -210,7 +210,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 </Row>
 
                 <div className='d-flex '>
-                  <Button 
+                  <Button
                     aria-label='Add'
                     type='submit'
                     className='w-100'

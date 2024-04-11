@@ -124,7 +124,11 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                           placeholder='Password'
                           {...register('password')}
                         />
-                        <Button aria-label='Show password' variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
+                        <Button
+                          aria-label='Show password'
+                          variant='outline-secondary'
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </Button>
                       </div>

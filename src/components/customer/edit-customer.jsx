@@ -334,7 +334,12 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                   </Col>
                 </Row>
 
-                <Button aria-label='save' type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
+                <Button
+                  aria-label='save'
+                  type='submit'
+                  style={{ backgroundColor: colors.blueAccent[600] }}
+                  className='ms-2 mb-3 h-fit'
+                >
                   Save changes
                 </Button>
               </Form>

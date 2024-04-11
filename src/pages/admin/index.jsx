@@ -124,11 +124,10 @@ const Admin = () => {
         <div className='d-flex gap-2'>
           {!row.is_superadmin && admin_permission[0].view && (
             <button
-              aria-label = 'View'
+              aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
               onClick={() => handelViewbutton(row)}
-              
             >
               <Visibility />
             </button>
@@ -384,7 +383,6 @@ const Admin = () => {
             top: 20,
             color: colors.grey[100]
           }}
-          
         >
           <Close />
         </IconButton>

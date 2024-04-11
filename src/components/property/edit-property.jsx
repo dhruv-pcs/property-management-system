@@ -302,8 +302,8 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Button 
-                 aria-label='Save changes'
+                <Button
+                  aria-label='Save changes'
                   type='submit'
                   style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                   className='ms-2 mb-3 fs-6 h-fit'

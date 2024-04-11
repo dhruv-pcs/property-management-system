@@ -267,7 +267,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     {!isViewOnly && (
                       <div className='d-flex'>
                         <Button
-                         aria-label='Edit'
+                          aria-label='Edit'
                           onClick={() => setEditable(!editable)}
                           className='mb-3'
                           style={{ backgroundColor: colors.blueAccent[600] }}
