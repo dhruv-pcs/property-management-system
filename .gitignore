@@ -13,8 +13,10 @@ sonar-project.properties
 .vscode
 .scannerwork
 
+
 # testing
 /coverage
+/cypress/screenshots
 
 # next.js
 /.next/
