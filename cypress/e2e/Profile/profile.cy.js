@@ -38,6 +38,7 @@ describe('Profile Page', () => {
       cy.get('input[name="first_name"]').clear().type('NewFirstName');
       cy.get('input[name="last_name"]').clear().type('NewLastName');
       cy.get('input[name="phone"]').clear().type('1234567890');
+      
       // Modify other fields as needed
   
       // Click on save changes button

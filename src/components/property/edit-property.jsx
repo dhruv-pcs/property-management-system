@@ -9,6 +9,7 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import React from 'react'
 
 const schema = Yup.object().shape({
   name: Yup.string().required('First name is required'),

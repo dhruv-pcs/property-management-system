@@ -256,8 +256,9 @@ const Admin = () => {
         <title>Admin</title>
         <meta name='description' content='Admin Page' />
       </Head>
-      <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
+      <div  data-testid="admin-list" className='p-2' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
+         
           columns={columns}
           data={adminData}
           title='Admin List'

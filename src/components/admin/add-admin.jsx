@@ -9,6 +9,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import React from 'react'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
