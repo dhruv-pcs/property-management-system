@@ -23,6 +23,7 @@ const Item = ({ title, to, icon, setSelected }) => {
 
   return (
     <MenuItem
+      data-testid={title}
       active={to === path}
       style={{
         color: to === path ? colors.greenAccent[500] : colors.grey[100],

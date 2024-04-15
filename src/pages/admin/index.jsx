@@ -256,9 +256,8 @@ const Admin = () => {
         <title>Admin</title>
         <meta name='description' content='Admin Page' />
       </Head>
-      <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
+      <div data-testid="admin-list" className='p-2' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
-          data-testid="admin-list"
           columns={columns}
           data={adminData}
           title='Admin List'
@@ -272,6 +271,7 @@ const Admin = () => {
           subHeaderComponent={
             admin_permission[0].add && (
               <button
+              data-testid="add-admin"
                 type='button'
                 className='btn btn-primary'
                 onClick={handleAddAdmin}
