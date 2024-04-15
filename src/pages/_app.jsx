@@ -10,6 +10,8 @@ import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import Footer from '@components/footer/footer'
 import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import withAuth from '@components/auth/auth'
+import React from 'react'
+
 
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()

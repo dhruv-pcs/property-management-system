@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'

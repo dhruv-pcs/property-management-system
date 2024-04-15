@@ -8,6 +8,8 @@ import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
 import LineChart from '@components/dashboard/line-chart'
 import { tokens } from '@theme/theme'
+import React from 'react'
+
 
 const Dashboard = () => {
   const theme = useTheme()

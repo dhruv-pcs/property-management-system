@@ -1,6 +1,7 @@
 import Loading from '@components/loading/loading'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import React from 'react'
 
 const withAuth = WrappedComponent => {
   const AuthComponent = props => {
@@ -21,6 +22,7 @@ const withAuth = WrappedComponent => {
     }, [router])
 
     if (!authenticated) {
+
       return <Loading />
     }
 
