@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
+import React from 'react'
 
 const Loading = () => {
   const theme = useTheme()

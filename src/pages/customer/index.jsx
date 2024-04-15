@@ -10,6 +10,8 @@ import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import React from 'react'
+
 
 const Customer = () => {
   const theme = useTheme()
