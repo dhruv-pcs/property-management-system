@@ -2,6 +2,7 @@ import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import Link from 'next/link'
 import Head from 'next/head'
+import React from 'react'
 
 const Notfound = () => {
   const theme = useTheme()

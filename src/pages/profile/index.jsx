@@ -100,24 +100,25 @@ const Profile = () => {
             <Card.Body className=''>
               <div className='d-flex justify-content-center'>
                 <Image
-                  className='img-account-profile  rounded-circle mb-2 img-fluid'
+                  data-testid="profile-image" 
+                  className='img-account-profile rounded-circle mb-2 img-fluid'
                   src={ProfileImage}
                   alt=''
                   width={200}
                   height={200}
-                  loading='lazy'
+               
                 />
               </div>
 
               {userData && (
                 <>
-                  <h5>
+                  <h5 data-testid="profile-name">
                     Name: {userData?.first_name} {userData?.last_name}
                   </h5>
-                  <h5>Email: {userData?.email}</h5>
-                  <h5>Role: {userData?.role?.name}</h5>
-                  <h5>Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
-                  <h5>Contact Number: {userData?.phone}</h5>
+                  <h5  data-testid="profile-email">Email: {userData?.email}</h5>
+                  <h5  data-testid="profile-role">Role: {userData?.role?.name}</h5>
+                  <h5  data-testid="profile-status">Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
+                  <h5  data-testid="profile-phone">Contact Number: {userData?.phone}</h5>
                 </>
               )}
             </Card.Body>
@@ -137,6 +138,7 @@ const Profile = () => {
                       <Form.Label>First name</Form.Label>
                       <Form.Control
                         type='text'
+                        name='first_name'
                         placeholder='Enter your first name'
                         {...register('first_name')}
                         defaultValue={userData?.first_name}
@@ -151,6 +153,7 @@ const Profile = () => {
                       <Form.Label>Last name</Form.Label>
                       <Form.Control
                         type='text'
+                        name='last_name'
                         placeholder='Enter your last name'
                         {...register('last_name')}
                         defaultValue={userData?.last_name}
@@ -166,6 +169,7 @@ const Profile = () => {
                       <Form.Label>Email address</Form.Label>
                       <Form.Control
                         type='email'
+                        name='email'
                         placeholder='Enter your email address'
                         {...register('email')}
                         defaultValue={userData?.email}
@@ -199,6 +203,7 @@ const Profile = () => {
                       <Form.Label>Phone number</Form.Label>
                       <Form.Control
                         type='tel'
+                        name='phone'
                         placeholder='Enter your phone number'
                         {...register('phone')}
                         readOnly={!editable}
@@ -213,6 +218,7 @@ const Profile = () => {
                       <Form.Label>Alternative Phone No:</Form.Label>
                       <Form.Control
                         type='tel'
+                        name='alternate_phone'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
                         readOnly={!editable}
@@ -227,6 +233,7 @@ const Profile = () => {
                       <Form.Label>City</Form.Label>
                       <Form.Control
                         type='text'
+                        name='city'
                         defaultValue={userData?.city}
                         placeholder='Enter your city'
                         {...register('city')}
@@ -240,6 +247,7 @@ const Profile = () => {
                       <Form.Label>State</Form.Label>
                       <Form.Control
                         type='text'
+                        name='state'
                         defaultValue={userData?.state}
                         placeholder='Enter your state'
                         {...register('state')}
@@ -254,6 +262,7 @@ const Profile = () => {
                       <Form.Label>Country</Form.Label>
                       <Form.Control
                         type='text'
+                        name='country'
                         defaultValue={userData?.country}
                         placeholder='Enter your country'
                         {...register('country')}
@@ -267,6 +276,7 @@ const Profile = () => {
                       <Form.Label>Pincode</Form.Label>
                       <Form.Control
                         type='text'
+                        name='pincode'
                         defaultValue={userData?.pincode}
                         placeholder='Enter your pincode'
                         {...register('pincode')}

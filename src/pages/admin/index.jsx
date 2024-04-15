@@ -258,6 +258,7 @@ const Admin = () => {
       </Head>
       <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
+          data-testid="admin-list"
           columns={columns}
           data={adminData}
           title='Admin List'

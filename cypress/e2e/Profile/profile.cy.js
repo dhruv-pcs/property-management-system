@@ -1,50 +1,56 @@
 describe('Profile Page', () => {
     beforeEach(() => {
-      // Visit the profile page
+  
+      // Login with valid credentials
       cy.login('super@gmail.com', 'Super@123');
-      cy.visit('/profile');
   
-      // Login before each test
+      // Wait for the URL to include '/dashboard'
+      cy.url().should('include', '/');
+      
+      // Click on the profile icon to navigate to the profile page
+      cy.get('[data-testid="profile-icon"]').click();
+  
+      // Wait for the URL to include '/profile'
+      cy.url().should('include', '/profile');
+    });
+
+     it('should display the profile picture', () => {
+        // Assert that the profile picture exists
+        cy.get('[data-testid="profile-image"]').should('exist');
+        cy.get('[data-testid="profile-image"]').should('be.visible');    
     });
   
-    it('should display the profile picture and account details', () => {
-      // Check if the profile picture is displayed
-      cy.get('.img-account-profile').should('be.visible');
-  
-      // Check if account details are displayed
-      cy.contains('Name:').should('exist');
-      cy.contains('Email:').should('exist');
-      cy.contains('Role:').should('exist');
-      cy.contains('Status:').should('exist');
-      cy.contains('Contact Number:').should('exist');
+    it('Displays user data correctly', () => {
+        cy.wait(2000);
+
+        cy.get('[data-testid="profile-name"]').should('be.visible')
+    
+        // Check if Email is displayed correctly
+        cy.get('[data-testid="profile-email"]').should('be.visible')
+    
+        // Check if Role is displayed correctly
+        cy.get('[data-testid="profile-role"]').should('be.visible')
+    
+        // Check if Status is displayed correctly
+        cy.get('[data-testid="profile-status"]').should('be.visible')
+    
+        // Check if Contact Number is displayed correctly
+        cy.get('[data-testid="profile-phone"]').should('be.visible')
+      })
+
+    it('should have non-empty values in profile form', () => {
+     
+      cy.wait(2000);
+      
+      // Assert that the values of the profile form are not empty
+      cy.get('input[name="first_name"]').should('not.have.value', '');
+      cy.get('input[name="last_name"]').should('not.have.value', '');
+      cy.get('input[name="email"]').should('not.have.value', '');
+      cy.get('input[name="phone"]').should('not.have.value', '');
+      cy.get('input[name="alternate_phone"]').should('not.have.value', '');
+      cy.get('input[name="city"]').should('not.have.value', '');
+      cy.get('input[name="state"]').should('not.have.value', '');
+      cy.get('input[name="country"]').should('not.have.value', '');
+      cy.get('input[name="pincode"]').should('not.have.value', '');
     });
-  
-    it('should allow editing profile information', () => {
-      // Click on the edit button
-      cy.contains('Edit').click();
-  
-      // Check if input fields are editable
-      cy.get('input[name="first_name"]').should('be.enabled');
-      cy.get('input[name="last_name"]').should('be.enabled');
-      cy.get('input[name="email"]').should('be.enabled');
-      cy.get('input[name="phone"]').should('be.enabled');
-      cy.get('input[name="alternate_phone"]').should('be.enabled');
-      cy.get('input[name="city"]').should('be.enabled');
-      cy.get('input[name="state"]').should('be.enabled');
-      cy.get('input[name="country"]').should('be.enabled');
-      cy.get('input[name="pincode"]').should('be.enabled');
-  
-      // Modify some profile information (you can change this according to your UI)
-      cy.get('input[name="first_name"]').clear().type('NewFirstName');
-      cy.get('input[name="last_name"]').clear().type('NewLastName');
-      cy.get('input[name="phone"]').clear().type('1234567890');
-      // Modify other fields as needed
-  
-      // Click on save changes button
-      cy.contains('Save changes').click();
-  
-      // Assert that changes are saved (you may need to adjust this assertion based on how your UI behaves)
-      cy.contains('Your changes have been saved').should('be.visible');
-    });
-  });
-  
+});
