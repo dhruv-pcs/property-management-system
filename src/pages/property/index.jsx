@@ -240,7 +240,7 @@ const Property = () => {
         <meta name='description' content='Property Page' />
       </Head>
 
-      <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
+      <div data-testid="property-list" className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
           data={propertyData}
