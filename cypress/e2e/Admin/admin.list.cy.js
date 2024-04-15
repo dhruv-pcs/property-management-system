@@ -4,7 +4,7 @@ describe('Admin Management', () => {
     cy.login('super@gmail.com', 'Super@123');
 
     cy.url().should('include', '/');
-   
+    cy.visit('/')
     cy.get('[data-testid="Admin"]').click();
 
     cy.url().should('include', '/admin');
