@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
 import Image from 'next/image'
-import React,{ useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -100,25 +100,24 @@ const Profile = () => {
             <Card.Body className=''>
               <div className='d-flex justify-content-center'>
                 <Image
-                  data-testid="profile-image" 
+                  data-testid='profile-image'
                   className='img-account-profile rounded-circle mb-2 img-fluid'
                   src={ProfileImage}
                   alt=''
                   width={200}
                   height={200}
-               
                 />
               </div>
 
               {userData && (
                 <>
-                  <h5 data-testid="profile-name">
+                  <h5 data-testid='profile-name'>
                     Name: {userData?.first_name} {userData?.last_name}
                   </h5>
-                  <h5  data-testid="profile-email">Email: {userData?.email}</h5>
-                  <h5  data-testid="profile-role">Role: {userData?.role?.name}</h5>
-                  <h5  data-testid="profile-status">Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
-                  <h5  data-testid="profile-phone">Contact Number: {userData?.phone}</h5>
+                  <h5 data-testid='profile-email'>Email: {userData?.email}</h5>
+                  <h5 data-testid='profile-role'>Role: {userData?.role?.name}</h5>
+                  <h5 data-testid='profile-status'>Status: {userData?.status ? 'Active' : 'Inactive'}</h5>
+                  <h5 data-testid='profile-phone'>Contact Number: {userData?.phone}</h5>
                 </>
               )}
             </Card.Body>

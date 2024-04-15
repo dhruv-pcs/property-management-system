@@ -1,6 +1,6 @@
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'

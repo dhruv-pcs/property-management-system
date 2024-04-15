@@ -9,7 +9,6 @@ import navigation from './sidebarItem'
 import { Icon } from '@iconify/react'
 import React from 'react'
 
-
 const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)

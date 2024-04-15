@@ -5,6 +5,7 @@ import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import React from 'react'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),

@@ -5,7 +5,7 @@ import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import React,{ useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
@@ -161,6 +161,7 @@ const Owner = () => {
         <div className='d-flex gap-2'>
           {owner_permission[0].view && (
             <button
+              data-testid='view-owner'
               aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
@@ -171,6 +172,7 @@ const Owner = () => {
           )}
           {owner_permission[0].update && (
             <button
+              data-testid='edit-owner'
               aria-label='Edit'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
@@ -181,6 +183,7 @@ const Owner = () => {
           )}
           {owner_permission[0].remove && (
             <button
+              data-testid='delete-owner'
               aria-label='Delete'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
@@ -295,7 +298,7 @@ const Owner = () => {
         <meta name='description' content='Owner Page' />
       </Head>
 
-      <div className='p-3 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
+      <div data-testid='owner-list' className='p-3 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
           data={ownerData}
@@ -318,6 +321,7 @@ const Owner = () => {
           actions={
             owner_permission[0].add && (
               <Button
+                data-testid='add-owner'
                 aria-label='Add'
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
@@ -331,6 +335,7 @@ const Owner = () => {
       </div>
 
       <Dialog
+        data-testid='edit-owner-modal'
         fullScreen={isSmallScreen}
         onClose={handelEditbutton}
         aria-labelledby='customized-dialog-title'
@@ -365,6 +370,7 @@ const Owner = () => {
       </Dialog>
 
       <Dialog
+        data-testid='view-owner-modal'
         fullScreen={isSmallScreen}
         onClose={handelViewbutton}
         aria-labelledby='customized-dialog-title'
@@ -399,6 +405,7 @@ const Owner = () => {
       </Dialog>
 
       <Dialog
+        data-testid='add-owner-modal'
         fullScreen={isSmallScreen}
         className='z-3'
         onClose={handelAddbutton}
@@ -433,7 +440,12 @@ const Owner = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+      <Dialog
+        data-testid='delete-owner-modal'
+        onClose={handelDeletebutton}
+        aria-labelledby='customized-dialog-title'
+        open={openDelete}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'

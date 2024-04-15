@@ -66,7 +66,7 @@ const Topbar = () => {
             <IconButton aria-label='Mode' onClick={colorMode.toggleColorMode}>
               {theme.palette.mode === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
             </IconButton>
-            <Link aria-label='Profile' href='/profile' data-testid="profile-icon">
+            <Link aria-label='Profile' href='/profile' data-testid='profile-icon'>
               <IconButton>
                 <PersonOutlinedIcon />
               </IconButton>

@@ -10,7 +10,6 @@ import LineChart from '@components/dashboard/line-chart'
 import { tokens } from '@theme/theme'
 import React from 'react'
 
-
 const Dashboard = () => {
   const theme = useTheme()
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'))

@@ -22,7 +22,6 @@ const withAuth = WrappedComponent => {
     }, [router])
 
     if (!authenticated) {
-
       return <Loading />
     }
 
