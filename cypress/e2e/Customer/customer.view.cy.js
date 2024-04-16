@@ -1,4 +1,4 @@
-describe('View Role', () => {
+describe('View Customer', () => {
     beforeEach(() => {
         cy.login('super@gmail.com', 'Super@123');
         cy.url().should('include', '/');

@@ -1,4 +1,4 @@
-describe('Owner', () => {
+describe('Customer', () => {
     beforeEach(() => {
         cy.viewport(1280, 720); 
         cy.login('super@gmail.com', 'Super@123');
