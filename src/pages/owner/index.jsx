@@ -481,6 +481,7 @@ const Owner = () => {
               Cancel
             </Button>
             <Button
+              data-testid='confirm-delete'
               onClick={() => handelDeleteConfirmation(selectedRow)}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}

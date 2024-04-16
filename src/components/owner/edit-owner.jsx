@@ -107,6 +107,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Last name</Form.Label>
                       <Form.Control
+                        id='last_name'
                         type='text'
                         placeholder='Enter your last name'
                         {...register('last_name')}
@@ -122,6 +123,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Email address</Form.Label>
                       <Form.Control
+                        id='email'
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
