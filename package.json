@@ -20,7 +20,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test": "yarn jest --coverage --watchAll --collectCoverageFrom=\"src/**/*.{js,jsx}\" --config=jest.config.js"
+    "test": "jest --coverage --watchAll --collectCoverageFrom=\"src/**/*.{js,jsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

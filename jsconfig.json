@@ -8,5 +8,5 @@
       "@theme/*": ["src/theme/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/pages/role-and-permission.jsx"]
 }
