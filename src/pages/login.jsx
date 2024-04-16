@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { TextField, Button, FormControl, InputAdornment, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import AuthWrapper from '@components/auth/loginauth'
 import { ToastContainer, toast } from 'react-toastify'
@@ -48,7 +48,7 @@ const Login = () => {
       <div className='container d-flex justify-content-center align-items-center vh-100'>
         <div className='card w-lg-50'>
           <div className='card-header'>
-            <h1 className='text-center'>Login</h1>
+            <h1 aria-label='Login' className='text-center'>Login</h1>
           </div>
           <div className='card-body'>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
@@ -86,7 +86,7 @@ const Login = () => {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position='end'>
-                            <IconButton onClick={togglePasswordVisibility} edge='end'>
+                            <IconButton aria-label='Toggle password visibility' onClick={togglePasswordVisibility} edge='end'>
                               {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
                             </IconButton>
                           </InputAdornment>
@@ -101,7 +101,7 @@ const Login = () => {
                   </Typography>
                 )}
               </FormControl>
-              <Button variant='contained' className='bg-dark' type='submit' fullWidth>
+              <Button  name="Login" type='submit' variant='contained' className='bg-dark'  fullWidth>
                 Login
               </Button>
             </form>
