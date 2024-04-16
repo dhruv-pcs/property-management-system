@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react'
 import Loading from '@components/loading/loading'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 const AuthWrapper = WrappedComponent => {
-  return props => {
+  const AuthenticatedComponent = props => {
     const [loading, setLoading] = useState(true)
     const [authenticated, setAuthenticated] = useState(false)
     const router = useRouter()
@@ -31,21 +30,23 @@ const AuthWrapper = WrappedComponent => {
       checkAuthentication()
     }, [])
 
+    // Redirect to home page if authenticated
+    useEffect(() => {
+      if (authenticated) {
+        router.push('/')
+      }
+    }, [authenticated, router])
+
     // Show loading page while checking authentication
     if (loading) {
       return <Loading />
     }
 
-    // Redirect to home page if authenticated
-    if (authenticated) {
-      router.push('/')
-
-      return null
-    }
-
     // Render the wrapped component if not authenticated
     return <WrappedComponent {...props} />
   }
+
+  return AuthenticatedComponent
 }
 
 export default AuthWrapper

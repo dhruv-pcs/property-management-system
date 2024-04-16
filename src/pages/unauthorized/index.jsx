@@ -1,7 +1,7 @@
+import React from 'react'
 import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import Link from 'next/link'
-import React from 'react'
 
 export default function Unauthorized() {
   const theme = useTheme()

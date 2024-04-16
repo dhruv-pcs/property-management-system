@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@styles-page/globals.css'
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ColorModeContext, tokens, useMode } from '@theme/theme'
 import Topbar from '@components/topbar/topbar'
@@ -11,7 +11,6 @@ import Footer from '@components/footer/footer'
 import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import withAuth from '@components/auth/auth'
 import React from 'react'
-
 
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()

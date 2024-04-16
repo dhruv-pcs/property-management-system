@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
@@ -96,6 +97,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>First name</Form.Label>
                       <Form.Control
+                        id='first_name'
                         type='text'
                         placeholder='Enter your first name'
                         {...register('first_name')}
@@ -109,6 +111,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Last name</Form.Label>
                       <Form.Control
+                        id='last_name'
                         type='text'
                         placeholder='Enter your last name'
                         {...register('last_name')}
@@ -124,6 +127,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Email address</Form.Label>
                       <Form.Control
+                        id='email'
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
@@ -137,6 +141,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>GST No</Form.Label>
                       <Form.Control
+                        id='gst_no'
                         type='text'
                         placeholder='Enter GST No'
                         {...register('gst_no')}
@@ -151,6 +156,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Phone number</Form.Label>
                       <Form.Control
+                        id='phone'
                         type='tel'
                         placeholder='Enter your phone number'
                         {...register('phone')}
@@ -164,6 +170,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Alternative Phone No:</Form.Label>
                       <Form.Control
+                        id='alternate_phone'
                         type='tel'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
@@ -178,6 +185,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>City</Form.Label>
                       <Form.Control
+                        id='city'
                         type='text'
                         defaultValue={customer?.city}
                         placeholder='Enter your city'
@@ -190,6 +198,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>State</Form.Label>
                       <Form.Control
+                        id='state'
                         type='text'
                         defaultValue={customer?.state}
                         placeholder='Enter your state'
@@ -204,6 +213,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Country</Form.Label>
                       <Form.Control
+                        id='country'
                         type='text'
                         defaultValue={customer?.country}
                         placeholder='Enter your country'
@@ -216,6 +226,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Pincode</Form.Label>
                       <Form.Control
+                        id='pincode'
                         type='text'
                         defaultValue={customer?.pincode}
                         placeholder='Enter your pincode'
@@ -230,6 +241,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Aadhar Card No</Form.Label>
                       <Form.Control
+                        id='aadhar_card_no'
                         type='text'
                         placeholder='Enter Aadhar Card No'
                         {...register('aadhar_card_no')}
@@ -243,6 +255,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Address</Form.Label>
                       <Form.Control
+                        id='address'
                         type='text'
                         placeholder='Enter Address'
                         {...register('address')}
@@ -258,6 +271,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Landmark</Form.Label>
                       <Form.Control
+                        id='landmark'
                         type='text'
                         placeholder='Enter Landmark'
                         {...register('landmark')}
@@ -271,6 +285,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Street</Form.Label>
                       <Form.Control
+                        id='street'
                         type='text'
                         placeholder='Enter Street'
                         {...register('street')}

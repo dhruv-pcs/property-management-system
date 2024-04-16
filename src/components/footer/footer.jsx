@@ -1,10 +1,10 @@
+import React from 'react'
 import Facebook from '@mui/icons-material/Facebook'
 import Instagram from '@mui/icons-material/Instagram'
 import LinkedIn from '@mui/icons-material/LinkedIn'
 import { Box, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import Link from 'next/link'
-import React from 'react'
 
 const Footer = () => {
   const theme = useTheme()
