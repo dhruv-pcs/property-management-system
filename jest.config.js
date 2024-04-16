@@ -12,7 +12,7 @@ module.exports = async () => {
       '^src/(.*)$': '<rootDir>/src/$1',
       '^@components/(.*)$': '<rootDir>/src/components/$1',
       '^@theme/(.*)$': '<rootDir>/src/theme/$1',
-
+      '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     },
     transform: {
       '^.+\\.jsx?$': 'babel-jest',

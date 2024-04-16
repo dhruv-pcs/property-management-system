@@ -13,7 +13,7 @@ const AuthWrapper = WrappedComponent => {
         try {
           const token = localStorage.getItem('token')
           if (token) {
-            // Token exists, user is authenticated
+           
             setAuthenticated(true)
           } else {
             // Token does not exist, user is not authenticated
