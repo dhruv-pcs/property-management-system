@@ -7,8 +7,6 @@ describe('Admin', () => {
         cy.url().should('include', '/admin');
     });
 
- 
-
     it('should display the list of Admin', () => {
         cy.get('[data-testid="admin-list"]').should('exist');
     });
