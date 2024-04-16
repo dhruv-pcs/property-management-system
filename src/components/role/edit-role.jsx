@@ -149,6 +149,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     <>
       <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
         <TextField
+          id="role-name"
           label='Role Name'
           value={roleName}
           onChange={e => setRoleName(e.target.value)}
@@ -171,11 +172,12 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {moduleData.map(item => (
+              {moduleData.map((item,index) => (
                 <TableRow key={item.u_id}>
                   <TableCell>{item.module.alias_name}</TableCell>
                   <TableCell>
                     <Checkbox
+                      id={`selectAll-${index}`}
                       checked={permissions[item.u_id]?.selectAll || false}
                       onChange={e =>
                         handlePermissionChange({
@@ -255,7 +257,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Button aria-label='Save' variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
+        <Button id="save-permissions" aria-label='Save' variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
           Save Permissions
         </Button>
       </div>
