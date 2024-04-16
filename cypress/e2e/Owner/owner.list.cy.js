@@ -30,13 +30,13 @@ describe('Owner', () => {
     });
 
     it('should open the add owner modal when the "Add" button is clicked', () => {
-        cy.get('[data-testid="add-owner"]').click(); // Click on the element with aria-label "Add"
+        cy.get('[data-testid="add-owner"]').click();
         cy.get('[data-testid="add-owner-modal"]').should('be.visible');
     });
 
     it('should open the edit owner modal when the "Edit" button is clicked', () => {
         cy.wait(2000);
-        cy.get('[data-testid="edit-owner"]').eq(0).click(); // Click on the element with aria-label "Edit"
+        cy.get('[data-testid="edit-owner"]').eq(0).click();
         cy.get('[data-testid="edit-owner-modal"]').should('be.visible');
     });
 
@@ -48,7 +48,7 @@ describe('Owner', () => {
 
     it('should open the delete owner modal when the "Delete" button is clicked', () => {
         cy.wait(2000);
-        cy.get('[data-testid="delete-owner"]').eq(0).click(); // Click on the element with aria-label "Delete"
+        cy.get('[data-testid="delete-owner"]').eq(0).click();
         cy.get('[data-testid="delete-owner-modal"]').should('be.visible');
     });
 });

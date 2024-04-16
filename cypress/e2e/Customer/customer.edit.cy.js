@@ -2,16 +2,16 @@ describe('Owner', () => {
     beforeEach(() => {
       cy.login('super@gmail.com', 'Super@123');
       cy.url().should('include', '/');
-      cy.get('[data-testid="Owner"]').click();
-      cy.url().should('include', '/owner');
+      cy.get('[data-testid="Customer"]').click();
+      cy.url().should('include', '/customer');
     });
   
-    it('should display the Edit Owner button', () => {
-      cy.get('[data-testid="edit-owner"]').should('exist');
+    it('should display the Edit Customer button', () => {
+      cy.get('[data-testid="edit-customer"]').should('exist');
     });
   
-    it('should add a new owner with default data', () => {
-        cy.get('[data-testid="edit-owner"]').eq(0).click();
+    it('should add a Edit Customer with default data', () => {
+        cy.get('[data-testid="edit-customer"]').eq(0).click();
         
         cy.get('#last_name').clear();   
         cy.get('#last_name').type('Wick');
@@ -23,7 +23,7 @@ describe('Owner', () => {
 
     
         cy.wait(2000); 
-        cy.get('[data-testid="owner-list"]').should('exist');
+        cy.get('[data-testid="customer-list"]').should('exist');
         cy.contains('John').should('exist');
       });
   

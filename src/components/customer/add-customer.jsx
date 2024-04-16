@@ -1,4 +1,4 @@
-// import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
@@ -83,7 +83,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>First name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your first name' {...register('first_name')} />
+                      <Form.Control id="first_name" type='text' placeholder='Enter your first name' {...register('first_name')} />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -91,7 +91,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Last name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your last name' {...register('last_name')} />
+                      <Form.Control id="last_name" type='text' placeholder='Enter your last name' {...register('last_name')} />
                       {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -101,7 +101,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Email address</Form.Label>
-                      <Form.Control type='email' placeholder='Enter your email address' {...register('email')} />
+                      <Form.Control id="email" type='email' placeholder='Enter your email address' {...register('email')} />
                       {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
                   </Col>
@@ -109,7 +109,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>GST No</Form.Label>
-                      <Form.Control type='text' placeholder='Enter GST No' {...register('gst_no')} />
+                      <Form.Control id="gst_no" type='text' placeholder='Enter GST No' {...register('gst_no')} />
                       {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
                     </Form.Group>
                   </Col>
@@ -118,7 +118,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Phone number</Form.Label>
-                      <Form.Control type='tel' placeholder='Enter your phone number' {...register('phone')} />
+                      <Form.Control id="phone" type='tel' placeholder='Enter your phone number' {...register('phone')} />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
                   </Col>
@@ -127,6 +127,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Alternative Phone No:</Form.Label>
                       <Form.Control
+                        id="alternate_phone"
                         type='tel'
                         {...register('alternate_phone', {
                           validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
@@ -141,7 +142,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>City</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Control id="city" type='text' placeholder='Enter your city' {...register('city')} />
                       {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                     </Form.Group>
                   </Col>
@@ -149,7 +150,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>State</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Control id="state" type='text' placeholder='Enter your state' {...register('state')} />
                       {errors.state && <span className='text-danger'>{errors.state.message}</span>}
                     </Form.Group>
                   </Col>
@@ -159,7 +160,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Country</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your country' {...register('country')} />
+                      <Form.Control id="country" type='text' placeholder='Enter your country' {...register('country')} />
                       {errors.country && <span className='text-danger'>{errors.country.message}</span>}
                     </Form.Group>
                   </Col>
@@ -167,7 +168,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Pincode</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your pincode' {...register('pincode')} />
+                      <Form.Control id="pincode" type='text' placeholder='Enter your pincode' {...register('pincode')} />
                       {errors.pincode && <span className='text-danger'>{errors.pincode.message}</span>}
                     </Form.Group>
                   </Col>
@@ -177,7 +178,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Aadhar Card No</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Aadhar Card No' {...register('aadhar_card_no')} />
+                      <Form.Control id="aadhar_card_no" type='text' placeholder='Enter Aadhar Card No' {...register('aadhar_card_no')} />
                       {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
                     </Form.Group>
                   </Col>
@@ -185,7 +186,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Address</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Address' {...register('address')} />
+                      <Form.Control id="address" type='text' placeholder='Enter Address' {...register('address')} />
                       {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
                   </Col>
@@ -195,7 +196,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Landmark</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Landmark' {...register('landmark')} />
+                      <Form.Control id="landmark" type='text' placeholder='Enter Landmark' {...register('landmark')} />
                       {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                     </Form.Group>
                   </Col>
@@ -203,7 +204,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Street</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Street' {...register('street')} />
+                      <Form.Control id="street" type='text' placeholder='Enter Street' {...register('street')} />
                       {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                     </Form.Group>
                   </Col>
@@ -211,6 +212,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
 
                 <div className='d-flex '>
                   <Button
+                    
                     aria-label='Add'
                     type='submit'
                     className='w-100'
