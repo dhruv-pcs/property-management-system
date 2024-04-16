@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from 'react'
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
@@ -256,7 +256,7 @@ const Admin = () => {
         <title>Admin</title>
         <meta name='description' content='Admin Page' />
       </Head>
-      <div className='p-2' style={{ backgroundColor: colors.primary[400] }}>
+      <div data-testid='admin-list' className='p-2' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
           columns={columns}
           data={adminData}
@@ -271,6 +271,7 @@ const Admin = () => {
           subHeaderComponent={
             admin_permission[0].add && (
               <button
+                data-testid='add-admin'
                 type='button'
                 className='btn btn-primary'
                 onClick={handleAddAdmin}

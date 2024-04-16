@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import Head from 'next/head'

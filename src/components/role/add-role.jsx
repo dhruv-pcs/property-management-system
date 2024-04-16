@@ -166,6 +166,7 @@ const AddRole = ({ onUpdate, onClose }) => {
     <>
       <div style={{ width: isSmallScreen ? '100%' : '550px', backgroundColor: colors.primary[400] }}>
         <TextField
+          id='role-name'
           label='Role Name'
           value={roleName}
           onChange={e => setRoleName(e.target.value)}
@@ -177,7 +178,7 @@ const AddRole = ({ onUpdate, onClose }) => {
         {formSubmitted && roleName.trim() === '' && (
           <FormHelperText error>Please enter a role name</FormHelperText> // Show error message
         )}
-        <Checkbox checked={selectAll} onChange={e => handleGlobalSelectAllChange(e.target.checked)} />
+        <Checkbox id='select-all' checked={selectAll} onChange={e => handleGlobalSelectAllChange(e.target.checked)} />
         Select All Permissions
         <TableContainer>
           <Table>
@@ -247,7 +248,7 @@ const AddRole = ({ onUpdate, onClose }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Button variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
+        <Button id='save-permissions' variant='contained' className='mt-4 w-100' color='primary' onClick={handleSubmit}>
           Save Permissions
         </Button>
       </div>

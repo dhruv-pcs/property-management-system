@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
@@ -171,7 +171,7 @@ const Permission = () => {
         <title>Permission List</title>
         <meta name='description' content='Permission List Page' />
       </Head>
-      <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
+      <div data-testid='permission-list' className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
           data={permissionData}

@@ -10,6 +10,7 @@ import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import React from 'react'
 
 const Customer = () => {
   const theme = useTheme()
@@ -152,6 +153,7 @@ const Customer = () => {
         <div className='d-flex gap-2'>
           {customer_permission[0]?.view && (
             <button
+              data-testid='view-customer'
               aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
@@ -162,6 +164,7 @@ const Customer = () => {
           )}
           {customer_permission[0]?.update && (
             <button
+              data-testid='edit-customer'
               aria-label='Edit'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
@@ -172,6 +175,7 @@ const Customer = () => {
           )}
           {customer_permission[0]?.remove && (
             <button
+              data-testid='delete-customer'
               aria-label='Delete'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
@@ -286,7 +290,7 @@ const Customer = () => {
         <meta name='description' content='Customer Page' />
       </Head>
 
-      <div className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
+      <div data-testid='customer-list' className='p-2 rounded-2' style={{ backgroundColor: colors.primary[500] }}>
         <DataTable
           columns={columns}
           data={customerData}
@@ -309,6 +313,7 @@ const Customer = () => {
           actions={
             customer_permission[0]?.add && (
               <Button
+                data-testid='add-customer'
                 aria-label='Add'
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
@@ -322,6 +327,7 @@ const Customer = () => {
       </div>
 
       <Dialog
+        data-testid='edit-customer-modal'
         fullScreen={isSmallScreen}
         onClose={handelEditbutton}
         aria-labelledby='customized-dialog-title'
@@ -360,6 +366,7 @@ const Customer = () => {
       </Dialog>
 
       <Dialog
+        data-testid='view-customer-modal'
         fullScreen={isSmallScreen}
         onClose={handelViewbutton}
         aria-labelledby='customized-dialog-title'
@@ -394,6 +401,7 @@ const Customer = () => {
       </Dialog>
 
       <Dialog
+        data-testid='add-customer-modal'
         fullScreen={isSmallScreen}
         className='z-3'
         onClose={handelAddbutton}
@@ -428,7 +436,12 @@ const Customer = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+      <Dialog
+        data-testid='delete-customer-modal'
+        onClose={handelDeletebutton}
+        aria-labelledby='customized-dialog-title'
+        open={openDelete}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -464,6 +477,7 @@ const Customer = () => {
               Cancel
             </Button>
             <Button
+              data-testid='confirm-delete'
               onClick={() => handelDeleteConfirmation(selectedRow)}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
