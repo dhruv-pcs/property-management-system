@@ -34,7 +34,6 @@ const Login = () => {
       router.push('/')
     } catch (error) {
       toast.error('Invalid Credentials')
-      console.error('Error Login:', error)
     }
   }
 

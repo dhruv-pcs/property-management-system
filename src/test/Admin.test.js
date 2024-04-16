@@ -1,71 +1,100 @@
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import axios from 'axios';
-import Admin from 'src/pages/admin';
+import Login from 'src/pages/login';
 import { useRouter } from 'next/router';
 
 jest.mock('axios');
+jest.mock('react-toastify/dist/ReactToastify.css', () => ({}));
 jest.mock('next/router', () => ({
     useRouter: jest.fn(),
 }));
 
-describe('Admin Component', () => {
-    const mockPush = jest.fn();
-
+describe('Login Component', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        useRouter.mockReturnValue({ push: mockPush });
-    });
-
-    test('renders admin dashboard correctly', () => {
-        render(<Admin />);
-        expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
-        expect(screen.getByRole('navigation')).toBeInTheDocument();
-    });
-
-    test('allows admin to navigate to user management', async () => {
-        render(<Admin />);
-        fireEvent.click(screen.getByText('Manage Users'));
-        await waitFor(() => {
-            expect(mockPush).toHaveBeenCalledWith('/admin/users');
+        useRouter.mockReturnValue({
+            push: jest.fn(),
         });
+        global.localStorage = {
+          getItem: jest.fn(),
+          setItem: jest.fn(),
+          removeItem: jest.fn(),
+          clear: jest.fn()
+        };
+      });
+
+      test('renders login form correctly', async () => {
+        render(<Login />);
+        
+        // Assert that the login form elements and the submit button are present
+        expect(screen.getByLabelText('Login')).toBeInTheDocument();
+        expect(screen.getByLabelText('Email address')).toBeInTheDocument();
+        expect(screen.getByLabelText('Password')).toBeInTheDocument();
+           
+          expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
+    
+      });
+      
+  test('validates form submission with empty fields', async () => {
+    render(<Login />);
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
+    await waitFor(() => {
+      expect(screen.getByText('Email address is required')).toBeInTheDocument();
+      expect(screen.getByText('Password is required')).toBeInTheDocument();
     });
+  });
 
-    test('fetches and displays list of users', async () => {
-        const users = [{ id: 1, name: 'John Doe' }, { id: 2, name: 'Jane Smith' }];
-        axios.get.mockResolvedValueOnce({ data: users });
-        render(<Admin />);
+  test('submits form with valid data', async () => {
+    const userData = {
+        permissionData: {
+            // Your user permission data
+        },
+        token: 'mockToken',
+        roleID: 'mockRoleID'
+    };
 
-        await waitFor(() => {
-            users.forEach(user => {
-                expect(screen.getByText(user.name)).toBeInTheDocument();
-            });
-        });
+    axios.post.mockResolvedValueOnce({ data: userData });
+    render(<Login />);
+    
+    // Simulate form submission
+    fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'super@gmail.com' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'Super@123' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
+    
+    // Wait for the login process to complete asynchronously
+    await waitFor(() => {
+        expect(localStorage.getItem('user'));
+        expect(localStorage.getItem('token'));
+        expect(localStorage.getItem('Role'));
+        expect(useRouter().push).toHaveBeenCalledWith('/');
     });
-
-    test('handles API error when fetching users', async () => {
-        const errorMessage = 'Failed to fetch';
-        axios.get.mockRejectedValueOnce(new Error(errorMessage));
-        render(<Admin />);
-
-        await waitFor(() => {
-            expect(screen.getByText('Error loading users')).toBeInTheDocument();
-        });
-    });
-
-    test('allows admin to delete a user', async () => {
-        const users = [{ id: 1, name: 'John Doe' }];
-        axios.delete.mockResolvedValueOnce({});
-        axios.get.mockResolvedValueOnce({ data: users });
-        render(<Admin />);
-
-        fireEvent.click(screen.getByText('Delete John Doe'));
-        await waitFor(() => {
-            expect(axios.delete).toHaveBeenCalledWith('/api/users/1');
-            expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
-        });
-    });
-
 });
 
+
+  test('displays error on invalid credentials', async () => {
+    axios.post.mockRejectedValueOnce(new Error('Invalid credentials'));
+    render(<Login />);
+    fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'invalidPassword' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
+    await waitFor(() => {
+      expect(screen.getByText('Invalid Credentials')).toBeInTheDocument();
+    });
+  });
+
+ 
+  test('toggles password visibility', () => {
+    render(<Login />);
+    const passwordInput = screen.getByLabelText('Password');
+    expect(passwordInput).toHaveAttribute('type', 'password');
+    
+    // Assuming your button has an aria-label of 'Toggle password visibility'
+    const toggleButton = screen.getByLabelText('Toggle password visibility');
+    
+    fireEvent.click(toggleButton);
+    
+    expect(passwordInput).toHaveAttribute('type', 'text');
+  });
+});

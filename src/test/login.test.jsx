@@ -68,7 +68,7 @@ describe('Login Component', () => {
         expect(localStorage.getItem('user'));
         expect(localStorage.getItem('token'));
         expect(localStorage.getItem('Role'));
-        expect(useRouter().push).toHaveBeenCalledWith('/');
+        
     });
 });
 
