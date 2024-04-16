@@ -50,7 +50,6 @@ const App = ({ Component, pageProps }) => {
       if (route === '/') {
         return true
       }
-      console.log('LOCAL', Local)
 
       return Local.some(item => {
         if (item.view) return `/${item.module.name}` === route
