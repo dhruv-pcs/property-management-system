@@ -1,11 +1,10 @@
-// import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react'
 import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import React from 'react'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),

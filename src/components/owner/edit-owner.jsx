@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
@@ -8,7 +9,6 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import React from 'react'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@styles-page/globals.css'
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ColorModeContext, tokens, useMode } from '@theme/theme'
 import Topbar from '@components/topbar/topbar'

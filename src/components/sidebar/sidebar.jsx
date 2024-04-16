@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
 import { tokens } from '@theme/theme'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
@@ -7,7 +7,6 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import { usePathname, useRouter } from 'next/navigation'
 import navigation from './sidebarItem'
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()

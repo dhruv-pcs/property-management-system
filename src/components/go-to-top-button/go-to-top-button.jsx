@@ -1,6 +1,5 @@
-// GoToTopButton.js
-import { ArrowUpward } from '@mui/icons-material'
 import React, { useState, useEffect } from 'react'
+import { ArrowUpward } from '@mui/icons-material'
 
 const GoToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false)

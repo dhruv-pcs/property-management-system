@@ -11,7 +11,7 @@ import { useProSidebar } from 'react-pro-sidebar'
 import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
 import axios from 'axios'
-import Router from 'next/router'
+import Router from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 

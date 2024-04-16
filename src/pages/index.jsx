@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import Head from 'next/head'
@@ -8,7 +9,6 @@ import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
 import LineChart from '@components/dashboard/line-chart'
 import { tokens } from '@theme/theme'
-import React from 'react'
 
 const Dashboard = () => {
   const theme = useTheme()
