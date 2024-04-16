@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Loading from '@components/loading/loading'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 const AuthWrapper = WrappedComponent => {
   const AuthenticatedComponent = props => {
