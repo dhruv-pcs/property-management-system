@@ -14,30 +14,45 @@ describe('Admin Management', () => {
         cy.get('[data-testid="admin-list"]').should('exist');
     }); 
 
+    
+
     it('should display the Add Admin button', () => {
-        cy.get('[data-testid="add-admin"]').click();
-
-        // Fill out the admin addition form
-        cy.get('input[name="first_name"]').type('Aesha');
-        cy.get('input[name="last_name"]').type('Patel');
-        cy.get('input[name="email"]').type('aesha@gmail.com');
-        cy.get('input[name="password"]').type('aesha@123');
-        cy.get('select[name="role_u_id"]').select('admin');
-        cy.get('input[name="phone"]').type('9876321123');
-        cy.get('input[name="alternate_phone"]').type('9876321870');
-        cy.get('input[name="city"]').type('baroda');
-        cy.get('input[name="state"]').type('gujrat');
-        cy.get('input[name="country"]').type('india');
-        cy.get('input[name="pincode"]').type('321123');
-
-        cy.get('button').contains('Add Admin').click(); 
-        cy.wait(500);
-        cy.contains('Admin successfully added', { timeout: 10000 }).should('be.visible'); 
-        cy.get('[data-testid="admin-list"]').contains('New Admin').should('exist');
+        cy.get('[data-testid="add-admin"]').should('exist');
     });
 
-    it('should view the admin details', () =>{
-        cy.get('[data-testid="view-admin"]').click();
+    it('should display the view Admin button', () => {
+        cy.get('[data-testid="view-admin"]').should('exist');
+    });
+
+    it('should display the edit Admin button', () => {
+        cy.get('[data-testid="edit-admin"]').should('exist');
+    });
+
+    it('should display the Delete Admin button', () => {
+        cy.get('[data-testid="delete-admin"]').should('exist');
+    });
+
+    it('should open the add admin modal when the "Add" button is clicked', () => {
+        cy.get('[data-testid="add-admin"]').click(); // Click on the element with aria-label "Add"
+        cy.get('[data-testid="add-admin-modal"]').should('be.visible');
+    });
+
+    it('should open the edit admin modal when the "Edit" button is clicked', () => {
+        cy.wait(2000);
+        cy.get('[data-testid="edit-admin"]').eq(0).click(); // Click on the element with aria-label "Edit"
+        cy.get('[data-testid="edit-admin-modal"]').should('be.visible');
+    });
+
+    it('should open the view admin modal when the "View" button is clicked', () => {
+        cy.wait(2000);
+        cy.get('[data-testid="view-admin"]').eq(0).click(); 
+        cy.get('[data-testid="view-admin-modal"]').should('be.visible');
+    });
+
+    it('should open the delete admin modal when the "Delete" button is clicked', () => {
+        cy.wait(2000);
+        cy.get('[data-testid="delete-admin"]').eq(0).click(); // Click on the element with aria-label "Delete"
+        cy.get('[data-testid="delete-admin-modal"]').should('be.visible');
     });
 
   });

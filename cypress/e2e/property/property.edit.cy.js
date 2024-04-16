@@ -1,4 +1,4 @@
-describe('Property', () => {
+describe('Owner', () => {
     beforeEach(() => {
       cy.login('super@gmail.com', 'Super@123');
       cy.url().should('include', '/');
@@ -12,10 +12,10 @@ describe('Property', () => {
   
     it('should add a new property with default data', () => {
         cy.get('[data-testid="edit-property"]').eq(0).click();
-
+        
         cy.get('#city').clear();  
         cy.get('#city').type('Baroda');
-        cy.get('#name').clear();  
+        cy.get('#name').clear(); 
         cy.get('#name').type('Green Ellegance Lux');
     
         cy.get('form').submit();
