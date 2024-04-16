@@ -1,4 +1,4 @@
-const App = require('../pages/_app.jsx')
+import App from '../pages/_app.jsx'
 
 describe('App', () => {
   it('should render without crashing', () => {

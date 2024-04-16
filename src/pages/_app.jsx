@@ -43,7 +43,7 @@ const App = ({ Component, pageProps }) => {
         return false
       }
 
-      if (route === '/404' || route === '/unauthorized' || route === '/login' || route === '/profile') {
+      if (route === '/404' || route === '/unauthorized' || route === '/login' || route === '/profile ') {
         return true
       }
 
