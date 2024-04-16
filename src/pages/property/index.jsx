@@ -108,6 +108,7 @@ const Property = () => {
         <div className='d-flex gap-2'>
           {property_permission[0].view && (
             <button
+              data-testid="view-property"
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
               onClick={() => handelViewbutton(row)}
@@ -117,6 +118,7 @@ const Property = () => {
           )}
           {property_permission[0].update && (
             <button
+            data-testid="edit-property"
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
               onClick={() => handelEditbutton(row)}
@@ -126,6 +128,7 @@ const Property = () => {
           )}
           {property_permission[0].remove && (
             <button
+            data-testid="delete-property"
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
               onClick={() => handelDeletebutton(row)}
@@ -263,6 +266,7 @@ const Property = () => {
           actions={
             property_permission[0].add && (
               <Button
+              data-testid="add-property"
                 onClick={handelAddbutton}
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
@@ -274,7 +278,7 @@ const Property = () => {
         />
       </div>
 
-      <Dialog className='z-3' onClose={handelAddbutton} aria-labelledby='customized-dialog-title' open={openAdd}>
+      <Dialog data-testid="add-property-modal" className='z-3' onClose={handelAddbutton} aria-labelledby='customized-dialog-title' open={openAdd}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -303,7 +307,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
+      <Dialog data-testid="edit-property-modal" onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -336,7 +340,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog onClose={handelViewbutton} aria-labelledby='customized-dialog-title' open={openView}>
+      <Dialog data-testid="view-property-modal" onClose={handelViewbutton} aria-labelledby='customized-dialog-title' open={openView}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -365,7 +369,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+      <Dialog data-testid="delete-property-modal" onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -394,6 +398,7 @@ const Property = () => {
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
+               data-testid='confirm-delete'
               onClick={handelDeletebutton}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}

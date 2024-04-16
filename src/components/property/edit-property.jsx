@@ -90,6 +90,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Name</Form.Label>
                       <Form.Control
+                      id='name'
                         type='text'
                         placeholder='Enter your Name'
                         {...register('name')}
@@ -191,6 +192,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>City</Form.Label>
                       <Form.Control
+                        id ='city'
                         type='text'
                         defaultValue={property?.city}
                         placeholder='Enter your city'

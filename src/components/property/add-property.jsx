@@ -91,7 +91,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your Name' {...register('name')} />
+                      <Form.Control id='name' type='text' placeholder='Enter your Name' {...register('name')} />
                       {errors.name && <span className='text-danger'>{errors.name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -99,7 +99,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Rent</Form.Label>
-                      <Form.Control type='tel' placeholder='Enter Rent' {...register('rent')} />
+                      <Form.Control id='rent' type='tel' placeholder='Enter Rent' {...register('rent')} />
                       {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
                     </Form.Group>
                   </Col>
@@ -108,14 +108,14 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Available From</Form.Label>
-                      <Form.Control type='date' placeholder='Select Date' {...register('available_from')} />
+                      <Form.Control id='available_from' type='date' placeholder='Select Date' {...register('available_from')} />
                       {errors.available_from && <span className='text-danger'>{errors.available_from.message}</span>}
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Rent-Type</Form.Label>
-                      <Form.Control type='text' placeholder=' Rent type' {...register('rent_type')} />
+                      <Form.Control id='rent_type' type='text' placeholder=' Rent type' {...register('rent_type')} />
                       {errors.rent_type && <span className='text-danger'>{errors.rent_type.message}</span>}
                     </Form.Group>
                   </Col>
@@ -124,7 +124,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Location</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Location' {...register('location')} />
+                      <Form.Control id='location' type='text' placeholder='Enter Location' {...register('location')} />
                       {errors.location && <span className='text-danger'>{errors.location.message}</span>}
                     </Form.Group>
                   </Col>
@@ -132,7 +132,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Address</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Address' {...register('address')} />
+                      <Form.Control id='address' type='text' placeholder='Enter Address' {...register('address')} />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -140,14 +140,14 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>City</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Control id='city' type='text' placeholder='Enter your city' {...register('city')} />
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>State</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Control id='state' type='text' placeholder='Enter your state' {...register('state')} />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -155,14 +155,14 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Country</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your country' {...register('country')} />
+                      <Form.Control id='country' type='text' placeholder='Enter your country' {...register('country')} />
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Pincode</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your pincode' {...register('pin_code')} />
+                      <Form.Control id='pin_code' type='text' placeholder='Enter your pincode' {...register('pin_code')} />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -170,14 +170,14 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Street</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Street' {...register('street')} />
+                      <Form.Control id='street' type='text' placeholder='Enter Street' {...register('street')} />
                       {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Landmark</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Landmark' {...register('landmark')} />
+                      <Form.Control id='landmark' type='text' placeholder='Enter Landmark' {...register('landmark')} />
                       {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                     </Form.Group>
                   </Col>
@@ -186,7 +186,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Property Type</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Property Type' {...register('property_type')} />
+                      <Form.Control id='property_type' type='text' placeholder='Enter Property Type' {...register('property_type')} />
                       {errors.property_type && <span className='text-danger'>{errors.property_type.message}</span>}
                     </Form.Group>
                   </Col>
@@ -194,7 +194,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>BHK</Form.Label>
-                      <Form.Control type='text' placeholder='Enter BHK' {...register('bhk')} />
+                      <Form.Control id='bhk' type='text' placeholder='Enter BHK' {...register('bhk')} />
                       {errors.bhk && <span className='text-danger'>{errors.bhk.message}</span>}
                     </Form.Group>
                   </Col>
@@ -204,6 +204,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>No. of Bathrooms</Form.Label>
                       <Form.Control
+                        id='no_of_bathrooms'
                         type='tel'
                         placeholder='Enter Number of Bathrooms'
                         {...register('no_of_bathrooms')}
@@ -215,7 +216,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>No. of Bedrooms</Form.Label>
-                      <Form.Control type='tel' placeholder='Enter Number of Bedrooms' {...register('no_of_bedrooms')} />
+                      <Form.Control  id='no_of_bedrooms' type='tel' placeholder='Enter Number of Bedrooms' {...register('no_of_bedrooms')} />
                       {errors.no_of_bedrooms && <span className='text-danger'>{errors.no_of_bedrooms.message}</span>}
                     </Form.Group>
                   </Col>
@@ -224,7 +225,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>No. of Rooms</Form.Label>
-                      <Form.Control type='tel' placeholder=' Number of Rooms' {...register('no_of_rooms')} />
+                      <Form.Control  id='no_of_rooms' type='tel' placeholder=' Number of Rooms' {...register('no_of_rooms')} />
                       {errors.no_of_rooms && <span className='text-danger'>{errors.no_of_rooms.message}</span>}
                     </Form.Group>
                   </Col>
@@ -232,7 +233,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>No. of Kitchen</Form.Label>
-                      <Form.Control type='tel' placeholder=' Number of Kitchen' {...register('no_of_kitchen')} />
+                      <Form.Control id='no_of_kitchen' type='tel' placeholder=' Number of Kitchen' {...register('no_of_kitchen')} />
                       {errors.no_of_kitchen && <span className='text-danger'>{errors.no_of_kitchen.message}</span>}
                     </Form.Group>
                   </Col>
@@ -241,7 +242,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>No. of Balconies</Form.Label>
-                      <Form.Control type='tel' placeholder=' Number of Balconies' {...register('no_of_balconies')} />
+                      <Form.Control id='no_of_balconies' type='tel' placeholder=' Number of Balconies' {...register('no_of_balconies')} />
                       {errors.no_of_balconies && <span className='text-danger'>{errors.no_of_balconies.message}</span>}
                     </Form.Group>
                   </Col>
@@ -250,6 +251,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label>Ready to Move</Form.Label>
                       <div className='d-flex align-items-center'>
                         <Form.Check
+                        id='ready_to_move'
                           type='radio'
                           label='True'
                           value='true'
@@ -272,7 +274,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Property Number</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Property Number' {...register('property_number')} />
+                      <Form.Control id='property_number' type='text' placeholder='Enter Property Number' {...register('property_number')} />
                       {errors.property_number && <span className='text-danger'>{errors.property_number.message}</span>}
                     </Form.Group>
                   </Col>
@@ -281,6 +283,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Property Age</Form.Label>
                       <Form.Control
+                      id='property_age'
                         type='tel'
                         placeholder='Enter Property Age in Years'
                         {...register('property_age')}
@@ -294,6 +297,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Property Area</Form.Label>
                       <Form.Control
+                      id='property_area'
                         type='text'
                         placeholder='Enter Property Area (e.g., 5000 sq. ft.)'
                         {...register('property_area')}
@@ -305,7 +309,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>District</Form.Label>
-                      <Form.Control type='text' placeholder='Enter District' {...register('district')} />
+                      <Form.Control id='district' type='text' placeholder='Enter District' {...register('district')} />
                       {errors.district && <span className='text-danger'>{errors.district.message}</span>}
                     </Form.Group>
                   </Col>
@@ -314,7 +318,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Latitude</Form.Label>
-                      <Form.Control type='text' placeholder='Latitude' {...register('latitude')} />
+                      <Form.Control id='latitude' type='text' placeholder='Latitude' {...register('latitude')} />
                       {errors.latitude && <span className='text-danger'>{errors.latitude.message}</span>}
                     </Form.Group>
                   </Col>
@@ -322,7 +326,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Longitude</Form.Label>
-                      <Form.Control type='text' placeholder='Longitude' {...register('longitude')} />
+                      <Form.Control id='longitude' type='text' placeholder='Longitude' {...register('longitude')} />
                       {errors.longitude && <span className='text-danger'>{errors.longitude.message}</span>}
                     </Form.Group>
                   </Col>
@@ -331,12 +335,13 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   <Col md={12}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Description</Form.Label>
-                      <Form.Control as='textarea' placeholder='Enter Description' {...register('description')} />
+                      <Form.Control id='description' as='textarea' placeholder='Enter Description' {...register('description')} />
                       {errors.description && <span className='text-danger'>{errors.description.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Button
+                 data-testid='add-property-button'
                   aria-label='Add'
                   type='submit'
                   style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
