@@ -113,7 +113,7 @@ const Role_Permission = () => {
         <div className='container-fluid'>
           <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols g-2'>
             {role.map((item, index) => (
-              <div data-testid="role-list" key={item.id} className='col p-2'>
+              <div data-testid='role-list' key={item.id} className='col p-2'>
                 <div style={{ backgroundColor: colors.blueAccent[1000], height: '150px' }} className='rounded-2  p-2'>
                   <div className='d-flex justify-content-between'>
                     <h4 className='text-capitalize'>{item.name}</h4>
@@ -129,8 +129,8 @@ const Role_Permission = () => {
                   {item.u_id !== 'ROL1000000001' && (
                     <div className='mt-5 d-flex justify-content-between'>
                       {/* Edit */}
-                      <button 
-                        data-testid="edit-role"
+                      <button
+                        data-testid='edit-role'
                         onClick={() => handleEditButton(item)}
                         className='btn fs-5 p-0'
                         style={{ color: colors.grey[100], border: 'none' }}
@@ -141,8 +141,8 @@ const Role_Permission = () => {
                       <div className=''>
                         {/* Delete */}
                         {role_permission[0].remove && (
-                          <button 
-                          data-testid="delete-role"
+                          <button
+                            data-testid='delete-role'
                             onClick={() => handleDeleteButton(item)}
                             className='btn fs-5 p-0'
                             style={{ color: colors.grey[100], border: 'none', marginRight: '10px' }}
@@ -157,7 +157,7 @@ const Role_Permission = () => {
                         {/* View */}
                         {role_permission[0].view && (
                           <button
-                            data-testid="view-role"
+                            data-testid='view-role'
                             onClick={() => handleViewButton(item)}
                             className='btn fs-5 p-0'
                             style={{ color: colors.grey[100], border: 'none' }}
@@ -180,7 +180,7 @@ const Role_Permission = () => {
                 <h3>Add Admin</h3>
                 {role_permission[0].add && (
                   <Button
-                    data-testid="add-role"
+                    data-testid='add-role'
                     onClick={handleAddButton}
                     className='btn fs-5 p-0 '
                     style={{
@@ -201,7 +201,12 @@ const Role_Permission = () => {
         </div>
       </div>
 
-      <Dialog data-testid="delete-role-modal" onClose={handleDeleteButton} aria-labelledby='customized-dialog-title' open={openDelete}>
+      <Dialog
+        data-testid='delete-role-modal'
+        onClose={handleDeleteButton}
+        aria-labelledby='customized-dialog-title'
+        open={openDelete}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -237,7 +242,7 @@ const Role_Permission = () => {
               Cancel
             </Button>
             <Button
-              data-testid="confirm-delete"
+              data-testid='confirm-delete'
               onClick={() => handelDeleteConfirmation(selectedRow)}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
@@ -249,7 +254,7 @@ const Role_Permission = () => {
       </Dialog>
 
       <Dialog
-        data-testid="view-role-modal"
+        data-testid='view-role-modal'
         fullScreen={isSmallScreen}
         onClose={handleViewButton}
         aria-labelledby='customized-dialog-title'
@@ -280,7 +285,7 @@ const Role_Permission = () => {
       </Dialog>
 
       <Dialog
-        data-testid="add-role-modal"
+        data-testid='add-role-modal'
         fullScreen={isSmallScreen}
         onClose={handleAddButton}
         aria-labelledby='customized-dialog-title'
@@ -315,7 +320,7 @@ const Role_Permission = () => {
       </Dialog>
 
       <Dialog
-        data-testid="edit-role-modal"
+        data-testid='edit-role-modal'
         fullScreen={isSmallScreen}
         onClose={handleEditButton}
         aria-labelledby='customized-dialog-title'

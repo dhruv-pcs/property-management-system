@@ -350,7 +350,6 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 </Row>
 
                 <Button
-                  
                   aria-label='save'
                   type='submit'
                   style={{ backgroundColor: colors.blueAccent[600] }}
