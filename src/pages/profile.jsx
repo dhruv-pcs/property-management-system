@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import ProfileImage from '../../../public/images/profile/Img1.png'
+import ProfileImage from '../../public/images/profile/Img1.png'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@styles-page/globals.css'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ColorModeContext, tokens, useMode } from '@theme/theme'
 import Topbar from '@components/topbar/topbar'
@@ -43,7 +43,7 @@ const App = ({ Component, pageProps }) => {
         return false
       }
 
-      if (route === '/404' || route === '/unauthorized' || route === '/login' || route === '/profile ') {
+      if (route === '/404' || route === '/unauthorized' || route === '/login' || route === '/profile') {
         return true
       }
 

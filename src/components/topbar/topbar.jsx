@@ -11,29 +11,33 @@ import { useProSidebar } from 'react-pro-sidebar'
 import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
 import axios from 'axios'
-import Router from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Topbar = () => {
+
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const colorMode = useContext(ColorModeContext)
   const { toggleSidebar, broken } = useProSidebar()
+  const router = useRouter();
 
   const handleLogout = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      if (response.data.statusCode === 200) {
-        localStorage.clear()
-        Router.push('/login')
+      try{
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        if (response.data.statusCode === 200) {
+          localStorage.clear()
+          router.push('/login')
+        }
+      }catch(error){
+        toast.error('Error Logging Out')
+        console.error(error)
       }
-    } catch (error) {
-      toast.error('Something went wrong')
-      console.log(error)
-    }
+    
   }
 
   return (
