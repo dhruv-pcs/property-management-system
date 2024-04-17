@@ -16,7 +16,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors }
   } = useForm()
-  // console.log('errors',errors);
+  
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
 
@@ -26,12 +26,11 @@ const Login = () => {
 
   const onSubmit = async data => {
     try {
-      console.log('12354', process.env.NEXT_PUBLIC_API_URL,data)
+
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data)
-      console.log('response', response)
+     
       
       const userData = response.data.data
-      console.log('userData', userData)
       router.push('/')
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)

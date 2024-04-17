@@ -1,119 +1,86 @@
-// import React from 'react';
-// import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-// import '@testing-library/jest-dom';
-// import axios from 'axios';
-// import Login from 'src/pages/login';
-// import { useRouter } from 'next/router';
+import React from 'react'
+import { render, fireEvent, waitFor, screen, act } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import axios from 'axios'
+import Login from 'src/pages/login'
 
-// jest.mock('axios');
-// jest.mock('react-toastify/dist/ReactToastify.css', () => ({}));
+jest.mock('axios')
+jest.mock('react-toastify/dist/ReactToastify.css', () => ({}))
 
-// jest.mock('next/router', () => ({
-//     useRouter: jest.fn(),
-// }));
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn()
+  }))
+}))
 
-// describe('Login Component', () => {
-//     beforeEach(() => {
-//         jest.clearAllMocks();
-//         useRouter.mockReturnValue({
-//             push: jest.fn(),
-//         });
-//         global.localStorage = {
-//             getItem: jest.fn(),
-//             setItem: jest.fn(),
-//             removeItem: jest.fn(),
-//             clear: jest.fn()
-//         };
-//     });
+const MockData = {
+  permissionData: {},
+  token: 'mockToken',
+  roleID: 'mockRoleID'
+}
 
-//     test('renders login form correctly', async () => {
-//         render(<Login />);
+process.env.NEXT_PUBLIC_API_URL = 'https://pms.codenticsoftware.in'
 
-//         expect(screen.getByLabelText('Login')).toBeInTheDocument();
-//         expect(screen.getByLabelText('Email address')).toBeInTheDocument();
-//         expect(screen.getByLabelText('Password')).toBeInTheDocument();
-//         expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
-//     });
+describe('Login Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
-//     test('validates form submission with empty fields', async () => {
-//         render(<Login />);
-//         fireEvent.click(screen.getByRole('button', { name: 'Login' }));
-//         // await waitFor(() => {
-//         //     expect(screen.getByText('Email address is required')).toBeInTheDocument();
-//         //     expect(screen.getByText('Password is required')).toBeInTheDocument();
-            
-//         // });
-//     });
+  test('renders login form correctly', async () => {
+    render(<Login />)
+  })
 
+  test('displays error on empty credentials', async () => {
+    render(<Login />)
 
-//     test('displays error message when email field is empty', async () => {
-//         render(<Login />);
-        
-//         const loginButton = screen.getByRole('button', { name: "Login" });
-//         fireEvent.click(loginButton);
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }))
 
-//          await waitFor(() => {
-             
-//             expect(screen.getByText("Email address is required")).toBeInTheDocument();
-//          })   
-//       });
+    await waitFor(() => {
+      expect(screen.getByText('Email address is required')).toBeInTheDocument()
+      expect(screen.getByText('Password is required')).toBeInTheDocument()
+    })
 
-      
-//       test('submits form with valid data and sets localStorage', async () => {
-//         // Mock axios post response
-//         axios.post.mockResolvedValueOnce({
-//           data: {
-//             data: {
-//               permissionData: {},
-//               token: 'mockToken',
-//               roleID: 'mockRoleID'
-//             }
-//           }
-//         });
-      
-//         render(<Login />);
-        
-//         // Fill in the email and password fields
-//         fireEvent.change(screen.getByLabelText("Email address"), { target: { value: 'super@gmail.com' } });
-//         fireEvent.change(screen.getByLabelText("Password"), { target: { value: 'Super@123' } });
-      
-//         // Click the login button
-//         fireEvent.click(screen.getByRole('button', { name: "Login" }));
-      
-//         await screen.findByText("Please sign in to your account and start the advanced!");
-      
-//         expect(localStorage.getItem('user')).toBe(JSON.stringify({}));
-//         expect(localStorage.getItem('token')).toBe('mockToken');
-//         expect(localStorage.getItem('Role')).toBe('mockRoleID');
-//       });
-      
-//       test('displays error on invalid credentials', async () => {
-      
-//         render(<Login />);
-      
-//         fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'test@example.com' } });
-//         fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'invalidPassword' } });
-      
-//         fireEvent.click(screen.getByRole('button', { name: 'Login' }));
-//         await waitFor(() => {
-//           expect(screen.getByText('Invalid Credentials')).toBeInTheDocument();
-    
-//         });
-//       });
-      
+  })
 
-//     test('toggles password visibility', () => {
-//         render(<Login />);
-//         const passwordInput = screen.getByLabelText('Password');
-//         expect(passwordInput).toHaveAttribute('type', 'password');
+  test('displays error on invalid credentials', async () => {
+    render(<Login />)
 
-//         // Assuming your button has an aria-label of 'Toggle password visibility'
-//         const toggleButton = screen.getByLabelText('Toggle password visibility');
+    fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'test@example.com' } })
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'invalidPassword' } })
 
-//         fireEvent.click(toggleButton);
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }))
+    await waitFor(() => {
+      expect(screen.getByText('Invalid Credentials')).toBeInTheDocument()
+    })
+  })
 
-//         expect(passwordInput).toHaveAttribute('type', 'text');
-//     });
+  test('login Successfully', async () => {
+    render(<Login />)
 
-    
-// });
+    axios.post.mockResolvedValueOnce({
+      data: {
+        data: MockData
+      }
+    })
+
+    const email = screen.getByTestId('email')
+    expect(email).toBeInTheDocument()
+    const password = screen.getByTestId('password')
+    expect(password).toBeInTheDocument()
+
+    fireEvent.change(email, { target: { value: 'super@gmail.com' } })
+    fireEvent.change(password, { target: { value: 'Super@123' } })
+
+    const getPasswordIcon = screen.getByTestId('toggle-password')
+    fireEvent.click(getPasswordIcon)
+
+    const submitButton = screen.getByTestId('login-button')
+
+    await act(async () => {
+      fireEvent.click(submitButton)
+      expect(localStorage.getItem('user'))
+      expect(localStorage.getItem('token'))
+      expect(localStorage.getItem('Role'))
+    })
+  })
+})

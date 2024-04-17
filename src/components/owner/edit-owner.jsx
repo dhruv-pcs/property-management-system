@@ -337,6 +337,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Button
                   aria-label='save'
                   type='submit'
+                  data-testid='save-changes'
                   style={{ backgroundColor: colors.blueAccent[600] }}
                   className='ms-2 mb-3 h-fit'
                 >

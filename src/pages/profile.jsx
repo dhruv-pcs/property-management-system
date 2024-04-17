@@ -10,7 +10,8 @@ import * as Yup from 'yup'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import ProfileImage from '../../public/images/profile/Img1.png'
+import { act } from '@testing-library/react'
+
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -19,7 +20,7 @@ const schema = Yup.object().shape({
   phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.number(),
+  alternate_phone: Yup.number()
 })
 
 const Profile = () => {
@@ -45,25 +46,27 @@ const Profile = () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        setUserData(response.data.data.data)
-
-        setValue('first_name', response.data.data.data.first_name)
-        setValue('last_name', response.data.data.data.last_name)
-        setValue('email', response.data.data.data.email)
-        setValue('phone', response.data.data.data.phone)
-        setValue('alternate_phone', response.data.data.data.alternate_phone)
-        setValue('city', response.data.data.data.city)
-        setValue('country', response.data.data.data.country)
-        setValue('pincode', response.data.data.data.pincode)
-        setValue('state', response.data.data.data.state)
+        });
+        act(() => {
+          setUserData(response.data.data.data);
+          setValue('first_name', response.data.data.data.first_name);
+          setValue('last_name', response.data.data.data.last_name);
+          setValue('email', response.data.data.data.email);
+          setValue('phone', response.data.data.data.phone);
+          setValue('alternate_phone', response.data.data.data.alternate_phone);
+          setValue('city', response.data.data.data.city);
+          setValue('country', response.data.data.data.country);
+          setValue('pincode', response.data.data.data.pincode);
+          setValue('state', response.data.data.data.state);
+        });
       } catch (error) {
-        toast.error('Error Fetching Data')
+        toast.error('Error Fetching Data');
       }
-    }
-
-    fetchData()
-  }, [setValue])
+    };
+  
+    fetchData();
+  }, [setValue]);
+  
 
   useEffect(() => {}, [userData])
 
@@ -76,7 +79,7 @@ const Profile = () => {
       setEditable(false)
       await fetchData()
     } catch (error) {
-      toast.error("Error While Updating Profile")
+      toast.error('Error While Updating Profile')
     }
   }
 
@@ -98,7 +101,7 @@ const Profile = () => {
                 <Image
                   data-testid='profile-image'
                   className='img-account-profile rounded-circle mb-2 img-fluid'
-                  src={ProfileImage}
+                  src={'/images/profile/Img1.png'}
                   alt=''
                   width={200}
                   height={200}
@@ -134,6 +137,7 @@ const Profile = () => {
                       <Form.Control
                         type='text'
                         name='first_name'
+                        data-testid='first_name'
                         placeholder='Enter your first name'
                         {...register('first_name')}
                         defaultValue={userData?.first_name}
@@ -149,6 +153,7 @@ const Profile = () => {
                       <Form.Control
                         type='text'
                         name='last_name'
+                        data-testid='last_name'
                         placeholder='Enter your last name'
                         {...register('last_name')}
                         defaultValue={userData?.last_name}
@@ -165,6 +170,7 @@ const Profile = () => {
                       <Form.Control
                         type='email'
                         name='email'
+                        data-testid='email'
                         placeholder='Enter your email address'
                         {...register('email')}
                         defaultValue={userData?.email}
@@ -175,22 +181,22 @@ const Profile = () => {
                   </Col>
 
                   {/* <Col md={6}>
-                  <Form.Group className='mb-1'>
-                    <Form.Label>Password</Form.Label>
-                    <div className='input-group'>
-                      <Form.Control
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder='Password'
-                        {...register('password')}
-                        readOnly={!editable}
-                      />
-                      <Button variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </Button>
-                    </div>
-                    {errors.password && <span className='text-danger'>{errors.password.message}</span>}
-                  </Form.Group>
-                </Col> */}
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Password</Form.Label>
+                      <div className='input-group'>
+                        <Form.Control
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder='Password'
+                          {...register('password')}
+                          readOnly={!editable}
+                        />
+                        <Button variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </Button>
+                      </div>
+                      {errors.password && <span className='text-danger'>{errors.password.message}</span>}
+                    </Form.Group>
+                  </Col> */}
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
@@ -199,6 +205,7 @@ const Profile = () => {
                       <Form.Control
                         type='tel'
                         name='phone'
+                        data-testid='phone'
                         placeholder='Enter your phone number'
                         {...register('phone')}
                         readOnly={!editable}
@@ -214,6 +221,7 @@ const Profile = () => {
                       <Form.Control
                         type='tel'
                         name='alternate_phone'
+                        data-testid='alternate_phone'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
                         readOnly={!editable}
@@ -229,6 +237,7 @@ const Profile = () => {
                       <Form.Control
                         type='text'
                         name='city'
+                        data-testid='city'
                         defaultValue={userData?.city}
                         placeholder='Enter your city'
                         {...register('city')}
@@ -243,6 +252,7 @@ const Profile = () => {
                       <Form.Control
                         type='text'
                         name='state'
+                        data-testid='state'
                         defaultValue={userData?.state}
                         placeholder='Enter your state'
                         {...register('state')}
@@ -258,6 +268,7 @@ const Profile = () => {
                       <Form.Control
                         type='text'
                         name='country'
+                        data-testid='country'
                         defaultValue={userData?.country}
                         placeholder='Enter your country'
                         {...register('country')}
@@ -271,6 +282,7 @@ const Profile = () => {
                       <Form.Label>Pincode</Form.Label>
                       <Form.Control
                         type='text'
+                        data-testid='pincode'
                         name='pincode'
                         defaultValue={userData?.pincode}
                         placeholder='Enter your pincode'
@@ -291,6 +303,7 @@ const Profile = () => {
                           style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                           onClick={() => setEditable(!editable)}
                           className='mb-3'
+                          data-testid='edit-button'
                         >
                           {editable ? 'Cancel' : 'Edit'}
                         </Button>
@@ -300,8 +313,9 @@ const Profile = () => {
                         <Button
                           style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                           className='ms-2 mb-3 h-fit'
-                          type="submit"
-                          name="Save changes"
+                          type='submit'
+                          data-testid='update-button'
+                          name='Save changes'
                         >
                           Save changes
                         </Button>

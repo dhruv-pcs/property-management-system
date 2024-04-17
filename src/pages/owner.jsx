@@ -36,7 +36,7 @@ const Owner = () => {
 
       setOwnerData(response.data.data.ownerData)
     } catch (error) {
-      console.error(error)
+      toast.error('Error Fetching Data')
     }
   }
 
@@ -78,8 +78,9 @@ const Owner = () => {
         toast.success('Owner Deleted Successfully')
       }
     } catch (error) {
-      toast.error('Error Deleting Owner')
-      console.log('error', error)
+      setOpenDelete(!openDelete);
+      toast.error('Failed to Delete Owner');
+      console.error('Error deleting owner:', error); 
     }
   }
 
@@ -95,19 +96,19 @@ const Owner = () => {
   const columns = [
     {
       name: 'Name',
-      selector: row => row.first_name + ' ' + row.last_name
+      selector: row => <span data-testid='name'>{row.first_name + ' ' + row.last_name}</span>
     },
     {
       name: 'Email',
-      selector: row => row.email
+      selector: row => <span data-testid='email'>{row.email}</span>
     },
     {
       name: 'Phone',
-      selector: row => row.phone
+      selector: row => <span data-testid='phone'>{row.phone}</span>
     },
     {
       name: 'Aadhar Card',
-      selector: row => row.aadhar_card_no
+      selector: row => <span data-testid='aadhar_card_no'>{row.aadhar_card_no}</span>
     },
     {
       name: 'Verification',
@@ -115,6 +116,7 @@ const Owner = () => {
         row.is_verified ? (
           <>
             <div
+              
               className=' text-center fw-bold py-1 px-2 rounded-pill'
               style={{ backgroundColor: colors.greenAccent[600] }}
             >
