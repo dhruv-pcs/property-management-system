@@ -20,7 +20,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "jest": " jest --coverage  --testTimeout=100000  --verbose --no-cache  --passWithNoTests --runInBand --forceExit --config=jest.config.js"
+    "jest": " jest --coverage  --testTimeout=100000  --verbose --no-cache  --passWithNoTests --runInBand --forceExit --config=jest.config.js "
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -56,6 +56,7 @@
     "@popperjs/core": "^2.11.8",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/babel__generator": "^7.6.8",
     "@types/bootstrap": "^5.2.10",

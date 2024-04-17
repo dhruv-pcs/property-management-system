@@ -69,18 +69,15 @@ const Owner = () => {
 
   const handelDeleteConfirmation = async selectedRow => {
     try {
-      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/owner/${selectedRow.u_id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/owner/${selectedRow.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.data.statusCode === 200) {
-        setOpenDelete(!openDelete)
-        handleOwnerDataUpdate()
-        toast.success('Owner Deleted Successfully')
-      }
+      setOpenDelete(!openDelete)
+      handleOwnerDataUpdate()
+      toast.success('Owner Deleted Successfully')
     } catch (error) {
-      setOpenDelete(!openDelete);
-      toast.error('Failed to Delete Owner');
-      console.error('Error deleting owner:', error); 
+      setOpenDelete(!openDelete)
+      toast.error('Failed to Delete Owner')
     }
   }
 
@@ -116,9 +113,9 @@ const Owner = () => {
         row.is_verified ? (
           <>
             <div
-              
               className=' text-center fw-bold py-1 px-2 rounded-pill'
               style={{ backgroundColor: colors.greenAccent[600] }}
+              data-testid='verified'
             >
               Verified
             </div>
@@ -128,6 +125,7 @@ const Owner = () => {
             <div
               className='text-center fw-bold py-1 px-2 rounded-pill'
               style={{ backgroundColor: colors.redAccent[600] }}
+              data-testid='not-verified'
             >
               Not Verified
             </div>
@@ -142,6 +140,7 @@ const Owner = () => {
             <div
               className='text-center py-1 px-2 fw-bold rounded-pill'
               style={{ backgroundColor: colors.greenAccent[600] }}
+              data-testid='active'
             >
               Active
             </div>
@@ -151,6 +150,7 @@ const Owner = () => {
             <div
               className=' text-center py-1 px-2 fw-bold rounded-pill'
               style={{ backgroundColor: colors.redAccent[600] }}
+              data-testid='not-active'
             >
               Not Active
             </div>
