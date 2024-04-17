@@ -16,6 +16,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors }
   } = useForm()
+  // console.log('errors',errors);
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
 
@@ -23,15 +24,18 @@ const Login = () => {
     setShowPassword(!showPassword)
   }
 
-  const onSubmit = async formData => {
+  const onSubmit = async data => {
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, formData)
-
+      console.log('12354', process.env.NEXT_PUBLIC_API_URL,data)
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data)
+      console.log('response', response)
+      
       const userData = response.data.data
+      console.log('userData', userData)
+      router.push('/')
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)
       localStorage.setItem('Role', userData.roleID)
-      router.push('/')
     } catch (error) {
       toast.error('Invalid Credentials')
     }
@@ -47,7 +51,9 @@ const Login = () => {
       <div className='container d-flex justify-content-center align-items-center vh-100'>
         <div className='card w-lg-50'>
           <div className='card-header'>
-            <h1 aria-label='Login' className='text-center'>Login</h1>
+            <h1 aria-label='Login' className='text-center'>
+              Login
+            </h1>
           </div>
           <div className='card-body'>
             <form onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
@@ -61,7 +67,13 @@ const Login = () => {
                   defaultValue=''
                   rules={{ required: 'Email address is required' }}
                   render={({ field }) => (
-                    <TextField {...field} label='Email address' variant='outlined' className='bg-none' />
+                    <TextField
+                      {...field}
+                      label='Email address'
+                      variant='outlined'
+                      className='bg-none'
+                      inputProps={{ 'data-testid': 'email' }}
+                    />
                   )}
                 />
                 {errors.email && (
@@ -82,10 +94,16 @@ const Login = () => {
                       type={showPassword ? 'text' : 'password'}
                       label='Password'
                       variant='outlined'
+                      inputProps={{ 'data-testid': 'password' }}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position='end'>
-                            <IconButton aria-label='Toggle password visibility' onClick={togglePasswordVisibility} edge='end'>
+                            <IconButton
+                              aria-label='Toggle password visibility'
+                              onClick={togglePasswordVisibility}
+                              edge='end'
+                              data-testid='toggle-password'
+                            >
                               {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
                             </IconButton>
                           </InputAdornment>
@@ -100,7 +118,14 @@ const Login = () => {
                   </Typography>
                 )}
               </FormControl>
-              <Button  name="Login" type='submit' variant='contained' className='bg-dark'  fullWidth>
+              <Button
+                name='Login'
+                type='submit'
+                variant='contained'
+                className='bg-dark'
+                fullWidth
+                data-testid='login-button'
+              >
                 Login
               </Button>
             </form>

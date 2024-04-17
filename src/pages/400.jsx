@@ -17,6 +17,7 @@ const Notfound = () => {
       <div className='position-absolute top-50 start-50 translate-middle'>
         <h1 className=''>Page Not Found</h1>
         <Link
+          name='return to dashboard'
           aria-label='Dashboard'
           href='/'
           className='text-decoration-none d-flex justify-content-center'
