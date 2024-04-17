@@ -272,7 +272,7 @@ const Admin = () => {
           paginationRowsPerPageOptions={[10, 25, 50, 100]}
           pagination
           subHeaderComponent={
-            admin_permission[0].add && (
+            admin_permission && admin_permission.length > 0 && admin_permission[0].add && (
               <button
                 data-testid='add-admin'
                 type='button'

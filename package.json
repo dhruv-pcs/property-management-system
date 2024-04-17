@@ -20,7 +20,8 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test": "jest  --config=jest.config.js"
+    "test": "jest  --config=jest.config.js",
+    "jest": " jest --coverage  --testTimeout=100000  --verbose --no-cache  --passWithNoTests --runInBand --forceExit --config=jest.config.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -31,6 +32,7 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "d3-interpolate": "^3.0.1",
+    "jest-mock-axios": "^4.7.3",
     "next": "14.1.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
