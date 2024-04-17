@@ -16,15 +16,10 @@ const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   email: Yup.string().email().required('Email is required'),
-  password: Yup.string().matches(
-    /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-    'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
-  ),
   phone: Yup.number()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.number(),
-  status: Yup.boolean().required('Admin status is required')
 })
 
 const Profile = () => {
@@ -63,7 +58,7 @@ const Profile = () => {
         setValue('pincode', response.data.data.data.pincode)
         setValue('state', response.data.data.data.state)
       } catch (error) {
-        console.error('Error fetching user data:', error)
+        toast.error('Error Fetching Data')
       }
     }
 
@@ -77,9 +72,11 @@ const Profile = () => {
       await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+      toast.success('Profile updated successfully')
+      setEditable(false)
+      await fetchData()
     } catch (error) {
-      toast.error('Error Fetching Data')
-      console.log('error', error)
+      toast.error("Error While Updating Profile")
     }
   }
 
@@ -303,7 +300,8 @@ const Profile = () => {
                         <Button
                           style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
                           className='ms-2 mb-3 h-fit'
-                          type='submit'
+                          type="submit"
+                          name="Save changes"
                         >
                           Save changes
                         </Button>

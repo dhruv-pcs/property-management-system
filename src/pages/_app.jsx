@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@styles-page/globals.css'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ColorModeContext, tokens, useMode } from '@theme/theme'
 import Topbar from '@components/topbar/topbar'
@@ -50,6 +50,7 @@ const App = ({ Component, pageProps }) => {
       if (route === '/') {
         return true
       }
+    
 
       return Local.some(item => {
         if (item.view) return `/${item.module.name}` === route
