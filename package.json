@@ -61,6 +61,7 @@
     "@types/babel__generator": "^7.6.8",
     "@types/bootstrap": "^5.2.10",
     "@types/d3-delaunay": "^6.0.4",
+    "axios-mock-adapter": "^1.22.0",
     "cypress": "^13.7.3",
     "d3-array": "^3.2.4",
     "eslint": "^8.57.0",

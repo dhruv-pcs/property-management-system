@@ -33,7 +33,7 @@ const Admin = () => {
       })
       setAdminData(response.data.data.adminData)
     } catch (error) {
-      console.error(error)
+      toast.error('Error Fetching Data')
     }
   }
   useEffect(() => {
@@ -50,8 +50,8 @@ const Admin = () => {
       handleAdminDataUpdate()
       toast.success('User deleted successfully!')
     } catch (error) {
-      toast.error('Error deleting User:', error)
-      console.error('Error deleting User:', error)
+      toast.error('Error deleting Admin', error)
+      console.error('Error deleting User', error)
     }
   }
 
@@ -122,9 +122,9 @@ const Admin = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          {!row.is_superadmin && admin_permission[0].view && (
+         {admin_permission && admin_permission.length > 0 && !row.is_superadmin && admin_permission[0].view && (
             <button
-            data-testid="view-admin"
+              data-testid="view-admin"
               aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
@@ -133,7 +133,7 @@ const Admin = () => {
               <Visibility />
             </button>
           )}
-          {!row.is_superadmin && admin_permission[0].update && (
+          {admin_permission && admin_permission.length > 0 && !row.is_superadmin && admin_permission[0].update && (
             <button
               data-testid="edit-admin"
               className='btn p-0 m-0 bg-none'
@@ -144,7 +144,7 @@ const Admin = () => {
               <Edit />
             </button>
           )}
-          {!row.is_superadmin && admin_permission[0].remove && (
+          {admin_permission && admin_permission.length > 0 && !row.is_superadmin && admin_permission[0].remove && (
             <button
             data-testid="delete-admin"
               className='btn p-0  m-0 bg-none'

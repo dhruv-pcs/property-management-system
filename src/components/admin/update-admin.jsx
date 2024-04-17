@@ -269,6 +269,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     {!isViewOnly && (
                       <div className='d-flex'>
                         <Button
+                          data-testid='edit-admin'
                           aria-label='Edit'
                           onClick={() => setEditable(!editable)}
                           className='mb-3'
