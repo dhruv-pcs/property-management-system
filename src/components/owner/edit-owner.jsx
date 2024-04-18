@@ -66,13 +66,18 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
   }, [setValue]);
 
   const onSubmit = async data => {
-    await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    });
+    try{
 
-    handelEditbutton();
-    onUpdate();
-    toast.success('Owner updated successfully');
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      
+      handelEditbutton();
+      onUpdate();
+      toast.success('Owner updated successfully');
+    }catch(err){
+      toast.error("Error updating owner");
+    }
   };
 
   return (

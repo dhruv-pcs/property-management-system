@@ -21,7 +21,7 @@ const schema = Yup.object().shape({
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   aadhar_card_no: Yup.number()
     .required('Aadhar Card No is required')
-    .test('len', 'Phone number must be exactly 12 digits', val => val && val.toString().length === 12),
+    .test('len', 'Aadhar Card No must be exactly 12 digits', val => val && val.toString().length === 12),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
   landmark: Yup.string().required('Landmark is required'),
@@ -58,7 +58,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
       }
     } catch (error) {
         
-      toast.error("Owner can't be added")
+      toast.error("Owner cannot be added")
       console.log('error', error)
     }
   }
@@ -146,9 +146,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                         type='tel'
                         data-testid="alternate_phone"
                         placeholder='Enter your alternate phone number'
-                        {...register('alternate_phone', {
-                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
-                        })}
+                        {...register('alternate_phone')}
                       />
                       {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                     </Form.Group>
