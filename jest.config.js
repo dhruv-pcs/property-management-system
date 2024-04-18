@@ -14,6 +14,7 @@ module.exports = async () => {
       '^@components/(.*)$': '<rootDir>/src/components/$1',
       '^@theme/(.*)$': '<rootDir>/src/theme/$1',
       '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+      "\\.(jpg|jpeg|png|gif|webp|svg)$": "identity-obj-proxy"
     },
     transform: {
       '^.+\\.jsx?$': 'babel-jest',

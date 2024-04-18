@@ -324,7 +324,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Status</Form.Label>
+                      <Form.Label>Verification</Form.Label>
                       <div>
                         <Form.Check
                           inline

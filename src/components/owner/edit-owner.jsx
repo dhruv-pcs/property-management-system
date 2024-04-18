@@ -1,14 +1,13 @@
-import React from 'react'
-import { useTheme, useMediaQuery } from '@mui/material'
-import { tokens } from '@theme/theme'
-import { Card, Col, Row, Form, Button } from 'react-bootstrap'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
-import { useEffect } from 'react'
-import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import React, { useEffect } from 'react';
+import { useTheme, useMediaQuery } from '@mui/material';
+import { tokens } from '@theme/theme';
+import { Card, Col, Row, Form, Button } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -19,7 +18,7 @@ const schema = Yup.object().shape({
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   alternate_phone: Yup.number()
     .required('Phone number is required')
-    .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
+    .test('len', 'Alternate Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
@@ -31,12 +30,12 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required'),
   status: Yup.boolean().required('Admin status is required'),
   is_verified: Yup.boolean().required('Verification status is required')
-})
+});
 
 const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
-  const theme = useTheme()
-  const colors = tokens(theme.palette.mode)
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const {
     register,
@@ -46,41 +45,35 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
     setValue
   } = useForm({
     resolver: yupResolver(schema)
-  })
+  });
 
   useEffect(() => {
-    setValue('first_name', owner.first_name)
-    setValue('last_name', owner.last_name)
-    setValue('email', owner.email)
-    setValue('phone', owner.phone)
-    setValue('alternate_phone', owner.alternate_phone)
-    setValue('city', owner.city)
-    setValue('country', owner.country)
-    setValue('pincode', owner.pincode)
-    setValue('state', owner.state)
-    setValue('aadhar_card_no', owner.aadhar_card_no)
-    setValue('address', owner.address)
-    setValue('gst_no', owner.gst_no)
-    setValue('landmark', owner.landmark)
-    setValue('street', owner.street)
+    setValue('first_name', owner.first_name);
+    setValue('last_name', owner.last_name);
+    setValue('email', owner.email);
+    setValue('phone', owner.phone);
+    setValue('alternate_phone', owner.alternate_phone);
+    setValue('city', owner.city);
+    setValue('country', owner.country);
+    setValue('pincode', owner.pincode);
+    setValue('state', owner.state);
+    setValue('aadhar_card_no', owner.aadhar_card_no);
+    setValue('address', owner.address);
+    setValue('gst_no', owner.gst_no);
+    setValue('landmark', owner.landmark);
+    setValue('street', owner.street);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setValue])
+  }, [setValue]);
 
   const onSubmit = async data => {
-    try {
-      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      if (response.status === 201) {
-        handelEditbutton()
-        onUpdate()
-        toast.success('Owner updated successfully')
-      }
-    } catch (error) {
-      toast.error('Error updating owner')
-      console.log('error', error)
-    }
-  }
+    await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
+
+    handelEditbutton();
+    onUpdate();
+    toast.success('Owner updated successfully');
+  };
 
   return (
     <>
@@ -92,11 +85,13 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>First name</Form.Label>
+                      <Form.Label htmlFor="first_name">First name</Form.Label>
                       <Form.Control
                         type='text'
+                        id="first_name"
                         placeholder='Enter your first name'
                         {...register('first_name')}
+                        data-testid='first_name'
                         defaultValue={owner?.first_name}
                       />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
@@ -105,10 +100,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Last name</Form.Label>
+                      <Form.Label htmlFor="last_name">Last name</Form.Label>
                       <Form.Control
                         id='last_name'
                         type='text'
+                        data-testid='last_name'
                         placeholder='Enter your last name'
                         {...register('last_name')}
                         defaultValue={owner?.last_name}
@@ -121,9 +117,10 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Email address</Form.Label>
+                      <Form.Label htmlFor="email">Email address</Form.Label>
                       <Form.Control
                         id='email'
+                        data-testid='email'
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
@@ -135,9 +132,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>GST No</Form.Label>
+                      <Form.Label htmlFor="gst_no">GST No</Form.Label>
                       <Form.Control
                         type='text'
+                        id='gst_no'
+                        data-testid='gst_no'
                         placeholder='Enter GST No'
                         {...register('gst_no')}
                         defaultValue={owner?.gst_no}
@@ -146,15 +145,18 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                     </Form.Group>
                   </Col>
                 </Row>
+
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Phone number</Form.Label>
+                      <Form.Label htmlFor="phone">Phone number</Form.Label>
                       <Form.Control
                         type='tel'
+                        id='phone'
+                        data-testid='phone'
                         placeholder='Enter your phone number'
                         {...register('phone')}
-                        defaultValue={owner?.phone ? Number(owner.phone) : ''}
+                        defaultValue={owner?.phone && Number(owner.phone)}
                       />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
@@ -162,9 +164,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Alternative Phone No:</Form.Label>
+                      <Form.Label htmlFor="alternate_phone">Alternative Phone No:</Form.Label>
                       <Form.Control
                         type='tel'
+                        id='alternate_phone'
+                        data-testid='alternate_phone'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
                         defaultValue={owner?.alternate_phone}
@@ -176,9 +180,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
+                      <Form.Label htmlFor="city">City</Form.Label>
                       <Form.Control
                         type='text'
+                        id='city'
+                        data-testid='city'
                         defaultValue={owner?.city}
                         placeholder='Enter your city'
                         {...register('city')}
@@ -188,9 +194,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
+                      <Form.Label htmlFor="state">State</Form.Label>
                       <Form.Control
                         type='text'
+                        id='state'
+                        data-testid='state'
                         defaultValue={owner?.state}
                         placeholder='Enter your state'
                         {...register('state')}
@@ -202,9 +210,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
+                      <Form.Label htmlFor="country">Country</Form.Label>
                       <Form.Control
                         type='text'
+                        id='country'
+                        data-testid='country'
                         defaultValue={owner?.country}
                         placeholder='Enter your country'
                         {...register('country')}
@@ -214,9 +224,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label htmlFor="pincode">Pincode</Form.Label>
                       <Form.Control
                         type='text'
+                        id='pincode'
+                        data-testid='pincode'
                         defaultValue={owner?.pincode}
                         placeholder='Enter your pincode'
                         {...register('pincode')}
@@ -228,9 +240,12 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Aadhar Card No</Form.Label>
+                      <Form.Label htmlFor="aadhar_card_no">Aadhar Card No</Form.Label>
                       <Form.Control
                         type='text'
+                        id='aadhar_card_no'
+
+                        data-testid='aadhar_card_no'
                         placeholder='Enter Aadhar Card No'
                         {...register('aadhar_card_no')}
                         defaultValue={owner?.aadhar_card_no}
@@ -241,9 +256,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Address</Form.Label>
+                      <Form.Label htmlFor="address">Address</Form.Label>
                       <Form.Control
                         type='text'
+                        id='address'
+                        data-testid='address'
                         placeholder='Enter Address'
                         {...register('address')}
                         defaultValue={owner?.address}
@@ -256,9 +273,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Landmark</Form.Label>
+                      <Form.Label htmlFor="landmark">Landmark</Form.Label>
                       <Form.Control
                         type='text'
+                        id='landmark'
+                        data-testid='landmark'
                         placeholder='Enter Landmark'
                         {...register('landmark')}
                         defaultValue={owner?.landmark}
@@ -269,9 +288,11 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Street</Form.Label>
+                      <Form.Label htmlFor="street">Street</Form.Label>
                       <Form.Control
                         type='text'
+                        id='street'
+                        data-testid='street'
                         placeholder='Enter Street'
                         {...register('street')}
                         defaultValue={owner?.street}
@@ -290,6 +311,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           inline
                           label='Active'
                           type='radio'
+                          data-testid='active'
                           id='active'
                           {...register('status', { required: true })}
                           value={true}
@@ -299,6 +321,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           inline
                           label='Inactive'
                           type='radio'
+                          data-testid='inactive'
                           id='inactive'
                           {...register('status', { required: true })}
                           value={false}
@@ -306,16 +329,19 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         />
                       </div>
                     </Form.Group>
+          
+
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Status</Form.Label>
+                      <Form.Label>Verification</Form.Label>
                       <div>
                         <Form.Check
                           inline
                           label='Verified'
                           type='radio'
                           id='verified'
+                          data-testid='verified'
                           {...register('is_verified', { required: true })}
                           value={true}
                           defaultChecked={owner?.is_verified === true && true}
@@ -325,6 +351,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                           label='Not Verified'
                           type='radio'
                           id='not_verified'
+                          data-testid='not_verified'
                           {...register('is_verified', { required: true })}
                           value={false}
                           defaultChecked={owner?.is_verified === false && true}
@@ -337,6 +364,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Button
                   aria-label='save'
                   type='submit'
+                  data-testid='save-changes'
                   style={{ backgroundColor: colors.blueAccent[600] }}
                   className='ms-2 mb-3 h-fit'
                 >
@@ -349,7 +377,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
       </Row>
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
-  )
+  );
 }
 
-export default EditOwner
+export default EditOwner;

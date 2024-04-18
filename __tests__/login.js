@@ -3,7 +3,6 @@ import { render, fireEvent, waitFor, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import Login from 'src/pages/login'
-import { useRouter } from 'next/router'
 
 jest.mock('axios')
 jest.mock('react-toastify/dist/ReactToastify.css', () => ({}))
@@ -14,26 +13,55 @@ jest.mock('next/router', () => ({
   }))
 }))
 
-// Mock the environment variable
-process.env.NEXT_PUBLIC_API_URL = 'https://pms.codenticsoftware.in';
+const MockData = {
+  permissionData: {},
+  token: 'mockToken',
+  roleID: 'mockRoleID'
+}
+
+process.env.NEXT_PUBLIC_API_URL = 'https://pms.codenticsoftware.in'
 
 describe('Login Component', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    
-    // global.localStorage = {
-    //   getItem: jest.fn(),
-    //   setItem: jest.fn(),
-    //   removeItem: jest.fn(),
-    //   clear: jest.fn()
-    // }
   })
 
   test('renders login form correctly', async () => {
     render(<Login />)
   })
-  test('renders login form correctly', async () => {
+
+  test('displays error on empty credentials', async () => {
     render(<Login />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }))
+
+    await waitFor(() => {
+      expect(screen.getByText('Email address is required')).toBeInTheDocument()
+      expect(screen.getByText('Password is required')).toBeInTheDocument()
+    })
+
+  })
+
+  test('displays error on invalid credentials', async () => {
+    render(<Login />)
+
+    fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'test@example.com' } })
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'invalidPassword' } })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }))
+    await waitFor(() => {
+      expect(screen.getByText('Invalid Credentials')).toBeInTheDocument()
+    })
+  })
+
+  test('login Successfully', async () => {
+    render(<Login />)
+
+    axios.post.mockResolvedValueOnce({
+      data: {
+        data: MockData
+      }
+    })
 
     const email = screen.getByTestId('email')
     expect(email).toBeInTheDocument()
@@ -50,6 +78,9 @@ describe('Login Component', () => {
 
     await act(async () => {
       fireEvent.click(submitButton)
+      expect(localStorage.getItem('user'))
+      expect(localStorage.getItem('token'))
+      expect(localStorage.getItem('Role'))
     })
   })
 })

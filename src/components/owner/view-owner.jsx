@@ -4,28 +4,7 @@ import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
 
-const schema = Yup.object().shape({
-  first_name: Yup.string().required('First name is required'),
-  last_name: Yup.string().required('Last name is required'),
-  email: Yup.string().email().required('Email is required'),
-  password: Yup.string().matches(
-    /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-    'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
-  ),
-  phone: Yup.string()
-    .required('Phone number is required')
-    .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
-  alternate_phone: Yup.string(),
-  status: Yup.boolean().required('Admin status is required'),
-  aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
-  address: Yup.string().required('Address is required'),
-  gst_no: Yup.string().required('GST No is required'),
-  is_verified: Yup.boolean().required('Verification status is required'),
-  landmark: Yup.string().required('Landmark is required'),
-  street: Yup.string().required('Street is required')
-})
 
 const ViewOwner = ({ owner }) => {
   const theme = useTheme()
@@ -36,11 +15,8 @@ const ViewOwner = ({ owner }) => {
 
   const {
     register,
-    formState: { errors },
     control
-  } = useForm({
-    resolver: yupResolver(schema)
-  })
+  } = useForm()
 
   return (
     <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
@@ -61,7 +37,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.first_name}
                       readOnly={!editable}
                     />
-                    {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
+                    
                   </Form.Group>
                 </Col>
 
@@ -75,7 +51,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.last_name}
                       readOnly={!editable}
                     />
-                    {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
+                   
                   </Form.Group>
                 </Col>
               </Row>
@@ -90,7 +66,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.email}
                       readOnly={!editable}
                     />
-                    {errors.email && <span className='text-danger'>{errors.email.message}</span>}
+
                   </Form.Group>
                 </Col>
 
@@ -104,7 +80,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.gst_no}
                       readOnly={!editable}
                     />
-                    {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
+                  
                   </Form.Group>
                 </Col>
               </Row>
@@ -119,7 +95,7 @@ const ViewOwner = ({ owner }) => {
                       readOnly={!editable}
                       defaultValue={owner?.phone ? Number(owner.phone) : ''}
                     />
-                    {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
+                   
                   </Form.Group>
                 </Col>
 
@@ -201,7 +177,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.aadhar_card_no}
                       readOnly={!editable}
                     />
-                    {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
+                    
                   </Form.Group>
                 </Col>
 
@@ -215,7 +191,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.address}
                       readOnly={!editable}
                     />
-                    {errors.address && <span className='text-danger'>{errors.address.message}</span>}
+                   
                   </Form.Group>
                 </Col>
               </Row>
@@ -230,7 +206,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.landmark}
                       readOnly={!editable}
                     />
-                    {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
+                   
                   </Form.Group>
                 </Col>
 
@@ -244,7 +220,7 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.street}
                       readOnly={!editable}
                     />
-                    {errors.street && <span className='text-danger'>{errors.street.message}</span>}
+                   
                   </Form.Group>
                 </Col>
               </Row>
