@@ -1,12 +1,15 @@
 import React from 'react'
-import { render} from '@testing-library/react'
+import { act, render} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Dashboard from 'src/pages/index'
 
-describe('Unauthorized Component', () => {
+describe('Dashboard Component', () => {
 
-    it('should render unauthorized component', async () => {
-        const { container } = render(<Dashboard />)
+    it('should render dashboard component', async () => {
+        const { container } = 
+        act(() =>
+         render(<Dashboard />)
+        )
         expect(container).toMatchSnapshot()
     })
 })
