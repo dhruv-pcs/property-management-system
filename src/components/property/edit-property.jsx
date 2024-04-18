@@ -10,7 +10,6 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-
 const schema = Yup.object().shape({
   name: Yup.string().required('First name is required'),
   rent: Yup.string().required('Rent is required'),
@@ -89,7 +88,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="name">Name</Form.Label>
+                      <Form.Label htmlFor='name'>Name</Form.Label>
                       <Form.Control
                         id='name'
                         data-testid='name'
@@ -104,7 +103,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
 
                   <Col md={3}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="rent">Rent</Form.Label>
+                      <Form.Label htmlFor='rent'>Rent</Form.Label>
                       <Form.Control
                         id='rent'
                         data-testid='rent'
@@ -118,7 +117,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={3}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="rent_type">Rent-Type</Form.Label>
+                      <Form.Label htmlFor='rent_type'>Rent-Type</Form.Label>
                       <Form.Control
                         id='rent_type'
                         data-testid='rent_type'
@@ -134,7 +133,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="landmark">Landmark</Form.Label>
+                      <Form.Label htmlFor='landmark'>Landmark</Form.Label>
                       <Form.Control
                         id='landmark'
                         data-testid='landmark'
@@ -148,10 +147,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="location">Location</Form.Label>
+                      <Form.Label htmlFor='location'>Location</Form.Label>
                       <Form.Control
-                      id='location'
-                      data-testid='location'
+                        id='location'
+                        data-testid='location'
                         type='text'
                         placeholder='Enter Location'
                         {...register('location')}
@@ -164,7 +163,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="address">Address</Form.Label>
+                      <Form.Label htmlFor='address'>Address</Form.Label>
                       <Form.Control
                         id='address'
                         data-testid='address'
@@ -178,7 +177,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="street">Street</Form.Label>
+                      <Form.Label htmlFor='street'>Street</Form.Label>
                       <Form.Control
                         id='street'
                         data-testid='street'
@@ -193,7 +192,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="property_number">Property Number</Form.Label>
+                      <Form.Label htmlFor='property_number'>Property Number</Form.Label>
                       <Form.Control
                         id='property_number'
                         data-testid='property_number'
@@ -207,9 +206,9 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="city">City</Form.Label>
+                      <Form.Label htmlFor='city'>City</Form.Label>
                       <Form.Control
-                        id ='city'
+                        id='city'
                         data-testid='city'
                         type='text'
                         defaultValue={property?.city}
@@ -223,7 +222,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="district">District</Form.Label>
+                      <Form.Label htmlFor='district'>District</Form.Label>
                       <Form.Control
                         id='district'
                         data-testid='district'
@@ -236,7 +235,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="state">State</Form.Label>
+                      <Form.Label htmlFor='state'>State</Form.Label>
                       <Form.Control
                         id='state'
                         data-testid='state'
@@ -252,10 +251,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="country">Country</Form.Label>
+                      <Form.Label htmlFor='country'>Country</Form.Label>
                       <Form.Control
-                      id='country'
-                      data-testid='country'
+                        id='country'
+                        data-testid='country'
                         type='text'
                         defaultValue={property?.country}
                         placeholder='Enter your country'
@@ -266,10 +265,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="pin_code">Pincode</Form.Label>
+                      <Form.Label htmlFor='pin_code'>Pincode</Form.Label>
                       <Form.Control
-                      id='pin_code'
-                      data-testid='pin_code'
+                        id='pin_code'
+                        data-testid='pin_code'
                         type='tel'
                         placeholder='Enter Pincode'
                         {...register('pin_code')}
@@ -282,7 +281,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="latitude">Latitude</Form.Label>
+                      <Form.Label htmlFor='latitude'>Latitude</Form.Label>
                       <Form.Control
                         id='latitude'
                         data-testid='latitude'
@@ -296,10 +295,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="longitude">Longitude</Form.Label>
+                      <Form.Label htmlFor='longitude'>Longitude</Form.Label>
                       <Form.Control
-                      id='longitude'
-                      data-testid='longitude'
+                        id='longitude'
+                        data-testid='longitude'
                         type='tel'
                         placeholder='Enter Longitude'
                         {...register('longitude')}

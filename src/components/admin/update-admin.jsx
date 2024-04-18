@@ -86,7 +86,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     <Form.Group className='mb-1'>
                       <Form.Label>First name</Form.Label>
                       <Form.Control
-                      id='first_name'
+                        id='first_name'
                         type='text'
                         placeholder='Enter your first name'
                         {...register('first_name')}

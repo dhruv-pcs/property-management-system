@@ -6,12 +6,11 @@ describe('Admin Management', () => {
     cy.url().should('include', '/admin')
   })
 
-    it('should display the list of admins', () => {
-        cy.get('[data-testid="admin-list"]').should('exist');
-    }); 
+  it('should display the list of admins', () => {
+    cy.get('[data-testid="admin-list"]').should('exist')
+  })
 
-    it('should display the Add Admin button', () => {
-        cy.get('[data-testid="add-admin"]').should('exist');
-    })
-
-  });
+  it('should display the Add Admin button', () => {
+    cy.get('[data-testid="add-admin"]').should('exist')
+  })
+})

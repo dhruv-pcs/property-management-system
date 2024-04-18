@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-
 const schema = Yup.object().shape({
   name: Yup.string().required('First name is required'),
   rent: Yup.string().required('Last name is required'),

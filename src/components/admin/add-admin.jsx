@@ -10,7 +10,6 @@ import { useTheme } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -94,7 +93,12 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>First name</Form.Label>
-                      <Form.Control id='first_name' type='text' placeholder='Enter your first name' {...register('first_name')} />
+                      <Form.Control
+                        id='first_name'
+                        type='text'
+                        placeholder='Enter your first name'
+                        {...register('first_name')}
+                      />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -102,7 +106,12 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Last name</Form.Label>
-                      <Form.Control id='last_name' type='text' placeholder='Enter your last name' {...register('last_name')} />
+                      <Form.Control
+                        id='last_name'
+                        type='text'
+                        placeholder='Enter your last name'
+                        {...register('last_name')}
+                      />
                       {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -111,7 +120,12 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={12}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Email address</Form.Label>
-                      <Form.Control id='email' type='email' placeholder='Enter your email address' {...register('email')} />
+                      <Form.Control
+                        id='email'
+                        type='email'
+                        placeholder='Enter your email address'
+                        {...register('email')}
+                      />
                       {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
                   </Col>
@@ -140,7 +154,7 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={6}>
                     <Form.Group className='mb-3'>
                       <Form.Label>Role</Form.Label>
-                      <Form.Select id="role_u_id" {...register('role_u_id')}>
+                      <Form.Select id='role_u_id' {...register('role_u_id')}>
                         <option value=''>Select a role</option>
                         {roles.map(role => (
                           <option key={role.u_id} value={role.u_id}>
@@ -156,7 +170,12 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Phone number</Form.Label>
-                      <Form.Control id='phone' type='text' placeholder='Enter your phone number' {...register('phone')} />
+                      <Form.Control
+                        id='phone'
+                        type='text'
+                        placeholder='Enter your phone number'
+                        {...register('phone')}
+                      />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
                   </Col>
@@ -165,7 +184,7 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label>Alternative Phone No:</Form.Label>
                       <Form.Control
-                      id='alternate_phone'
+                        id='alternate_phone'
                         type='text'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone', {
@@ -195,18 +214,28 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Country</Form.Label>
-                      <Form.Control id='country' type='text' placeholder='Enter your country' {...register('country')} />
+                      <Form.Control
+                        id='country'
+                        type='text'
+                        placeholder='Enter your country'
+                        {...register('country')}
+                      />
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Pincode</Form.Label>
-                      <Form.Control id='pincode' type='text' placeholder='Enter your pincode' {...register('pincode')} />
+                      <Form.Control
+                        id='pincode'
+                        type='text'
+                        placeholder='Enter your pincode'
+                        {...register('pincode')}
+                      />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Button
-                 data-testid='add-admin-button'
+                  data-testid='add-admin-button'
                   type='submit'
                   aria-label='Add Admin'
                   variant='primary'
