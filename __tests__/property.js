@@ -241,7 +241,6 @@ test('Update Property With Empty Fields to Get Validation Error', async () => {
   fireEvent.change(state, { target: { value: '' } });
   fireEvent.change(city, { target: { value: '' } });
   
-
   const saveButton = screen.getByTestId('save-changes');
   act(() => {
     fireEvent.click(saveButton);
@@ -279,7 +278,26 @@ test('successfully updates property upon form submission', async () => {
   })
 })
 
-describe('AddProperty Component', () => {
+test('handles error when updating owner', async () => {
+  const mockError = new Error('Update request failed')
+  axios.patch = jest.fn().mockRejectedValue(mockError)
+  const onUpdate = jest.fn()
+  const handelEditbutton = jest.fn()
+
+  render(<EditProperty property={property} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+
+  const saveButton = screen.getByLabelText('Save changes')
+  fireEvent.click(saveButton)
+
+  await waitFor(() => {
+    expect(onUpdate).not.toHaveBeenCalled()
+    expect(handelEditbutton).not.toHaveBeenCalled()
+    expect(screen.getByText('Error updating property')).toBeInTheDocument()
+  })
+})
+})
+
+describe('Property Add Component', () => {
   const property = {
     name: 'Sunset Villa',
     address: '123 Ocean St',
@@ -302,7 +320,7 @@ describe('AddProperty Component', () => {
     property_area: '1500 sq ft',
     property_number: 'SV101',
     property_type: 'Residential',
-    property_rent: 2500,
+    rent: 2500,
     rent_type: 'Monthly',
     state: 'State',
     street: 'Beachside Lane',
@@ -313,27 +331,230 @@ describe('AddProperty Component', () => {
     const mockResponse = { data: { statusCode: 201 } };
     axios.post = jest.fn().mockResolvedValue(mockResponse);
     const onUpdate = jest.fn();
-    const handleAddButton = jest.fn();
+    const handelAddbutton= jest.fn();
 
-    render(<AddProperty onUpdate={onUpdate} handleAddButton={handleAddButton} />);
+    const { getByLabelText } =render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
 
-    Object.keys(property).forEach(key => {
-      fireEvent.change(screen.getByTestId(new RegExp(key, 'i')), 
-      { target: { value: property[key] } });
+      const name = getByLabelText('Name');
+      const address = getByLabelText('Address');
+      const available_from = getByLabelText('Available From');
+      const bhk = getByLabelText('BHK');
+      const city = getByLabelText('City');
+      const country = getByLabelText('Country');
+      const description = getByLabelText('Description');
+      const district = getByLabelText('District');
+      const landmark = getByLabelText('Landmark');
+      const latitude = getByLabelText('Latitude');
+      const longitude = getByLabelText('Longitude');
+      const no_of_balconies = getByLabelText('No. of Balconies');
+      const no_of_bathrooms = getByLabelText('No. of Bathrooms');
+      const no_of_bedrooms = getByLabelText('No. of Bedrooms');
+      const no_of_kitchen = getByLabelText('No. of Kitchen');
+      const no_of_rooms = getByLabelText('No. of Rooms');
+      const pin_code = getByLabelText('Pincode');
+      const property_age = getByLabelText('Property Age');
+      const property_area = getByLabelText('Property Area');
+      const property_number = getByLabelText('Property Number');
+      const property_type = getByLabelText('Property Type');
+      const rent = getByLabelText('Rent');
+      const rent_type = getByLabelText('Rent-Type');
+      const state = getByLabelText('State');
+      const street = getByLabelText('Street');
+      const ready_to_move = getByLabelText('Ready to Move');
 
+      fireEvent.change(name, { target: { value: property.name } });
+      fireEvent.change(address, { target: { value:  property.address } });
+      fireEvent.change(available_from, { target: { value:  property.available_from } });
+      fireEvent.change(bhk, { target: { value:  property.bhk} });
+      fireEvent.change(city, { target: { value:  property.city } });
+      fireEvent.change(country, { target: { value:  property.country } });
+      fireEvent.change(description, { target: { value:  property.description} });
+      fireEvent.change(district, { target: { value:  property.district } });
+      fireEvent.change(landmark, { target: { value:  property.landmark} });
+      fireEvent.change(latitude, { target: { value:   property.latitude} });
+      fireEvent.change(longitude, { target: { value:  property.longitude } });
+      fireEvent.change(no_of_balconies, { target: { value:  property.no_of_balconies } });
+      fireEvent.change(no_of_bathrooms, { target: { value:  property.no_of_bathrooms} });
+      fireEvent.change(no_of_bedrooms, { target: { value:  property.no_of_bedrooms } });
+      fireEvent.change(no_of_kitchen, { target: { value:  property. no_of_kitchen} });
+      fireEvent.change(no_of_rooms, { target: { value: property. no_of_rooms } });
+      fireEvent.change(pin_code, { target: { value:  property.pin_code } });
+      fireEvent.change(property_age, { target: { value:  property.property_age } });
+      fireEvent.change(property_area, { target: { value:   property.property_area} });
+      fireEvent.change(property_number, { target: { value: property.property_number } });
+      fireEvent.change(property_type, { target: { value:  property.property_type } });
+      fireEvent.change(rent, { target: { value:  property.rent } });
+      fireEvent.change(rent_type, { target: { value:  property.rent_type } });
+      fireEvent.change(state, { target: { value:  property.state } });
+      fireEvent.change(street, { target: { value: property.street } });
+      fireEvent.change(ready_to_move, { target: { value:  property.ready_to_move } });
+
+
+      const saveButton = screen.getByTestId('add-property-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+        })
+
+      await waitFor(() => {
+      expect(onUpdate).toHaveBeenCalled()
+      expect(handelAddbutton).toHaveBeenCalled()
+      expect(screen.getByText('Property added successfully')).toBeInTheDocument()
+      })
     });
 
-    const saveButton = screen.getByTestId('add-property-button');
-    act(() => {
-      fireEvent.click(saveButton);
-    });
+    test('Add New Property With Empty Fields to get Validation Error', async () => {
+      const mockResponse = { data: { statusCode: 201 } }
+      axios.post = jest.fn().mockResolvedValue(mockResponse)
+      const onUpdate = jest.fn()
+      const handelAddbutton = jest.fn()
+  
+      const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
 
-    await waitFor(() => {
-      expect(onUpdate).toHaveBeenCalled();
-      expect(handleAddButton).toHaveBeenCalled();
-      expect(axios.post).toHaveBeenCalled();
-      expect(screen.getByText('Property added successfully')).toBeInTheDocument();
+      const name = getByLabelText('Name');
+      const address = getByLabelText('Address');
+      const available_from = getByLabelText('Available From');
+      const bhk = getByLabelText('BHK');
+      const city = getByLabelText('City');
+      const country = getByLabelText('Country');
+      const description = getByLabelText('Description');
+      const district = getByLabelText('District');
+      const landmark = getByLabelText('Landmark');
+      const latitude = getByLabelText('Latitude');
+      const longitude = getByLabelText('Longitude');
+      const no_of_balconies = getByLabelText('No. of Balconies');
+      const no_of_bathrooms = getByLabelText('No. of Bathrooms');
+      const no_of_bedrooms = getByLabelText('No. of Bedrooms');
+      const no_of_kitchen = getByLabelText('No. of Kitchen');
+      const no_of_rooms = getByLabelText('No. of Rooms');
+      const pin_code = getByLabelText('Pincode');
+      const property_age = getByLabelText('Property Age');
+      const property_area = getByLabelText('Property Area');
+      const property_number = getByLabelText('Property Number');
+      const property_type = getByLabelText('Property Type');
+      const rent = getByLabelText('Rent');
+      const rent_type = getByLabelText('Rent-Type');
+      const state = getByLabelText('State');
+      const street = getByLabelText('Street');
+      const ready_to_move = getByLabelText('Ready to Move');
+
+      fireEvent.change(name, { target: { value: '' } });
+      fireEvent.change(address, { target: { value: '' } });
+      fireEvent.change(available_from, { target: { value: '' } });
+      fireEvent.change(bhk, { target: { value: ''} });
+      fireEvent.change(city, { target: {value: '' } });
+      fireEvent.change(country, { target: { value: '' } });
+      fireEvent.change(description, { target: { value: ''} });
+      fireEvent.change(district, { target: { value: '' } });
+      fireEvent.change(landmark, { target: { value: ''} });
+      fireEvent.change(latitude, { target: { value: ''} });
+      fireEvent.change(longitude, { target: { value: '' } });
+      fireEvent.change(no_of_balconies, { target: { value: '' } });
+      fireEvent.change(no_of_bathrooms, { target: { value: ''} });
+      fireEvent.change(no_of_bedrooms, { target: { value: '' } });
+      fireEvent.change(no_of_kitchen, { target: { value: ''} });
+      fireEvent.change(no_of_rooms, { target: { value: '' } });
+      fireEvent.change(pin_code, { target: {value: '' } });
+      fireEvent.change(property_age, { target: { value: '' } });
+      fireEvent.change(property_area, { target: { value: ''} });
+      fireEvent.change(property_number, { target: { value: '' } });
+      fireEvent.change(property_type, { target: { value:'' } });
+      fireEvent.change(rent, { target: { value:  ''} });
+      fireEvent.change(rent_type, { target: { value:  '' } });
+      fireEvent.change(state, { target: { value: '' } });
+      fireEvent.change(street, { target: { value: '' } });
+      fireEvent.change(ready_to_move, { target: { value: '' } });
+
+
+      const saveButton = screen.getByTestId('add-property-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText('Name is required')).toBeInTheDocument();
+          expect(screen.getByText('Rent is required')).toBeInTheDocument();
+          expect(screen.getByText('Address is required')).toBeInTheDocument();
+          expect(screen.getByText('Landmark is required')).toBeInTheDocument();
+          expect(screen.getByText('State is required')).toBeInTheDocument();
+          expect(screen.getByText('City is required')).toBeInTheDocument();
+      })
     });
-  });
-});
-})
+    test('Add New Property', async () => {
+      const mockError = new Error('Add request failed')
+      axios.post = jest.fn().mockRejectedValue(mockError)
+      const onUpdate = jest.fn()
+      const handelAddbutton = jest.fn()
+  
+      const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+  
+      const name = getByLabelText('Name');
+      const address = getByLabelText('Address');
+      const available_from = getByLabelText('Available From');
+      const bhk = getByLabelText('BHK');
+      const city = getByLabelText('City');
+      const country = getByLabelText('Country');
+      const description = getByLabelText('Description');
+      const district = getByLabelText('District');
+      const landmark = getByLabelText('Landmark');
+      const latitude = getByLabelText('Latitude');
+      const longitude = getByLabelText('Longitude');
+      const no_of_balconies = getByLabelText('No. of Balconies');
+      const no_of_bathrooms = getByLabelText('No. of Bathrooms');
+      const no_of_bedrooms = getByLabelText('No. of Bedrooms');
+      const no_of_kitchen = getByLabelText('No. of Kitchen');
+      const no_of_rooms = getByLabelText('No. of Rooms');
+      const pin_code = getByLabelText('Pincode');
+      const property_age = getByLabelText('Property Age');
+      const property_area = getByLabelText('Property Area');
+      const property_number = getByLabelText('Property Number');
+      const property_type = getByLabelText('Property Type');
+      const rent = getByLabelText('Rent');
+      const rent_type = getByLabelText('Rent-Type');
+      const state = getByLabelText('State');
+      const street = getByLabelText('Street');
+      const ready_to_move = getByLabelText('Ready to Move');
+  
+      fireEvent.change(name, { target: { value: property.name } });
+      fireEvent.change(address, { target: { value:  property.address } });
+      fireEvent.change(available_from, { target: { value:  property.available_from } });
+      fireEvent.change(bhk, { target: { value:  property.bhk} });
+      fireEvent.change(city, { target: { value:  property.city } });
+      fireEvent.change(country, { target: { value:  property.country } });
+      fireEvent.change(description, { target: { value:  property.description} });
+      fireEvent.change(district, { target: { value:  property.district } });
+      fireEvent.change(landmark, { target: { value:  property.landmark} });
+      fireEvent.change(latitude, { target: { value:   property.latitude} });
+      fireEvent.change(longitude, { target: { value:  property.longitude } });
+      fireEvent.change(no_of_balconies, { target: { value:  property.no_of_balconies } });
+      fireEvent.change(no_of_bathrooms, { target: { value:  property.no_of_bathrooms} });
+      fireEvent.change(no_of_bedrooms, { target: { value:  property.no_of_bedrooms } });
+      fireEvent.change(no_of_kitchen, { target: { value:  property. no_of_kitchen} });
+      fireEvent.change(no_of_rooms, { target: { value: property. no_of_rooms } });
+      fireEvent.change(pin_code, { target: { value:  property.pin_code } });
+      fireEvent.change(property_age, { target: { value:  property.property_age } });
+      fireEvent.change(property_area, { target: { value:   property.property_area} });
+      fireEvent.change(property_number, { target: { value: property.property_number } });
+      fireEvent.change(property_type, { target: { value:  property.property_type } });
+      fireEvent.change(rent, { target: { value:  property.rent } });
+      fireEvent.change(rent_type, { target: { value:  property.rent_type } });
+      fireEvent.change(state, { target: { value:  property.state } });
+      fireEvent.change(street, { target: { value: property.street } });
+      fireEvent.change(ready_to_move, { target: { value:  property.ready_to_move } });
+  
+      const saveButton = screen.getByTestId('add-property-button')
+  
+      act(() => {
+        fireEvent.click(saveButton)
+      })
+  
+      await waitFor(() => {
+        expect(onUpdate).not.toHaveBeenCalled()
+        expect(handelAddbutton).not.toHaveBeenCalled()
+        expect(screen.getByText('Error adding property')).toBeInTheDocument()
+      })
+    })
+
+});  
+   

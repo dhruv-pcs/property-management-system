@@ -520,14 +520,14 @@ describe('Owner Add Component', () => {
       expect(
         screen.getByText('pincode must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
       ).toBeInTheDocument()
-      expect(
+      expect( 
         screen.getByText(
           'alternate_phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).'
         )
       ).toBeInTheDocument()
     })
   })
-
+  
   test('Add New Owner', async () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)

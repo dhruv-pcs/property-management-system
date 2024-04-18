@@ -74,7 +74,6 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
       }
     } catch (error) {
       toast.error('Error adding property')
-      console.log('error', error)
     }
   }
 
@@ -90,7 +89,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Name</Form.Label>
+                      <Form.Label htmlFor='name'>Name</Form.Label>
                       <Form.Control
                         id='name'
                         data-testid='name'
@@ -104,7 +103,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Rent</Form.Label>
+                      <Form.Label htmlFor='rent'>Rent</Form.Label>
                       <Form.Control
                         id='rent'
                         data-testid='property_rent'
@@ -119,7 +118,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Available From</Form.Label>
+                      <Form.Label htmlFor='available_from'>Available From</Form.Label>
                       <Form.Control
                         id='available_from'
                         data-testid='available_from'
@@ -132,7 +131,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Rent-Type</Form.Label>
+                      <Form.Label htmlFor='rent_type'>Rent-Type</Form.Label>
                       <Form.Control
                         id='rent_type'
                         data-testid='rent_type'
@@ -147,7 +146,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Location</Form.Label>
+                      <Form.Label htmlFor='location'>Location</Form.Label>
                       <Form.Control
                         id='location'
                         data-testid='lacation'
@@ -161,7 +160,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Address</Form.Label>
+                      <Form.Label htmlFor='address'>Address</Form.Label>
                       <Form.Control
                         id='address'
                         data-testid='address'
@@ -175,7 +174,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
+                      <Form.Label htmlFor='city'>City</Form.Label>
                       <Form.Control
                         id='city'
                         data-testid='city'
@@ -183,12 +182,13 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter your city'
                         {...register('city')}
                       />
+                       {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
+                      <Form.Label htmlFor='state'>State</Form.Label>
                       <Form.Control
                         id='state'
                         data-testid='state'
@@ -196,13 +196,14 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter your state'
                         {...register('state')}
                       />
+                      {errors.state && <span className='text-danger'>{errors.state.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
+                      <Form.Label htmlFor='country'>Country</Form.Label>
                       <Form.Control
                         id='country'
                         data-testid='country'
@@ -215,7 +216,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label htmlFor='pin_code'>Pincode</Form.Label>
                       <Form.Control
                         id='pin_code'
                         data-testid='pin_code'
@@ -223,13 +224,14 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter your pincode'
                         {...register('pin_code')}
                       />
+                       {errors.pin_code && <span className='text-danger'>{errors.pin_code.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Street</Form.Label>
+                      <Form.Label htmlFor='street'>Street</Form.Label>
                       <Form.Control
                         id='street'
                         data-testid='street'
@@ -242,7 +244,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Landmark</Form.Label>
+                      <Form.Label htmlFor='landmark'>Landmark</Form.Label>
                       <Form.Control
                         id='landmark'
                         data-testid='landmark'
@@ -257,7 +259,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Property Type</Form.Label>
+                      <Form.Label htmlFor='property_type'>Property Type</Form.Label>
                       <Form.Control
                         id='property_type'
                         data-testid='property_type'
@@ -271,7 +273,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>BHK</Form.Label>
+                      <Form.Label htmlFor='bhk'>BHK</Form.Label>
                       <Form.Control
                         id='bhk'
                         data-testid='bhk'
@@ -286,7 +288,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>No. of Bathrooms</Form.Label>
+                      <Form.Label htmlFor='no_of_bathrooms'>No. of Bathrooms</Form.Label>
                       <Form.Control
                         id='no_of_bathrooms'
                         data-testid='no_of_bathrooms'
@@ -300,7 +302,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>No. of Bedrooms</Form.Label>
+                      <Form.Label htmlFor='no_of_bedrooms'>No. of Bedrooms</Form.Label>
                       <Form.Control
                         id='no_of_bedrooms'
                         data-testid='no_of_bedrooms'
@@ -315,7 +317,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>No. of Rooms</Form.Label>
+                      <Form.Label htmlFor='no_of_rooms'>No. of Rooms</Form.Label>
                       <Form.Control
                         id='no_of_rooms'
                         data-testid='no_of_rooms'
@@ -329,7 +331,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>No. of Kitchen</Form.Label>
+                      <Form.Label htmlFor='no_of_kitchen'>No. of Kitchen</Form.Label>
                       <Form.Control
                         id='no_of_kitchen'
                         data-testid='no_of_kitchen'
@@ -344,7 +346,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>No. of Balconies</Form.Label>
+                      <Form.Label htmlFor='no_of_balconies'>No. of Balconies</Form.Label>
                       <Form.Control
                         id='no_of_balconies'
                         data-testid='no_of_balconies'
@@ -357,7 +359,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group>
-                      <Form.Label>Ready to Move</Form.Label>
+                      <Form.Label htmlFor='ready_to_move'>Ready to Move</Form.Label>
                       <div className='d-flex align-items-center'>
                         <Form.Check
                           id='ready_to_move'
@@ -383,7 +385,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Property Number</Form.Label>
+                      <Form.Label htmlFor='property_number'>Property Number</Form.Label>
                       <Form.Control
                         id='property_number'
                         data-testid='property_number'
@@ -397,7 +399,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Property Age</Form.Label>
+                      <Form.Label htmlFor='property_age'>Property Age</Form.Label>
                       <Form.Control
                         id='property_age'
                         data-testid='property_age'
@@ -412,7 +414,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Property Area</Form.Label>
+                      <Form.Label htmlFor='property_area'>Property Area</Form.Label>
                       <Form.Control
                         id='property_area'
                         data-testid='property_area'
@@ -426,7 +428,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>District</Form.Label>
+                      <Form.Label htmlFor='district'>District</Form.Label>
                       <Form.Control
                         id='district'
                         data-testid='district'
@@ -441,7 +443,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Latitude</Form.Label>
+                      <Form.Label htmlFor='latitude'>Latitude</Form.Label>
                       <Form.Control
                         id='latitude'
                         data-testid='latitude'
@@ -455,7 +457,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Longitude</Form.Label>
+                      <Form.Label htmlFor='longitude'>Longitude</Form.Label>
                       <Form.Control
                         id='longitude'
                         data-testid='longitude'
@@ -470,7 +472,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={12}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Description</Form.Label>
+                      <Form.Label htmlFor='description'>Description</Form.Label>
                       <Form.Control
                         id='description'
                         data-testid='description'
@@ -482,6 +484,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                     </Form.Group>
                   </Col>
                 </Row>
+                <div className='d-flex '>
                 <Button
                   data-testid='add-property-button'
                   aria-label='Add'
@@ -491,6 +494,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                 >
                   Add
                 </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
