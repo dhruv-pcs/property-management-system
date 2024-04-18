@@ -1,0 +1,296 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unauthorized Component should render unauthorized component 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-zwiamn"
+  >
+    <div
+      class="MuiBox-root css-1qdrcqi"
+    >
+      <div
+        class="MuiBox-root css-1xn3edc"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h2 css-1di55by-MuiTypography-root"
+        >
+          DASHBOARD
+        </h2>
+        <h5
+          class="MuiTypography-root MuiTypography-h5 css-b1sixc-MuiTypography-root"
+        >
+          Welcome to your dashboard
+        </h5>
+      </div>
+    </div>
+    <div
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-sftz05-MuiGrid2-root"
+    >
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-12 MuiGrid2-grid-md-6 MuiGrid2-grid-lg-3 MuiGrid2-grid-xl-3 css-1szldki-MuiGrid2-root"
+      >
+        <div
+          class="d-flex justify-content-center align-items-center rounded-2 MuiBox-root css-zcdbrp"
+        >
+          <div
+            class="MuiBox-root css-weiauh"
+          >
+            <div
+              class="MuiBox-root css-gg4vpm"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-12yztwa-MuiSvgIcon-root"
+                  data-testid="EmailIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
+                  />
+                </svg>
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 css-1gwnvns-MuiTypography-root"
+                >
+                  1236
+                </h4>
+              </div>
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-123byb"
+                />
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-15goea3"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-18bglcv-MuiTypography-root"
+              >
+                Emails Sent
+              </h5>
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-7zxgqb-MuiTypography-root"
+              >
+                +14%
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-12 MuiGrid2-grid-md-6 MuiGrid2-grid-lg-3 MuiGrid2-grid-xl-3 css-1szldki-MuiGrid2-root"
+      >
+        <div
+          class="d-flex justify-content-center align-items-center rounded-2 MuiBox-root css-zcdbrp"
+        >
+          <div
+            class="MuiBox-root css-weiauh"
+          >
+            <div
+              class="MuiBox-root css-gg4vpm"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-12yztwa-MuiSvgIcon-root"
+                  data-testid="PersonAddIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m-9-2V7H4v3H1v2h3v3h2v-3h3v-2zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4"
+                  />
+                </svg>
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 css-1gwnvns-MuiTypography-root"
+                >
+                  380
+                </h4>
+              </div>
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-ejga9j"
+                />
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-15goea3"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-18bglcv-MuiTypography-root"
+              >
+                Owner
+              </h5>
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-7zxgqb-MuiTypography-root"
+              >
+                +39%
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-12 MuiGrid2-grid-md-6 MuiGrid2-grid-lg-3 MuiGrid2-grid-xl-3 css-1szldki-MuiGrid2-root"
+      >
+        <div
+          class="d-flex justify-content-center align-items-center rounded-2 MuiBox-root css-zcdbrp"
+        >
+          <div
+            class="MuiBox-root css-weiauh"
+          >
+            <div
+              class="MuiBox-root css-gg4vpm"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-12yztwa-MuiSvgIcon-root"
+                  data-testid="PersonAddIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m-9-2V7H4v3H1v2h3v3h2v-3h3v-2zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4"
+                  />
+                </svg>
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 css-1gwnvns-MuiTypography-root"
+                >
+                  324
+                </h4>
+              </div>
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-oqsnfh"
+                />
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-15goea3"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-18bglcv-MuiTypography-root"
+              >
+                Tenets
+              </h5>
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-7zxgqb-MuiTypography-root"
+              >
+                +5%
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-12 MuiGrid2-grid-md-6 MuiGrid2-grid-lg-3 MuiGrid2-grid-xl-3 css-1szldki-MuiGrid2-root"
+      >
+        <div
+          class="d-flex justify-content-center align-items-center rounded-2 MuiBox-root css-zcdbrp"
+        >
+          <div
+            class="MuiBox-root css-weiauh"
+          >
+            <div
+              class="MuiBox-root css-gg4vpm"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-12yztwa-MuiSvgIcon-root"
+                  data-testid="AddHomeIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M18 11c.7 0 1.37.1 2 .29V9l-8-6-8 6v12h7.68c-.43-.91-.68-1.92-.68-3 0-3.87 3.13-7 7-7"
+                  />
+                  <path
+                    d="M18 13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5m3 5.5h-2.5V21h-1v-2.5H15v-1h2.5V15h1v2.5H21z"
+                  />
+                </svg>
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 css-1gwnvns-MuiTypography-root"
+                >
+                  400
+                </h4>
+              </div>
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-ejga9j"
+                />
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-15goea3"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-18bglcv-MuiTypography-root"
+              >
+                Properties
+              </h5>
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-7zxgqb-MuiTypography-root"
+              >
+                +43%
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1fww0pd-MuiGrid2-root"
+      >
+        <div
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-11 css-9zczwd-MuiGrid2-root"
+        >
+          <div
+            class="MuiBox-root css-1kc4pjf"
+          >
+            <div
+              class="MuiBox-root css-y9rbh3"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-ylphuy-MuiTypography-root"
+                >
+                  Revenue Generated
+                </h5>
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-mii9xm-MuiTypography-root"
+                >
+                  $58,370
+                </h5>
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-17vpt0k"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

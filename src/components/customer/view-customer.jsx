@@ -5,18 +5,12 @@ import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 
-const EditCustomer = ({ customer }) => {
+const ViewCustomer = ({ customer }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const {
-    register,
-
-    formState: { errors },
-    control,
-    setValue
-  } = useForm({})
+  const { register, control, setValue } = useForm({})
 
   useEffect(() => {
     setValue('first_name', customer.first_name)
@@ -54,7 +48,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.first_name}
                         readOnly
                       />
-                      {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -68,7 +61,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.last_name}
                         readOnly
                       />
-                      {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -84,7 +76,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.email}
                         readOnly
                       />
-                      {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -98,7 +89,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.gst_no}
                         readOnly
                       />
-                      {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -110,10 +100,9 @@ const EditCustomer = ({ customer }) => {
                         type='tel'
                         placeholder='Enter your phone number'
                         {...register('phone')}
-                        defaultValue={customer?.phone ? Number(customer.phone) : ''}
+                        defaultValue={customer?.phone && Number(customer.phone)}
                         readOnly
                       />
-                      {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -198,7 +187,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.aadhar_card_no}
                         readOnly
                       />
-                      {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -212,7 +200,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.address}
                         readOnly
                       />
-                      {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -228,7 +215,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.landmark}
                         readOnly
                       />
-                      {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -242,7 +228,6 @@ const EditCustomer = ({ customer }) => {
                         defaultValue={customer?.street}
                         readOnly
                       />
-                      {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -312,4 +297,4 @@ const EditCustomer = ({ customer }) => {
   )
 }
 
-export default EditCustomer
+export default ViewCustomer
