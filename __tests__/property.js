@@ -156,7 +156,7 @@ describe('Property Component', () => {
   })
 })
 
-  describe('EditProperty Component', () => {
+describe('EditProperty Component', () => {
     const property = {
       name: 'Sunset Villa',
       rent: 1200,
