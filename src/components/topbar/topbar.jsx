@@ -39,7 +39,7 @@ const Topbar = () => {
 
   return (
     <>
-      <header>
+      <header data-testid="topbar">
         <Box
           display='flex'
           justifyContent='space-between'

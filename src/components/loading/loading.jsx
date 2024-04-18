@@ -7,7 +7,8 @@ const Loading = () => {
   const colors = tokens(theme.palette.mode)
 
   return (
-    <div className='h-full w-full d-flex justify-content-center align-items-center'>
+    <div 
+    data-testid="spinner" className='h-full w-full d-flex justify-content-center align-items-center'>
       <span className='spinner' style={{ backgroundColor: colors.primary[500] }}></span>
     </div>
   )

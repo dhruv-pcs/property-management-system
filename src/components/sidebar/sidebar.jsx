@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
 import { tokens } from '@theme/theme'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
@@ -41,11 +41,18 @@ const MyProSidebar = () => {
   const [selected, setSelected] = useState('')
   const { collapseSidebar, toggleSidebar, broken } = useProSidebar()
   const navItem = navigation()
-  const LocalData = localStorage.getItem('user')
-  const Local = JSON.parse(LocalData)
+  const [localData, setLocalData] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('user');
+      setLocalData(data ? JSON.parse(data) : null);
+    }
+  }, []);
 
   return (
     <Box
+    data-testid="sidebar"
       className=''
       sx={{
         position: 'sticky',
@@ -109,7 +116,7 @@ const MyProSidebar = () => {
             {navItem.map((item, index) => {
               return (
                 <div key={index}>
-                  {Local?.map(local => {
+                  {localData?.map(local => {
                     if (local.view && item.subject === local.module.alias_name) {
                       return (
                         <Item

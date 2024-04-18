@@ -42,6 +42,7 @@ Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockPermissions))
 describe('Owner Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
+    localStorage.setItem('token', "5645654545564564")
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerData } } })
     render(<Owner />)
     await waitFor(() => {

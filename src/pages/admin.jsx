@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from 'react'
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'

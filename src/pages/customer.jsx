@@ -1,3 +1,5 @@
+"use client"
+
 import AddCustomer from '@components/customer/add-customer'
 import EditCustomer from '@components/customer/edit-customer'
 import ViewCustomer from '@components/customer/view-customer'
