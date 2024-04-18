@@ -50,8 +50,8 @@ const Admin = () => {
       handleAdminDataUpdate()
       toast.success('User deleted successfully!')
     } catch (error) {
+      setOpenDelete(!openDelete)
       toast.error('Error deleting Admin', error)
-      console.error('Error deleting User', error)
     }
   }
 

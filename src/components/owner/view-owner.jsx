@@ -3,8 +3,6 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme, useMediaQue
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-
 
 const ViewOwner = ({ owner }) => {
   const theme = useTheme()
@@ -13,10 +11,7 @@ const ViewOwner = ({ owner }) => {
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const {
-    register,
-    control
-  } = useForm()
+  const { register, control } = useForm()
 
   return (
     <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
@@ -37,7 +32,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.first_name}
                       readOnly={!editable}
                     />
-                    
                   </Form.Group>
                 </Col>
 
@@ -51,7 +45,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.last_name}
                       readOnly={!editable}
                     />
-                   
                   </Form.Group>
                 </Col>
               </Row>
@@ -66,7 +59,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.email}
                       readOnly={!editable}
                     />
-
                   </Form.Group>
                 </Col>
 
@@ -80,7 +72,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.gst_no}
                       readOnly={!editable}
                     />
-                  
                   </Form.Group>
                 </Col>
               </Row>
@@ -93,9 +84,8 @@ const ViewOwner = ({ owner }) => {
                       placeholder='Enter your phone number'
                       {...register('phone')}
                       readOnly={!editable}
-                      defaultValue={owner?.phone ? Number(owner.phone) : ''}
+                      defaultValue={owner?.phone && Number(owner.phone)}
                     />
-                   
                   </Form.Group>
                 </Col>
 
@@ -177,7 +167,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.aadhar_card_no}
                       readOnly={!editable}
                     />
-                    
                   </Form.Group>
                 </Col>
 
@@ -191,7 +180,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.address}
                       readOnly={!editable}
                     />
-                   
                   </Form.Group>
                 </Col>
               </Row>
@@ -206,7 +194,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.landmark}
                       readOnly={!editable}
                     />
-                   
                   </Form.Group>
                 </Col>
 
@@ -220,7 +207,6 @@ const ViewOwner = ({ owner }) => {
                       defaultValue={owner?.street}
                       readOnly={!editable}
                     />
-                   
                   </Form.Group>
                 </Col>
               </Row>
@@ -238,12 +224,12 @@ const ViewOwner = ({ owner }) => {
                       >
                         <FormControlLabel
                           value='active'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
+                          control={<Radio data-testid='active' style={{ color: colors.greenAccent[600] }} />}
                           label='Active'
                         />
                         <FormControlLabel
                           value='not_active'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
+                          control={<Radio data-testid='not_active' style={{ color: colors.greenAccent[600] }} />}
                           label='Not Active'
                         />
                       </RadioGroup>
@@ -264,12 +250,12 @@ const ViewOwner = ({ owner }) => {
                       >
                         <FormControlLabel
                           value='verified'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
+                          control={<Radio data-testid='verified' style={{ color: colors.greenAccent[600] }} />}
                           label='Verified'
                         />
                         <FormControlLabel
                           value='not_verified'
-                          control={<Radio style={{ color: colors.greenAccent[600] }} />}
+                          control={<Radio data-testid='not_verified' style={{ color: colors.greenAccent[600] }} />}
                           label='Not Verified'
                         />
                       </RadioGroup>

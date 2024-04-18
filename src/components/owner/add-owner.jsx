@@ -21,7 +21,7 @@ const schema = Yup.object().shape({
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   aadhar_card_no: Yup.number()
     .required('Aadhar Card No is required')
-    .test('len', 'Phone number must be exactly 12 digits', val => val && val.toString().length === 12),
+    .test('len', 'Aadhar Card No must be exactly 12 digits', val => val && val.toString().length === 12),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
   landmark: Yup.string().required('Landmark is required'),
@@ -57,9 +57,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
         toast.success('Owner added successfully')
       }
     } catch (error) {
-        
-      toast.error("Owner can't be added")
-      console.log('error', error)
+      toast.error('Owner cannot be added')
     }
   }
 
@@ -77,7 +75,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Control
                         id='first_name'
                         type='text'
-                        data-testid="first_name"
+                        data-testid='first_name'
                         placeholder='Enter your first name'
                         {...register('first_name')}
                       />
@@ -90,7 +88,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label htmlFor='last_name'>Last name</Form.Label>
                       <Form.Control
                         id='last_name'
-                        data-testid="last_name"
+                        data-testid='last_name'
                         type='text'
                         placeholder='Enter your last name'
                         {...register('last_name')}
@@ -106,7 +104,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label htmlFor='email'>Email address</Form.Label>
                       <Form.Control
                         id='email'
-                        data-testid="email"
+                        data-testid='email'
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
@@ -118,7 +116,13 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='gst_no'>GST No</Form.Label>
-                      <Form.Control data-testid="gst_no" id='gst_no' type='text' placeholder='Enter GST No' {...register('gst_no')} />
+                      <Form.Control
+                        data-testid='gst_no'
+                        id='gst_no'
+                        type='text'
+                        placeholder='Enter GST No'
+                        {...register('gst_no')}
+                      />
                       {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
                     </Form.Group>
                   </Col>
@@ -129,7 +133,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label htmlFor='phone'>Phone number</Form.Label>
                       <Form.Control
                         id='phone'
-                        data-testid="phone"
+                        data-testid='phone'
                         type='tel'
                         placeholder='Enter your phone number'
                         {...register('phone')}
@@ -144,11 +148,9 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Control
                         id='alternate_phone'
                         type='tel'
-                        data-testid="alternate_phone"
+                        data-testid='alternate_phone'
                         placeholder='Enter your alternate phone number'
-                        {...register('alternate_phone', {
-                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
-                        })}
+                        {...register('alternate_phone')}
                       />
                       {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                     </Form.Group>
@@ -159,7 +161,13 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='city'>City</Form.Label>
-                      <Form.Control data-testid="city" id='city' type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Control
+                        data-testid='city'
+                        id='city'
+                        type='text'
+                        placeholder='Enter your city'
+                        {...register('city')}
+                      />
                       {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                     </Form.Group>
                   </Col>
@@ -167,7 +175,13 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='state'>State</Form.Label>
-                      <Form.Control data-testid="state" id='state' type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Control
+                        data-testid='state'
+                        id='state'
+                        type='text'
+                        placeholder='Enter your state'
+                        {...register('state')}
+                      />
                       {errors.state && <span className='text-danger'>{errors.state.message}</span>}
                     </Form.Group>
                   </Col>
@@ -179,7 +193,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label htmlFor='country'>Country</Form.Label>
                       <Form.Control
                         id='country'
-                        data-testid="country"
+                        data-testid='country'
                         type='text'
                         placeholder='Enter your country'
                         {...register('country')}
@@ -193,7 +207,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label htmlFor='pincode'>Pincode</Form.Label>
                       <Form.Control
                         id='pincode'
-                        data-testid="pincode"
+                        data-testid='pincode'
                         type='text'
                         placeholder='Enter your pincode'
                         {...register('pincode')}
@@ -208,7 +222,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='aadhar_card_no'>Aadhar Card No</Form.Label>
                       <Form.Control
-                        data-testid="aadhar_card_no"
+                        data-testid='aadhar_card_no'
                         id='aadhar_card_no'
                         type='text'
                         placeholder='Enter Aadhar Card No'
@@ -221,7 +235,13 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='address'>Address</Form.Label>
-                      <Form.Control data-testid="address" id='address' type='text' placeholder='Enter Address' {...register('address')} />
+                      <Form.Control
+                        data-testid='address'
+                        id='address'
+                        type='text'
+                        placeholder='Enter Address'
+                        {...register('address')}
+                      />
                       {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
                   </Col>
@@ -231,7 +251,13 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='landmark'>Landmark</Form.Label>
-                      <Form.Control data-testid="landmark" id='landmark' type='text' placeholder='Enter Landmark' {...register('landmark')} />
+                      <Form.Control
+                        data-testid='landmark'
+                        id='landmark'
+                        type='text'
+                        placeholder='Enter Landmark'
+                        {...register('landmark')}
+                      />
                       {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                     </Form.Group>
                   </Col>
@@ -239,7 +265,13 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='street'>Street</Form.Label>
-                      <Form.Control data-testid="street" id='street' type='text' placeholder='Enter Street' {...register('street')} />
+                      <Form.Control
+                        data-testid='street'
+                        id='street'
+                        type='text'
+                        placeholder='Enter Street'
+                        {...register('street')}
+                      />
                       {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                     </Form.Group>
                   </Col>
@@ -249,8 +281,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
                   <Button
                     aria-label='Add'
                     type='submit'
-
-                    data-testid="add-owner"
+                    data-testid='add-owner'
                     className='w-100'
                     style={{ backgroundColor: colors.blueAccent[500], color: colors.grey[100] }}
                   >

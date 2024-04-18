@@ -17,7 +17,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
-    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "format": "prettier --write \"src/**/*.{js,jsx}\" \"__test__/**/*.js\" \"cypress/**/*.{js,jsx}\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "jest": " jest --coverage  --testTimeout=100000  --verbose --no-cache  --passWithNoTests --runInBand --forceExit --config=jest.config.js "

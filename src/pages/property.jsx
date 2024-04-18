@@ -34,7 +34,7 @@ const Property = () => {
       })
       setPropertyData(response.data.data.adminData)
     } catch (error) {
-      console.error(error)
+      toast.error('Error Fetching Data')
     }
   }
 
@@ -76,8 +76,8 @@ const Property = () => {
         toast.success('Property deleted successfully!')
       }
     } catch (error) {
+      setOpenDelete(!openDelete)
       toast.error('Something went wrong')
-      console.log('error', error)
     }
   }
 
@@ -398,7 +398,6 @@ const Property = () => {
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
-               data-testid='confirm-delete'
               onClick={handelDeletebutton}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
@@ -406,6 +405,7 @@ const Property = () => {
               Cancel
             </Button>
             <Button
+              data-testid='confirm-delete'
               onClick={() => handelDeleteConfirmation(selectedRow)}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}

@@ -64,20 +64,6 @@ describe('Admin Component', () => {
     })
   })
 
-  test('handles error when deleting admin', async () => {
-    jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Admin />)
-    const deleteAdmin = screen.getByTestId('delete-owner')
-    fireEvent.click(deleteAdmin)
-    expect(screen.getByText('Delete Admin')).toBeInTheDocument()
-    const confirmDelete = screen.getByTestId('confirm-delete')
-    fireEvent.click(confirmDelete)
-
-    await waitFor(() => {
-      expect(screen.getByText('Error deleting Admin')).toBeInTheDocument()
-    })
-  })
-
   test('Admin List Rendering Test', async () => {
     const adminList = await screen.findByTestId('admin-list')
     expect(adminList).toBeInTheDocument()
@@ -120,11 +106,15 @@ describe('Admin Component', () => {
     expect(screen.getByText('View Admin')).toBeInTheDocument()
   })
 
-  test('clicking Delete button to see delete model', async () => {
+  test('clicking Delete button opens delete modal', async () => {
     const deleteAdmin = screen.getByTestId('delete-admin')
     expect(deleteAdmin).toBeInTheDocument()
     fireEvent.click(deleteAdmin)
-    expect(screen.getByText('Delete Admin')).toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(screen.getByTestId('delete-admin-modal')).toBeInTheDocument()
+      expect(screen.getByText('Delete Admin')).toBeInTheDocument()
+    })
   })
 
   test('clicking Add button to see add model', async () => {
@@ -138,44 +128,38 @@ elements.forEach(element => {
 
   })
 
-  test('clicking Delete button and then clicking confirm delete button to delete admin - Success', async () => {
-    const mockResponseData = { data: { statusCode: 200 } };
-    axios.delete.mockResolvedValue(mockResponseData); // Ensure the correct mock is used
-  
-    render(<Admin />);
-  
-    await waitFor(() => expect(screen.getByText('John Doe')).toBeInTheDocument()); // Wait for initial data load
-  
-    const deleteAdminButton = screen.getByTestId('delete-admin');
-    fireEvent.click(deleteAdminButton);
-  
-    const confirmDeleteButton = screen.getByTestId('confirm-delete');
-    fireEvent.click(confirmDeleteButton);
-  
-    await waitFor(() => {
-      expect(screen.queryByText('Delete Admin')).not.toBeInTheDocument();
-      expect(screen.getByText('User deleted successfully!')).toBeInTheDocument();
-    });
-  });
-  
-  test('clicking Delete button and then clicking confirm delete button to delete admin - Error', async () => {
-    axios.delete.mockRejectedValue(new Error('API request failed')); // Ensure the correct mock is used
-  
-    render(<Admin />);
-  
-    await waitFor(() => expect(screen.getByText('John Doe')).toBeInTheDocument()); // Wait for initial data load
-  
-    const deleteAdminButton = screen.getByTestId('delete-admin');
-    fireEvent.click(deleteAdminButton);
-  
-    const confirmDeleteButton = screen.getByTestId('confirm-delete');
-    fireEvent.click(confirmDeleteButton);
-  
-    await waitFor(() => {
-      expect(screen.queryByText('Delete Admin')).toBeInTheDocument(); // Verify if modal is still visible
-      expect(screen.queryAllByText('Error deleting Admin')[0]).toBeInTheDocument();
-    });
-  });
-  
+  test('clicking Delete button and then click confirm delete button to delete admin - Success', async () => {
+    const mockResponseData = { data: { statusCode: 200 } }
+    jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
+    render(<Admin />)
+
+    const deleteAdmin = screen.getByTestId('delete-admin')
+    fireEvent.click(deleteAdmin)
+
+    expect(screen.getByText('Delete Admin')).toBeInTheDocument()
+
+    const confirmDelete = screen.getByTestId('confirm-delete')
+    fireEvent.click(confirmDelete)
+
+    await waitFor(() => {
+      expect(screen.queryByText('Delete Admin')).not.toBeInTheDocument()
+      expect(screen.queryAllByText('User deleted successfully!')[0]).toBeInTheDocument()
+    })
+  })
+  test('handles error when deleting admin', async () => {
+    jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
+    render(<Admin />)
+    const deleteAdmin = screen.getByTestId('delete-admin')
+    fireEvent.click(deleteAdmin)
+    expect(screen.getByText('Delete Admin')).toBeInTheDocument()
+    const confirmDelete = screen.getByTestId('confirm-delete')
+    fireEvent.click(confirmDelete)
+
+    await waitFor(() => {
+      expect(screen.getByText('Error deleting Admin')).toBeInTheDocument()
+    })
+  })
+
+  
 });

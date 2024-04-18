@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useTheme, useMediaQuery } from '@mui/material';
-import { tokens } from '@theme/theme';
-import { Card, Col, Row, Form, Button } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect } from 'react'
+import { useTheme, useMediaQuery } from '@mui/material'
+import { tokens } from '@theme/theme'
+import { Card, Col, Row, Form, Button } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -30,12 +30,12 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required'),
   status: Yup.boolean().required('Admin status is required'),
   is_verified: Yup.boolean().required('Verification status is required')
-});
+})
 
 const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -45,35 +45,39 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
     setValue
   } = useForm({
     resolver: yupResolver(schema)
-  });
+  })
 
   useEffect(() => {
-    setValue('first_name', owner.first_name);
-    setValue('last_name', owner.last_name);
-    setValue('email', owner.email);
-    setValue('phone', owner.phone);
-    setValue('alternate_phone', owner.alternate_phone);
-    setValue('city', owner.city);
-    setValue('country', owner.country);
-    setValue('pincode', owner.pincode);
-    setValue('state', owner.state);
-    setValue('aadhar_card_no', owner.aadhar_card_no);
-    setValue('address', owner.address);
-    setValue('gst_no', owner.gst_no);
-    setValue('landmark', owner.landmark);
-    setValue('street', owner.street);
+    setValue('first_name', owner.first_name)
+    setValue('last_name', owner.last_name)
+    setValue('email', owner.email)
+    setValue('phone', owner.phone)
+    setValue('alternate_phone', owner.alternate_phone)
+    setValue('city', owner.city)
+    setValue('country', owner.country)
+    setValue('pincode', owner.pincode)
+    setValue('state', owner.state)
+    setValue('aadhar_card_no', owner.aadhar_card_no)
+    setValue('address', owner.address)
+    setValue('gst_no', owner.gst_no)
+    setValue('landmark', owner.landmark)
+    setValue('street', owner.street)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setValue]);
+  }, [setValue])
 
   const onSubmit = async data => {
-    await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    });
+    try {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/update/${owner.u_id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
 
-    handelEditbutton();
-    onUpdate();
-    toast.success('Owner updated successfully');
-  };
+      handelEditbutton()
+      onUpdate()
+      toast.success('Owner updated successfully')
+    } catch (err) {
+      toast.error('Error updating owner')
+    }
+  }
 
   return (
     <>
@@ -85,10 +89,10 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="first_name">First name</Form.Label>
+                      <Form.Label htmlFor='first_name'>First name</Form.Label>
                       <Form.Control
                         type='text'
-                        id="first_name"
+                        id='first_name'
                         placeholder='Enter your first name'
                         {...register('first_name')}
                         data-testid='first_name'
@@ -100,7 +104,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="last_name">Last name</Form.Label>
+                      <Form.Label htmlFor='last_name'>Last name</Form.Label>
                       <Form.Control
                         id='last_name'
                         type='text'
@@ -117,7 +121,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="email">Email address</Form.Label>
+                      <Form.Label htmlFor='email'>Email address</Form.Label>
                       <Form.Control
                         id='email'
                         data-testid='email'
@@ -132,7 +136,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="gst_no">GST No</Form.Label>
+                      <Form.Label htmlFor='gst_no'>GST No</Form.Label>
                       <Form.Control
                         type='text'
                         id='gst_no'
@@ -149,7 +153,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="phone">Phone number</Form.Label>
+                      <Form.Label htmlFor='phone'>Phone number</Form.Label>
                       <Form.Control
                         type='tel'
                         id='phone'
@@ -164,7 +168,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="alternate_phone">Alternative Phone No:</Form.Label>
+                      <Form.Label htmlFor='alternate_phone'>Alternative Phone No:</Form.Label>
                       <Form.Control
                         type='tel'
                         id='alternate_phone'
@@ -180,7 +184,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="city">City</Form.Label>
+                      <Form.Label htmlFor='city'>City</Form.Label>
                       <Form.Control
                         type='text'
                         id='city'
@@ -194,7 +198,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="state">State</Form.Label>
+                      <Form.Label htmlFor='state'>State</Form.Label>
                       <Form.Control
                         type='text'
                         id='state'
@@ -210,7 +214,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="country">Country</Form.Label>
+                      <Form.Label htmlFor='country'>Country</Form.Label>
                       <Form.Control
                         type='text'
                         id='country'
@@ -224,7 +228,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="pincode">Pincode</Form.Label>
+                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
                       <Form.Control
                         type='text'
                         id='pincode'
@@ -240,11 +244,10 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="aadhar_card_no">Aadhar Card No</Form.Label>
+                      <Form.Label htmlFor='aadhar_card_no'>Aadhar Card No</Form.Label>
                       <Form.Control
                         type='text'
                         id='aadhar_card_no'
-
                         data-testid='aadhar_card_no'
                         placeholder='Enter Aadhar Card No'
                         {...register('aadhar_card_no')}
@@ -256,7 +259,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="address">Address</Form.Label>
+                      <Form.Label htmlFor='address'>Address</Form.Label>
                       <Form.Control
                         type='text'
                         id='address'
@@ -273,7 +276,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="landmark">Landmark</Form.Label>
+                      <Form.Label htmlFor='landmark'>Landmark</Form.Label>
                       <Form.Control
                         type='text'
                         id='landmark'
@@ -288,7 +291,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor="street">Street</Form.Label>
+                      <Form.Label htmlFor='street'>Street</Form.Label>
                       <Form.Control
                         type='text'
                         id='street'
@@ -329,8 +332,6 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
                         />
                       </div>
                     </Form.Group>
-          
-
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
@@ -377,7 +378,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
       </Row>
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
-  );
+  )
 }
 
-export default EditOwner;
+export default EditOwner

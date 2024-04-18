@@ -1,11 +1,11 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import Owner from 'src/pages/owner'
+import Customer from 'src/pages/customer'
 import React from 'react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
-import EditOwner from '@components/owner/edit-owner'
-import AddOwner from '@components/owner/add-owner'
-import ViewOwner from '@components/owner/view-owner'
+import ViewCustomer from '@components/customer/view-customer'
+import EditCustomer from '@components/customer/edit-customer'
+import AddCustomer from '@components/customer/add-customer'
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
@@ -15,7 +15,7 @@ jest.mock('@mui/material', () => ({
 const mockPermissions = [
   {
     module: {
-      alias_name: 'Owner'
+      alias_name: 'Customer'
     },
     view: true,
     update: true,
@@ -24,7 +24,7 @@ const mockPermissions = [
   }
 ]
 
-const mockOwnerData = [
+const mockCustomerData = [
   {
     id: 1,
     first_name: 'John',
@@ -39,36 +39,38 @@ const mockOwnerData = [
 
 Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockPermissions))
 
-describe('Owner Component', () => {
+describe('Customer Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
-    axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerData } } })
-    render(<Owner />)
+    axios.get = jest.fn().mockResolvedValue({ data: { data: { customerData: mockCustomerData } } })
+    render(<Customer />)
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
   })
 
-  test('Owner List Rendering Test', async () => {
-    const ownerList = await screen.findByTestId('owner-list')
+  test('Customer List Rendering Test', async () => {
+    const ownerList = await screen.findByTestId('customer-list')
     expect(ownerList).toBeInTheDocument()
   })
 
-  test('renders owner list from API', async () => {
+  test('renders customer list from API', async () => {
     await waitFor(() => {
-      expect(screen.getByTestId('name')).toBeInTheDocument()
+      expect(screen.getByText('Name')).toBeInTheDocument()
       expect(screen.getByText('Email')).toBeInTheDocument()
       expect(screen.getByText('Phone')).toBeInTheDocument()
       expect(screen.getByText('Aadhar Card')).toBeInTheDocument()
       expect(screen.getByText('John Doe')).toBeInTheDocument()
       expect(screen.getByText('john.doe@example.com')).toBeInTheDocument()
+      expect(screen.getByText('123456789012')).toBeInTheDocument()
+      expect(screen.getByText('123456789012')).toBeInTheDocument()
     })
   })
 
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
 
-    render(<Owner />)
+    render(<Customer />)
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -76,109 +78,88 @@ describe('Owner Component', () => {
   })
 
   test('clicking Edit button opens edit modal', async () => {
-    const edit = screen.getByTestId('edit-owner')
+    const edit = screen.getByTestId('edit-customer')
     expect(edit).toBeInTheDocument()
     fireEvent.click(edit)
 
     await waitFor(() => {
-      expect(screen.getByTestId('edit-owner-modal')).toBeInTheDocument()
-      expect(screen.getByText('Edit Owner')).toBeInTheDocument()
+      expect(screen.getByTestId('edit-customer-modal')).toBeInTheDocument()
+      expect(screen.getByText('Edit Customer')).toBeInTheDocument()
     })
   })
 
   test('clicking View button opens view modal', async () => {
-    const view = screen.getByTestId('view-owner')
+    const view = screen.getByTestId('view-customer')
     expect(view).toBeInTheDocument()
     fireEvent.click(view)
 
     await waitFor(() => {
-      expect(screen.getByTestId('view-owner-modal')).toBeInTheDocument()
-      expect(screen.getByText('View Owner')).toBeInTheDocument()
+      expect(screen.getByTestId('view-customer-modal')).toBeInTheDocument()
+      expect(screen.getByText('View Customer')).toBeInTheDocument()
     })
   })
 
   test('clicking Delete button opens delete modal', async () => {
-    const deleteOwner = screen.getByTestId('delete-owner')
-    expect(deleteOwner).toBeInTheDocument()
-    fireEvent.click(deleteOwner)
+    const deleteCustomer = screen.getByTestId('delete-customer')
+    expect(deleteCustomer).toBeInTheDocument()
+    fireEvent.click(deleteCustomer)
 
     await waitFor(() => {
-      expect(screen.getByTestId('delete-owner-modal')).toBeInTheDocument()
-      expect(screen.getByText('Delete Owner')).toBeInTheDocument()
+      expect(screen.getByTestId('delete-customer-modal')).toBeInTheDocument()
+      expect(screen.getByText('Delete Customer')).toBeInTheDocument()
     })
   })
 
   test('clicking Add button opens add modal', async () => {
-    const add = screen.getByTestId('add-owner')
+    const add = screen.getByTestId('add-customer')
     expect(add).toBeInTheDocument()
     fireEvent.click(add)
 
     await waitFor(() => {
-      expect(screen.getByTestId('add-owner-modal')).toBeInTheDocument()
-      expect(screen.getByText('Add Owner')).toBeInTheDocument()
+      expect(screen.getByTestId('add-customer-modal')).toBeInTheDocument()
+      expect(screen.getByText('Add Customer')).toBeInTheDocument()
     })
   })
 
-  test('clicking Delete button and then click confirm delete button to delete owner - Success', async () => {
-    const mockResponseData = { data: { statusCode: 200 } }
+  test('clicking Delete button and then click confirm delete button to delete customer - Success', async () => {
+    const mockResponseData = { data: { statusCode: 201 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
-    render(<Owner />)
+    render(<Customer />)
 
-    const deleteOwner = screen.getByTestId('delete-owner')
-    fireEvent.click(deleteOwner)
+    const deleteCustomer = screen.getByTestId('delete-customer')
+    fireEvent.click(deleteCustomer)
 
-    expect(screen.getByText('Delete Owner')).toBeInTheDocument()
+    expect(screen.getByText('Delete Customer')).toBeInTheDocument()
 
     const confirmDelete = screen.getByTestId('confirm-delete')
-    fireEvent.click(confirmDelete)
+
+    act(() => {
+      fireEvent.click(confirmDelete)
+    })
 
     await waitFor(() => {
-      expect(screen.queryByText('Delete Owner')).not.toBeInTheDocument()
-      expect(screen.queryAllByText('Owner Deleted Successfully')[0]).toBeInTheDocument()
+      expect(screen.queryByText('Delete Customer')).not.toBeInTheDocument()
+      expect(screen.queryAllByText('Customer Deleted Successfully')[0]).toBeInTheDocument()
     })
   })
 
-  test('handles error when deleting owner', async () => {
+  test('handles error when deleting customer', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Owner />)
-    const deleteOwner = screen.getByTestId('delete-owner')
+    render(<Customer />)
+    const deleteOwner = screen.getByTestId('delete-customer')
     fireEvent.click(deleteOwner)
-    expect(screen.getByText('Delete Owner')).toBeInTheDocument()
+    expect(screen.getByText('Delete Customer')).toBeInTheDocument()
     const confirmDelete = screen.getByTestId('confirm-delete')
     fireEvent.click(confirmDelete)
 
     await waitFor(() => {
-      expect(screen.getByText('Failed to Delete Owner')).toBeInTheDocument()
+      expect(screen.getByText('Error Deleting Customer')).toBeInTheDocument()
     })
   })
 
   test('renders specific content when is_verified and status are false', async () => {
-    const mockOwnerDataFalse = [
-      {
-        id: 1,
-        first_name: 'John',
-        last_name: 'Doe',
-        email: 'john.doe@example.com',
-        phone: '1234567890',
-        aadhar_card_no: '123456789012',
-        is_verified: false,
-        status: false 
-      }
-    ]
-
-    axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerDataFalse } } })
-
-    render(<Owner />)
-
-    await waitFor(() => {
-      expect(screen.getByTestId('not-verified')).toBeInTheDocument()
-      expect(screen.getByTestId('not-active')).toBeInTheDocument()
-    })
-  })
-
-  test('renders View Componets specific content when is_verified and status are false', async () => {
-    const mockOwnerDataFalse = [
+    const mockCustomerDataFalse = [
       {
         id: 1,
         first_name: 'John',
@@ -190,16 +171,37 @@ describe('Owner Component', () => {
         status: false
       }
     ]
+    render(<ViewCustomer customer={mockCustomerDataFalse[0]} />)
+  })
 
-    axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerDataFalse } } })
+  test('renders specific content when is_verified and status are false', async () => {
+    const mockCustomerDataFalse = [
+      {
+        id: 1,
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@example.com',
+        phone: '1234567890',
+        aadhar_card_no: '123456789012',
+        is_verified: false, // Set to false
+        status: false // Set to false
+      }
+    ]
 
-    render(<ViewOwner owner={mockOwnerDataFalse[0]}  />)
+    axios.get = jest.fn().mockResolvedValue({ data: { data: { customerData: mockCustomerDataFalse } } })
+
+    render(<Customer />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('not-verified')).toBeInTheDocument()
+      expect(screen.getByTestId('not-active')).toBeInTheDocument()
+    })
   })
 })
 
-describe('Owner Edit Component', () => {
-  const owner = {
-    u_id: 1,
+describe('Edit Customer Component', () => {
+  const customer = {
+    id: 1,
     first_name: 'John',
     last_name: 'Doe',
     email: 'john.doe@example.com',
@@ -218,57 +220,57 @@ describe('Owner Edit Component', () => {
     is_verified: true
   }
 
-  test('renders with owner data with status and is_verified true', () => {
-    const { getByLabelText, getByTestId } = render(<EditOwner owner={owner} />)
+  test('renders with customer data with status and is_verified true', () => {
+    const { getByLabelText, getByTestId } = render(<EditCustomer customer={customer} />)
 
-    expect(getByLabelText('First name')).toHaveValue(owner.first_name)
-    expect(getByLabelText('Last name')).toHaveValue(owner.last_name)
-    expect(getByLabelText('Email address')).toHaveValue(owner.email)
-    expect(getByLabelText('Phone number')).toHaveValue(owner.phone)
-    expect(getByLabelText('Alternative Phone No:')).toHaveValue(owner.alternate_phone)
-    expect(getByLabelText('City')).toHaveValue(owner.city)
-    expect(getByLabelText('State')).toHaveValue(owner.state)
-    expect(getByLabelText('Country')).toHaveValue(owner.country)
-    expect(getByLabelText('Pincode')).toHaveValue(owner.pincode)
-    expect(getByLabelText('Aadhar Card No')).toHaveValue(owner.aadhar_card_no)
-    expect(getByLabelText('Address')).toHaveValue(owner.address)
-    expect(getByLabelText('GST No')).toHaveValue(owner.gst_no)
-    expect(getByLabelText('Landmark')).toHaveValue(owner.landmark)
-    expect(getByLabelText('Street')).toHaveValue(owner.street)
+    expect(getByLabelText('First name')).toHaveValue(customer.first_name)
+    expect(getByLabelText('Last name')).toHaveValue(customer.last_name)
+    expect(getByLabelText('Email address')).toHaveValue(customer.email)
+    expect(getByLabelText('Phone number')).toHaveValue(customer.phone)
+    expect(getByLabelText('Alternative Phone No:')).toHaveValue(customer.alternate_phone)
+    expect(getByLabelText('City')).toHaveValue(customer.city)
+    expect(getByLabelText('State')).toHaveValue(customer.state)
+    expect(getByLabelText('Country')).toHaveValue(customer.country)
+    expect(getByLabelText('Pincode')).toHaveValue(customer.pincode)
+    expect(getByLabelText('Aadhar Card No')).toHaveValue(customer.aadhar_card_no)
+    expect(getByLabelText('Address')).toHaveValue(customer.address)
+    expect(getByLabelText('GST No')).toHaveValue(customer.gst_no)
+    expect(getByLabelText('Landmark')).toHaveValue(customer.landmark)
+    expect(getByLabelText('Street')).toHaveValue(customer.street)
     expect(getByTestId('active')).toBeChecked()
     expect(getByTestId('verified')).toBeChecked()
   })
 
-  test('renders with owner data with status and is_verified false', () => {
-    const ownerData = {
-      ...owner,
+  test('renders with customer data with status and is_verified false', () => {
+    const customerData = {
+      ...customer,
       status: false,
       is_verified: false
     }
-    const { getByLabelText, getByTestId } = render(<EditOwner owner={ownerData} />)
+    const { getByLabelText, getByTestId } = render(<EditCustomer customer={customerData} />)
 
-    expect(getByLabelText('First name')).toHaveValue(owner.first_name)
-    expect(getByLabelText('Last name')).toHaveValue(owner.last_name)
-    expect(getByLabelText('Email address')).toHaveValue(owner.email)
-    expect(getByLabelText('Phone number')).toHaveValue(owner.phone)
-    expect(getByLabelText('Alternative Phone No:')).toHaveValue(owner.alternate_phone)
-    expect(getByLabelText('City')).toHaveValue(owner.city)
-    expect(getByLabelText('State')).toHaveValue(owner.state)
-    expect(getByLabelText('Country')).toHaveValue(owner.country)
-    expect(getByLabelText('Pincode')).toHaveValue(owner.pincode)
-    expect(getByLabelText('Aadhar Card No')).toHaveValue(owner.aadhar_card_no)
-    expect(getByLabelText('Address')).toHaveValue(owner.address)
-    expect(getByLabelText('GST No')).toHaveValue(owner.gst_no)
-    expect(getByLabelText('Landmark')).toHaveValue(owner.landmark)
-    expect(getByLabelText('Street')).toHaveValue(owner.street)
+    expect(getByLabelText('First name')).toHaveValue(customer.first_name)
+    expect(getByLabelText('Last name')).toHaveValue(customer.last_name)
+    expect(getByLabelText('Email address')).toHaveValue(customer.email)
+    expect(getByLabelText('Phone number')).toHaveValue(customer.phone)
+    expect(getByLabelText('Alternative Phone No:')).toHaveValue(customer.alternate_phone)
+    expect(getByLabelText('City')).toHaveValue(customer.city)
+    expect(getByLabelText('State')).toHaveValue(customer.state)
+    expect(getByLabelText('Country')).toHaveValue(customer.country)
+    expect(getByLabelText('Pincode')).toHaveValue(customer.pincode)
+    expect(getByLabelText('Aadhar Card No')).toHaveValue(customer.aadhar_card_no)
+    expect(getByLabelText('Address')).toHaveValue(customer.address)
+    expect(getByLabelText('GST No')).toHaveValue(customer.gst_no)
+    expect(getByLabelText('Landmark')).toHaveValue(customer.landmark)
+    expect(getByLabelText('Street')).toHaveValue(customer.street)
     expect(getByTestId('inactive')).toBeChecked()
     expect(getByTestId('not_verified')).toBeChecked()
   })
 
-  test('Update Owner With out Empty Fields to get Validation Error', async () => {
+  test('Update Customer With out Empty Fields to get Validation Error', async () => {
     const onUpdate = jest.fn()
     const handelEditbutton = jest.fn()
-    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
 
     const first_name = screen.getByTestId('first_name')
     const last_name = screen.getByTestId('last_name')
@@ -299,10 +301,7 @@ describe('Owner Edit Component', () => {
       expect(screen.getByText('First name is required')).toBeInTheDocument()
       expect(screen.getByText('Last name is required')).toBeInTheDocument()
       expect(screen.getByText('Email is required')).toBeInTheDocument()
-      expect(
-        screen.getByText('phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
-      ).toBeInTheDocument()
-
+      expect(screen.getByText('Phone number is required')).toBeInTheDocument()
       expect(screen.getByText('GST No is required')).toBeInTheDocument()
       expect(screen.getByText('Address is required')).toBeInTheDocument()
       expect(screen.getByText('Street is required')).toBeInTheDocument()
@@ -311,13 +310,13 @@ describe('Owner Edit Component', () => {
     })
   })
 
-  test('successfully updates owner upon form submission', async () => {
+  test('successfully updates customer upon form submission', async () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
     const handelEditbutton = jest.fn()
 
-    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
 
     const saveButton = screen.getByLabelText('save')
 
@@ -328,17 +327,17 @@ describe('Owner Edit Component', () => {
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
       expect(handelEditbutton).toHaveBeenCalled()
-      expect(screen.getByText('Owner updated successfully')).toBeInTheDocument()
+      expect(screen.getByText('Customer updated successfully')).toBeInTheDocument()
     })
   })
 
-  test('handles error when updating owner', async () => {
+  test('handles error when updating customer', async () => {
     const mockError = new Error('Update request failed')
     axios.patch = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
     const handelEditbutton = jest.fn()
 
-    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
 
     const saveButton = screen.getByLabelText('save')
     fireEvent.click(saveButton)
@@ -346,13 +345,13 @@ describe('Owner Edit Component', () => {
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
       expect(handelEditbutton).not.toHaveBeenCalled()
-      expect(screen.getByText('Error updating owner')).toBeInTheDocument()
+      expect(screen.getByText('Customer cannot be updated')).toBeInTheDocument()
     })
   })
 })
 
-describe('Owner Add Component', () => {
-  const owner = {
+describe('Add Customer Component', () => {
+  const customer = {
     first_name: 'John',
     last_name: 'Doe',
     email: 'john.doe@example.com',
@@ -369,13 +368,13 @@ describe('Owner Add Component', () => {
     country: 'Country'
   }
 
-  test('Add New Owner', async () => {
+  test('Add New Customer', async () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
     const handelAddbutton = jest.fn()
 
-    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -392,22 +391,22 @@ describe('Owner Add Component', () => {
     const landmark = getByLabelText('Landmark')
     const street = getByLabelText('Street')
 
-    fireEvent.change(first_name, { target: { value: owner.first_name } })
-    fireEvent.change(last_name, { target: { value: owner.last_name } })
-    fireEvent.change(email, { target: { value: owner.email } })
-    fireEvent.change(phone, { target: { value: owner.phone } })
-    fireEvent.change(alternate_phone, { target: { value: owner.alternate_phone } })
-    fireEvent.change(city, { target: { value: owner.city } })
-    fireEvent.change(state, { target: { value: owner.state } })
-    fireEvent.change(country, { target: { value: owner.country } })
-    fireEvent.change(pincode, { target: { value: owner.pincode } })
-    fireEvent.change(aadhar_card_no, { target: { value: owner.aadhar_card_no } })
-    fireEvent.change(address, { target: { value: owner.address } })
-    fireEvent.change(gst_no, { target: { value: owner.gst_no } })
-    fireEvent.change(landmark, { target: { value: owner.landmark } })
-    fireEvent.change(street, { target: { value: owner.street } })
+    fireEvent.change(first_name, { target: { value: customer.first_name } })
+    fireEvent.change(last_name, { target: { value: customer.last_name } })
+    fireEvent.change(email, { target: { value: customer.email } })
+    fireEvent.change(phone, { target: { value: customer.phone } })
+    fireEvent.change(alternate_phone, { target: { value: customer.alternate_phone } })
+    fireEvent.change(city, { target: { value: customer.city } })
+    fireEvent.change(state, { target: { value: customer.state } })
+    fireEvent.change(country, { target: { value: customer.country } })
+    fireEvent.change(pincode, { target: { value: customer.pincode } })
+    fireEvent.change(aadhar_card_no, { target: { value: customer.aadhar_card_no } })
+    fireEvent.change(address, { target: { value: customer.address } })
+    fireEvent.change(gst_no, { target: { value: customer.gst_no } })
+    fireEvent.change(landmark, { target: { value: customer.landmark } })
+    fireEvent.change(street, { target: { value: customer.street } })
 
-    const saveButton = screen.getByTestId('add-owner')
+    const saveButton = screen.getByTestId('submit')
 
     act(() => {
       fireEvent.click(saveButton)
@@ -416,52 +415,17 @@ describe('Owner Add Component', () => {
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
       expect(handelAddbutton).toHaveBeenCalled()
-      expect(screen.getByText('Owner added successfully')).toBeInTheDocument()
+      expect(screen.getByText('Customer added successfully')).toBeInTheDocument()
     })
-
-    // expect(axios.post).toHaveBeenCalledWith(
-    //   expect.any(String), // URL
-    //   {
-    //     first_name: 'John',
-    //     last_name: 'Doe',
-    //     email: 'john.doe@example.com',
-    //     phone: '1234567890',
-    //     alternate_phone: '9876543210',
-    //     aadhar_card_no: '123456789012',
-    //     address: '123 Main St',
-    //     gst_no: '123456789012345',
-    //     landmark: 'Near Park',
-    //     street: 'Main Street',
-    //     city: 'City',
-    //     state: 'State',
-    //     pincode: '123456',
-    //     country: 'Country'
-    //   },
-    //   expect.any(Object)
-    // )
-
-    // expect(getByLabelText('Last name')).toBeInTheDocument();
-    // expect(getByLabelText('Email address')).toBeInTheDocument();
-    // expect(getByLabelText('Phone number')).toBeInTheDocument();
-    // expect(getByLabelText('Alternative Phone No')).toBeInTheDocument();
-    // expect(getByLabelText('City')).toBeInTheDocument();
-    // expect(getByLabelText('State')).toBeInTheDocument();
-    // expect(getByLabelText('Country')).toBeInTheDocument();
-    // expect(getByLabelText('Pincode')).toBeInTheDocument();
-    // expect(getByLabelText('Aadhar Card No')).toBeInTheDocument();
-    // expect(getByLabelText('Address')).toBeInTheDocument();
-    // expect(getByLabelText('GST No')).toBeInTheDocument();
-    // expect(getByLabelText('Landmark')).toBeInTheDocument();
-    // expect(getByLabelText('Street')).toBeInTheDocument();
   })
 
-  test('Add New Owner With Empty Fields to get Validation Error', async () => {
+  test('Add New customer With Empty Fields to get Validation Error', async () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
     const handelAddbutton = jest.fn()
 
-    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -493,7 +457,7 @@ describe('Owner Add Component', () => {
     fireEvent.change(landmark, { target: { value: '' } })
     fireEvent.change(street, { target: { value: '' } })
 
-    const saveButton = screen.getByTestId('add-owner')
+    const saveButton = screen.getByTestId('submit')
 
     act(() => {
       fireEvent.click(saveButton)
@@ -507,34 +471,23 @@ describe('Owner Add Component', () => {
       expect(screen.getByText('GST No is required')).toBeInTheDocument()
       expect(screen.getByText('Landmark is required')).toBeInTheDocument()
       expect(screen.getByText('Street is required')).toBeInTheDocument()
-      expect(
-        screen.getByText('phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
-      ).toBeInTheDocument()
-      expect(
-        screen.getByText(
-          'aadhar_card_no must be a `number` type, but the final value was: `NaN` (cast from the value `""`).'
-        )
-      ).toBeInTheDocument()
+      expect(screen.getByText('Phone number is required')).toBeInTheDocument()
+      expect(screen.getByText('Aadhar Card No is required')).toBeInTheDocument()
       expect(screen.getByText('City is required')).toBeInTheDocument()
       expect(screen.getByText('State is required')).toBeInTheDocument()
       expect(
         screen.getByText('pincode must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
       ).toBeInTheDocument()
-      expect(
-        screen.getByText(
-          'alternate_phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).'
-        )
-      ).toBeInTheDocument()
     })
   })
 
-  test('Add New Owner', async () => {
+  test('Add New customer', async () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
     const handelAddbutton = jest.fn()
 
-    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -551,22 +504,22 @@ describe('Owner Add Component', () => {
     const landmark = getByLabelText('Landmark')
     const street = getByLabelText('Street')
 
-    fireEvent.change(first_name, { target: { value: owner.first_name } })
-    fireEvent.change(last_name, { target: { value: owner.last_name } })
-    fireEvent.change(email, { target: { value: owner.email } })
-    fireEvent.change(phone, { target: { value: owner.phone } })
-    fireEvent.change(alternate_phone, { target: { value: owner.alternate_phone } })
-    fireEvent.change(city, { target: { value: owner.city } })
-    fireEvent.change(state, { target: { value: owner.state } })
-    fireEvent.change(country, { target: { value: owner.country } })
-    fireEvent.change(pincode, { target: { value: owner.pincode } })
-    fireEvent.change(aadhar_card_no, { target: { value: owner.aadhar_card_no } })
-    fireEvent.change(address, { target: { value: owner.address } })
-    fireEvent.change(gst_no, { target: { value: owner.gst_no } })
-    fireEvent.change(landmark, { target: { value: owner.landmark } })
-    fireEvent.change(street, { target: { value: owner.street } })
+    fireEvent.change(first_name, { target: { value: customer.first_name } })
+    fireEvent.change(last_name, { target: { value: customer.last_name } })
+    fireEvent.change(email, { target: { value: customer.email } })
+    fireEvent.change(phone, { target: { value: customer.phone } })
+    fireEvent.change(alternate_phone, { target: { value: customer.alternate_phone } })
+    fireEvent.change(city, { target: { value: customer.city } })
+    fireEvent.change(state, { target: { value: customer.state } })
+    fireEvent.change(country, { target: { value: customer.country } })
+    fireEvent.change(pincode, { target: { value: customer.pincode } })
+    fireEvent.change(aadhar_card_no, { target: { value: customer.aadhar_card_no } })
+    fireEvent.change(address, { target: { value: customer.address } })
+    fireEvent.change(gst_no, { target: { value: customer.gst_no } })
+    fireEvent.change(landmark, { target: { value: customer.landmark } })
+    fireEvent.change(street, { target: { value: customer.street } })
 
-    const saveButton = screen.getByTestId('add-owner')
+    const saveButton = screen.getByTestId('submit')
 
     act(() => {
       fireEvent.click(saveButton)
@@ -575,7 +528,7 @@ describe('Owner Add Component', () => {
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
       expect(handelAddbutton).not.toHaveBeenCalled()
-      expect(screen.getByText('Owner cannot be added')).toBeInTheDocument()
+      expect(screen.getByText('customer cannot be added')).toBeInTheDocument()
     })
   })
 })

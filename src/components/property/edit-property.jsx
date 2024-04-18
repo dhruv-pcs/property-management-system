@@ -18,6 +18,8 @@ const schema = Yup.object().shape({
   is_verified: Yup.boolean().required('Verification status is required'),
   landmark: Yup.string().required('Landmark is required'),
   street: Yup.string().required('Street is required'),
+  state: Yup.string().required('State is required'),
+  city: Yup.string().required('City is required'),
   longitude: Yup.string().required('Rent is required'),
   latitude: Yup.string().required('Rent is required')
 })
@@ -50,11 +52,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
     setValue('property_number', property.property_number)
     setValue('city', property.city)
     setValue('district', property.district)
-    setValue('pincode', property.pincode)
+    setValue('pincode', property.pin_code)
     setValue('latitude', property.latitude)
     setValue('longitude', property.longitude)
     setValue('description', property.description)
-    setValue('is_verified', property.is_verified)
     setValue('latitude', property.latitude)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
@@ -88,9 +89,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Name</Form.Label>
+                      <Form.Label htmlFor="name">Name</Form.Label>
                       <Form.Control
-                      id='name'
+                        id='name'
+                        data-testid='name'
                         type='text'
                         placeholder='Enter your Name'
                         {...register('name')}
@@ -102,8 +104,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
 
                   <Col md={3}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Rent</Form.Label>
+                      <Form.Label htmlFor="rent">Rent</Form.Label>
                       <Form.Control
+                        id='rent'
+                        data-testid='rent'
                         type='tel'
                         placeholder='Enter Rent'
                         {...register('rent')}
@@ -114,8 +118,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={3}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Rent-Type</Form.Label>
+                      <Form.Label htmlFor="rent_type">Rent-Type</Form.Label>
                       <Form.Control
+                        id='rent_type'
+                        data-testid='rent_type'
                         type='text'
                         placeholder=' Rent type'
                         {...register('rent_type')}
@@ -128,8 +134,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Landmark</Form.Label>
+                      <Form.Label htmlFor="landmark">Landmark</Form.Label>
                       <Form.Control
+                        id='landmark'
+                        data-testid='landmark'
                         type='text'
                         placeholder='Enter Landmark'
                         {...register('landmark')}
@@ -140,8 +148,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Location</Form.Label>
+                      <Form.Label htmlFor="location">Location</Form.Label>
                       <Form.Control
+                      id='location'
+                      data-testid='location'
                         type='text'
                         placeholder='Enter Location'
                         {...register('location')}
@@ -154,19 +164,24 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Address</Form.Label>
+                      <Form.Label htmlFor="address">Address</Form.Label>
                       <Form.Control
+                        id='address'
+                        data-testid='address'
                         type='text'
                         placeholder='Enter Address'
                         {...register('address')}
                         defaultValue={property?.address}
                       />
+                      {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Street</Form.Label>
+                      <Form.Label htmlFor="street">Street</Form.Label>
                       <Form.Control
+                        id='street'
+                        data-testid='street'
                         type='text'
                         defaultValue={property?.street}
                         placeholder='Enter your street'
@@ -178,8 +193,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Property Number</Form.Label>
+                      <Form.Label htmlFor="property_number">Property Number</Form.Label>
                       <Form.Control
+                        id='property_number'
+                        data-testid='property_number'
                         type='text'
                         placeholder='Enter Landmark'
                         {...register('property_number')}
@@ -190,22 +207,26 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
+                      <Form.Label htmlFor="city">City</Form.Label>
                       <Form.Control
                         id ='city'
+                        data-testid='city'
                         type='text'
                         defaultValue={property?.city}
                         placeholder='Enter your city'
                         {...register('city')}
                       />
+                      {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>District</Form.Label>
+                      <Form.Label htmlFor="district">District</Form.Label>
                       <Form.Control
+                        id='district'
+                        data-testid='district'
                         type='text'
                         defaultValue={property?.district}
                         placeholder='Enter your district'
@@ -215,21 +236,26 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
+                      <Form.Label htmlFor="state">State</Form.Label>
                       <Form.Control
+                        id='state'
+                        data-testid='state'
                         type='text'
                         defaultValue={property?.state}
                         placeholder='Enter your state'
                         {...register('state')}
                       />
+                      {errors.state && <span className='text-danger'>{errors.state.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
+                      <Form.Label htmlFor="country">Country</Form.Label>
                       <Form.Control
+                      id='country'
+                      data-testid='country'
                         type='text'
                         defaultValue={property?.country}
                         placeholder='Enter your country'
@@ -240,8 +266,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label htmlFor="pin_code">Pincode</Form.Label>
                       <Form.Control
+                      id='pin_code'
+                      data-testid='pin_code'
                         type='tel'
                         placeholder='Enter Pincode'
                         {...register('pin_code')}
@@ -254,8 +282,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Latitue</Form.Label>
+                      <Form.Label htmlFor="latitude">Latitude</Form.Label>
                       <Form.Control
+                        id='latitude'
+                        data-testid='latitude'
                         type='tel'
                         placeholder='Enter Latitude'
                         {...register('latitude')}
@@ -266,8 +296,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Longitude</Form.Label>
+                      <Form.Label htmlFor="longitude">Longitude</Form.Label>
                       <Form.Control
+                      id='longitude'
+                      data-testid='longitude'
                         type='tel'
                         placeholder='Enter Longitude'
                         {...register('longitude')}
@@ -288,6 +320,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                           label='Verified'
                           type='radio'
                           id='verified'
+                          data-testid='verified'
                           {...register('is_verified', { required: true })}
                           value={true}
                           defaultChecked={property?.is_verified === true && true}
@@ -297,9 +330,10 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                           label='Not Verified'
                           type='radio'
                           id='not_verified'
+                          data-testid='not_verified'
                           {...register('is_verified', { required: true })}
                           value={false}
-                          defaultChecked={!property?.is_verified && true}
+                          defaultChecked={property?.is_verified === false && true}
                         />
                       </div>
                     </Form.Group>
