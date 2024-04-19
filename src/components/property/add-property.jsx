@@ -36,7 +36,7 @@ const schema = Yup.object().shape({
   rent_type: Yup.string().required('Rent type is required'),
   state: Yup.string().required('State is required'),
   street: Yup.string().required('Street is required'),
-  ready_to_move: Yup.boolean().required('This field is required'),
+  ready_to_move: Yup.boolean().required('This field is required')
 })
 
 const AddProperty = ({ onUpdate, handelAddbutton }) => {
@@ -183,7 +183,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter your city'
                         {...register('city')}
                       />
-                       {errors.city && <span className='text-danger'>{errors.city.message}</span>}
+                      {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -226,7 +226,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter your pincode'
                         {...register('pin_code')}
                       />
-                       {errors.pin_code && <span className='text-danger'>{errors.pin_code.message}</span>}
+                      {errors.pin_code && <span className='text-danger'>{errors.pin_code.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -356,7 +356,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder=' Number of Balconies'
                         {...register('no_of_balconies')}
                       />
-                       {errors.no_of_balconies && (<span className="text-danger">{errors.no_of_balconies.message}</span>)}
+                      {errors.no_of_balconies && <span className='text-danger'>{errors.no_of_balconies.message}</span>}
                     </Form.Group>
                   </Col>
                   <Col md={6}>
@@ -487,15 +487,15 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                   </Col>
                 </Row>
                 <div className='d-flex '>
-                <Button
-                  data-testid='add-property-button'
-                  aria-label='Add'
-                  type='submit'
-                  style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
-                  className='ms-2 mb-3 w-100 h-fit'
-                >
-                  Add
-                </Button>
+                  <Button
+                    data-testid='add-property-button'
+                    aria-label='Add'
+                    type='submit'
+                    style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
+                    className='ms-2 mb-3 w-100 h-fit'
+                  >
+                    Add
+                  </Button>
                 </div>
               </Form>
             </Card.Body>

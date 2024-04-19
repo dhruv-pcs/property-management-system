@@ -66,7 +66,12 @@ const Topbar = () => {
         >
           <Box display='flex'>
             {broken && (
-              <IconButton data-testid="menu" aria-label='Menu' sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
+              <IconButton
+                data-testid='menu'
+                aria-label='Menu'
+                sx={{ margin: '0 6 0 2' }}
+                onClick={() => toggleSidebar()}
+              >
                 <MenuOutlinedIcon />
               </IconButton>
             )}

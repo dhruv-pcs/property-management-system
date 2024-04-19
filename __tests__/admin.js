@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import axios from 'axios';
 import Admin from 'src/pages/admin';
 
-// Mock axios globally
 jest.mock('axios');
 
 const mockPermissions = [
@@ -32,7 +31,6 @@ const mockAdminData = [
   }
 ];
 
-// Setup axios mock for each test
 beforeEach(() => {
   axios.get.mockResolvedValue({
     data: {
