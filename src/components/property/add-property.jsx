@@ -18,6 +18,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required'),
   description: Yup.string().required('Description is required'),
   district: Yup.string().required('District is required'),
+  location: Yup.string().required('Location is required'),
   landmark: Yup.string().required('Landmark is required'),
   latitude: Yup.string().required('Latitude is required'),
   longitude: Yup.string().required('Longitude is required'),
@@ -36,7 +37,6 @@ const schema = Yup.object().shape({
   state: Yup.string().required('State is required'),
   street: Yup.string().required('Street is required'),
   ready_to_move: Yup.boolean().required('This field is required'),
-  district: Yup.string().required('District is required')
 })
 
 const AddProperty = ({ onUpdate, handelAddbutton }) => {
@@ -106,12 +106,12 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                       <Form.Label htmlFor='rent'>Rent</Form.Label>
                       <Form.Control
                         id='rent'
-                        data-testid='property_rent'
+                        data-testid='rent'
                         type='tel'
                         placeholder='Enter Rent'
                         {...register('rent')}
                       />
-                      {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
+                      {errors.rent && <span className='text-danger '>{errors.rent.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -168,6 +168,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter Address'
                         {...register('address')}
                       />
+                      {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -211,6 +212,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Enter your country'
                         {...register('country')}
                       />
+                      {errors.country && <span className='text-danger'>{errors.country.message}</span>}
                     </Form.Group>
                   </Col>
 
@@ -354,7 +356,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
                         placeholder=' Number of Balconies'
                         {...register('no_of_balconies')}
                       />
-                      {errors.no_of_balconies && <span className='text-danger'>{errors.no_of_balconies.message}</span>}
+                       {errors.no_of_balconies && (<span className="text-danger">{errors.no_of_balconies.message}</span>)}
                     </Form.Group>
                   </Col>
                   <Col md={6}>

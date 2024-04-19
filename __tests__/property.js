@@ -307,6 +307,7 @@ describe('Property Add Component', () => {
     country: 'Wonderland',
     description: 'A beautiful seaside property.',
     district: 'Coastal District',
+    location: 'Lighthouse',
     landmark: 'Near Lighthouse',
     latitude: '34.0201613',
     longitude: '-118.6919206',
@@ -343,6 +344,7 @@ describe('Property Add Component', () => {
       const country = getByLabelText('Country');
       const description = getByLabelText('Description');
       const district = getByLabelText('District');
+      const location = getByLabelText('Location');
       const landmark = getByLabelText('Landmark');
       const latitude = getByLabelText('Latitude');
       const longitude = getByLabelText('Longitude');
@@ -370,6 +372,7 @@ describe('Property Add Component', () => {
       fireEvent.change(country, { target: { value:  property.country } });
       fireEvent.change(description, { target: { value:  property.description} });
       fireEvent.change(district, { target: { value:  property.district } });
+      fireEvent.change(location, { target: { value:  property.location} });
       fireEvent.change(landmark, { target: { value:  property.landmark} });
       fireEvent.change(latitude, { target: { value:   property.latitude} });
       fireEvent.change(longitude, { target: { value:  property.longitude } });
@@ -419,6 +422,7 @@ describe('Property Add Component', () => {
       const country = getByLabelText('Country');
       const description = getByLabelText('Description');
       const district = getByLabelText('District');
+      const location = getByLabelText('Location');
       const landmark = getByLabelText('Landmark');
       const latitude = getByLabelText('Latitude');
       const longitude = getByLabelText('Longitude');
@@ -446,6 +450,7 @@ describe('Property Add Component', () => {
       fireEvent.change(country, { target: { value: '' } });
       fireEvent.change(description, { target: { value: ''} });
       fireEvent.change(district, { target: { value: '' } });
+      fireEvent.change(location, { target: { value:''} });
       fireEvent.change(landmark, { target: { value: ''} });
       fireEvent.change(latitude, { target: { value: ''} });
       fireEvent.change(longitude, { target: { value: '' } });
@@ -474,13 +479,35 @@ describe('Property Add Component', () => {
 
         await waitFor(() => {
           expect(screen.getByText('Name is required')).toBeInTheDocument();
-          expect(screen.getByText('Rent is required')).toBeInTheDocument();
+          expect(screen.getByText(/rent must be a `number` type, but the final value was: `NaN`/)).toBeInTheDocument();
           expect(screen.getByText('Address is required')).toBeInTheDocument();
           expect(screen.getByText('Landmark is required')).toBeInTheDocument();
           expect(screen.getByText('State is required')).toBeInTheDocument();
           expect(screen.getByText('City is required')).toBeInTheDocument();
+          expect(screen.getByText('BHK is required')).toBeInTheDocument();
+          expect(screen.getByText('Country is required')).toBeInTheDocument();
+          expect(screen.getByText('Description is required')).toBeInTheDocument();
+          expect(screen.getByText('District is required')).toBeInTheDocument();
+          expect(screen.getByText('Latitude is required')).toBeInTheDocument();
+          expect(screen.getByText('Longitude is required')).toBeInTheDocument();
+          expect(screen.getByText('Location is required')).toBeInTheDocument();
+          expect(screen.getByText('no_of_balconies must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+          expect(screen.getByText('no_of_bathrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+          expect(screen.getByText('no_of_kitchen must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+          expect(screen.getByText('no_of_bedrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+          expect(screen.getByText('no_of_rooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+          expect(screen.getByText('property_age must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+          expect(screen.getByText('Property area is required')).toBeInTheDocument();
+          expect(screen.getByText('Property number is required')).toBeInTheDocument();
+          expect(screen.getByText('Property type is required')).toBeInTheDocument();
+          expect(screen.getByText('State is required')).toBeInTheDocument();
+          expect(screen.getByText('Street is required')).toBeInTheDocument();
+          expect(screen.getByText('District is required')).toBeInTheDocument();
+          expect(screen.getByText('Rent type is required')).toBeInTheDocument();
+          expect(screen.getByText('available_from must be a `date` type, but the final value was: `Invalid Date` (cast from the value `""`).')).toBeInTheDocument();
       })
     });
+
     test('Add New Property', async () => {
       const mockError = new Error('Add request failed')
       axios.post = jest.fn().mockRejectedValue(mockError)
@@ -498,6 +525,7 @@ describe('Property Add Component', () => {
       const description = getByLabelText('Description');
       const district = getByLabelText('District');
       const landmark = getByLabelText('Landmark');
+      const location = getByLabelText('Location');
       const latitude = getByLabelText('Latitude');
       const longitude = getByLabelText('Longitude');
       const no_of_balconies = getByLabelText('No. of Balconies');
@@ -525,6 +553,7 @@ describe('Property Add Component', () => {
       fireEvent.change(description, { target: { value:  property.description} });
       fireEvent.change(district, { target: { value:  property.district } });
       fireEvent.change(landmark, { target: { value:  property.landmark} });
+      fireEvent.change(location, { target: { value:  property.location} });
       fireEvent.change(latitude, { target: { value:   property.latitude} });
       fireEvent.change(longitude, { target: { value:  property.longitude } });
       fireEvent.change(no_of_balconies, { target: { value:  property.no_of_balconies } });
