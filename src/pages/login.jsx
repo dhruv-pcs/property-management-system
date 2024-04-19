@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { TextField, Button, FormControl, InputAdornment, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
@@ -32,6 +32,21 @@ const Login = () => {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
+  }
+
+  const [isMounted, setIsMounted] = useState(false)
+
+  
+  useEffect(() => {
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [])
+
+  if (!isMounted) {
+    return null
   }
 
   const onSubmit = async data => {

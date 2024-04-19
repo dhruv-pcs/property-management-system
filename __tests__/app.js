@@ -8,7 +8,7 @@ import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import { ColorModeContext } from '@theme/theme'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import Login from 'src/pages/login'
-import Notfound from 'src/pages/400'
+import Notfound from 'src/pages/404'
 
 jest.mock('src/middleware', () => ({
   middleware: jest.fn(req => {
@@ -94,5 +94,7 @@ describe('App component layout', () => {
 
     expect(screen.getByTestId('notfound')).toBeInTheDocument();
   });
+
+  
 
 });

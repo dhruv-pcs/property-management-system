@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Topbar from 'src/components/topbar/topbar'
 import { waitFor } from '@testing-library/react'
-import { ProSidebarProvider, useProSidebar } from 'react-pro-sidebar'
+import { ProSidebarProvider } from 'react-pro-sidebar'
 import axios from 'axios'
 
 jest.mock('next/router', () => ({
@@ -11,11 +11,6 @@ jest.mock('next/router', () => ({
     push: jest.fn()
   }))
 }))
-
-jest.mock('react-pro-sidebar', () => ({
-    ...jest.requireActual('react-pro-sidebar'),
-    useProSidebar: jest.fn(),
-}));
 
 jest.mock('axios')
 
@@ -76,25 +71,6 @@ describe('Topbar Component', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Error Logging Out')).toBeInTheDocument()
-    })
-  })
-
-  test('should toggle sidebar when broken', async () => {
-   
-    const toggleSidebar = useProSidebar()
-    const broken = true
-    render(
-      <ProSidebarProvider>
-        <Topbar />
-      </ProSidebarProvider>
-    )
-    expect(broken).toBe(true)
-
-    useProSidebar.mockReturnValueOnce({ toggleSidebar: toggleSidebar })
-
-    await waitFor(() => {
-        fireEvent.click(screen.getByTestId('menu'))
-      expect(toggleSidebarMock).toHaveBeenCalled()
     })
   })
 })

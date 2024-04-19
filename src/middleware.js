@@ -1,20 +1,27 @@
 import { NextResponse } from 'next/server'
-import { parseCookies } from 'nookies'
+import { cookies } from "next/headers";
 
-// Middleware function
 export function middleware(req) {
   try {
-    const cookies = parseCookies({ req })
-    const token = cookies.token
-    const pathname = req.url.split('?')[0]
+   
+    const pathname = '/' + req.url.substring(req.url.lastIndexOf('/') + 1)
+    const cookie = cookies().get('token')
+    const token = cookie ? cookie.value : null
+    
 
-    if (pathname === '/login') {
+    if (pathname === '/login' && !token) {
       return NextResponse.next()
     }
-
-    if (token) {
-      return NextResponse.next()
+    else if(pathname === '/login' && token){
+      return NextResponse.redirect(new URL('/', req.url))
     }
+    else{
+
+      if (token) {
+        return NextResponse.next()
+      }
+    }
+
   } catch (error) {
     console.error('Error in middleware:', error)
 
@@ -22,8 +29,8 @@ export function middleware(req) {
   }
 }
 
-// Configuration for the middleware
 export const config = {
-  // Specify the path pattern to match
   matcher: ['/:path*']
 }
+
+

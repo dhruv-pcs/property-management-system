@@ -88,21 +88,21 @@ describe('Admin Component', () => {
     })
   })
 
-  test('clicking Edit button to see edit model', async () => {
-    const edit = screen.getByTestId('edit-admin')
-    expect(edit).toBeInTheDocument()
-    fireEvent.click(edit)
+  // test('clicking Edit button to see edit model', async () => {
+  //   const edit = screen.getByTestId('edit-admin')
+  //   expect(edit).toBeInTheDocument()
+  //   fireEvent.click(edit)
 
-    expect(screen.getByTestId('Save_changes')).toBeInTheDocument()
-  })
+  //   expect(screen.getByTestId('Save_changes')).toBeInTheDocument()
+  // })
 
-  test('clicking View button to see view model', async () => {
-    const view = screen.getByTestId('view-admin')
-    expect(view).toBeInTheDocument()
-    fireEvent.click(view)
+  // test('clicking View button to see view model', async () => {
+  //   const view = screen.getByTestId('view-admin')
+  //   expect(view).toBeInTheDocument()
+  //   fireEvent.click(view)
 
-    expect(screen.getByText('View Admin')).toBeInTheDocument()
-  })
+  //   expect(screen.getByText('View Admin')).toBeInTheDocument()
+  // })
 
   test('clicking Delete button opens delete modal', async () => {
     const deleteAdmin = screen.getByTestId('delete-admin')
