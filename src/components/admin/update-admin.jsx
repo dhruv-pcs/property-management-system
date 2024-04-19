@@ -86,6 +86,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     <Form.Group className='mb-1'>
                       <Form.Label>First name</Form.Label>
                       <Form.Control
+                        id='first_name'
                         type='text'
                         placeholder='Enter your first name'
                         {...register('first_name')}
@@ -176,6 +177,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     <Form.Group className='mb-1'>
                       <Form.Label>City</Form.Label>
                       <Form.Control
+                        id='city'
                         type='text'
                         defaultValue={admin?.city}
                         placeholder='Enter your city'
@@ -267,6 +269,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
                     {!isViewOnly && (
                       <div className='d-flex'>
                         <Button
+                          data-testid='edit-admin'
                           aria-label='Edit'
                           onClick={() => setEditable(!editable)}
                           className='mb-3'
@@ -277,6 +280,7 @@ const UpdateAdmin = ({ admin = {}, isViewOnly, onUpdate, handelEditbutton }) => 
 
                         {editable && (
                           <Button
+                            id='Save_changes'
                             aria-label='Save'
                             className='ms-2 mb-3 h-fit'
                             type='submit'

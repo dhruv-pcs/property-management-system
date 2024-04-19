@@ -35,7 +35,7 @@ const Admin = () => {
       })
       setAdminData(response.data.data.adminData)
     } catch (error) {
-      console.error(error)
+      toast.error('Error Fetching Data')
     }
   }
   useEffect(() => {
@@ -52,8 +52,8 @@ const Admin = () => {
       handleAdminDataUpdate()
       toast.success('User deleted successfully!')
     } catch (error) {
-      toast.error('Error deleting User:', error)
-      console.error('Error deleting User:', error)
+      setOpenDelete(!openDelete)
+      toast.error('Error deleting Admin', error)
     }
   }
 
@@ -124,8 +124,9 @@ const Admin = () => {
       name: 'Action',
       cell: row => (
         <div className='d-flex gap-2'>
-          {!row.is_superadmin && admin_permission[0].view && (
+          {admin_permission && admin_permission.length > 0 && !row.is_superadmin && admin_permission[0].view && (
             <button
+              data-testid='view-admin'
               aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
@@ -134,8 +135,9 @@ const Admin = () => {
               <Visibility />
             </button>
           )}
-          {!row.is_superadmin && admin_permission[0].update && (
+          {admin_permission && admin_permission.length > 0 && !row.is_superadmin && admin_permission[0].update && (
             <button
+              data-testid='edit-admin'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100], cursor: 'pointer' }}
               onClick={() => handelEditbutton(row)}
@@ -144,8 +146,9 @@ const Admin = () => {
               <Edit />
             </button>
           )}
-          {!row.is_superadmin && admin_permission[0].remove && (
+          {admin_permission && admin_permission.length > 0 && !row.is_superadmin && admin_permission[0].remove && (
             <button
+              data-testid='delete-admin'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
               onClick={() => handelDeletebutton(row)}
@@ -271,6 +274,8 @@ const Admin = () => {
           paginationRowsPerPageOptions={[10, 25, 50, 100]}
           pagination
           subHeaderComponent={
+            admin_permission &&
+            admin_permission.length > 0 &&
             admin_permission[0].add && (
               <button
                 data-testid='add-admin'
@@ -285,7 +290,7 @@ const Admin = () => {
           }
         />
       </div>
-      <Dialog open={showAddModal} onClose={handleCloseAddModal}>
+      <Dialog data-testid='add-admin-modal' open={showAddModal} onClose={handleCloseAddModal}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -305,6 +310,7 @@ const Admin = () => {
         </DialogContent>
       </Dialog>
       <Dialog
+        data-testid='view-admin-modal'
         fullScreen={isSmallScreen}
         onClose={handelViewbutton}
         aria-labelledby='customized-dialog-title'
@@ -336,7 +342,12 @@ const Admin = () => {
           <UpdateAdmin admin={selectedRow} isViewOnly={true} />
         </DialogContent>
       </Dialog>
-      <Dialog onClose={handelEditbutton} aria-labelledby='customized-dialog-title' open={openEdit}>
+      <Dialog
+        data-testid='edit-admin-modal'
+        onClose={handelEditbutton}
+        aria-labelledby='customized-dialog-title'
+        open={openEdit}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -369,7 +380,12 @@ const Admin = () => {
           />
         </DialogContent>
       </Dialog>
-      <Dialog onClose={handelDeletebutton} aria-labelledby='customized-dialog-title' open={openDelete}>
+      <Dialog
+        data-testid='delete-admin-modal'
+        onClose={handelDeletebutton}
+        aria-labelledby='customized-dialog-title'
+        open={openDelete}
+      >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -404,6 +420,7 @@ const Admin = () => {
               Cancel
             </Button>
             <Button
+              data-testid='confirm-delete'
               onClick={() => handleDelete(selectedRow)}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.redAccent[600] }}
