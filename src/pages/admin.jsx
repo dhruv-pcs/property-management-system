@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
+import ViewAdmin from '@components/admin/view-admin'
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Dialog, DialogTitle, DialogContent, IconButton, useTheme, Button, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
@@ -22,6 +23,7 @@ const Admin = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  
   const userPermissions = JSON.parse(localStorage.getItem('user'))
 
   const admin_permission = userPermissions
@@ -261,7 +263,7 @@ const Admin = () => {
         <title>Admin</title>
         <meta name='description' content='Admin Page' />
       </Head>
-      <div data-testid='admin-list' className='p-2' style={{ backgroundColor: colors.primary[400] }}>
+      <div data-testid='admin-list' className='p-2 rounded-1' style={{ backgroundColor: colors.primary[400] }}>
         <DataTable
           columns={columns}
           data={adminData}
@@ -339,7 +341,7 @@ const Admin = () => {
           dividers
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
         >
-          <UpdateAdmin admin={selectedRow} isViewOnly={true} />
+          <ViewAdmin admin={selectedRow} />
         </DialogContent>
       </Dialog>
       <Dialog
@@ -375,7 +377,6 @@ const Admin = () => {
           <UpdateAdmin
             handelEditbutton={handelEditbutton}
             admin={selectedRow}
-            isViewOnly={false}
             onUpdate={handleAdminDataUpdate}
           />
         </DialogContent>
