@@ -30,6 +30,7 @@ const GoToTopButton = () => {
 
   return (
     <button
+      data-testid='go-to-top-button'
       aria-label='Go to top'
       className={`go-top-btn d-flex justify-content-center align-items-center rounded-circle ${isVisible ? 'show' : ''}`}
       onClick={scrollToTop}

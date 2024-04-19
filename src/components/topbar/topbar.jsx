@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { ColorModeContext, tokens } from '@theme/theme'
 import { useTheme, Box, IconButton, InputBase } from '@mui/material'
@@ -11,16 +11,29 @@ import { useProSidebar } from 'react-pro-sidebar'
 import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Topbar = () => {
+  const [isMounted, setIsMounted] = useState(false)
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const colorMode = useContext(ColorModeContext)
   const { toggleSidebar, broken } = useProSidebar()
   const router = useRouter()
+
+  useEffect(() => {
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   const handleLogout = async () => {
     try {
@@ -39,8 +52,9 @@ const Topbar = () => {
 
   return (
     <>
-      <header data-testid="topbar">
+      <header>
         <Box
+          data-testid='topbar'
           display='flex'
           justifyContent='space-between'
           p={1}
@@ -52,7 +66,7 @@ const Topbar = () => {
         >
           <Box display='flex'>
             {broken && (
-              <IconButton aria-label='Menu' sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
+              <IconButton data-testid="menu" aria-label='Menu' sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
                 <MenuOutlinedIcon />
               </IconButton>
             )}
@@ -73,7 +87,7 @@ const Topbar = () => {
               </IconButton>
             </Link>
 
-            <IconButton aria-label='Logout' onClick={() => handleLogout()}>
+            <IconButton data-testid='logout' aria-label='Logout' onClick={() => handleLogout()}>
               <LogoutIcon />
             </IconButton>
           </Box>

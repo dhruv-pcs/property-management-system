@@ -4,7 +4,7 @@ import { tokens } from '@theme/theme'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import navigation from './sidebarItem'
 import { Icon } from '@iconify/react'
 
@@ -12,7 +12,7 @@ const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
-  const path = usePathname()
+  const path = router.pathname
 
   const handleItemClick = () => {
     setSelected(title)
@@ -41,18 +41,25 @@ const MyProSidebar = () => {
   const [selected, setSelected] = useState('')
   const { collapseSidebar, toggleSidebar, broken } = useProSidebar()
   const navItem = navigation()
-  const [localData, setLocalData] = useState(null);
+  const LocalData = localStorage.getItem('user')
+  const Local = JSON.parse(LocalData)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const data = localStorage.getItem('user');
-      setLocalData(data ? JSON.parse(data) : null);
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
     }
-  }, []);
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   return (
     <Box
-    data-testid="sidebar"
+      data-testid='sidebar'
       className=''
       sx={{
         position: 'sticky',
@@ -116,7 +123,7 @@ const MyProSidebar = () => {
             {navItem.map((item, index) => {
               return (
                 <div key={index}>
-                  {localData?.map(local => {
+                  {Local?.map(local => {
                     if (local.view && item.subject === local.module.alias_name) {
                       return (
                         <Item

@@ -1,36 +1,36 @@
-import React from 'react';
-import '@styles-page/globals.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { ColorModeContext, tokens, useMode } from '@theme/theme';
-import Topbar from '@components/topbar/topbar';
-import { ProSidebarProvider } from 'react-pro-sidebar';
-import { MyProSidebarProvider } from '@components/sidebar/sidebar-context';
-import Footer from '@components/footer/footer';
-import GoToTopButton from '@components/go-to-top-button/go-to-top-button';
-import { usePathname } from 'next/navigation';
- 
+import React, { useEffect, useState } from 'react'
+import '@styles-page/globals.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import { ColorModeContext, tokens, useMode } from '@theme/theme'
+import Topbar from '@components/topbar/topbar'
+import { ProSidebarProvider } from 'react-pro-sidebar'
+import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
+import Footer from '@components/footer/footer'
+import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
+import { useRouter } from 'next/router'
 
 const App = ({ Component, pageProps }) => {
-  
+  const [theme, colorMode] = useMode()
+  const colors = tokens(theme.palette.mode)
+  const router = useRouter()
+  const [isClient, setIsClient] = useState(false)
 
-  
-  const [theme, colorMode] = useMode();
-  const colors = tokens(theme.palette.mode);
-  const pathname = usePathname()
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
+  if (!isClient) {
+    return null // Return null if not yet on the client
+  }
 
-
-  const isLoginPage = pathname === '/login';
-  const is404 = pathname === '/404';
-
+  const pathname = router.pathname
+  const isLoginPage = pathname === '/login'
+  const is404 = pathname === '/404'
 
   if (isLoginPage || is404) {
     return <Component {...pageProps} />
   } else {
-   
-
-
     return (
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
@@ -56,8 +56,8 @@ const App = ({ Component, pageProps }) => {
           </ProSidebarProvider>
         </ThemeProvider>
       </ColorModeContext.Provider>
-    );
+    )
   }
-};
+}
 
-export default App;
+export default App

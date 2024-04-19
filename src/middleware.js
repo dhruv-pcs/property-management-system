@@ -11,17 +11,13 @@ export function middleware(req) {
     if (pathname === '/login') {
       return NextResponse.next()
     }
-    
+
     if (token) {
       return NextResponse.next()
-    } 
-
-    
-
-
+    }
   } catch (error) {
     console.error('Error in middleware:', error)
-    
+
     return NextResponse.error()
   }
 }
@@ -29,5 +25,5 @@ export function middleware(req) {
 // Configuration for the middleware
 export const config = {
   // Specify the path pattern to match
-  matcher: ['/', '/'],
+  matcher: ['/:path*']
 }

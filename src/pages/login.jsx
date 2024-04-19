@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { TextField, Button, FormControl, InputAdornment, IconButton, Typography } from '@mui/material'
@@ -10,16 +10,15 @@ import 'react-toastify/dist/ReactToastify.css'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
-const  setCookie = (name, value, days) => {
-  var expires = "";
+const setCookie = (name, value, days) => {
+  var expires = ''
   if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toUTCString();
+    var date = new Date()
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+    expires = '; expires=' + date.toUTCString()
   }
-  document.cookie = name + "=" + value + expires + "; path=/";
+  document.cookie = name + '=' + value + expires + '; path=/'
 }
-
 
 const Login = () => {
   const {
@@ -43,11 +42,10 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)
       localStorage.setItem('Role', userData.roleID)
-      setCookie('token', userData.token, 1);
-      setCookie('user', JSON.stringify(userData.permissionData), 1);
-      setCookie('Role', userData.roleID, 1);
+      setCookie('token', userData.token, 1)
+      setCookie('user', JSON.stringify(userData.permissionData), 1)
+      setCookie('Role', userData.roleID, 1)
       router.push('/')
-      
     } catch (error) {
       toast.error('Invalid Credentials')
     }

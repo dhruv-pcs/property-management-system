@@ -34,27 +34,22 @@ const Permission = () => {
       case 'super-admin':
         return colors.redAccent[600]
       default:
-        return generateRandomColor()
+        const min = parseInt('3da58a', 16)
+        const max = parseInt('4cceac', 16)
+        const randomColor = '#' + Math.floor(Math.random() * (max - min + 1) + min).toString(16)
+
+        return randomColor
     }
-  }
-
-  const generateRandomColor = () => {
-    // Generate random hex color between #4cceac to #3da58a
-    const min = parseInt('3da58a', 16)
-    const max = parseInt('4cceac', 16)
-    const randomColor = '#' + Math.floor(Math.random() * (max - min + 1) + min).toString(16)
-
-    return randomColor
   }
 
   const columns = [
     {
       name: 'Name',
-      selector: row => row.module
+      selector: row => <span>{row.module}</span>
     },
     {
       name: 'Assign to',
-      selector: row => row.role, // Assuming row.role is an array
+      selector: row => row.role,
       cell: row => (
         <div className='d-flex gap-2'>
           {row.role.map((role, index) => (

@@ -11,7 +11,7 @@ const Footer = () => {
   const colors = tokens(theme.palette.mode)
 
   return (
-    <footer>
+    <footer data-testid='footer'>
       <Box
         style={{ backgroundColor: colors.primary[500] }}
         className='p-2 d-lg-flex justify-content-center align-content-center justify-content-lg-between '
