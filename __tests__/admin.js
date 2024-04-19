@@ -6,6 +6,8 @@ import Admin from 'src/pages/admin';
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
 
+
+// Mock axios globally
 jest.mock('axios');
 
 const mockPermissions = [
@@ -33,6 +35,7 @@ const mockAdminData = [
   }
 ];
 
+// Setup axios mock for each test
 beforeEach(() => {
   axios.get.mockResolvedValue({
     data: {
@@ -41,19 +44,15 @@ beforeEach(() => {
       }
     }
   });
-
   Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockPermissions));
 });
 
 // describe('Admin Component', () => {
-
 //   test('renders admin component with mock permission data', async () => {
 //     render(<Admin />);
-    
 //     const addButton = await screen.findByTestId('add-admin');
 //     expect(addButton).toBeInTheDocument();
 //   });
-
 describe('Admin Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
@@ -63,12 +62,10 @@ describe('Admin Component', () => {
       expect(axios.get).toHaveBeenCalled()
     })
   })
-
   test('Admin List Rendering Test', async () => {
     const adminList = await screen.findByTestId('admin-list')
     expect(adminList).toBeInTheDocument()
   })
-
   test('renders Admin list from API', async () => {
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument()
@@ -79,22 +76,17 @@ describe('Admin Component', () => {
       expect(screen.getByText('Action')).toBeInTheDocument()
     })
   })
-
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
-
     render(<Admin />)
-
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
     })
   })
-
   test('clicking Edit button opens edit modal', async () => {
     const edit = screen.getByTestId('edit-admin')
     expect(edit).toBeInTheDocument()
     fireEvent.click(edit)
-
     await waitFor(() => {
       expect(screen.getByTestId('edit-admin-modal')).toBeInTheDocument()
       expect(screen.getByText('Edit Admin')).toBeInTheDocument()
@@ -104,21 +96,17 @@ describe('Admin Component', () => {
     const view = screen.getByTestId('view-admin')
     expect(view).toBeInTheDocument()
     fireEvent.click(view)
-
-  //   expect(screen.getByText('View Admin')).toBeInTheDocument()
-  // })
-
+    expect(screen.getByText('View Admin')).toBeInTheDocument()
+  })
   test('clicking Delete button opens delete modal', async () => {
     const deleteAdmin = screen.getByTestId('delete-admin')
     expect(deleteAdmin).toBeInTheDocument()
     fireEvent.click(deleteAdmin)
-
     await waitFor(() => {
       expect(screen.getByTestId('delete-admin-modal')).toBeInTheDocument()
       expect(screen.getByText('Delete Admin')).toBeInTheDocument()
     })
   })
-
   test('clicking Add button to see add model', async () => {
     const add = screen.getByTestId('add-admin')
     expect(add).toBeInTheDocument()
@@ -127,23 +115,16 @@ const elements = screen.getAllByText('Add Admin');
 elements.forEach(element => {
   expect(element).toBeInTheDocument();
 });
-
   })
-
   test('clicking Delete button and then click confirm delete button to delete admin - Success', async () => {
     const mockResponseData = { data: { statusCode: 200 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
-
     render(<Admin />)
-
     const deleteAdmin = screen.getByTestId('delete-admin')
     fireEvent.click(deleteAdmin)
-
     expect(screen.getByText('Delete Admin')).toBeInTheDocument()
-
     const confirmDelete = screen.getByTestId('confirm-delete')
     fireEvent.click(confirmDelete)
-
     await waitFor(() => {
       expect(screen.queryByText('Delete Admin')).not.toBeInTheDocument()
       expect(screen.queryAllByText('User deleted successfully!')[0]).toBeInTheDocument()
@@ -157,13 +138,11 @@ elements.forEach(element => {
     expect(screen.getByText('Delete Admin')).toBeInTheDocument()
     const confirmDelete = screen.getByTestId('confirm-delete')
     fireEvent.click(confirmDelete)
-
     await waitFor(() => {
       expect(screen.getByText('Error deleting Admin')).toBeInTheDocument()
     })
   })
 });
-
 describe('Edit Admin Component', () => {
   const admin = {
     first_name: 'Jhon',
@@ -177,10 +156,8 @@ describe('Edit Admin Component', () => {
     pincode: '900260',
     status:true,
   };
-
   test('renders admin details with correct values', () => {
     const { getByLabelText,getByTestId } =  render(<UpdateAdmin admin={admin} />);
-  
     expect(getByLabelText('First name')).toHaveValue(admin.first_name);
     expect(getByLabelText('Last name')).toHaveValue(admin.last_name);
     expect(getByLabelText('Email address')).toHaveValue(admin.email);
@@ -192,12 +169,10 @@ describe('Edit Admin Component', () => {
     expect(getByLabelText('Pincode')).toHaveValue(admin.pincode);
     expect(getByTestId('active')).toBeChecked()
     });
-
     test('Update Admin With Empty Fields to Get Validation Error', async () => {
       const onUpdate = jest.fn();
       const handleEditButton = jest.fn();
       render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handleEditButton={handleEditButton} />);
-    
       const first_name = screen.getByTestId('first_name');
       const state = screen.getByTestId('state');
       const city = screen.getByTestId('city');
@@ -206,7 +181,6 @@ describe('Edit Admin Component', () => {
       const phone = screen.getByTestId('phone');
       const country = screen.getByTestId('country');
       const alternate_phone = screen.getByTestId('alternate_phone');
-    
       fireEvent.change(first_name, { target: { value: '' } });
       fireEvent.change(state, { target: { value: '' } });
       fireEvent.change(city, { target: { value: '' } });
@@ -216,12 +190,10 @@ describe('Edit Admin Component', () => {
       fireEvent.change(phone, { target: { value: '' } });
       fireEvent.change(alternate_phone, { target: { value: '' } });
       fireEvent.change(country, { target: { value: '' } });
-      
       const saveButton = screen.getByTestId('save-changes');
       act(() => {
         fireEvent.click(saveButton);
       });
-    
       await waitFor(() => {
         expect(screen.getByText('First name is required')).toBeInTheDocument();
         expect(screen.getByText('State is required')).toBeInTheDocument();
@@ -233,38 +205,30 @@ describe('Edit Admin Component', () => {
         expect(screen.getByText('Country is required')).toBeInTheDocument();
       });
     });
-
     test('successfully updates admin upon form submission', async () => {
       const mockResponse = { status: 201 }
       axios.patch = jest.fn().mockResolvedValue(mockResponse)
       const onUpdate = jest.fn()
       const handelEditbutton = jest.fn()
       render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
-    
       const saveButton = screen.getByLabelText('save')
-    
       act(() => {
         fireEvent.click(saveButton)
       })
-
       await waitFor(() => {
         expect(onUpdate).toHaveBeenCalled()
         expect(handelEditbutton).toHaveBeenCalled()
         expect(screen.getByText('Admin updated successfully')).toBeInTheDocument()
       })
     })
-
     test('handles error when updating Admin', async () => {
       const mockError = new Error('Update request failed')
       axios.patch = jest.fn().mockRejectedValue(mockError)
       const onUpdate = jest.fn()
       const handelEditbutton = jest.fn()
-    
       render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
-    
       const saveButton = screen.getByLabelText('save')
       fireEvent.click(saveButton)
-    
       await waitFor(() => {
         expect(onUpdate).not.toHaveBeenCalled()
         expect(handelEditbutton).not.toHaveBeenCalled()
@@ -272,7 +236,6 @@ describe('Edit Admin Component', () => {
       })
     })
 })
-
 describe('Admin Add Component', () => {
   const admin = {
     first_name: 'Jhon',
@@ -287,15 +250,12 @@ describe('Admin Add Component', () => {
     pincode: '900260',
     role_u_id:'owner',
   };
-
   test('Add New Admin', async () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
     const onClose = jest.fn()
-
     const { getByLabelText } = render(<AddAdmin onUpdate={onUpdate} onClose={onClose}  />)
-
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
     const email = getByLabelText('Email address')
@@ -307,7 +267,6 @@ describe('Admin Add Component', () => {
     const country = getByLabelText('Country')
     const pincode = getByLabelText('Pincode')
     const role_u_id = getByLabelText('Role')
-
     fireEvent.change(first_name, { target: { value: admin.first_name } })
     fireEvent.change(last_name, { target: { value: admin.last_name } })
     fireEvent.change(email, { target: { value: admin.email } })
@@ -319,13 +278,10 @@ describe('Admin Add Component', () => {
     fireEvent.change(state, { target: { value: admin.state } })
     fireEvent.change(country, { target: { value: admin.country } })
     fireEvent.change(pincode, { target: { value: admin.pincode } })
-
     const saveButton = screen.getByTestId('add-admin-button')
-
     act(() => {
       fireEvent.click(saveButton)
     })
-
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
       expect(onClose).toHaveBeenCalled()
