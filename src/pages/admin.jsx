@@ -308,7 +308,7 @@ const Admin = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <AddAdmin onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
+          <AddAdmin onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal}  />
         </DialogContent>
       </Dialog>
       <Dialog

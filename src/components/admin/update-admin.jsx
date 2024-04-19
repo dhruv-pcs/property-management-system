@@ -18,19 +18,24 @@
     //   /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
     //   'Password must be at least 6 characters long and contain at least one uppercase letter, one special character, one digit, and one lowercase letter'
     // ),
+    
     phone: Yup.number()
       .required('Phone number is required')
       .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-    alternate_phone: Yup.number(),
-    status: Yup.boolean().required('Admin status is required')
+    alternate_phone: Yup.number().required('Alternate_Phone number is required'),
+    status: Yup.boolean().required('Admin status is required'),
+    state: Yup.string().required('State is required'),
+    city: Yup.string().required('City is required'),
+    pincode: Yup.string().required('Pincode is required'),
+    country: Yup.string().required('Country is required'),
+    
+
   })
 
-  const UpdateAdmin = ({ admin = {}, onUpdate, handelEditbutton }) => {
+  const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
-
 
     const {
       register,
@@ -43,7 +48,7 @@
     })
 
     useEffect(() => {
-      if (admin) {
+      {
         setValue('first_name', admin.first_name)
         setValue('last_name', admin.last_name)
         setValue('email', admin.email)
@@ -54,7 +59,7 @@
         setValue('pincode', admin.pincode)
         setValue('state', admin.state)
       }
-    }, [admin, setValue])
+    }, [setValue])
 
     const onSubmit = async data => {
       try {
@@ -92,7 +97,6 @@
                           placeholder='Enter your first name'
                           {...register('first_name')}
                           defaultValue={admin?.first_name}
-                        
                         />
                         {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                       </Form.Group>
@@ -108,7 +112,6 @@
                           placeholder='Enter your last name'
                           {...register('last_name')}
                           defaultValue={admin?.last_name}
-                        
                         />
                         {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                       </Form.Group>
@@ -125,7 +128,6 @@
                           placeholder='Enter your email address'
                           {...register('email')}
                           defaultValue={admin?.email}
-                        
                         />
                         {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                       </Form.Group>
@@ -159,7 +161,6 @@
                           type='tel'
                           placeholder='Enter your phone number'
                           {...register('phone')}
-                        
                           defaultValue={admin?.phone ? Number(admin.phone) : ''}
                         />
                         {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
@@ -175,9 +176,9 @@
                           type='tel'
                           placeholder='Alternative phone number'
                           {...register('alternate_phone')}
-                        
                           defaultValue={admin?.alternate_phone}
                         />
+                         {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                       </Form.Group>
                     </Col>
                   </Row>
@@ -192,8 +193,8 @@
                           defaultValue={admin?.city}
                           placeholder='Enter your city'
                           {...register('city')}
-                        
                         />
+                          {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                       </Form.Group>
                     </Col>
 
@@ -207,8 +208,8 @@
                           defaultValue={admin?.state}
                           placeholder='Enter your state'
                           {...register('state')}
-                        
                         />
+                          {errors.state && <span className='text-danger'>{errors.state.message}</span>}
                       </Form.Group>
                     </Col>
                   </Row>
@@ -223,8 +224,8 @@
                           defaultValue={admin?.country}
                           placeholder='Enter your country'
                           {...register('country')}
-                        
                         />
+                        {errors.country && <span className='text-danger'>{errors.country.message}</span>}
                       </Form.Group>
                     </Col>
 
@@ -238,15 +239,11 @@
                           defaultValue={admin?.pincode}
                           placeholder='Enter your pincode'
                           {...register('pincode')}
-                        
                         />
+                        {errors.pincode && <span className='text-danger'>{errors.pincode.message}</span>}
                       </Form.Group>
                     </Col>
                   </Row>
-                  {admin?.role_u_id === 'ROL1000000001' ? (
-                    <></>
-                  ) : (
-                    <>
                       <Row className='gx-3 mb-3'>
                         <Col md={6}>
                           <Form.Group className='mb-1'>
@@ -272,14 +269,11 @@
                                 {...register('status', { required: true })}
                                 value={false}
                                 defaultChecked={admin?.status === false && true}
-                               
                               />
                             </div>
                           </Form.Group>
                         </Col>
                       </Row>
-                    </>
-                  )}
                   <Button
                   aria-label='save'
                   type='submit'
