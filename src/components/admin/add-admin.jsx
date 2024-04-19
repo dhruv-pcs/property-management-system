@@ -6,7 +6,7 @@ import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -39,6 +39,8 @@ const AddAdmin = ({ onUpdate, onClose }) => {
   const colors = tokens(theme.palette.mode)
   const [showPassword, setShowPassword] = useState(false)
   const [roles, setRoles] = useState([])
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -84,7 +86,7 @@ const AddAdmin = ({ onUpdate, onClose }) => {
 
   return (
     <>
-      <Row>
+      <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
         <Col xl={12}>
           <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
             <Card.Body>
@@ -92,9 +94,10 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>First name</Form.Label>
+                      <Form.Label htmlFor='first_name'>First name</Form.Label>
                       <Form.Control
                         id='first_name'
+                        data-testid='first_name'
                         type='text'
                         placeholder='Enter your first name'
                         {...register('first_name')}
@@ -105,9 +108,10 @@ const AddAdmin = ({ onUpdate, onClose }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Last name</Form.Label>
+                      <Form.Label htmlFor='last_name'>Last name</Form.Label>
                       <Form.Control
                         id='last_name'
+                        data-testid='last_name'
                         type='text'
                         placeholder='Enter your last name'
                         {...register('last_name')}
@@ -119,9 +123,10 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={12}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Email address</Form.Label>
+                      <Form.Label htmlFor='email'>Email address</Form.Label>
                       <Form.Control
                         id='email'
+                        data-testid='email'
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
@@ -132,10 +137,11 @@ const AddAdmin = ({ onUpdate, onClose }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label htmlFor='password'>Password</Form.Label>
                       <div className='input-group'>
                         <Form.Control
                           id='password'
+                          data-testid='password'
                           type={showPassword ? 'text' : 'password'}
                           placeholder='Password'
                           {...register('password')}
@@ -153,8 +159,8 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-3'>
-                      <Form.Label>Role</Form.Label>
-                      <Form.Select id='role_u_id' {...register('role_u_id')}>
+                      <Form.Label htmlFor='role_u_id'>Role</Form.Label>
+                      <Form.Select id='role_u_id' data-testid='role_u_id' {...register('role_u_id')}>
                         <option value=''>Select a role</option>
                         {roles.map(role => (
                           <option key={role.u_id} value={role.u_id}>
@@ -169,9 +175,10 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Phone number</Form.Label>
+                      <Form.Label htmlFor='phone'>Phone number</Form.Label>
                       <Form.Control
                         id='phone'
+                        data-testid='phone'
                         type='text'
                         placeholder='Enter your phone number'
                         {...register('phone')}
@@ -182,9 +189,10 @@ const AddAdmin = ({ onUpdate, onClose }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Alternative Phone No:</Form.Label>
+                      <Form.Label htmlFor='alternate_phone'>Alternative Phone No:</Form.Label>
                       <Form.Control
                         id='alternate_phone'
+                        data-testid='alternate_phone'
                         type='text'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone', {
@@ -198,24 +206,25 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
-                      <Form.Control id='city' type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Label htmlFor='city'>City</Form.Label>
+                      <Form.Control id='city' data-testid='city' type='text' placeholder='Enter your city' {...register('city')} />
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
-                      <Form.Control id='state' type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Label htmlFor='state'>State</Form.Label>
+                      <Form.Control id='state' data-testid='state' type='text' placeholder='Enter your state' {...register('state')} />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
+                      <Form.Label htmlFor='country'>Country</Form.Label>
                       <Form.Control
                         id='country'
+                        data-testid='country'
                         type='text'
                         placeholder='Enter your country'
                         {...register('country')}
@@ -224,9 +233,10 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
                       <Form.Control
                         id='pincode'
+                        data-testid='pincode'
                         type='text'
                         placeholder='Enter your pincode'
                         {...register('pincode')}

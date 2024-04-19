@@ -1,8 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, act } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import Admin from 'src/pages/admin';
+import UpdateAdmin from '@components/admin/update-admin'
+import AddAdmin from '@components/admin/add-admin'
 
 jest.mock('axios');
 
@@ -88,18 +90,20 @@ describe('Admin Component', () => {
     })
   })
 
-  // test('clicking Edit button to see edit model', async () => {
-  //   const edit = screen.getByTestId('edit-admin')
-  //   expect(edit).toBeInTheDocument()
-  //   fireEvent.click(edit)
+  test('clicking Edit button opens edit modal', async () => {
+    const edit = screen.getByTestId('edit-admin')
+    expect(edit).toBeInTheDocument()
+    fireEvent.click(edit)
 
-  //   expect(screen.getByTestId('Save_changes')).toBeInTheDocument()
-  // })
-
-  // test('clicking View button to see view model', async () => {
-  //   const view = screen.getByTestId('view-admin')
-  //   expect(view).toBeInTheDocument()
-  //   fireEvent.click(view)
+    await waitFor(() => {
+      expect(screen.getByTestId('edit-admin-modal')).toBeInTheDocument()
+      expect(screen.getByText('Edit Admin')).toBeInTheDocument()
+    })
+  })
+  test('clicking View button to see view model', async () => {
+    const view = screen.getByTestId('view-admin')
+    expect(view).toBeInTheDocument()
+    fireEvent.click(view)
 
   //   expect(screen.getByText('View Admin')).toBeInTheDocument()
   // })
@@ -158,6 +162,174 @@ elements.forEach(element => {
       expect(screen.getByText('Error deleting Admin')).toBeInTheDocument()
     })
   })
-
-  
 });
+
+describe('Edit Admin Component', () => {
+  const admin = {
+    first_name: 'Jhon',
+    last_name:'deo',
+    email:'jhon@gmail.com',
+    phone:9087654321,
+    alternate_phone:7689043210,
+    country:'USA',
+    state: 'California',
+    city: 'Los Angeles',
+    pincode: '900260',
+    status:true,
+  };
+
+  test('renders admin details with correct values', () => {
+    const { getByLabelText,getByTestId } =  render(<UpdateAdmin admin={admin} />);
+  
+    expect(getByLabelText('First name')).toHaveValue(admin.first_name);
+    expect(getByLabelText('Last name')).toHaveValue(admin.last_name);
+    expect(getByLabelText('Email address')).toHaveValue(admin.email);
+    expect(getByLabelText('Phone number')).toHaveValue(admin.phone.toString());
+    expect(getByLabelText('Alternative Phone No:')).toHaveValue(admin.alternate_phone.toString());
+    expect(getByLabelText('Country')).toHaveValue(admin.country);
+    expect(getByLabelText('State')).toHaveValue(admin.state);
+    expect(getByLabelText('City')).toHaveValue(admin.city);
+    expect(getByLabelText('Pincode')).toHaveValue(admin.pincode);
+    expect(getByTestId('active')).toBeChecked()
+    });
+
+    test('Update Admin With Empty Fields to Get Validation Error', async () => {
+      const onUpdate = jest.fn();
+      const handleEditButton = jest.fn();
+      render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handleEditButton={handleEditButton} />);
+    
+      const first_name = screen.getByTestId('first_name');
+      const state = screen.getByTestId('state');
+      const city = screen.getByTestId('city');
+      const last_name = screen.getByTestId('last_name');
+      const email = screen.getByTestId('email');
+      const phone = screen.getByTestId('phone');
+      const country = screen.getByTestId('country');
+      const alternate_phone = screen.getByTestId('alternate_phone');
+    
+      fireEvent.change(first_name, { target: { value: '' } });
+      fireEvent.change(state, { target: { value: '' } });
+      fireEvent.change(city, { target: { value: '' } });
+      fireEvent.change(pincode, { target: { value: '' } });
+      fireEvent.change(last_name, { target: { value: '' } });
+      fireEvent.change(email, { target: { value: '' } });
+      fireEvent.change(phone, { target: { value: '' } });
+      fireEvent.change(alternate_phone, { target: { value: '' } });
+      fireEvent.change(country, { target: { value: '' } });
+      
+      const saveButton = screen.getByTestId('save-changes');
+      act(() => {
+        fireEvent.click(saveButton);
+      });
+    
+      await waitFor(() => {
+        expect(screen.getByText('First name is required')).toBeInTheDocument();
+        expect(screen.getByText('State is required')).toBeInTheDocument();
+        expect(screen.getByText('City is required')).toBeInTheDocument();
+        expect(screen.getByText('Last name is required')).toBeInTheDocument();
+        expect(screen.getByText('Email is required')).toBeInTheDocument();
+        expect(screen.getByText('phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+        expect(screen.getByText('alternate_phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+        expect(screen.getByText('Country is required')).toBeInTheDocument();
+      });
+    });
+
+    test('successfully updates admin upon form submission', async () => {
+      const mockResponse = { status: 201 }
+      axios.patch = jest.fn().mockResolvedValue(mockResponse)
+      const onUpdate = jest.fn()
+      const handelEditbutton = jest.fn()
+      render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    
+      const saveButton = screen.getByLabelText('save')
+    
+      act(() => {
+        fireEvent.click(saveButton)
+      })
+
+      await waitFor(() => {
+        expect(onUpdate).toHaveBeenCalled()
+        expect(handelEditbutton).toHaveBeenCalled()
+        expect(screen.getByText('Admin updated successfully')).toBeInTheDocument()
+      })
+    })
+
+    test('handles error when updating Admin', async () => {
+      const mockError = new Error('Update request failed')
+      axios.patch = jest.fn().mockRejectedValue(mockError)
+      const onUpdate = jest.fn()
+      const handelEditbutton = jest.fn()
+    
+      render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    
+      const saveButton = screen.getByLabelText('save')
+      fireEvent.click(saveButton)
+    
+      await waitFor(() => {
+        expect(onUpdate).not.toHaveBeenCalled()
+        expect(handelEditbutton).not.toHaveBeenCalled()
+        expect(screen.getByText('Error updating admin')).toBeInTheDocument()
+      })
+    })
+})
+
+describe('Admin Add Component', () => {
+  const admin = {
+    first_name: 'Jhon',
+    last_name:'deo',
+    email:'jhon@gmail.com',
+    password:'Jhon@123',
+    phone:9087654321,
+    alternate_phone:7689043210,
+    country:'USA',
+    state: 'California',
+    city: 'Los Angeles',
+    pincode: '900260',
+    role_u_id:'owner',
+  };
+
+  test('Add New Admin', async () => {
+    const mockResponse = { data: { statusCode: 201 } }
+    axios.post = jest.fn().mockResolvedValue(mockResponse)
+    const onUpdate = jest.fn()
+    const onClose = jest.fn()
+
+    const { getByLabelText } = render(<AddAdmin onUpdate={onUpdate} onClose={onClose}  />)
+
+    const first_name = getByLabelText('First name')
+    const last_name = getByLabelText('Last name')
+    const email = getByLabelText('Email address')
+    const password = getByLabelText('Password')
+    const phone = getByLabelText('Phone number')
+    const alternate_phone = getByLabelText('Alternative Phone No:')
+    const city = getByLabelText('City')
+    const state = getByLabelText('State')
+    const country = getByLabelText('Country')
+    const pincode = getByLabelText('Pincode')
+    const role_u_id = getByLabelText('Role')
+
+    fireEvent.change(first_name, { target: { value: admin.first_name } })
+    fireEvent.change(last_name, { target: { value: admin.last_name } })
+    fireEvent.change(email, { target: { value: admin.email } })
+    fireEvent.change(password, { target: { value: admin.password } })
+    fireEvent.change(role_u_id, { target: { value: admin.role_u_id } })
+    fireEvent.change(phone, { target: { value: admin.phone } })
+    fireEvent.change(alternate_phone, { target: { value: admin.alternate_phone } })
+    fireEvent.change(city, { target: { value: admin.city } })
+    fireEvent.change(state, { target: { value: admin.state } })
+    fireEvent.change(country, { target: { value: admin.country } })
+    fireEvent.change(pincode, { target: { value: admin.pincode } })
+
+    const saveButton = screen.getByTestId('add-admin-button')
+
+    act(() => {
+      fireEvent.click(saveButton)
+    })
+
+    await waitFor(() => {
+      expect(onUpdate).toHaveBeenCalled()
+      expect(onClose).toHaveBeenCalled()
+      expect(screen.getByText('Admin added successfully')).toBeInTheDocument()
+    })
+})
+})

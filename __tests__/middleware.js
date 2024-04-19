@@ -1,6 +1,7 @@
 import { middleware } from 'src/middleware';
 import { NextResponse } from 'next/server';
-import { parseCookies } from 'nookies';
+import { cookies } from 'next/headers'; // Updated import
+import { waitFor } from '@testing-library/react';
 
 // Mock NextResponse functions
 jest.mock('next/server', () => ({
@@ -11,9 +12,9 @@ jest.mock('next/server', () => ({
   },
 }));
 
-// Mock nookies functions
-jest.mock('nookies', () => ({
-  parseCookies: jest.fn(),
+// Mock cookies function
+jest.mock('next/headers', () => ({
+  cookies: jest.fn(),
 }));
 
 describe('Middleware Test Suite', () => {
@@ -21,35 +22,43 @@ describe('Middleware Test Suite', () => {
     jest.clearAllMocks();
   });
 
-  test('Handles login route properly', () => {
-    const req = { url: '/login', cookies: {} };
-    parseCookies.mockReturnValueOnce({});
-    middleware(req);
-    expect(NextResponse.error).not.toHaveBeenCalled();
-  });
-
-  test('Handles request with token properly', () => {
-    const req = { url: '/some-route', cookies: { token: 'some_token' } };
-    parseCookies.mockReturnValueOnce({ token: 'some_token' });
+  test('Handles login route properly without token', () => {
+    const req = { url: '/login' };
+    cookies.mockReturnValueOnce({ get: jest.fn().mockReturnValueOnce(null) }); // Mock no token
     middleware(req);
     expect(NextResponse.next).toHaveBeenCalledTimes(1);
     expect(NextResponse.error).not.toHaveBeenCalled();
+    expect(NextResponse.redirect).not.toHaveBeenCalled();
   });
 
-  test('Handles request without token properly', () => {
-    const req = { url: '/some-route', cookies:{} };
-    parseCookies.mockReturnValueOnce({});
+
+  test('Handles route with token properly', () => {
+    const req = { url: '/some-route' };
+    cookies.mockReturnValueOnce({ get: jest.fn().mockReturnValueOnce('some_token') }); // Mock token
     middleware(req);
+    expect(NextResponse.next).toHaveBeenCalledTimes(1);
+    expect(NextResponse.error).not.toHaveBeenCalled();
+    expect(NextResponse.redirect).not.toHaveBeenCalled();
   });
 
+
+  test('Handles route without token properly', () => {
+    const req = { url: '/some-route' };
+    cookies.mockReturnValueOnce({ get: jest.fn().mockReturnValueOnce(null) }); 
+    middleware(req);
+    expect(NextResponse.error).not.toHaveBeenCalled();
+    expect(NextResponse.redirect).not.toHaveBeenCalled();
+  });
 
   test('Handles error in middleware properly', () => {
-    const req = { url: '/some-route', cookies: { token: 'some_token' } };
-    parseCookies.mockImplementation(() => {
+    const req = { url: '/some-route' };
+    cookies.mockImplementation(() => {
       throw new Error('Parsing error');
     });
     middleware(req);
     expect(NextResponse.next).not.toHaveBeenCalled();
     expect(NextResponse.error).toHaveBeenCalledTimes(1);
+    expect(NextResponse.redirect).not.toHaveBeenCalled();
   });
 });
+
