@@ -407,105 +407,50 @@ describe('Property Add Component', () => {
     });
 
     test('Add New Property With Empty Fields to get Validation Error', async () => {
-      const mockResponse = { data: { statusCode: 201 } }
-      axios.post = jest.fn().mockResolvedValue(mockResponse)
-      const onUpdate = jest.fn()
-      const handelAddbutton = jest.fn()
-  
-      const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
-
-      const name = getByLabelText('Name');
-      const address = getByLabelText('Address');
-      const available_from = getByLabelText('Available From');
-      const bhk = getByLabelText('BHK');
-      const city = getByLabelText('City');
-      const country = getByLabelText('Country');
-      const description = getByLabelText('Description');
-      const district = getByLabelText('District');
-      const location = getByLabelText('Location');
-      const landmark = getByLabelText('Landmark');
-      const latitude = getByLabelText('Latitude');
-      const longitude = getByLabelText('Longitude');
-      const no_of_balconies = getByLabelText('No. of Balconies');
-      const no_of_bathrooms = getByLabelText('No. of Bathrooms');
-      const no_of_bedrooms = getByLabelText('No. of Bedrooms');
-      const no_of_kitchen = getByLabelText('No. of Kitchen');
-      const no_of_rooms = getByLabelText('No. of Rooms');
-      const pin_code = getByLabelText('Pincode');
-      const property_age = getByLabelText('Property Age');
-      const property_area = getByLabelText('Property Area');
-      const property_number = getByLabelText('Property Number');
-      const property_type = getByLabelText('Property Type');
-      const rent = getByLabelText('Rent');
-      const rent_type = getByLabelText('Rent-Type');
-      const state = getByLabelText('State');
-      const street = getByLabelText('Street');
-      const ready_to_move = getByLabelText('Ready to Move');
-
-      fireEvent.change(name, { target: { value: '' } });
-      fireEvent.change(address, { target: { value: '' } });
-      fireEvent.change(available_from, { target: { value: '' } });
-      fireEvent.change(bhk, { target: { value: ''} });
-      fireEvent.change(city, { target: {value: '' } });
-      fireEvent.change(country, { target: { value: '' } });
-      fireEvent.change(description, { target: { value: ''} });
-      fireEvent.change(district, { target: { value: '' } });
-      fireEvent.change(location, { target: { value:''} });
-      fireEvent.change(landmark, { target: { value: ''} });
-      fireEvent.change(latitude, { target: { value: ''} });
-      fireEvent.change(longitude, { target: { value: '' } });
-      fireEvent.change(no_of_balconies, { target: { value: '' } });
-      fireEvent.change(no_of_bathrooms, { target: { value: ''} });
-      fireEvent.change(no_of_bedrooms, { target: { value: '' } });
-      fireEvent.change(no_of_kitchen, { target: { value: ''} });
-      fireEvent.change(no_of_rooms, { target: { value: '' } });
-      fireEvent.change(pin_code, { target: {value: '' } });
-      fireEvent.change(property_age, { target: { value: '' } });
-      fireEvent.change(property_area, { target: { value: ''} });
-      fireEvent.change(property_number, { target: { value: '' } });
-      fireEvent.change(property_type, { target: { value:'' } });
-      fireEvent.change(rent, { target: { value:  ''} });
-      fireEvent.change(rent_type, { target: { value:  '' } });
-      fireEvent.change(state, { target: { value: '' } });
-      fireEvent.change(street, { target: { value: '' } });
-      fireEvent.change(ready_to_move, { target: { value: '' } });
-
-
-      const saveButton = screen.getByTestId('add-property-button')
-
-        act(() => {
-          fireEvent.click(saveButton)
-        })
-
-        await waitFor(() => {
-          expect(screen.getByText('Name is required')).toBeInTheDocument();
-          expect(screen.getByText(/rent must be a `number` type, but the final value was: `NaN`/)).toBeInTheDocument();
-          expect(screen.getByText('Address is required')).toBeInTheDocument();
-          expect(screen.getByText('Landmark is required')).toBeInTheDocument();
-          expect(screen.getByText('State is required')).toBeInTheDocument();
-          expect(screen.getByText('City is required')).toBeInTheDocument();
-          expect(screen.getByText('BHK is required')).toBeInTheDocument();
-          expect(screen.getByText('Country is required')).toBeInTheDocument();
-          expect(screen.getByText('Description is required')).toBeInTheDocument();
-          expect(screen.getByText('District is required')).toBeInTheDocument();
-          expect(screen.getByText('Latitude is required')).toBeInTheDocument();
-          expect(screen.getByText('Longitude is required')).toBeInTheDocument();
-          expect(screen.getByText('Location is required')).toBeInTheDocument();
-          expect(screen.getByText('no_of_balconies must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
-          expect(screen.getByText('no_of_bathrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
-          expect(screen.getByText('no_of_kitchen must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
-          expect(screen.getByText('no_of_bedrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
-          expect(screen.getByText('no_of_rooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
-          expect(screen.getByText('property_age must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
-          expect(screen.getByText('Property area is required')).toBeInTheDocument();
-          expect(screen.getByText('Property number is required')).toBeInTheDocument();
-          expect(screen.getByText('Property type is required')).toBeInTheDocument();
-          expect(screen.getByText('State is required')).toBeInTheDocument();
-          expect(screen.getByText('Street is required')).toBeInTheDocument();
-          expect(screen.getByText('District is required')).toBeInTheDocument();
-          expect(screen.getByText('Rent type is required')).toBeInTheDocument();
-          expect(screen.getByText('available_from must be a `date` type, but the final value was: `Invalid Date` (cast from the value `""`).')).toBeInTheDocument();
-      })
+      const mockResponse = { data: { statusCode: 201 } };
+      axios.post = jest.fn().mockResolvedValue(mockResponse);
+    
+      const onUpdate = jest.fn();
+      const handleAddButton = jest.fn();
+    
+      render(<AddProperty onUpdate={onUpdate} handleAddButton={handleAddButton} />);
+    
+      const saveButton = screen.getByTestId('add-property-button');
+      fireEvent.click(saveButton);
+    
+      await waitFor(() => {
+          const expectedErrors = [
+              'Description is required',
+              'Longitude is required',
+              'Latitude is required',
+              'Property area is required',
+              'Property number is required',
+              'Property type is required',
+              'BHK is required',
+              'Name is required',
+              'Address is required',
+              'Landmark is required',
+              'Location is required',
+              'Street is required',
+              'Country is required',
+              'City is required',
+              'State is required',
+              'Rent type is required',
+              'rent must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'available_from must be a `date` type, but the final value was: `Invalid Date` (cast from the value `""`).',
+              'pin_code must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'no_of_bathrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'no_of_balconies must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'no_of_rooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'no_of_kitchen must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'no_of_bedrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+              'property_age must be a `number` type, but the final value was: `NaN` (cast from the value `""`).',
+          ];
+    
+          expectedErrors.forEach(error => {
+              expect(screen.getByText(error)).toBeInTheDocument();
+          });
+      });
     });
 
     test('Add New Property', async () => {
@@ -586,4 +531,107 @@ describe('Property Add Component', () => {
     })
 
 });  
+
+// test('Add New Property With Empty Fields to get Validation Error', async () => {
+    //   const mockResponse = { data: { statusCode: 201 } }
+    //   axios.post = jest.fn().mockResolvedValue(mockResponse)
+    //   const onUpdate = jest.fn()
+    //   const handelAddbutton = jest.fn()
+  
+    //   const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+
+    //   const name = getByLabelText('Name');
+    //   const address = getByLabelText('Address');
+    //   const available_from = getByLabelText('Available From');
+    //   const bhk = getByLabelText('BHK');
+    //   const city = getByLabelText('City');
+    //   const country = getByLabelText('Country');
+    //   const description = getByLabelText('Description');
+    //   const district = getByLabelText('District');
+    //   const location = getByLabelText('Location');
+    //   const landmark = getByLabelText('Landmark');
+    //   const latitude = getByLabelText('Latitude');
+    //   const longitude = getByLabelText('Longitude');
+    //   const no_of_balconies = getByLabelText('No. of Balconies');
+    //   const no_of_bathrooms = getByLabelText('No. of Bathrooms');
+    //   const no_of_bedrooms = getByLabelText('No. of Bedrooms');
+    //   const no_of_kitchen = getByLabelText('No. of Kitchen');
+    //   const no_of_rooms = getByLabelText('No. of Rooms');
+    //   const pin_code = getByLabelText('Pincode');
+    //   const property_age = getByLabelText('Property Age');
+    //   const property_area = getByLabelText('Property Area');
+    //   const property_number = getByLabelText('Property Number');
+    //   const property_type = getByLabelText('Property Type');
+    //   const rent = getByLabelText('Rent');
+    //   const rent_type = getByLabelText('Rent-Type');
+    //   const state = getByLabelText('State');
+    //   const street = getByLabelText('Street');
+    //   const ready_to_move = getByLabelText('Ready to Move');
+
+    //   fireEvent.change(name, { target: { value: '' } });
+    //   fireEvent.change(address, { target: { value: '' } });
+    //   fireEvent.change(available_from, { target: { value: '' } });
+    //   fireEvent.change(bhk, { target: { value: ''} });
+    //   fireEvent.change(city, { target: {value: '' } });
+    //   fireEvent.change(country, { target: { value: '' } });
+    //   fireEvent.change(description, { target: { value: ''} });
+    //   fireEvent.change(district, { target: { value: '' } });
+    //   fireEvent.change(location, { target: { value:''} });
+    //   fireEvent.change(landmark, { target: { value: ''} });
+    //   fireEvent.change(latitude, { target: { value: ''} });
+    //   fireEvent.change(longitude, { target: { value: '' } });
+    //   fireEvent.change(no_of_balconies, { target: { value: '' } });
+    //   fireEvent.change(no_of_bathrooms, { target: { value: ''} });
+    //   fireEvent.change(no_of_bedrooms, { target: { value: '' } });
+    //   fireEvent.change(no_of_kitchen, { target: { value: ''} });
+    //   fireEvent.change(no_of_rooms, { target: { value: '' } });
+    //   fireEvent.change(pin_code, { target: {value: '' } });
+    //   fireEvent.change(property_age, { target: { value: '' } });
+    //   fireEvent.change(property_area, { target: { value: ''} });
+    //   fireEvent.change(property_number, { target: { value: '' } });
+    //   fireEvent.change(property_type, { target: { value:'' } });
+    //   fireEvent.change(rent, { target: { value:  ''} });
+    //   fireEvent.change(rent_type, { target: { value:  '' } });
+    //   fireEvent.change(state, { target: { value: '' } });
+    //   fireEvent.change(street, { target: { value: '' } });
+    //   fireEvent.change(ready_to_move, { target: { value: '' } });
+
+
+    //   const saveButton = screen.getByTestId('add-property-button')
+
+    //     act(() => {
+    //       fireEvent.click(saveButton)
+    //     })
+
+    //     await waitFor(() => {
+    //       expect(screen.getByText('Name is required')).toBeInTheDocument();
+    //       expect(screen.getByText(/rent must be a `number` type, but the final value was: `NaN`/)).toBeInTheDocument();
+    //       expect(screen.getByText('Address is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Landmark is required')).toBeInTheDocument();
+    //       expect(screen.getByText('State is required')).toBeInTheDocument();
+    //       expect(screen.getByText('City is required')).toBeInTheDocument();
+    //       expect(screen.getByText('BHK is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Country is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Description is required')).toBeInTheDocument();
+    //       expect(screen.getByText('District is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Latitude is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Longitude is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Location is required')).toBeInTheDocument();
+    //       expect(screen.getByText('no_of_balconies must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+    //       expect(screen.getByText('no_of_bathrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+    //       expect(screen.getByText('no_of_kitchen must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+    //       expect(screen.getByText('no_of_bedrooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+    //       expect(screen.getByText('no_of_rooms must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+    //       expect(screen.getByText('property_age must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')).toBeInTheDocument();
+    //       expect(screen.getByText('Property area is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Property number is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Property type is required')).toBeInTheDocument();
+    //       expect(screen.getByText('State is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Street is required')).toBeInTheDocument();
+    //       expect(screen.getByText('District is required')).toBeInTheDocument();
+    //       expect(screen.getByText('Rent type is required')).toBeInTheDocument();
+    //       expect(screen.getByText('available_from must be a `date` type, but the final value was: `Invalid Date` (cast from the value `""`).')).toBeInTheDocument();
+    //   })
+    // });
+
    
