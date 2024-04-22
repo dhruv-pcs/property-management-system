@@ -71,3 +71,18 @@ body{
 .pointer-events-none {
   pointer-events: none;
 }
+
+input[type="checkbox"] { 
+  transform: scale(1.5); 
+  margin-right: 20px;
+  accent-color: #141b2d;
+  border-color: #141b2d;
+} 
+
+input[type="checkbox"]:checked {
+  transform: scale(1.5); 
+  background-color: #141b2d;
+  border-color: #141b2d;
+  margin-right: 20px;
+
+}
