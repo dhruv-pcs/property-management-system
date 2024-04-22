@@ -42,6 +42,7 @@ const Topbar = () => {
       })
       if (response.data.statusCode === 200) {
         router.push('/login')
+
         // localStorage.clear()
         const cookies = document.cookie.split(';')
 

@@ -34,7 +34,7 @@ const schema = Yup.object().shape({
   role_u_id: Yup.string().required('Role is required')
 })
 
-const AddAdmin = ({  onUpdate, handelAddbutton }) => {
+const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [showPassword, setShowPassword] = useState(false)

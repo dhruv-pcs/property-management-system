@@ -18,19 +18,17 @@ import { useForm } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
 
 export const handlePermissionChange = (permissions, setPermissions, permission) => {
-  const { module_u_id: moduleId, permissionType, value } = permission;
-
- 
+  const { module_u_id: moduleId, permissionType, value } = permission
 
   if (permissionType === 'selectAll') {
-    const updatedPermissions = { ...permissions };
+    const updatedPermissions = { ...permissions }
     Object.keys(updatedPermissions[moduleId]).forEach(key => {
       if (key !== 'module_u_id' && key !== 'selectAll') {
-        updatedPermissions[moduleId][key] = value;
+        updatedPermissions[moduleId][key] = value
       }
-    });
-    updatedPermissions[moduleId].selectAll = value;
-    setPermissions(updatedPermissions);
+    })
+    updatedPermissions[moduleId].selectAll = value
+    setPermissions(updatedPermissions)
   } else {
     setPermissions(prevPermissions => ({
       ...prevPermissions,
@@ -38,10 +36,10 @@ export const handlePermissionChange = (permissions, setPermissions, permission) 
         ...prevPermissions[moduleId],
         [permissionType]: value
       }
-    }));
+    }))
 
     if (permissionType === 'view') {
-      const existingPermissions = permissions[moduleId];
+      const existingPermissions = permissions[moduleId]
 
       const updatedPermissions = {
         ...permissions,
@@ -53,12 +51,11 @@ export const handlePermissionChange = (permissions, setPermissions, permission) 
           remove: false,
           notification: false
         }
-      };
-      setPermissions(updatedPermissions);
+      }
+      setPermissions(updatedPermissions)
     }
-    
   }
-};
+}
 
 export const handleGlobalSelectAllChange = (value, permissions, setPermissions, moduleData) => {
   const updatedPermissions = {}
@@ -75,7 +72,6 @@ export const handleGlobalSelectAllChange = (value, permissions, setPermissions, 
   })
   setPermissions(updatedPermissions)
 }
-
 
 const EditRole = ({ roleData, onUpdate, onClose }) => {
   const [moduleData, setModuleData] = useState([])
@@ -95,42 +91,35 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
 
   useEffect(() => {
     const fetchModuleData = async () => {
-      
-        
-        const roleResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        setRoleName(roleResponse.data.data.roleName)
-        setValue('roleName', roleResponse.data.data.roleName)
-        const rolePermissions = roleResponse.data.data.permissions
+      const roleResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      setRoleName(roleResponse.data.data.roleName)
+      setValue('roleName', roleResponse.data.data.roleName)
+      const rolePermissions = roleResponse.data.data.permissions
 
-        const initialPermissions = {}
-        const moduleData = []
-        rolePermissions.forEach(permission => {
-          const moduleId = permission.u_id
-          if (!initialPermissions[moduleId]) {
-            initialPermissions[moduleId] = {
-              selectAll:
-                permission.view && permission.add && permission.update && permission.remove && permission.notification,
-              view: permission.view,
-              add: permission.add,
-              update: permission.update,
-              remove: permission.remove,
-              notification: permission.notification
-            }
-            moduleData.push(permission)
+      const initialPermissions = {}
+      const moduleData = []
+      rolePermissions.forEach(permission => {
+        const moduleId = permission.u_id
+        if (!initialPermissions[moduleId]) {
+          initialPermissions[moduleId] = {
+            selectAll:
+              permission.view && permission.add && permission.update && permission.remove && permission.notification,
+            view: permission.view,
+            add: permission.add,
+            update: permission.update,
+            remove: permission.remove,
+            notification: permission.notification
           }
-        })
-        setPermissions(initialPermissions)
-        setModuleData(moduleData)
-     
+          moduleData.push(permission)
+        }
+      })
+      setPermissions(initialPermissions)
+      setModuleData(moduleData)
     }
     fetchModuleData()
-  }, [roleData])
-
-
-
- 
+  }, [roleData,setValue])
 
   const onSubmit = async () => {
     try {
@@ -154,7 +143,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
       }
 
       if (roleName.trim() === '') {
-       
         return
       }
 
@@ -187,9 +175,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
               defaultValue={roleName}
               onChange={e => setRoleName(e.target.value)}
             />
-           {!formSubmitted && errors.roleName && (
-    <span className='text-danger mt-3'>{errors.roleName.message}</span>
-  )}
+            {!formSubmitted && errors.roleName && <span className='text-danger mt-3'>{errors.roleName.message}</span>}
           </Form.Group>
           <div className='mt-2'>
             <input
@@ -198,7 +184,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
               type='checkbox'
               checked={Object.values(permissions).every(module => module.selectAll)}
               style={{ marginLeft: '5px' }}
-              onChange={e => handleGlobalSelectAllChange(e.target.checked, permissions, setPermissions ,moduleData)}
+              onChange={e => handleGlobalSelectAllChange(e.target.checked, permissions, setPermissions, moduleData)}
               data-testid='select-all-checkbox'
             />
             <label htmlFor='select-all' className='form-check-label'>
@@ -232,7 +218,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.selectAll || false}
                         onChange={e =>
-                          handlePermissionChange(permissions, setPermissions,{
+                          handlePermissionChange(permissions, setPermissions, {
                             module_u_id: item.u_id,
                             permissionType: 'selectAll',
                             value: e.target.checked
@@ -247,7 +233,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.view || false}
                         onChange={e =>
-                          handlePermissionChange(permissions, setPermissions,{
+                          handlePermissionChange(permissions, setPermissions, {
                             module_u_id: item.u_id,
                             permissionType: 'view',
                             value: e.target.checked
@@ -262,7 +248,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.add || false}
                         onChange={e =>
-                          handlePermissionChange(permissions, setPermissions,{
+                          handlePermissionChange(permissions, setPermissions, {
                             module_u_id: item.u_id,
                             permissionType: 'add',
                             value: e.target.checked
@@ -278,7 +264,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.update || false}
                         onChange={e =>
-                          handlePermissionChange(permissions, setPermissions,{
+                          handlePermissionChange(permissions, setPermissions, {
                             module_u_id: item.u_id,
                             permissionType: 'update',
                             value: e.target.checked
@@ -294,7 +280,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.remove || false}
                         onChange={e =>
-                          handlePermissionChange(permissions, setPermissions,{
+                          handlePermissionChange(permissions, setPermissions, {
                             module_u_id: item.u_id,
                             permissionType: 'remove',
                             value: e.target.checked
@@ -310,7 +296,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.notification || false}
                         onChange={e =>
-                          handlePermissionChange(permissions, setPermissions,{
+                          handlePermissionChange(permissions, setPermissions, {
                             module_u_id: item.u_id,
                             permissionType: 'notification',
                             value: e.target.checked
@@ -332,7 +318,7 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
             className='mt-4 w-100'
             color='primary'
             type='submit'
-            data-testid="save-permissions"
+            data-testid='save-permissions'
           >
             Save Permissions
           </Button>
@@ -342,6 +328,5 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     </>
   )
 }
-
 
 export default EditRole

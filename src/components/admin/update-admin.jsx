@@ -57,6 +57,7 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
       setValue('pincode', admin.pincode)
       setValue('state', admin.state)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
 
   const onSubmit = async data => {
