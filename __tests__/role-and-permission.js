@@ -1,9 +1,10 @@
 import React from 'react'
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import RoleAndPermission from 'src/pages/role-and-permission'
 import axios from 'axios'
 import AddRole from '@components/role/add-role'
+import MockAdapter from 'axios-mock-adapter'
 
 const mockPermissions = [
   {

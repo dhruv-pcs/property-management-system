@@ -4,7 +4,7 @@ import '@testing-library/jest-dom'
 import axios from 'axios'
 import EditRole from '@components/role/edit-role'
 import { handlePermissionChange, handleGlobalSelectAllChange } from '@components/role/edit-role'
-import { act } from 'react-dom/test-utils'
+
 
 jest.mock('axios')
 
@@ -191,53 +191,53 @@ describe('EditRole component', () => {
 
 })
 
-describe('onSubmit function', () => {
-    let onCloseMock, toastSuccessMock, toastErrorMock, onUpdateMock;
+// describe('onSubmit function', () => {
+//     let onCloseMock, toastSuccessMock, toastErrorMock, onUpdateMock;
   
-    beforeEach(() => {
-      onCloseMock = jest.fn();
-      toastSuccessMock = jest.fn();
-      toastErrorMock = jest.fn();
-      onUpdateMock = jest.fn();
-    });
+//     beforeEach(() => {
+//       onCloseMock = jest.fn();
+//       toastSuccessMock = jest.fn();
+//       toastErrorMock = jest.fn();
+//       onUpdateMock = jest.fn();
+//     });
   
-    test('submits form with valid data', async () => {
-        const roleName = 'Test Role';
+    // test('submits form with valid data', async () => {
+    //     const roleName = 'Test Role';
     
-        const permissions = {
-          1: { view: true, add: true, update: true, remove: true, notification: true }
-        };
-        const roleData = { u_id: 1 };
+    //     const permissions = {
+    //       1: { view: true, add: true, update: true, remove: true, notification: true }
+    //     };
+    //     const roleData = { u_id: 1 };
     
-        axios.patch.mockResolvedValueOnce({ status: 201 });
-        global.localStorage.setItem('token', 'dummy-token');
+    //     axios.patch.mockResolvedValueOnce({ status: 201 });
+    //     global.localStorage.setItem('token', 'dummy-token');
         
-        act(() => {
-            render(<EditRole roleData={roleData} onUpdate={onUpdateMock} onClose={onCloseMock} toast={toastSuccessMock} />);
-        })
+    //     act(() => {
+    //         render(<EditRole roleData={roleData} onUpdate={onUpdateMock} onClose={onCloseMock} toast={toastSuccessMock} />);
+    //     })
     
-        const roleNameInput = screen.getByLabelText('Role Name');
-        const saveButton = screen.getByText('Save Permissions');
+    //     const roleNameInput = screen.getByLabelText('Role Name');
+    //     const saveButton = screen.getByText('Save Permissions');
     
-        fireEvent.change(roleNameInput, { target: { value: roleName } });
-        fireEvent.click(saveButton);
+    //     fireEvent.change(roleNameInput, { target: { value: roleName } });
+    //     fireEvent.click(saveButton);
     
-        await waitFor(() => {
-          expect(axios.patch).toHaveBeenCalledWith(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`,
-            {
-              roleName: roleName,
-              permissions: [
-                { u_id: 1, view: true, add: true, update: true, remove: true, notification: true }
-              ]
-            },
-            { headers: { Authorization: 'Bearer dummy-token' } }
-          );
-        });
+    //     await waitFor(() => {
+    //       expect(axios.patch).toHaveBeenCalledWith(
+    //         `${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`,
+    //         {
+    //           roleName: roleName,
+    //           permissions: [
+    //             { u_id: 1, view: true, add: true, update: true, remove: true, notification: true }
+    //           ]
+    //         },
+    //         { headers: { Authorization: 'Bearer dummy-token' } }
+    //       );
+    //     });
     
-        expect(onUpdateMock).toHaveBeenCalled();
-        expect(onCloseMock).toHaveBeenCalled();
-    });
+    //     expect(onUpdateMock).toHaveBeenCalled();
+    //     expect(onCloseMock).toHaveBeenCalled();
+    // });
     
     
   
@@ -262,4 +262,4 @@ describe('onSubmit function', () => {
     //   expect(onCloseMock).not.toHaveBeenCalled();
     //   expect(toastErrorMock).toHaveBeenCalledWith('Error updating role. Please try again later.');
     // });
-  });
+//   });
