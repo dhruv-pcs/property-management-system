@@ -43,18 +43,18 @@ const Topbar = () => {
       if (response.data.statusCode === 200) {
         router.push('/login')
         // localStorage.clear()
-        const cookies = document.cookie.split(';');
+        const cookies = document.cookie.split(';')
 
-  // Iterate over each cookie
-  cookies.forEach(cookie => {
-    // Split cookie into name and value
-    const cookieParts = cookie.split('=');
-    const cookieName = cookieParts[0].trim();
+        // Iterate over each cookie
+        cookies.forEach(cookie => {
+          // Split cookie into name and value
+          const cookieParts = cookie.split('=')
+          const cookieName = cookieParts[0].trim()
 
-    // Set the cookie expiration date to a past date
-    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  });
-        console.log(document.cookie);
+          // Set the cookie expiration date to a past date
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+        })
+        console.log(document.cookie)
       }
     } catch (error) {
       toast.error('Error Logging Out')

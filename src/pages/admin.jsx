@@ -23,7 +23,7 @@ const Admin = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  
+
   const userPermissions = JSON.parse(localStorage.getItem('user'))
 
   const admin_permission = userPermissions
@@ -308,7 +308,7 @@ const Admin = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <AddAdmin onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal}  />
+          <AddAdmin onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal} />
         </DialogContent>
       </Dialog>
       <Dialog
@@ -374,11 +374,7 @@ const Admin = () => {
           className=''
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100], maxHeight: '500px' }}
         >
-          <UpdateAdmin
-            handelEditbutton={handelEditbutton}
-            admin={selectedRow}
-            onUpdate={handleAdminDataUpdate}
-          />
+          <UpdateAdmin handelEditbutton={handelEditbutton} admin={selectedRow} onUpdate={handleAdminDataUpdate} />
         </DialogContent>
       </Dialog>
       <Dialog

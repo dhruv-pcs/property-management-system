@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor, screen, fireEvent } from '@testing-library/react'
+import { render, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import App from 'src/pages/_app'
 import Topbar from '@components/topbar/topbar'

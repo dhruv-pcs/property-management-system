@@ -207,14 +207,26 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='city'>City</Form.Label>
-                      <Form.Control id='city' data-testid='city' type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Control
+                        id='city'
+                        data-testid='city'
+                        type='text'
+                        placeholder='Enter your city'
+                        {...register('city')}
+                      />
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='state'>State</Form.Label>
-                      <Form.Control id='state' data-testid='state' type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Control
+                        id='state'
+                        data-testid='state'
+                        type='text'
+                        placeholder='Enter your state'
+                        {...register('state')}
+                      />
                     </Form.Group>
                   </Col>
                 </Row>

@@ -173,6 +173,7 @@ const AddRole = ({ onUpdate, onClose }) => {
           fullWidth
           margin='normal'
           required
+          
           error={formSubmitted && roleName.trim() === ''}
         />
         {formSubmitted && roleName.trim() === '' && (
