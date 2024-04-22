@@ -18,7 +18,7 @@ const Admin = () => {
   const colors = tokens(theme.palette.mode)
   const [adminData, setAdminData] = useState([])
   const [selectedRow, setSelectedRow] = useState(null)
-  const [showAddModal, setShowAddModal] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
@@ -59,6 +59,10 @@ const Admin = () => {
     }
   }
 
+  const handelAddbutton = () => {
+    setOpenAdd(!openAdd)
+  }
+
   const handleAdminDataUpdate = async () => {
     await fetchData()
   }
@@ -71,14 +75,6 @@ const Admin = () => {
   const handelEditbutton = row => {
     setOpenEdit(!openEdit)
     setSelectedRow(row)
-  }
-
-  const handleAddAdmin = () => {
-    setShowAddModal(true)
-  }
-
-  const handleCloseAddModal = () => {
-    setShowAddModal(false)
   }
 
   const handelDeletebutton = async row => {
@@ -283,7 +279,7 @@ const Admin = () => {
                 data-testid='add-admin'
                 type='button'
                 className='btn btn-primary'
-                onClick={handleAddAdmin}
+                onClick={handelAddbutton}
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
               >
                 ADD
@@ -292,7 +288,7 @@ const Admin = () => {
           }
         />
       </div>
-      <Dialog data-testid='add-admin-modal' open={showAddModal} onClose={handleCloseAddModal}>
+      <Dialog data-testid='add-admin-modal' open={openAdd} onClose={handelAddbutton}>
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
@@ -301,14 +297,14 @@ const Admin = () => {
           Add Admin
           <IconButton
             aria-label='close'
-            onClick={handleCloseAddModal}
+            onClick={handelAddbutton}
             sx={{ position: 'absolute', right: 16, top: 20, color: colors.grey[100] }}
           >
             <Close />
           </IconButton>
         </DialogTitle>
         <DialogContent dividers sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}>
-          <AddAdmin onUpdate={handleAdminDataUpdate} onClose={handleCloseAddModal}  />
+          <AddAdmin onUpdate={handleAdminDataUpdate} handelAddbutton={handelAddbutton}  />
         </DialogContent>
       </Dialog>
       <Dialog
