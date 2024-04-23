@@ -1,11 +1,7 @@
-import { createContext } from 'react'; 
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from '@testing-library/react';
 import { themeSettings, tokens, useMode } from '@theme/theme';
 
-export const ColorModeContext = createContext({
-  toggleColorMode: () => {} 
-});
 
 
 describe('themeSettings', () => {
@@ -21,12 +17,12 @@ describe('themeSettings', () => {
 });
 
 describe('tokens', () => {
-  it('returns correct color tokens for light mode', () => {
-    const lightTokens = tokens('light');
+  test('returns correct color tokens for light mode', () => {
+    tokens('light');
   });
 
-  it('returns correct color tokens for dark mode', () => {
-    const darkTokens = tokens('dark');
+  test('returns correct color tokens for dark mode', () => {
+     tokens('dark');
   });
 
 
@@ -34,7 +30,7 @@ describe('tokens', () => {
 });
 
 describe('useMode', () => {
-  it('toggles color mode correctly', () => {
+  test('toggles color mode correctly dark-light', () => {
     const { result } = renderHook(() => useMode());
 
     const [, { toggleColorMode }] = result.current;
@@ -48,14 +44,32 @@ describe('useMode', () => {
     expect(result.current[0].palette.mode).toBe('light');
   });
 
-  it('provides correct context value', () => {
+  test('toggles color mode correctly light-dark', () => {
+    const { result } = renderHook(() => useMode());
+
+    const [, { toggleColorMode }] = result.current;
+
+    expect(result.current[0].palette.mode).toBe('dark');
+
+    act(() => {
+        toggleColorMode();
+    });
+
+    expect(result.current[0].palette.mode).toBe('light');
+
+    act(() => {
+        toggleColorMode();
+    })
+
+    expect(result.current[0].palette.mode).toBe('dark');
+  });
+
+  test('provides correct context value', () => {
     const { result } = renderHook(() => useMode());
 
     const contextValue = result.current[1];
     expect(contextValue).toHaveProperty('toggleColorMode');
   });
 
-  it('creates ColorModeContext', () => {
-    expect(ColorModeContext).toBeDefined();
-  });
+ 
 });

@@ -12,30 +12,30 @@ import { useRouter } from 'next/router'
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
   const colors = tokens(theme.palette.mode)
-  const router = useRouter()
   const [isClient, setIsClient] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
   if (!isClient) {
-    return null // Return null if not yet on the client
+    return null
   }
 
-  const pathname = router.pathname
-  const isLoginPage = pathname === '/login'
-  const is404 = pathname === '/404'
+  // Check if the current route is the login page
+  const isBlankPage = router.pathname === '/login' || router.pathname === '/404';
 
-  if (isLoginPage || is404) {
-    return <Component {...pageProps} />
-  } else {
-    return (
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <ProSidebarProvider theme={theme}>
-            <CssBaseline />
-            <MyProSidebarProvider>
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+        {isBlankPage && <Component {...pageProps} />}
+        {!isBlankPage && (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ProSidebarProvider theme={theme}>
+          <MyProSidebarProvider>
+           
+          
               <div style={{ height: '100%', width: '100%' }}>
                 <Topbar />
                 <main
@@ -50,12 +50,13 @@ const App = ({ Component, pageProps }) => {
                 </main>
                 <Footer />
               </div>
-            </MyProSidebarProvider>
-          </ProSidebarProvider>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
-    )
-  }
+         
+          </MyProSidebarProvider>
+        </ProSidebarProvider>
+      </ThemeProvider>
+          )}
+    </ColorModeContext.Provider>
+  )
 }
 
 export default App

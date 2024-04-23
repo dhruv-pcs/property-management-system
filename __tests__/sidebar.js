@@ -1,7 +1,7 @@
 import React from 'react'
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import MyProSidebar from 'src/components/sidebar/sidebar'
-import { ProSidebarProvider} from 'react-pro-sidebar'
+import { ProSidebarProvider } from 'react-pro-sidebar'
 
 import { renderHook } from '@testing-library/react-hooks'
 import { MyProSidebarProvider, useSidebarContext } from 'src/components/sidebar/sidebar-context'
@@ -37,15 +37,23 @@ global.matchMedia = jest.fn().mockImplementation(query => {
   }
 })
 
+const useMockProSidebar = () => ({
+  collapseSidebar: jest.fn(),
+  toggleSidebar: jest.fn(),
+  broken: false
+})
+
+jest.mock('react-pro-sidebar', () => ({
+  ...jest.requireActual('react-pro-sidebar'),
+  useProSidebar: useMockProSidebar
+}))
+
 jest.mock('@components/sidebar/sidebarItem', () => ({
   __esModule: true,
   default: jest.fn(() => [{ title: 'Admin', to: '/', icon: 'mdi:home-outline', subject: 'Admin', path: '/' }])
 }))
 
 global.localStorage = mockLocalStorage
-
-
-
 
 describe('MyProSidebar component', () => {
   test('does not render items when localStorage data does not match condition', () => {
@@ -104,8 +112,33 @@ describe('MyProSidebar component', () => {
     expect(screen.getAllByTestId('Dashboard')).toHaveLength(1)
   })
 
-  
-  
+  test('collapses the sidebar when the collapse button is clicked', async () => {
+    render(
+      <ProSidebarProvider>
+        <MyProSidebar />
+      </ProSidebarProvider>
+    )
+
+    const collapseButton = screen.getByTestId('collapse-sidebar')
+
+    act(() => {
+      fireEvent.click(collapseButton)
+    })
+  })
+
+  test('collapses the sidebar when the collapse button is clicked and broken is false', async () => {
+    render(
+      <ProSidebarProvider>
+        <MyProSidebar />
+      </ProSidebarProvider>
+    )
+
+    const collapseButton = screen.getByTestId('collapse-sidebar-close')
+
+    act(() => {
+      fireEvent.click(collapseButton)
+    })
+  })
 })
 
 describe('useSidebarContext', () => {

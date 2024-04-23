@@ -13,13 +13,11 @@ describe('Admin', () => {
   it('should add a new Admin with default data', () => {
     cy.get('[data-testid="edit-admin"]').eq(0).click()
 
-    cy.contains('button', 'Edit').click()
-    cy.get('#city').clear()
-    cy.get('#city').type('Baroda')
     cy.get('#first_name').clear()
     cy.get('#first_name').type('Ayeshaa')
-
-    cy.get('#Save_changes').click()
+    cy.get('#city').clear()
+    cy.get('#city').type('Baroda')
+    cy.contains('button', 'Save changes').click()
 
     cy.wait(2000)
     cy.get('[data-testid="admin-list"]').should('exist')

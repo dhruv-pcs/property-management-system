@@ -7,6 +7,22 @@ import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+export const getRoleBackgroundColor = (role, colors) => {
+  const Role = role.toLowerCase()
+
+  if (Role === 'admin') {
+    return colors.greenAccent[600]
+  } else if (Role === 'super-admin') {
+    return colors.redAccent[600]
+  } else {
+    const min = parseInt('3da58a', 16)
+    const max = parseInt('4cceac', 16)
+    const randomValue = Math.floor(Math.random() * (max - min + 1) + min)
+
+    return '#' + randomValue.toString(16)
+  }
+}
+
 const Permission = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
@@ -21,26 +37,10 @@ const Permission = () => {
         setPermissionData(response.data.data.permissionData)
       } catch (error) {
         toast.error('Error Fetching Data')
-        console.error(error)
       }
     }
     fetchData()
   }, [])
-
-  const getRoleBackgroundColor = role => {
-    switch (role.toLowerCase()) {
-      case 'admin':
-        return colors.greenAccent[600]
-      case 'super-admin':
-        return colors.redAccent[600]
-      default:
-        const min = parseInt('3da58a', 16)
-        const max = parseInt('4cceac', 16)
-        const randomColor = '#' + Math.floor(Math.random() * (max - min + 1) + min).toString(16)
-
-        return randomColor
-    }
-  }
 
   const columns = [
     {
@@ -49,14 +49,13 @@ const Permission = () => {
     },
     {
       name: 'Assign to',
-      selector: row => row.role,
       cell: row => (
         <div className='d-flex gap-2'>
           {row.role.map((role, index) => (
             <div
               className='fw-bold  d-flex jstify-content-center align-items-center  px-2 py-1 rounded-pill text-capitalize'
               key={index}
-              style={{ backgroundColor: getRoleBackgroundColor(role) }}
+              style={{ backgroundColor: getRoleBackgroundColor(role, colors) }}
             >
               {role}
             </div>
