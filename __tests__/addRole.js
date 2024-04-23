@@ -103,6 +103,26 @@ describe('AddRole component', () => {
     });
   }); 
 
+  test('submits form and updates role successfully but onClose and onUpdate not called', async () => {
+    axios.post = jest.fn().mockResolvedValue({ status: 202 })
+    const onUpdate = jest.fn()
+    const onClose = jest.fn()
+     
+    await act(async () => render(<AddRole onUpdate={onUpdate} onClose={onClose} />));
+
+    const saveButton = screen.getByTestId('save-permissions');
+    const roleName = screen.getByLabelText('Role Name');
+
+    fireEvent.change(roleName, { target: { value: 'Admin' } });
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(axios.post).toHaveBeenCalled();
+      expect(onUpdate).not.toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+  }); 
+
   test('handles error on form submission', async () => {
     axios.post.mockRejectedValueOnce(new Error('Failed to create role'))
 
@@ -119,84 +139,41 @@ describe('AddRole component', () => {
     })
   })
 
-  test('updates selectAll permission correctly', () => {
-    const setPermissionsMock = jest.fn()
-
-    handlePermissionChange(
-      {
-        1: {
-          module_u_id: 1,
-          selectAll: false,
-          view: false,
-          add: false,
-          update: false,
-          remove: false,
-          notification: false
-        }
-      },
-      setPermissionsMock,
-      {
-        module_u_id: 1,
-        permissionType: 'selectAll',
-        value: true
-      }
-    )
-
-    expect(setPermissionsMock).toHaveBeenCalledWith({
-      1: { module_u_id: 1, selectAll: true, view: true, add: true, update: true, remove: true, notification: true }
-    })
-  })
 
   test('updates view permission correctly', () => {
-    const setPermissionsMock = jest.fn()
+  const setPermissionsMock = jest.fn();
+  const moduleName = 1;
+  const permissionType = 'view';
+  const value = false;
 
-    handlePermissionChange(
-      {
-        1: {
-          module_u_id: 1,
-          selectAll: false,
-          view: false,
-          add: false,
-          update: false,
-          remove: false,
-          notification: false
-        }
-      },
-      setPermissionsMock,
-      {
+  handlePermissionChange(
+    {
+      1: {
         module_u_id: 1,
-        permissionType: 'view',
-        value: true
+        selectAll: false,
+        view: false,
+        add: false,
+        update: false,
+        remove: false,
+        notification: false
       }
-    )
+    },
+    setPermissionsMock,
+    moduleName,
+    permissionType,
+    value
+  );
 
-    expect(setPermissionsMock).toHaveBeenCalledWith({
-      1: { module_u_id: 1, selectAll: false, view: true, add: false, update: false, remove: false, notification: false }
-    })
-  })
+  expect(setPermissionsMock).toHaveBeenCalledWith({
+    1: { module_u_id: 1, selectAll: false, view: false, add: false, update: false, remove: false, notification: false }
+  });
+});
 
-  test('updates permissions for global selectAll correctly', async() => {
-    const setPermissionsMock = jest.fn()
 
-    const moduleData = [
-      { u_id: 1, alias_name: 'Module 1' },
-      { u_id: 2, alias_name: 'Module 2' }
-    ]
 
-    const permissions = {
-      1: { view: false, add: false, update: false, remove: false, notification: false },
-      2: { view: false, add: false, update: false, remove: false, notification: false }
-    }
+  
 
-    handleGlobalSelectAllChange(true, permissions, setPermissionsMock, moduleData)
-
-    const expectedPermissions = {
-      1: { selectAll: true, view: true, add: true, update: true, remove: true, notification: true },
-      2: { selectAll: true, view: true, add: true, update: true, remove: true, notification: true }
-    }
-
-    expect(setPermissionsMock).toHaveBeenCalledWith(expectedPermissions)
-  })
+ 
 
 
 

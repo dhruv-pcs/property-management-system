@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import navigation from '@components/sidebar/sidebarItem'
 import { Icon } from '@iconify/react'
 
-const Item = ({ title, to, icon, setSelected }) => {
+export const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
@@ -94,6 +94,7 @@ const MyProSidebar = () => {
       <Sidebar breakPoint='md' backgroundColor={colors.primary[400]}>
         <Menu iconshape='square'>
           <MenuItem
+            data-testid='collapse-sidebar'
             icon={<MenuOutlinedIcon onClick={() => collapseSidebar()} />}
             style={{
               margin: '10px 0 20px 0',
@@ -106,7 +107,7 @@ const MyProSidebar = () => {
                 EstateEase
               </Typography>
               <IconButton
-                data-testid='collapse-sidebar'
+                data-testid='collapse-sidebar-close'
                 aria-label='close'
                 onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}
               >

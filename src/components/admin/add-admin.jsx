@@ -17,7 +17,7 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  pincode: Yup.number(),
+  pincode: Yup.number()
 })
 
 const AddAdmin = ({ onUpdate, handelAddbutton }) => {
@@ -49,8 +49,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
         toast.success('Admin added successfully')
       }
     } catch (error) {
-      toast.error("Admin cannot be created")
-
+      toast.error('Admin cannot be created')
     }
   }
 
@@ -136,7 +135,11 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                           variant='outline-secondary'
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <VisibilityOff data-testid="visibility-off-icon" /> : <Visibility data-testid="visibility-icon" />}
+                          {showPassword ? (
+                            <VisibilityOff data-testid='visibility-off-icon' />
+                          ) : (
+                            <Visibility data-testid='visibility-icon' />
+                          )}
                         </Button>
                       </div>
                       {errors.password && <span className='text-danger'>{errors.password.message}</span>}
@@ -153,7 +156,6 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                           </option>
                         ))}
                       </Form.Select>
-                      
                     </Form.Group>
                   </Col>
                 </Row>
@@ -182,7 +184,6 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
                       />
-                      
                     </Form.Group>
                   </Col>
                 </Row>

@@ -295,8 +295,10 @@ describe('Admin Add Component', () => {
     const handelAddbutton = jest.fn();
 
   
-
-    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    act(() => {
+      
+      render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    })
     
       fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
       fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })

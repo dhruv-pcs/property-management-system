@@ -35,10 +35,8 @@ const getRoleBackgroundColor = jest.fn((role) => {
     default:
       const min = parseInt('3da58a', 16);
       const max = parseInt('4cceac', 16);
-      console.log('min:', min, 'max:', max);
       const randomColor = '#' + Math.floor(Math.random() * (max - min + 1) + min).toString(16);
       
-      console.log('randomColor:', randomColor);
 
     return randomColor;
   }
