@@ -3,17 +3,9 @@ import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
 
-const schema = Yup.object().shape({
-  name: Yup.string().required('First name is required'),
-  rent: Yup.string().required('Last name is required'),
-  address: Yup.string().required('Address is required'),
-  is_verified: Yup.boolean().required('Verification status is required'),
-  landmark: Yup.string().required('Landmark is required'),
-  street: Yup.string().required('Street is required')
-})
+
+
 
 const ViewProperty = ({ property }) => {
   const theme = useTheme()
@@ -23,11 +15,8 @@ const ViewProperty = ({ property }) => {
 
   const {
     register,
-    formState: { errors },
     control
-  } = useForm({
-    resolver: yupResolver(schema)
-  })
+  } = useForm()
 
   return (
     <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
@@ -48,7 +37,6 @@ const ViewProperty = ({ property }) => {
                       defaultValue={property?.name}
                       readOnly={!editable}
                     />
-                    {errors.name && <span className='text-danger'>{errors.name.message}</span>}
                   </Form.Group>
                 </Col>
 
@@ -62,7 +50,6 @@ const ViewProperty = ({ property }) => {
                       defaultValue={property?.rent}
                       readOnly={!editable}
                     />
-                    {errors.rent && <span className='text-danger'>{errors.rent.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
@@ -77,7 +64,6 @@ const ViewProperty = ({ property }) => {
                       defaultValue={property?.rent_type}
                       readOnly={!editable}
                     />
-                    {errors.rent_type && <span className='text-danger'>{errors.rent_type.message}</span>}
                   </Form.Group>
                 </Col>
                 <Col md={6}>
@@ -90,7 +76,6 @@ const ViewProperty = ({ property }) => {
                       defaultValue={property?.landmark}
                       readOnly={!editable}
                     />
-                    {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
@@ -105,7 +90,6 @@ const ViewProperty = ({ property }) => {
                       readOnly={!editable}
                       defaultValue={property?.location}
                     />
-                    {errors.location && <span className='text-danger'>{errors.location.message}</span>}
                   </Form.Group>
                 </Col>
                 <Col md={6}>
@@ -184,7 +168,6 @@ const ViewProperty = ({ property }) => {
                       defaultValue={property?.property_number}
                       readOnly={!editable}
                     />
-                    {errors.property_number && <span className='text-danger'>{errors.property_number.message}</span>}
                   </Form.Group>
                 </Col>
 
@@ -198,7 +181,6 @@ const ViewProperty = ({ property }) => {
                       defaultValue={property?.currency}
                       readOnly={!editable}
                     />
-                    {errors.currency && <span className='text-danger'>{errors.currency.message}</span>}
                   </Form.Group>
                 </Col>
               </Row>
