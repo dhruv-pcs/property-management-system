@@ -7,6 +7,7 @@ import Footer from '@components/footer/footer'
 import { ColorModeContext } from '@theme/theme'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import Login from 'src/pages/login'
+import Notfound from 'src/pages/404'
 
 jest.mock('src/middleware', () => ({
   middleware: jest.fn(req => {
@@ -84,6 +85,9 @@ describe('App component layout', () => {
     expect(screen.getByTestId('email')).toBeInTheDocument();
   });
 
+  test('renders mock component when pathname is not /404', () => {
+    render(<App Component={() => <Notfound/>} pageProps={{}} />);
+  })
 
 
   

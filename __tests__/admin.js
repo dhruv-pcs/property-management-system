@@ -5,11 +5,7 @@ import axios from 'axios'
 import Admin from 'src/pages/admin'
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
-import MockAdapter from 'axios-mock-adapter'
 
-const mock = new MockAdapter(axios)
-
-// Mock axios globally
 jest.mock('axios')
 
 const mockPermissions = [
@@ -326,9 +322,7 @@ describe('Admin Add Component', () => {
     const onUpdate = jest.fn()
     const handelAddbutton = jest.fn()
 
-    act(() => {
-      render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
-    })
+    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
 
     fireEvent.change(screen.getByLabelText('First name'), { target: { value: '' } })
     fireEvent.change(screen.getByLabelText('Last name'), { target: { value: '' } })

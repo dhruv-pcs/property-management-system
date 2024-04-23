@@ -73,4 +73,33 @@ describe('Topbar Component', () => {
       expect(screen.getByText('Error Logging Out')).toBeInTheDocument()
     })
   })
+
+  jest.mock('next/router', () => {
+    const mockPush = jest.fn();
+
+    return {
+      useRouter: () => ({
+        push: mockPush,
+      }),
+    };
+  });
+  
+  test('should handle non-200 status codes without redirecting', async () => {
+    axios.get.mockResolvedValue({ data: { statusCode: 401 } });
+  
+    render(
+      <ProSidebarProvider>
+        <Topbar />
+      </ProSidebarProvider>
+    );
+  
+    await waitFor(() => {
+      const logout = screen.getByTestId('logout');
+      fireEvent.click(logout);
+    });
+  
+    const { useRouter } = require('next/router');
+    expect(useRouter().push).not.toHaveBeenCalledWith('/login');
+  });
+  
 })
