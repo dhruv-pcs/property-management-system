@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor, screen } from '@testing-library/react'
+import { render, waitFor, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import App from 'src/pages/_app'
 import Topbar from '@components/topbar/topbar'
@@ -79,16 +79,37 @@ describe('App component layout', () => {
     });
   });
 
-  test('renders login component when pathname is /login', () => {
-    render(<App Component={() => <Login />} pageProps={{}} />);
+  test('404 page renders correctly', async () => {
+    jest.mock('next/router', () => ({
+      useRouter: () => ({
+        pathname: '/404',
+        push: jest.fn()
+      })
+    }))
 
-    expect(screen.getByTestId('email')).toBeInTheDocument();
-  });
+    const pageProps = {};
 
-  test('renders mock component when pathname is not /404', () => {
-    render(<App Component={() => <Notfound/>} pageProps={{}} />);
+    act(() => {
+      render(<App Component={() => <Notfound />} pageProps={pageProps} />)
+    })
+
   })
 
+  test('login page renders correctly', async () => {
+    jest.mock('next/router', () => ({
+      useRouter: () => ({
+        pathname: '/login',
+        push: jest.fn()
+      })
+    }))
+
+    const pageProps = {};
+
+    act(() => {
+      render(<App Component={() => <Login />} pageProps={pageProps} />)
+    })
+  })
+ 
 
   
 

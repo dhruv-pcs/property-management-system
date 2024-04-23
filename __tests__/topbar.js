@@ -12,6 +12,18 @@ jest.mock('next/router', () => ({
   }))
 }))
 
+const useMockProSidebar = () => ({
+  collapseSidebar: jest.fn(),
+  toggleSidebar: jest.fn(),
+  broken: true
+});
+
+
+jest.mock('react-pro-sidebar', () => ({
+  ...jest.requireActual('react-pro-sidebar'),
+  useProSidebar: useMockProSidebar
+}));
+
 jest.mock('axios')
 
 describe('Topbar Component', () => {
@@ -101,5 +113,22 @@ describe('Topbar Component', () => {
     const { useRouter } = require('next/router');
     expect(useRouter().push).not.toHaveBeenCalledWith('/login');
   });
+
+  test('toggle Sidebar in mobile view', async () => {
+    axios.get.mockResolvedValue({ data: { statusCode: 401 } });
   
+    render(
+      <ProSidebarProvider>
+        <Topbar />
+      </ProSidebarProvider>
+    );
+  
+    await waitFor(() => {
+      const logout = screen.getByTestId('menu');
+      fireEvent.click(logout);
+    });
+  
+  
+  });
+
 })
