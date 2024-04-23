@@ -18,10 +18,9 @@ const schema = Yup.object().shape({
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
   pincode: Yup.number(),
-  role_u_id: Yup.string().required('Role is required')
 })
 
-const AddAdmin = ({  onUpdate, handelAddbutton }) => {
+const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [showPassword, setShowPassword] = useState(false)
@@ -52,7 +51,6 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
     } catch (error) {
       toast.error("Admin cannot be created")
 
-      // console.log('error', error)
     }
   }
 
@@ -65,7 +63,7 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
         const filteredRoles = response.data.data.filter(role => role.name !== 'super-admin')
         setRoles(filteredRoles)
       } catch (error) {
-        console.log('Failed to fetch roles', error)
+        toast.error('Error Fetching Data')
       }
     }
     fetchRoles()
@@ -155,7 +153,7 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
                           </option>
                         ))}
                       </Form.Select>
-                      {errors.role && <span className='text-danger'>{errors.role.message}</span>}
+                      
                     </Form.Group>
                   </Col>
                 </Row>
@@ -184,7 +182,7 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
                       />
-                      {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
+                      
                     </Form.Group>
                   </Col>
                 </Row>
@@ -192,14 +190,26 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='city'>City</Form.Label>
-                      <Form.Control id='city' data-testid='city' type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Control
+                        id='city'
+                        data-testid='city'
+                        type='text'
+                        placeholder='Enter your city'
+                        {...register('city')}
+                      />
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label htmlFor='state'>State</Form.Label>
-                      <Form.Control id='state' data-testid='state' type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Control
+                        id='state'
+                        data-testid='state'
+                        type='text'
+                        placeholder='Enter your state'
+                        {...register('state')}
+                      />
                     </Form.Group>
                   </Col>
                 </Row>

@@ -13,8 +13,7 @@ import {
   useMediaQuery
 } from '@mui/material'
 import { tokens } from '@theme/theme'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
 
 const ViewRole = ({ roleData }) => {
   const [moduleData, setModuleData] = useState([])
@@ -26,13 +25,6 @@ const ViewRole = ({ roleData }) => {
 
   useEffect(() => {
     const fetchModuleData = async () => {
-      try {
-        if (!roleData || !roleData.u_id) {
-          console.error('Role data is missing or incomplete')
-
-          return
-        }
-
         const roleResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
@@ -58,10 +50,7 @@ const ViewRole = ({ roleData }) => {
         })
         setPermissions(initialPermissions)
         setModuleData(moduleData)
-      } catch (error) {
-        toast.error('Error fetching role data')
-        console.error(error)
-      }
+     
     }
     fetchModuleData()
   }, [roleData])
@@ -112,7 +101,6 @@ const ViewRole = ({ roleData }) => {
           </Table>
         </TableContainer>
       </div>
-      <ToastContainer />
     </>
   )
 }

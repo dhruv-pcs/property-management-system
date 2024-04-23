@@ -7,7 +7,6 @@ import Topbar from '@components/topbar/topbar'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import Footer from '@components/footer/footer'
-import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import { useRouter } from 'next/router'
 
 const App = ({ Component, pageProps }) => {
@@ -51,7 +50,6 @@ const App = ({ Component, pageProps }) => {
                 </main>
                 <Footer />
               </div>
-              <GoToTopButton />
             </MyProSidebarProvider>
           </ProSidebarProvider>
         </ThemeProvider>

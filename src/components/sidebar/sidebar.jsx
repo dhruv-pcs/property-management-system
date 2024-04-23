@@ -5,7 +5,7 @@ import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import { useRouter } from 'next/router'
-import navigation from './sidebarItem'
+import navigation from '@components/sidebar/sidebarItem'
 import { Icon } from '@iconify/react'
 
 const Item = ({ title, to, icon, setSelected }) => {
@@ -105,7 +105,11 @@ const MyProSidebar = () => {
               <Typography variant='h3' color={colors.grey[100]}>
                 EstateEase
               </Typography>
-              <IconButton aria-label='close' onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}>
+              <IconButton
+                data-testid='collapse-sidebar'
+                aria-label='close'
+                onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}
+              >
                 <CloseOutlinedIcon />
               </IconButton>
             </Box>
@@ -115,6 +119,7 @@ const MyProSidebar = () => {
             <Item
               title='Dashboard'
               to='/'
+              data-testid='dashboard'
               icon={'mdi:home-outline'}
               selected={selected}
               setSelected={setSelected}

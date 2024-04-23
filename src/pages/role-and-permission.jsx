@@ -48,7 +48,6 @@ const Role_Permission = () => {
       setRole(response.data.data)
     } catch (error) {
       toast.error('Error Fetching Data')
-      console.error(error)
     }
   }
 
@@ -92,7 +91,6 @@ const Role_Permission = () => {
       }
     } catch (error) {
       toast.error('Error Deleting Role')
-      console.error(error)
     }
   }
 

@@ -1,12 +1,10 @@
-
 import React from 'react'
-import {  Card, Col, Row, Form } from 'react-bootstrap'
+import { Card, Col, Row, Form } from 'react-bootstrap'
 import { tokens } from '@theme/theme'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
 
 const ViewAdmin = ({ admin }) => {
   const theme = useTheme()
@@ -16,7 +14,6 @@ const ViewAdmin = ({ admin }) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const { register, control } = useForm()
-
 
   return (
     <>
@@ -39,7 +36,6 @@ const ViewAdmin = ({ admin }) => {
                         defaultValue={admin?.first_name}
                         readOnly={!editable}
                       />
-                      
                     </Form.Group>
                   </Col>
 
@@ -67,7 +63,6 @@ const ViewAdmin = ({ admin }) => {
                         defaultValue={admin?.email}
                         readOnly={!editable}
                       />
-                     
                     </Form.Group>
                   </Col>
                 </Row>
@@ -82,7 +77,6 @@ const ViewAdmin = ({ admin }) => {
                         readOnly={!editable}
                         defaultValue={admin?.phone ? Number(admin.phone) : ''}
                       />
-                     
                     </Form.Group>
                   </Col>
 
@@ -154,35 +148,35 @@ const ViewAdmin = ({ admin }) => {
                     </Form.Group>
                   </Col>
                 </Row>
-                    <Row className='gx-3 mb-3'>
-                      <Col md={6}>
-                        <Form.Group className='mb-1'>
-                          <Form.Label>Admin</Form.Label>
-                          <div>
-                            <Form.Check
-                              inline
-                              label='Active'
-                              type='radio'
-                              id='active'
-                              {...register('status', { required: true })}
-                              value={true}
-                              defaultChecked={admin?.status === true && true}
-                              disabled={!editable}
-                            />
-                            <Form.Check
-                              inline
-                              label='Inactive'
-                              type='radio'
-                              id='inactive'
-                              {...register('status', { required: true })}
-                              value={false}
-                              defaultChecked={admin?.status === false && true}
-                              disabled={!editable}
-                            />
-                          </div>
-                        </Form.Group>
-                      </Col>
-                    </Row>
+                <Row className='gx-3 mb-3'>
+                  <Col md={6}>
+                    <Form.Group className='mb-1'>
+                      <Form.Label>Admin</Form.Label>
+                      <div>
+                        <Form.Check
+                          inline
+                          label='Active'
+                          type='radio'
+                          id='active'
+                          {...register('status', { required: true })}
+                          value={true}
+                          defaultChecked={admin?.status === true && true}
+                          disabled={!editable}
+                        />
+                        <Form.Check
+                          inline
+                          label='Inactive'
+                          type='radio'
+                          id='inactive'
+                          {...register('status', { required: true })}
+                          value={false}
+                          defaultChecked={admin?.status === false && true}
+                          disabled={!editable}
+                        />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                </Row>
               </Form>
             </Card.Body>
           </Card>

@@ -33,29 +33,29 @@ describe('tokens', () => {
 
 });
 
-// describe('useMode', () => {
-//   it('toggles color mode correctly', () => {
-//     const { result } = renderHook(() => useMode());
+describe('useMode', () => {
+  it('toggles color mode correctly', () => {
+    const { result } = renderHook(() => useMode());
 
-//     const [, { toggleColorMode }] = result.current;
+    const [, { toggleColorMode }] = result.current;
 
-//     expect(result.current[0].palette.mode).toBe('dark');
+    expect(result.current[0].palette.mode).toBe('dark');
 
-//     act(() => {
-//         toggleColorMode();
-//       });
+    act(() => {
+        toggleColorMode();
+      });
 
-//     expect(result.current[0].palette.mode).toBe('light');
-//   });
+    expect(result.current[0].palette.mode).toBe('light');
+  });
 
-//   it('provides correct context value', () => {
-//     const { result } = renderHook(() => useMode());
+  it('provides correct context value', () => {
+    const { result } = renderHook(() => useMode());
 
-//     const contextValue = result.current[1];
-//     expect(contextValue).toHaveProperty('toggleColorMode');
-//   });
+    const contextValue = result.current[1];
+    expect(contextValue).toHaveProperty('toggleColorMode');
+  });
 
-//   it('creates ColorModeContext', () => {
-//     expect(ColorModeContext).toBeDefined();
-//   });
-// });
+  it('creates ColorModeContext', () => {
+    expect(ColorModeContext).toBeDefined();
+  });
+});
