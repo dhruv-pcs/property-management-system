@@ -50,7 +50,7 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
         toast.success('Admin added successfully')
       }
     } catch (error) {
-      toast.error("Admin Can't be created")
+      toast.error("Admin cannot be created")
 
       // console.log('error', error)
     }

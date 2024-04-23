@@ -7,7 +7,6 @@ import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
 import MockAdapter from 'axios-mock-adapter';
 
-
 const mock = new MockAdapter(axios);
 
 // Mock axios globally
@@ -247,32 +246,34 @@ describe('Admin Add Component', () => {
     email: 'john.doe@gmail.com',
     password: 'John@1234',
     phone: '1234567890',
+    alternate_phone: '0987654321',
     country: 'USA',
     state: 'California',
     city: 'Los Angeles',
-    pincode: "315320",
-    role_u_id: 'ROL1000000010', 
-    language:'English',
+    pincode: '90026',
+    role_u_id: 'ROL10000000010', 
   }; 
 
   beforeEach(() => {
-    mock.reset();
-    mock.onGet(`${process.env.NEXT_PUBLIC_API_URL}/api/role`).reply(200, {
-      data: [
-        { u_id: 'ROL1000000001', name: 'super-admin' },
-        { u_id: 'ROL1000000009', name: 'Owner' },
-        { u_id: 'ROL1000000010', name: 'admin' },
-      ]
+    
+    axios.get = jest.fn().mockResolvedValue({
+
+      data: {
+        data: [
+          { u_id: 'ROL1000000001', name: 'super-admin' },
+          { u_id: 'ROL1000000009', name: 'Owner' },
+          { u_id: 'ROL1000000010', name: 'admin' },
+        ]
+      }
     });
   });
 
   test('Add New Admin Success', async () => {
-    const mockResponse = { status: 201 }
-    axios.post = jest.fn().mockResolvedValue(mockResponse)
+    axios.post = jest.fn().mockResolvedValue( { data: { statusCode: 201}} )
     const onUpdate = jest.fn();
     const handelAddbutton = jest.fn();
 
-    await act( () => render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />))
+    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
     
       fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
       fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })
@@ -288,17 +289,53 @@ describe('Admin Add Component', () => {
 
       const saveButton = screen.getByTestId('add-admin-button')
 
-         act(() => {
+        act(() => {
           fireEvent.click(saveButton)
+
         })
 
         await waitFor(() => {
-          expect(axios.post).toHaveBeenCalled()
-          expect(screen.getByText("Admin added successfully")).toBeInTheDocument()
+          expect(onUpdate).toHaveBeenCalled()
+          expect(handelAddbutton).toHaveBeenCalled()
+          expect(screen.getByText('Admin added successfully')).toBeInTheDocument()
         })
   
   });
 
+  test('Add New Admin Error', async () => {
+    axios.post = jest.fn().mockRejectedValue( { data: { statusCode: 500}} )
+    const onUpdate = jest.fn();
+    const handelAddbutton = jest.fn();
+
+  
+
+    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    
+      fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
+      fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })
+      fireEvent.change(screen.getByLabelText('Email address'), { target: { value: admin.email } })
+      fireEvent.change(screen.getByLabelText('Password'), { target: { value: admin.password } })
+      fireEvent.change(screen.getByLabelText('Role'), { target: { value: admin.role_u_id } })
+      fireEvent.change(screen.getByLabelText('Phone number'), { target: { value: admin.phone } })
+      fireEvent.change(screen.getByLabelText('Alternative Phone No:'), { target: { value: admin.alternate_phone } })
+      fireEvent.change(screen.getByLabelText('City'),{ target: { value: admin.city } })
+      fireEvent.change(screen.getByLabelText('State'), { target: { value: admin.state } })
+      fireEvent.change(screen.getByLabelText('Country'), { target: { value: admin.country } })
+      fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: admin.pincode } })
+
+      const saveButton = screen.getByTestId('add-admin-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+
+        })
+
+        await waitFor(() => {
+          expect(onUpdate).not.toHaveBeenCalled()
+          expect(handelAddbutton).not.toHaveBeenCalled()
+          expect(screen.getByText('Admin cannot be created')).toBeInTheDocument()
+        })
+  });
   describe('Password Visibility Toggle', () => {
     test('toggles the password visibility on button click', () => {
       render(<AddAdmin />);
@@ -312,6 +349,9 @@ describe('Admin Add Component', () => {
 
     });
   });
+
+
+
 
   
  test('Add New Admin With Empty Fields to get Validation Error', async () => {
@@ -340,49 +380,5 @@ describe('Admin Add Component', () => {
   });
 });
 
-// test('Add New Admin Failed', async () => {
-//   const mockError = new Error('Add request failed')
-//   axios.post = jest.fn().mockRejectedValue(mockError)
-//   const onUpdate = jest.fn()
-//   const handelAddbutton = jest.fn()
-
-//   const { getByLabelText } = render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
-
-//   const first_name = getByLabelText('First name')
-//   const last_name = getByLabelText('Last name')
-//   const email = getByLabelText('Email address')
-//   const password = getByLabelText('Password')
-//   const phone = getByLabelText('Phone number')
-//   const alternate_phone = getByLabelText('Alternative Phone No:')
-//   const city = getByLabelText('City')
-//   const state = getByLabelText('State')
-//   const country = getByLabelText('Country')
-//   const pincode = getByLabelText('Pincode')
-//   const role_u_id = getByLabelText('Role')
-
-//   fireEvent.change(first_name, { target: { value: admin.first_name } })
-//   fireEvent.change(last_name, { target: { value: admin.last_name } })
-//   fireEvent.change(email, { target: { value: admin.email } })
-//   fireEvent.change(password, { target: { value: admin.password } })
-//   fireEvent.change(role_u_id, { target: { value: admin.role_u_id } })
-//   fireEvent.change(phone, { target: { value: admin.phone } })
-//   fireEvent.change(alternate_phone, { target: { value: admin.alternate_phone } })
-//   fireEvent.change(city, { target: { value: admin.city } })
-//   fireEvent.change(state, { target: { value: admin.state } })
-//   fireEvent.change(country, { target: { value: admin.country } })
-//   fireEvent.change(pincode, { target: { value: admin.pincode } })
-
-//   const saveButton = screen.getByTestId('add-admin-button')
-
-//   act(() => {
-//     fireEvent.click(saveButton)
-//   })
-
-//   await waitFor(() => {
-//     expect(onUpdate).not.toHaveBeenCalled()
-//     expect(handelAddbutton).not.toHaveBeenCalled()
-//     expect(screen.getByText("Admin Can't be created")).toBeInTheDocument()
-//   })
-// })
 
  })
