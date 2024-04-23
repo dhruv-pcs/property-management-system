@@ -1,73 +1,41 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { useEffect, useState } from 'react'
 import '@styles-page/globals.css'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ColorModeContext, tokens, useMode } from '@theme/theme'
 import Topbar from '@components/topbar/topbar'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import Footer from '@components/footer/footer'
-import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
-import withAuth from '@components/auth/auth'
+import { useRouter } from 'next/router'
 
 const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
   const colors = tokens(theme.palette.mode)
-  const router = useRouter()
-  let LocalData = localStorage.getItem('user')
-  let Local = JSON.parse(LocalData)
+  const [isClient, setIsClient] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
-    const importBootstrap = async () => {
-      try {
-        await import('bootstrap/dist/js/bootstrap.bundle.min.js')
-      } catch (error) {
-        console.error('Error loading Bootstrap:', error)
-      }
-    }
-    importBootstrap()
-  }, [router])
+    setIsClient(true)
+  }, [])
 
-  const isLoginPage = router.pathname === '/login'
-  const is404 = router.pathname === '/404'
+  if (!isClient) {
+    return null
+  }
 
-  if (isLoginPage || is404) {
-    return <Component {...pageProps} />
-  } else {
-    const route = router.pathname
+  // Check if the current route is the login page
+  const isBlankPage = router.pathname === '/login' || router.pathname === '/404';
 
-    const hasPermission = route => {
-      if (!Local) {
-        return false
-      }
-
-      if (route === '/404' || route === '/unauthorized' || route === '/login' || route === '/profile') {
-        return true
-      }
-
-      if (route === '/') {
-        return true
-      }
-      console.log('LOCAL', Local)
-
-      return Local.some(item => {
-        if (item.view) return `/${item.module.name}` === route
-      })
-    }
-
-    const hasAccess = hasPermission(route)
-
-    if (!hasAccess) {
-      router.push('/unauthorized')
-    }
-
-    return (
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <ProSidebarProvider theme={theme}>
-            <CssBaseline />
-            <MyProSidebarProvider>
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+        {isBlankPage && <Component {...pageProps} />}
+        {!isBlankPage && (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ProSidebarProvider theme={theme}>
+          <MyProSidebarProvider>
+           
+          
               <div style={{ height: '100%', width: '100%' }}>
                 <Topbar />
                 <main
@@ -82,13 +50,13 @@ const App = ({ Component, pageProps }) => {
                 </main>
                 <Footer />
               </div>
-              <GoToTopButton />
-            </MyProSidebarProvider>
-          </ProSidebarProvider>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
-    )
-  }
+         
+          </MyProSidebarProvider>
+        </ProSidebarProvider>
+      </ThemeProvider>
+          )}
+    </ColorModeContext.Provider>
+  )
 }
 
-export default withAuth(App)
+export default App

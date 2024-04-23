@@ -1,18 +1,18 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
 import { tokens } from '@theme/theme'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import { usePathname, useRouter } from 'next/navigation'
-import navigation from './sidebarItem'
+import { useRouter } from 'next/router'
+import navigation from '@components/sidebar/sidebarItem'
 import { Icon } from '@iconify/react'
 
-const Item = ({ title, to, icon, setSelected }) => {
+export const Item = ({ title, to, icon, setSelected }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
-  const path = usePathname()
+  const path = router.pathname
 
   const handleItemClick = () => {
     setSelected(title)
@@ -21,6 +21,7 @@ const Item = ({ title, to, icon, setSelected }) => {
 
   return (
     <MenuItem
+      data-testid={title}
       active={to === path}
       style={{
         color: to === path ? colors.greenAccent[500] : colors.grey[100],
@@ -42,9 +43,25 @@ const MyProSidebar = () => {
   const navItem = navigation()
   const LocalData = localStorage.getItem('user')
   const Local = JSON.parse(LocalData)
+  const [isMounted, setIsMounted] = useState(false)
+
+
+
+  useEffect(() => {
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   return (
     <Box
+      data-testid='sidebar'
       className=''
       sx={{
         position: 'sticky',
@@ -79,7 +96,8 @@ const MyProSidebar = () => {
       <Sidebar breakPoint='md' backgroundColor={colors.primary[400]}>
         <Menu iconshape='square'>
           <MenuItem
-            icon={<MenuOutlinedIcon onClick={() => collapseSidebar()} />}
+           
+            icon={<MenuOutlinedIcon  data-testid='collapse-sidebar' onClick={() => collapseSidebar()} />}
             style={{
               margin: '10px 0 20px 0',
               color: colors.grey[100],
@@ -90,7 +108,11 @@ const MyProSidebar = () => {
               <Typography variant='h3' color={colors.grey[100]}>
                 EstateEase
               </Typography>
-              <IconButton onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}>
+              <IconButton
+                data-testid='collapse-sidebar-close'
+                aria-label='close'
+                onClick={broken ? () => toggleSidebar() : () => collapseSidebar()}
+              >
                 <CloseOutlinedIcon />
               </IconButton>
             </Box>
@@ -100,6 +122,7 @@ const MyProSidebar = () => {
             <Item
               title='Dashboard'
               to='/'
+              data-testid='dashboard'
               icon={'mdi:home-outline'}
               selected={selected}
               setSelected={setSelected}

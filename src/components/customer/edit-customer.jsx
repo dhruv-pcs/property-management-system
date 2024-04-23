@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
@@ -79,8 +80,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
         toast.success('Customer updated successfully')
       }
     } catch (error) {
-      toast.error("Customer can't be updated")
-      console.log('error', error)
+      toast.error('Customer cannot be updated')
     }
   }
 
@@ -94,11 +94,13 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>First name</Form.Label>
+                      <Form.Label htmlFor='first_name'>First name</Form.Label>
                       <Form.Control
                         type='text'
+                        id='first_name'
                         placeholder='Enter your first name'
                         {...register('first_name')}
+                        data-testid='first_name'
                         defaultValue={customer?.first_name}
                       />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
@@ -107,9 +109,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Last name</Form.Label>
+                      <Form.Label htmlFor='last_name'>Last name</Form.Label>
                       <Form.Control
+                        id='last_name'
                         type='text'
+                        data-testid='last_name'
                         placeholder='Enter your last name'
                         {...register('last_name')}
                         defaultValue={customer?.last_name}
@@ -122,8 +126,10 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Email address</Form.Label>
+                      <Form.Label htmlFor='email'>Email address</Form.Label>
                       <Form.Control
+                        id='email'
+                        data-testid='email'
                         type='email'
                         placeholder='Enter your email address'
                         {...register('email')}
@@ -135,9 +141,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>GST No</Form.Label>
+                      <Form.Label htmlFor='gst_no'>GST No</Form.Label>
                       <Form.Control
                         type='text'
+                        id='gst_no'
+                        data-testid='gst_no'
                         placeholder='Enter GST No'
                         {...register('gst_no')}
                         defaultValue={customer?.gst_no}
@@ -146,15 +154,18 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                     </Form.Group>
                   </Col>
                 </Row>
+
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Phone number</Form.Label>
+                      <Form.Label htmlFor='phone'>Phone number</Form.Label>
                       <Form.Control
                         type='tel'
+                        id='phone'
+                        data-testid='phone'
                         placeholder='Enter your phone number'
                         {...register('phone')}
-                        defaultValue={customer?.phone ? Number(customer.phone) : ''}
+                        defaultValue={customer?.phone && Number(customer.phone)}
                       />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
@@ -162,9 +173,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Alternative Phone No:</Form.Label>
+                      <Form.Label htmlFor='alternate_phone'>Alternative Phone No:</Form.Label>
                       <Form.Control
                         type='tel'
+                        id='alternate_phone'
+                        data-testid='alternate_phone'
                         placeholder='Alternative phone number'
                         {...register('alternate_phone')}
                         defaultValue={customer?.alternate_phone}
@@ -176,9 +189,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
+                      <Form.Label htmlFor='city'>City</Form.Label>
                       <Form.Control
                         type='text'
+                        id='city'
+                        data-testid='city'
                         defaultValue={customer?.city}
                         placeholder='Enter your city'
                         {...register('city')}
@@ -188,9 +203,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
+                      <Form.Label htmlFor='state'>State</Form.Label>
                       <Form.Control
                         type='text'
+                        id='state'
+                        data-testid='state'
                         defaultValue={customer?.state}
                         placeholder='Enter your state'
                         {...register('state')}
@@ -202,9 +219,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
+                      <Form.Label htmlFor='country'>Country</Form.Label>
                       <Form.Control
                         type='text'
+                        id='country'
+                        data-testid='country'
                         defaultValue={customer?.country}
                         placeholder='Enter your country'
                         {...register('country')}
@@ -214,9 +233,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
                       <Form.Control
                         type='text'
+                        id='pincode'
+                        data-testid='pincode'
                         defaultValue={customer?.pincode}
                         placeholder='Enter your pincode'
                         {...register('pincode')}
@@ -228,9 +249,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Aadhar Card No</Form.Label>
+                      <Form.Label htmlFor='aadhar_card_no'>Aadhar Card No</Form.Label>
                       <Form.Control
                         type='text'
+                        id='aadhar_card_no'
+                        data-testid='aadhar_card_no'
                         placeholder='Enter Aadhar Card No'
                         {...register('aadhar_card_no')}
                         defaultValue={customer?.aadhar_card_no}
@@ -241,9 +264,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Address</Form.Label>
+                      <Form.Label htmlFor='address'>Address</Form.Label>
                       <Form.Control
                         type='text'
+                        id='address'
+                        data-testid='address'
                         placeholder='Enter Address'
                         {...register('address')}
                         defaultValue={customer?.address}
@@ -256,9 +281,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Landmark</Form.Label>
+                      <Form.Label htmlFor='landmark'>Landmark</Form.Label>
                       <Form.Control
                         type='text'
+                        id='landmark'
+                        data-testid='landmark'
                         placeholder='Enter Landmark'
                         {...register('landmark')}
                         defaultValue={customer?.landmark}
@@ -269,9 +296,11 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Street</Form.Label>
+                      <Form.Label htmlFor='street'>Street</Form.Label>
                       <Form.Control
                         type='text'
+                        id='street'
+                        data-testid='street'
                         placeholder='Enter Street'
                         {...register('street')}
                         defaultValue={customer?.street}
@@ -290,6 +319,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                           inline
                           label='Active'
                           type='radio'
+                          data-testid='active'
                           id='active'
                           {...register('status', { required: true })}
                           value={true}
@@ -299,6 +329,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                           inline
                           label='Inactive'
                           type='radio'
+                          data-testid='inactive'
                           id='inactive'
                           {...register('status', { required: true })}
                           value={false}
@@ -309,13 +340,14 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Status</Form.Label>
+                      <Form.Label>Verification</Form.Label>
                       <div>
                         <Form.Check
                           inline
                           label='Verified'
                           type='radio'
                           id='verified'
+                          data-testid='verified'
                           {...register('is_verified', { required: true })}
                           value={true}
                           defaultChecked={customer?.is_verified === true && true}
@@ -325,6 +357,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                           label='Not Verified'
                           type='radio'
                           id='not_verified'
+                          data-testid='not_verified'
                           {...register('is_verified', { required: true })}
                           value={false}
                           defaultChecked={customer?.is_verified === false && true}
@@ -334,7 +367,13 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
                   </Col>
                 </Row>
 
-                <Button type='submit' style={{ backgroundColor: colors.blueAccent[600] }} className='ms-2 mb-3 h-fit'>
+                <Button
+                  aria-label='save'
+                  type='submit'
+                  data-testid='save-changes'
+                  style={{ backgroundColor: colors.blueAccent[600] }}
+                  className='ms-2 mb-3 h-fit'
+                >
                   Save changes
                 </Button>
               </Form>

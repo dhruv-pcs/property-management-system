@@ -1,4 +1,4 @@
-// import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
@@ -16,19 +16,20 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.string().when('phone', {
-    is: phone => phone && phone.length === 10,
-    then: () =>
-      Yup.string().test(
-        'notEqualToPhone',
-        'Alternate phone number cannot be the same as phone number',
-        function (value) {
-          const phoneValue = this.parent.phone
 
-          return value !== phoneValue
-        }
-      )
-  }),
+  // alternate_phone: Yup.string().when('phone', {
+  //   is: phone => phone && phone.length === 10,
+  //   then: () =>
+  //     Yup.string().test(
+  //       'notEqualToPhone',
+  //       'Alternate phone number cannot be the same as phone number',
+  //       function (value) {
+  //         const phoneValue = this.parent.phone
+
+  //         return value !== phoneValue
+  //       }
+  //     )
+  // }),
   aadhar_card_no: Yup.string().required('Aadhar Card No is required'),
   address: Yup.string().required('Address is required'),
   gst_no: Yup.string().required('GST No is required'),
@@ -67,8 +68,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
         toast.success('Customer added successfully')
       }
     } catch (error) {
-      toast.error("Customer can't be added")
-      console.log('error', error)
+      toast.error('customer cannot be added')
     }
   }
 
@@ -82,16 +82,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>First name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your first name' {...register('first_name')} />
+                      <Form.Label htmlFor='first_name'>First name</Form.Label>
+                      <Form.Control
+                        id='first_name'
+                        type='text'
+                        data-testid='first_name'
+                        placeholder='Enter your first name'
+                        {...register('first_name')}
+                      />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Last name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your last name' {...register('last_name')} />
+                      <Form.Label htmlFor='last_name'>Last name</Form.Label>
+                      <Form.Control
+                        id='last_name'
+                        data-testid='last_name'
+                        type='text'
+                        placeholder='Enter your last name'
+                        {...register('last_name')}
+                      />
                       {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -100,16 +112,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control type='email' placeholder='Enter your email address' {...register('email')} />
+                      <Form.Label htmlFor='email'>Email address</Form.Label>
+                      <Form.Control
+                        id='email'
+                        data-testid='email'
+                        type='email'
+                        placeholder='Enter your email address'
+                        {...register('email')}
+                      />
                       {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>GST No</Form.Label>
-                      <Form.Control type='text' placeholder='Enter GST No' {...register('gst_no')} />
+                      <Form.Label htmlFor='gst_no'>GST No</Form.Label>
+                      <Form.Control
+                        data-testid='gst_no'
+                        id='gst_no'
+                        type='text'
+                        placeholder='Enter GST No'
+                        {...register('gst_no')}
+                      />
                       {errors.gst_no && <span className='text-danger'>{errors.gst_no.message}</span>}
                     </Form.Group>
                   </Col>
@@ -117,22 +141,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Phone number</Form.Label>
-                      <Form.Control type='tel' placeholder='Enter your phone number' {...register('phone')} />
+                      <Form.Label htmlFor='phone'>Phone number</Form.Label>
+                      <Form.Control
+                        id='phone'
+                        data-testid='phone'
+                        type='tel'
+                        placeholder='Enter your phone number'
+                        {...register('phone')}
+                      />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Alternative Phone No:</Form.Label>
+                      <Form.Label htmlFor='alternate_phone'>Alternative Phone No</Form.Label>
                       <Form.Control
+                        id='alternate_phone'
                         type='tel'
-                        {...register('alternate_phone', {
-                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
-                        })}
+                        data-testid='alternate_phone'
+                        placeholder='Enter your alternate phone number'
+                        {...register('alternate_phone')}
                       />
-                      {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -140,16 +170,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Label htmlFor='city'>City</Form.Label>
+                      <Form.Control
+                        data-testid='city'
+                        id='city'
+                        type='text'
+                        placeholder='Enter your city'
+                        {...register('city')}
+                      />
                       {errors.city && <span className='text-danger'>{errors.city.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Label htmlFor='state'>State</Form.Label>
+                      <Form.Control
+                        data-testid='state'
+                        id='state'
+                        type='text'
+                        placeholder='Enter your state'
+                        {...register('state')}
+                      />
                       {errors.state && <span className='text-danger'>{errors.state.message}</span>}
                     </Form.Group>
                   </Col>
@@ -158,16 +200,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your country' {...register('country')} />
+                      <Form.Label htmlFor='country'>Country</Form.Label>
+                      <Form.Control
+                        id='country'
+                        data-testid='country'
+                        type='text'
+                        placeholder='Enter your country'
+                        {...register('country')}
+                      />
                       {errors.country && <span className='text-danger'>{errors.country.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your pincode' {...register('pincode')} />
+                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
+                      <Form.Control
+                        id='pincode'
+                        data-testid='pincode'
+                        type='text'
+                        placeholder='Enter your pincode'
+                        {...register('pincode')}
+                      />
                       {errors.pincode && <span className='text-danger'>{errors.pincode.message}</span>}
                     </Form.Group>
                   </Col>
@@ -176,16 +230,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Aadhar Card No</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Aadhar Card No' {...register('aadhar_card_no')} />
+                      <Form.Label htmlFor='aadhar_card_no'>Aadhar Card No</Form.Label>
+                      <Form.Control
+                        data-testid='aadhar_card_no'
+                        id='aadhar_card_no'
+                        type='text'
+                        placeholder='Enter Aadhar Card No'
+                        {...register('aadhar_card_no')}
+                      />
                       {errors.aadhar_card_no && <span className='text-danger'>{errors.aadhar_card_no.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Address</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Address' {...register('address')} />
+                      <Form.Label htmlFor='address'>Address</Form.Label>
+                      <Form.Control
+                        data-testid='address'
+                        id='address'
+                        type='text'
+                        placeholder='Enter Address'
+                        {...register('address')}
+                      />
                       {errors.address && <span className='text-danger'>{errors.address.message}</span>}
                     </Form.Group>
                   </Col>
@@ -194,16 +260,28 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Landmark</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Landmark' {...register('landmark')} />
+                      <Form.Label htmlFor='landmark'>Landmark</Form.Label>
+                      <Form.Control
+                        data-testid='landmark'
+                        id='landmark'
+                        type='text'
+                        placeholder='Enter Landmark'
+                        {...register('landmark')}
+                      />
                       {errors.landmark && <span className='text-danger'>{errors.landmark.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Street</Form.Label>
-                      <Form.Control type='text' placeholder='Enter Street' {...register('street')} />
+                      <Form.Label htmlFor='street'>Street</Form.Label>
+                      <Form.Control
+                        data-testid='street'
+                        id='street'
+                        type='text'
+                        placeholder='Enter Street'
+                        {...register('street')}
+                      />
                       {errors.street && <span className='text-danger'>{errors.street.message}</span>}
                     </Form.Group>
                   </Col>
@@ -211,7 +289,9 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
 
                 <div className='d-flex '>
                   <Button
+                    aria-label='Add'
                     type='submit'
+                    data-testid='submit'
                     className='w-100'
                     style={{ backgroundColor: colors.blueAccent[500], color: colors.grey[100] }}
                   >

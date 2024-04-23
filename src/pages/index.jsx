@@ -1,4 +1,5 @@
-import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
+import React from 'react'
+import { Box, useTheme, useMediaQuery } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import Head from 'next/head'
 import EmailIcon from '@mui/icons-material/Email'
@@ -6,7 +7,6 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import AddHome from '@mui/icons-material/AddHome'
 import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
-import LineChart from '@components/dashboard/line-chart'
 import { tokens } from '@theme/theme'
 
 const Dashboard = () => {
@@ -33,9 +33,8 @@ const Dashboard = () => {
           <Header title='DASHBOARD' subtitle='Welcome to your dashboard' />
         </Box>
 
-        {/* GRID & CHARTS */}
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid xs={12} sm={12} md={6}>
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
@@ -43,6 +42,7 @@ const Dashboard = () => {
               display='flex'
               alignItems='center'
               justifyContent='center'
+              height='200px'
             >
               <StatBox
                 title='1236'
@@ -53,7 +53,7 @@ const Dashboard = () => {
               />
             </Box>
           </Grid>
-          <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Grid xs={12} sm={12} md={6}>
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
@@ -61,6 +61,7 @@ const Dashboard = () => {
               display='flex'
               alignItems='center'
               justifyContent='center'
+              height='200px'
             >
               <StatBox
                 title='380'
@@ -71,13 +72,14 @@ const Dashboard = () => {
               />
             </Box>
           </Grid>
-          <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Grid xs={12} sm={12} md={6}>
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
               backgroundColor={colors.primary[500]}
               display='flex'
               alignItems='center'
+              height='200px'
               justifyContent='center'
             >
               <StatBox
@@ -89,7 +91,7 @@ const Dashboard = () => {
               />
             </Box>
           </Grid>
-          <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Grid xs={12} sm={12} md={6}>
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
@@ -97,6 +99,7 @@ const Dashboard = () => {
               display='flex'
               alignItems='center'
               justifyContent='center'
+              height='200px'
             >
               <StatBox
                 title='400'
@@ -108,7 +111,7 @@ const Dashboard = () => {
             </Box>
           </Grid>
 
-          <Grid xs={12} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          {/* <Grid xs={12} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid xs={12} md={11}>
               <Box backgroundColor={colors.primary[400]}>
                 <Box mt='25px' p='0 30px' display='flex' justifyContent='space-between' alignItems='center'>
@@ -126,7 +129,7 @@ const Dashboard = () => {
                 </Box>
               </Box>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </>

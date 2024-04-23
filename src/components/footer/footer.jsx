@@ -1,17 +1,17 @@
+import React from 'react'
 import Facebook from '@mui/icons-material/Facebook'
 import Instagram from '@mui/icons-material/Instagram'
 import LinkedIn from '@mui/icons-material/LinkedIn'
 import { Box, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import Link from 'next/link'
-import React from 'react'
 
 const Footer = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
   return (
-    <footer>
+    <footer data-testid='footer'>
       <Box
         style={{ backgroundColor: colors.primary[500] }}
         className='p-2 d-lg-flex justify-content-center align-content-center justify-content-lg-between '
@@ -19,6 +19,7 @@ const Footer = () => {
         <Box>
           <div className='d-flex  justify-content-center'>
             <Link
+              aria-label='Codentic Software'
               className='ms-1 text-decoration-none'
               style={{ color: colors.grey[100] }}
               href={'https://www.codenticsoftware.com/'}
@@ -28,15 +29,15 @@ const Footer = () => {
           </div>
         </Box>
         <Box className='d-flex justify-content-center'>
-          <Link href='https://www.facebook.com/codentic.software'>
+          <Link aria-label='Facebook' href='https://www.facebook.com/codentic.software'>
             <Facebook style={{ color: colors.grey[100] }} />
           </Link>
           &nbsp;
-          <Link href='https://www.linkedin.com/company/codentic-software'>
+          <Link aria-label='LinkedIn' href='https://www.linkedin.com/company/codentic-software'>
             <LinkedIn style={{ color: colors.grey[100] }} />
           </Link>
           &nbsp;
-          <Link href='https://www.instagram.com/codentic.software/'>
+          <Link aria-label='Instagram' href='https://www.instagram.com/codentic.software/'>
             <Instagram style={{ color: colors.grey[100] }} />
           </Link>
           &nbsp;

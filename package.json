@@ -1,13 +1,26 @@
 {
   "name": "property-management-system",
   "version": "0.1.0",
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ],
+    "verbose": true
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
-    "format": "prettier --write \"src/**/*.{js,jsx}\""
+    "lint": "eslint --fix \"src/**/*.{js,jsx}\"  \"cypress/**/*.{js,jsx}\"",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"  \"cypress/**/*.{js,jsx}\"",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "jest": " jest --coverage  --testTimeout=100000  --verbose --no-cache  --passWithNoTests --runInBand --forceExit --config=jest.config.js "
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -17,8 +30,11 @@
     "@mui/material": "^5.15.14",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "d3": "^7.9.0",
     "d3-interpolate": "^3.0.1",
+    "jest-mock-axios": "^4.7.3",
     "next": "14.1.4",
+    "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-data-table-component": "^7.6.2",
@@ -28,22 +44,40 @@
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5",
+    "sharp": "^0.33.3",
     "styled-components": "^5.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@babel/eslint-parser": "^7.24.1",
+    "@babel/preset-env": "^7.24.4",
+    "@babel/preset-react": "^7.24.1",
     "@iconify/react": "^4.1.1",
     "@nivo/core": "^0.85.1",
     "@nivo/line": "^0.85.1",
     "@popperjs/core": "^2.11.8",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^15.0.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/babel__generator": "^7.6.8",
     "@types/bootstrap": "^5.2.10",
     "@types/d3-delaunay": "^6.0.4",
+    "axios-mock-adapter": "^1.22.0",
+    "cypress": "^13.7.3",
     "d3-array": "^3.2.4",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "^9.1.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-next-dynamic": "^1.0.1",
+    "jsdom": "^24.0.0",
+    "next-router-mock": "^0.9.13",
+    "node-notifier": "^10.0.1",
     "prettier": "^3.2.5",
     "typescript": "^5.4.3"
   }
