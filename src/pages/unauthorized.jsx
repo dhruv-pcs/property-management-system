@@ -4,7 +4,6 @@ import { tokens } from '@theme/theme'
 import Link from 'next/link'
 
 export default function Unauthorized() {
-  
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 

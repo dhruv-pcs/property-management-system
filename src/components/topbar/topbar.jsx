@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { ColorModeContext, tokens } from '@theme/theme'
 import { useTheme, Box, IconButton, InputBase } from '@mui/material'
@@ -11,39 +11,58 @@ import { useProSidebar } from 'react-pro-sidebar'
 import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Topbar = () => {
-
+  const [isMounted, setIsMounted] = useState(false)
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const colorMode = useContext(ColorModeContext)
   const { toggleSidebar, broken } = useProSidebar()
-  const router = useRouter();
+  const router = useRouter()
+
+  useEffect(() => {
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   const handleLogout = async () => {
-      try{
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      if (response.data.statusCode === 200) {
+        router.push('/login')
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        const cookies = document.cookie.split(';')
+
+        cookies.forEach(cookie => {
+          const cookieParts = cookie.split('=')
+          const cookieName = cookieParts[0].trim()
+
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
         })
-        if (response.data.statusCode === 200) {
-          localStorage.clear()
-          router.push('/login')
-        }
-      }catch(error){
-        toast.error('Error Logging Out')
-        console.error(error)
       }
-    
+    } catch (error) {
+      toast.error('Error Logging Out')
+      console.error(error)
+    }
   }
 
   return (
     <>
       <header>
         <Box
+          data-testid='topbar'
           display='flex'
           justifyContent='space-between'
           p={1}
@@ -55,7 +74,12 @@ const Topbar = () => {
         >
           <Box display='flex'>
             {broken && (
-              <IconButton aria-label='Menu' sx={{ margin: '0 6 0 2' }} onClick={() => toggleSidebar()}>
+              <IconButton
+                data-testid='menu'
+                aria-label='Menu'
+                sx={{ margin: '0 6 0 2' }}
+                onClick={() => toggleSidebar()}
+              >
                 <MenuOutlinedIcon />
               </IconButton>
             )}
@@ -76,7 +100,7 @@ const Topbar = () => {
               </IconButton>
             </Link>
 
-            <IconButton aria-label='Logout' onClick={() => handleLogout()}>
+            <IconButton data-testid='logout' aria-label='Logout' onClick={() => handleLogout()}>
               <LogoutIcon />
             </IconButton>
           </Box>

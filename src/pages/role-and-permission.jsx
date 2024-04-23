@@ -48,7 +48,6 @@ const Role_Permission = () => {
       setRole(response.data.data)
     } catch (error) {
       toast.error('Error Fetching Data')
-      console.error(error)
     }
   }
 
@@ -92,7 +91,6 @@ const Role_Permission = () => {
       }
     } catch (error) {
       toast.error('Error Deleting Role')
-      console.error(error)
     }
   }
 
@@ -111,7 +109,7 @@ const Role_Permission = () => {
         </p>
 
         <div className='container-fluid'>
-          <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols g-2'>
+          <div data-testid='role' className='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols g-2'>
             {role.map((item, index) => (
               <div data-testid='role-list' key={item.id} className='col p-2'>
                 <div style={{ backgroundColor: colors.blueAccent[1000], height: '150px' }} className='rounded-2  p-2'>
@@ -130,7 +128,7 @@ const Role_Permission = () => {
                     <div className='mt-5 d-flex justify-content-between'>
                       {/* Edit */}
                       <button
-                        data-testid='edit-role'
+                        data-testid={`edit-role-${index}`}
                         onClick={() => handleEditButton(item)}
                         className='btn fs-5 p-0'
                         style={{ color: colors.grey[100], border: 'none' }}
@@ -142,7 +140,7 @@ const Role_Permission = () => {
                         {/* Delete */}
                         {role_permission[0].remove && (
                           <button
-                            data-testid='delete-role'
+                            data-testid={`delete-role-${index}`}
                             onClick={() => handleDeleteButton(item)}
                             className='btn fs-5 p-0'
                             style={{ color: colors.grey[100], border: 'none', marginRight: '10px' }}
@@ -157,7 +155,7 @@ const Role_Permission = () => {
                         {/* View */}
                         {role_permission[0].view && (
                           <button
-                            data-testid='view-role'
+                            data-testid={`view-role-${index}`}
                             onClick={() => handleViewButton(item)}
                             className='btn fs-5 p-0'
                             style={{ color: colors.grey[100], border: 'none' }}

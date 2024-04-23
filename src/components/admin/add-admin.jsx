@@ -6,7 +6,7 @@ import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useTheme } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -17,28 +17,16 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.string().when('phone', {
-    is: phone => phone && phone.length === 10,
-    then: () =>
-      Yup.string().test(
-        'notEqualToPhone',
-        'Alternate phone number cannot be the same as phone number',
-        function (value) {
-          const phoneValue = this.parent.phone
-
-          return value !== phoneValue
-        }
-      )
-  }),
-  pincode: Yup.number(),
-  role_u_id: Yup.string().required('Role is required')
+  pincode: Yup.number()
 })
 
-const AddAdmin = ({ onUpdate, onClose }) => {
+const AddAdmin = ({ onUpdate, handelAddbutton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [showPassword, setShowPassword] = useState(false)
   const [roles, setRoles] = useState([])
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     register,
@@ -57,12 +45,11 @@ const AddAdmin = ({ onUpdate, onClose }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        onClose()
+        handelAddbutton()
         toast.success('Admin added successfully')
       }
     } catch (error) {
-      toast.error("Admin Can't be created")
-      console.log('error', error)
+      toast.error('Admin cannot be created')
     }
   }
 
@@ -75,16 +62,15 @@ const AddAdmin = ({ onUpdate, onClose }) => {
         const filteredRoles = response.data.data.filter(role => role.name !== 'super-admin')
         setRoles(filteredRoles)
       } catch (error) {
-        console.log('Failed to fetch roles', error)
+        toast.error('Error Fetching Data')
       }
     }
-
     fetchRoles()
   }, [])
 
   return (
     <>
-      <Row>
+      <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>
         <Col xl={12}>
           <Card className='mb-4' style={{ backgroundColor: colors.primary[1100], color: colors.grey[100] }}>
             <Card.Body>
@@ -92,16 +78,28 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>First name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your first name' {...register('first_name')} />
+                      <Form.Label htmlFor='first_name'>First name</Form.Label>
+                      <Form.Control
+                        id='first_name'
+                        data-testid='first_name'
+                        type='text'
+                        placeholder='Enter your first name'
+                        {...register('first_name')}
+                      />
                       {errors.first_name && <span className='text-danger'>{errors.first_name.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Last name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your last name' {...register('last_name')} />
+                      <Form.Label htmlFor='last_name'>Last name</Form.Label>
+                      <Form.Control
+                        id='last_name'
+                        data-testid='last_name'
+                        type='text'
+                        placeholder='Enter your last name'
+                        {...register('last_name')}
+                      />
                       {errors.last_name && <span className='text-danger'>{errors.last_name.message}</span>}
                     </Form.Group>
                   </Col>
@@ -109,17 +107,25 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                 <Row className='gx-3 mb-3'>
                   <Col md={12}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control type='email' placeholder='Enter your email address' {...register('email')} />
+                      <Form.Label htmlFor='email'>Email address</Form.Label>
+                      <Form.Control
+                        id='email'
+                        data-testid='email'
+                        type='email'
+                        placeholder='Enter your email address'
+                        {...register('email')}
+                      />
                       {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label htmlFor='password'>Password</Form.Label>
                       <div className='input-group'>
                         <Form.Control
+                          id='password'
+                          data-testid='password'
                           type={showPassword ? 'text' : 'password'}
                           placeholder='Password'
                           {...register('password')}
@@ -129,7 +135,11 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                           variant='outline-secondary'
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          {showPassword ? (
+                            <VisibilityOff data-testid='visibility-off-icon' />
+                          ) : (
+                            <Visibility data-testid='visibility-icon' />
+                          )}
                         </Button>
                       </div>
                       {errors.password && <span className='text-danger'>{errors.password.message}</span>}
@@ -137,8 +147,8 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-3'>
-                      <Form.Label>Role</Form.Label>
-                      <Form.Select {...register('role_u_id')}>
+                      <Form.Label htmlFor='role_u_id'>Role</Form.Label>
+                      <Form.Select id='role_u_id' data-testid='role_u_id' {...register('role_u_id')}>
                         <option value=''>Select a role</option>
                         {roles.map(role => (
                           <option key={role.u_id} value={role.u_id}>
@@ -146,63 +156,92 @@ const AddAdmin = ({ onUpdate, onClose }) => {
                           </option>
                         ))}
                       </Form.Select>
-                      {errors.role && <span className='text-danger'>{errors.role.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Phone number</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your phone number' {...register('phone')} />
+                      <Form.Label htmlFor='phone'>Phone number</Form.Label>
+                      <Form.Control
+                        id='phone'
+                        data-testid='phone'
+                        type='text'
+                        placeholder='Enter your phone number'
+                        {...register('phone')}
+                      />
                       {errors.phone && <span className='text-danger'>{errors.phone.message}</span>}
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Alternative Phone No:</Form.Label>
+                      <Form.Label htmlFor='alternate_phone'>Alternative Phone No:</Form.Label>
                       <Form.Control
+                        id='alternate_phone'
+                        data-testid='alternate_phone'
                         type='text'
                         placeholder='Alternative phone number'
-                        {...register('alternate_phone', {
-                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
-                        })}
+                        {...register('alternate_phone')}
                       />
-                      {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>City</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your city' {...register('city')} />
+                      <Form.Label htmlFor='city'>City</Form.Label>
+                      <Form.Control
+                        id='city'
+                        data-testid='city'
+                        type='text'
+                        placeholder='Enter your city'
+                        {...register('city')}
+                      />
                     </Form.Group>
                   </Col>
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>State</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your state' {...register('state')} />
+                      <Form.Label htmlFor='state'>State</Form.Label>
+                      <Form.Control
+                        id='state'
+                        data-testid='state'
+                        type='text'
+                        placeholder='Enter your state'
+                        {...register('state')}
+                      />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Country</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your country' {...register('country')} />
+                      <Form.Label htmlFor='country'>Country</Form.Label>
+                      <Form.Control
+                        id='country'
+                        data-testid='country'
+                        type='text'
+                        placeholder='Enter your country'
+                        {...register('country')}
+                      />
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
-                      <Form.Control type='text' placeholder='Enter your pincode' {...register('pincode')} />
+                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
+                      <Form.Control
+                        id='pincode'
+                        data-testid='pincode'
+                        type='text'
+                        placeholder='Enter your pincode'
+                        {...register('pincode')}
+                      />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Button
+                  data-testid='add-admin-button'
                   type='submit'
                   aria-label='Add Admin'
                   variant='primary'

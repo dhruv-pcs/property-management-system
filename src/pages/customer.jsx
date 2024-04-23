@@ -1,3 +1,5 @@
+'use client'
+
 import AddCustomer from '@components/customer/add-customer'
 import EditCustomer from '@components/customer/edit-customer'
 import ViewCustomer from '@components/customer/view-customer'
@@ -37,7 +39,6 @@ const Customer = () => {
       setCustomerData(response.data.data.customerData)
     } catch (error) {
       toast.error('Error Fetching Data')
-      console.error(error)
     }
   }
 
@@ -70,17 +71,15 @@ const Customer = () => {
 
   const handelDeleteConfirmation = async selectedRow => {
     try {
-      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${selectedRow.u_id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/customer/${selectedRow.u_id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
-      if (response.data.statusCode === 201) {
-        setOpenDelete(!openDelete)
-        handleCustomerDataUpdate()
-        toast.success('Customer Deleted Successfully')
-      }
+
+      setOpenDelete(!openDelete)
+      handleCustomerDataUpdate()
+      toast.success('Customer Deleted Successfully')
     } catch (error) {
       toast.error('Error Deleting Customer')
-      console.log('error', error)
     }
   }
 
@@ -107,6 +106,7 @@ const Customer = () => {
         row.is_verified ? (
           <>
             <div
+              data-testid='verified'
               className=' text-center fw-bold py-1 px-2 rounded-pill'
               style={{ backgroundColor: colors.greenAccent[600] }}
             >
@@ -116,6 +116,7 @@ const Customer = () => {
         ) : (
           <>
             <div
+              data-testid='not-verified'
               className='text-center fw-bold py-1 px-2 rounded-pill'
               style={{ backgroundColor: colors.redAccent[600] }}
             >
@@ -130,6 +131,7 @@ const Customer = () => {
         row.status ? (
           <>
             <div
+              data-testid='active'
               className='text-center py-1 px-2 fw-bold rounded-pill'
               style={{ backgroundColor: colors.greenAccent[600] }}
             >
@@ -139,6 +141,7 @@ const Customer = () => {
         ) : (
           <>
             <div
+              data-testid='not-active'
               className=' text-center py-1 px-2 fw-bold rounded-pill'
               style={{ backgroundColor: colors.redAccent[600] }}
             >
@@ -447,7 +450,7 @@ const Customer = () => {
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Delete customer
+          Delete Customer
         </DialogTitle>
         <IconButton
           aria-label='close'
