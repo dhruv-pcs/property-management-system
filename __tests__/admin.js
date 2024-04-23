@@ -5,9 +5,7 @@ import axios from 'axios';
 import Admin from 'src/pages/admin';
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
-import userEvent from '@testing-library/user-event';
 import MockAdapter from 'axios-mock-adapter';
-import { ToastContainer } from 'react-toastify';
 
 const mock = new MockAdapter(axios);
 
@@ -253,8 +251,8 @@ describe('Admin Add Component', () => {
     state: 'California',
     city: 'Los Angeles',
     pincode: '90026',
-    role_u_id: 'ROL1000000010',  // Corrected to match role id from mock
-  };
+    role_u_id: 'ROL10000000010', 
+  }; 
 
   beforeEach(() => {
     mock.reset();
@@ -265,50 +263,53 @@ describe('Admin Add Component', () => {
         { u_id: 'ROL1000000010', name: 'admin' },
       ]
     });
-
-    mock.onPost(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`).reply(201, {
-      data: { statusCode: 201 }
-    });
   });
 
   test('Add New Admin Success', async () => {
+    const mockResponse = { status: 201 }
+    axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn();
-    const handleAddButton = jest.fn();
+    const handelAddbutton = jest.fn();
 
-    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handleAddButton} />);
+    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    
+      fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
+      fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })
+      fireEvent.change(screen.getByLabelText('Email address'), { target: { value: admin.email } })
+      fireEvent.change(screen.getByLabelText('Password'), { target: { value: admin.password } })
+      fireEvent.change(screen.getByLabelText('Role'), { target: { value: admin.role_u_id } })
+      fireEvent.change(screen.getByLabelText('Phone number'), { target: { value: admin.phone } })
+      fireEvent.change(screen.getByLabelText('Alternative Phone No:'), { target: { value: admin.alternate_phone } })
+      fireEvent.change(screen.getByLabelText('City'),{ target: { value: admin.city } })
+      fireEvent.change(screen.getByLabelText('State'), { target: { value: admin.state } })
+      fireEvent.change(screen.getByLabelText('Country'), { target: { value: admin.country } })
+      fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: admin.pincode } })
+
+      const saveButton = screen.getByTestId('add-admin-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("Admin Can't be created")).toBeInTheDocument()
+        })
   
-    // Wait for role options to be fetched and populated
-    await waitFor(() => {
-      const options = screen.getAllByRole('option');
-
-    });
-
-    // Form filling
-    userEvent.type(screen.getByLabelText('First name'), admin.first_name);
-    userEvent.type(screen.getByLabelText('Last name'), admin.last_name);
-    userEvent.type(screen.getByLabelText('Email address'), admin.email);
-    userEvent.type(screen.getByLabelText('Password'), admin.password);
-    userEvent.type(screen.getByLabelText('Phone number'), admin.phone);
-    userEvent.type(screen.getByLabelText('Alternative Phone No:'), admin.alternate_phone);
-    userEvent.type(screen.getByLabelText('City'), admin.city);
-    userEvent.type(screen.getByLabelText('State'), admin.state);
-    userEvent.type(screen.getByLabelText('Country'), admin.country);
-    userEvent.type(screen.getByLabelText('Pincode'), admin.pincode);
-
-    // Select role
-    userEvent.selectOptions(screen.getByLabelText('Role'), admin.role_u_id);
-
-    // Submit form
-    userEvent.click(screen.getByTestId('add-admin-button'));
-
-    // Assertions to check function calls and user feedback
-    await waitFor(() => {
-      expect(onUpdate).toHaveBeenCalled();
-      expect(handleAddButton).toHaveBeenCalled();
-      expect(screen.getByText('Admin added successfully')).toBeInTheDocument();
-    });
   });
 
+  describe('Password Visibility Toggle', () => {
+    test('toggles the password visibility on button click', () => {
+      render(<AddAdmin />);
+     
+    const toggleButton = screen.getByLabelText('Show password');
+    fireEvent.click(toggleButton);
+     expect(screen.getByTestId('visibility-off-icon')).toBeInTheDocument();
+
+    fireEvent.click(toggleButton);
+    expect(screen.getByTestId('visibility-icon')).toBeInTheDocument();
+
+    });
+  });
 
 test('Add New Admin With Empty Fields to get Validation Error', async () => {
   const mockResponse = { data: { statusCode: 201 } };

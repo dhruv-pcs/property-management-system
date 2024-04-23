@@ -151,7 +151,7 @@ const AddAdmin = ({  onUpdate, handelAddbutton }) => {
                           variant='outline-secondary'
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          {showPassword ? <VisibilityOff data-testid="visibility-off-icon" /> : <Visibility data-testid="visibility-icon" />}
                         </Button>
                       </div>
                       {errors.password && <span className='text-danger'>{errors.password.message}</span>}
