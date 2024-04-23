@@ -14,7 +14,6 @@ import {
 } from '@mui/material'
 import { tokens } from '@theme/theme'
 
-
 const ViewRole = ({ roleData }) => {
   const [moduleData, setModuleData] = useState([])
   const [permissions, setPermissions] = useState({})
@@ -25,32 +24,31 @@ const ViewRole = ({ roleData }) => {
 
   useEffect(() => {
     const fetchModuleData = async () => {
-        const roleResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        setRoleName(roleResponse.data.data.roleName)
-        const rolePermissions = roleResponse.data.data.permissions
+      const roleResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      setRoleName(roleResponse.data.data.roleName)
+      const rolePermissions = roleResponse.data.data.permissions
 
-        const initialPermissions = {}
-        const moduleData = []
-        rolePermissions.forEach(permission => {
-          const moduleId = permission.u_id
-          if (!initialPermissions[moduleId]) {
-            initialPermissions[moduleId] = {
-              selectAll:
-                permission.view && permission.add && permission.update && permission.remove && permission.notification,
-              view: permission.view,
-              add: permission.add,
-              update: permission.update,
-              remove: permission.remove,
-              notification: permission.notification
-            }
-            moduleData.push(permission)
+      const initialPermissions = {}
+      const moduleData = []
+      rolePermissions.forEach(permission => {
+        const moduleId = permission.u_id
+        if (!initialPermissions[moduleId]) {
+          initialPermissions[moduleId] = {
+            selectAll:
+              permission.view && permission.add && permission.update && permission.remove && permission.notification,
+            view: permission.view,
+            add: permission.add,
+            update: permission.update,
+            remove: permission.remove,
+            notification: permission.notification
           }
-        })
-        setPermissions(initialPermissions)
-        setModuleData(moduleData)
-     
+          moduleData.push(permission)
+        }
+      })
+      setPermissions(initialPermissions)
+      setModuleData(moduleData)
     }
     fetchModuleData()
   }, [roleData])

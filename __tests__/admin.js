@@ -282,7 +282,47 @@ describe('Admin Add Component', () => {
         })
 
         await waitFor(() => {
-          expect(screen.getByText("Admin Can't be created")).toBeInTheDocument()
+          expect(onUpdate).toHaveBeenCalled()
+          expect(handelAddbutton).toHaveBeenCalled()
+          expect(screen.getByText('Admin added successfully')).toBeInTheDocument()
+        })
+  
+  });
+
+  test('Add New Admin Error', async () => {
+    axios.post = jest.fn().mockRejectedValue( { data: { statusCode: 500}} )
+    const onUpdate = jest.fn();
+    const handelAddbutton = jest.fn();
+
+  
+    act(() => {
+      
+      render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    })
+    
+      fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
+      fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })
+      fireEvent.change(screen.getByLabelText('Email address'), { target: { value: admin.email } })
+      fireEvent.change(screen.getByLabelText('Password'), { target: { value: admin.password } })
+      fireEvent.change(screen.getByLabelText('Role'), { target: { value: admin.role_u_id } })
+      fireEvent.change(screen.getByLabelText('Phone number'), { target: { value: admin.phone } })
+      fireEvent.change(screen.getByLabelText('Alternative Phone No:'), { target: { value: admin.alternate_phone } })
+      fireEvent.change(screen.getByLabelText('City'),{ target: { value: admin.city } })
+      fireEvent.change(screen.getByLabelText('State'), { target: { value: admin.state } })
+      fireEvent.change(screen.getByLabelText('Country'), { target: { value: admin.country } })
+      fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: admin.pincode } })
+
+      const saveButton = screen.getByTestId('add-admin-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+
+        })
+
+        await waitFor(() => {
+          expect(onUpdate).not.toHaveBeenCalled()
+          expect(handelAddbutton).not.toHaveBeenCalled()
+          expect(screen.getByText('Admin cannot be created')).toBeInTheDocument()
         })
   
   });

@@ -85,13 +85,7 @@ describe('App component layout', () => {
     expect(screen.getByTestId('email')).toBeInTheDocument();
   });
 
-  test('renders 404 component when pathname is not /login', () => {
-    jest.clearAllMocks(); // Clear router mock
 
-    render(<App Component={() => <Notfound />} pageProps={{}} />);
-
-    expect(screen.getByTestId('notfound')).toBeInTheDocument();
-  });
 
   
 

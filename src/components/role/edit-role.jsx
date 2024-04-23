@@ -119,7 +119,8 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
       setModuleData(moduleData)
     }
     fetchModuleData()
-  }, [roleData, setValue])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onSubmit = async () => {
     setFormSubmitted(true)
