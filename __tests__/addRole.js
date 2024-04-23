@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
-import AddRole from '@components/role/add-role'
+import AddRole, { handleGlobalSelectAllChange, handlePermissionChange } from '@components/role/add-role'
 
 jest.mock('axios')
 
@@ -117,6 +117,85 @@ describe('AddRole component', () => {
       expect(axios.post).toHaveBeenCalled()
       expect(screen.getByText('Failed to create role')).toBeInTheDocument()
     })
+  })
+
+  test('updates selectAll permission correctly', () => {
+    const setPermissionsMock = jest.fn()
+
+    handlePermissionChange(
+      {
+        1: {
+          module_u_id: 1,
+          selectAll: false,
+          view: false,
+          add: false,
+          update: false,
+          remove: false,
+          notification: false
+        }
+      },
+      setPermissionsMock,
+      {
+        module_u_id: 1,
+        permissionType: 'selectAll',
+        value: true
+      }
+    )
+
+    expect(setPermissionsMock).toHaveBeenCalledWith({
+      1: { module_u_id: 1, selectAll: true, view: true, add: true, update: true, remove: true, notification: true }
+    })
+  })
+
+  test('updates view permission correctly', () => {
+    const setPermissionsMock = jest.fn()
+
+    handlePermissionChange(
+      {
+        1: {
+          module_u_id: 1,
+          selectAll: false,
+          view: false,
+          add: false,
+          update: false,
+          remove: false,
+          notification: false
+        }
+      },
+      setPermissionsMock,
+      {
+        module_u_id: 1,
+        permissionType: 'view',
+        value: true
+      }
+    )
+
+    expect(setPermissionsMock).toHaveBeenCalledWith({
+      1: { module_u_id: 1, selectAll: false, view: true, add: false, update: false, remove: false, notification: false }
+    })
+  })
+
+  test('updates permissions for global selectAll correctly', async() => {
+    const setPermissionsMock = jest.fn()
+
+    const moduleData = [
+      { u_id: 1, alias_name: 'Module 1' },
+      { u_id: 2, alias_name: 'Module 2' }
+    ]
+
+    const permissions = {
+      1: { view: false, add: false, update: false, remove: false, notification: false },
+      2: { view: false, add: false, update: false, remove: false, notification: false }
+    }
+
+    handleGlobalSelectAllChange(true, permissions, setPermissionsMock, moduleData)
+
+    const expectedPermissions = {
+      1: { selectAll: true, view: true, add: true, update: true, remove: true, notification: true },
+      2: { selectAll: true, view: true, add: true, update: true, remove: true, notification: true }
+    }
+
+    expect(setPermissionsMock).toHaveBeenCalledWith(expectedPermissions)
   })
 
 

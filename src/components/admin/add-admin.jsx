@@ -17,21 +17,7 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  alternate_phone: Yup.string().when('phone', {
-    is: phone => phone && phone.length === 10,
-    then: () =>
-      Yup.string().test(
-        'notEqualToPhone',
-        'Alternate phone number cannot be the same as phone number',
-        function (value) {
-          const phoneValue = this.parent.phone
-
-          return value !== phoneValue
-        }
-      )
-  }),
   pincode: Yup.number(),
-  role_u_id: Yup.string().required('Role is required')
 })
 
 const AddAdmin = ({ onUpdate, handelAddbutton }) => {
@@ -63,9 +49,8 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
         toast.success('Admin added successfully')
       }
     } catch (error) {
-      toast.error("Admin Can't be created")
+      toast.error("Admin cannot be created")
 
-      // console.log('error', error)
     }
   }
 
@@ -78,7 +63,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
         const filteredRoles = response.data.data.filter(role => role.name !== 'super-admin')
         setRoles(filteredRoles)
       } catch (error) {
-        console.log('Failed to fetch roles', error)
+        toast.error('Error Fetching Data')
       }
     }
     fetchRoles()
@@ -168,7 +153,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                           </option>
                         ))}
                       </Form.Select>
-                      {errors.role && <span className='text-danger'>{errors.role.message}</span>}
+                      
                     </Form.Group>
                   </Col>
                 </Row>
@@ -195,11 +180,9 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
                         data-testid='alternate_phone'
                         type='text'
                         placeholder='Alternative phone number'
-                        {...register('alternate_phone', {
-                          validate: value => (value && value.length === 10 ? Yup.ref('phone') !== value : true)
-                        })}
+                        {...register('alternate_phone')}
                       />
-                      {errors.alternate_phone && <span className='text-danger'>{errors.alternate_phone.message}</span>}
+                      
                     </Form.Group>
                   </Col>
                 </Row>

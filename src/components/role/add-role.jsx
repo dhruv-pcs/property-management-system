@@ -18,6 +18,52 @@ import { useForm } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
 
 
+export const handlePermissionChange = (permissions,setPermissions,moduleName, permissionType, value) => {
+  if (permissionType === 'view' && !value) {
+    const updatedPermissions = {
+      ...permissions,
+      [moduleName]: {
+        ...permissions[moduleName],
+        view: false,
+        add: false,
+        update: false,
+        remove: false,
+        notification: false,
+        selectAll: false
+      }
+    }
+    setPermissions(updatedPermissions)
+  } else {
+    setPermissions(prevPermissions => ({
+      ...prevPermissions,
+      [moduleName]: {
+        ...prevPermissions[moduleName],
+        [permissionType]: value
+      }
+    }))
+  }
+}
+
+export const handleGlobalSelectAllChange = (permissions, setPermissions,setSelectAll,value) => {
+  setSelectAll(value)
+
+  const updatedPermissions = {}
+  Object.keys(permissions).forEach(moduleName => {
+    updatedPermissions[moduleName] = {
+      ...permissions[moduleName],
+      selectAll: value,
+      view: value,
+      add: value,
+      update: value,
+      remove: value,
+      notification: value
+    }
+  })
+  setPermissions(updatedPermissions)
+}
+
+
+
 const AddRole = ({ onUpdate, onClose }) => {
   const [data, setData] = useState([])
   const [permissions, setPermissions] = useState({})
@@ -61,31 +107,7 @@ const AddRole = ({ onUpdate, onClose }) => {
     fetchData()
   }, [])
 
-  const handlePermissionChange = (moduleName, permissionType, value) => {
-    if (permissionType === 'view' && !value) {
-      const updatedPermissions = {
-        ...permissions,
-        [moduleName]: {
-          ...permissions[moduleName],
-          view: false,
-          add: false,
-          update: false,
-          remove: false,
-          notification: false,
-          selectAll: false
-        }
-      }
-      setPermissions(updatedPermissions)
-    } else {
-      setPermissions(prevPermissions => ({
-        ...prevPermissions,
-        [moduleName]: {
-          ...prevPermissions[moduleName],
-          [permissionType]: value
-        }
-      }))
-    }
-  }
+
 
   const handleSelectAllChange = (moduleName, value) => {
     setPermissions(prevPermissions => ({
@@ -102,23 +124,7 @@ const AddRole = ({ onUpdate, onClose }) => {
     }))
   }
 
-  const handleGlobalSelectAllChange = value => {
-    setSelectAll(value)
 
-    const updatedPermissions = {}
-    Object.keys(permissions).forEach(moduleName => {
-      updatedPermissions[moduleName] = {
-        ...permissions[moduleName],
-        selectAll: value,
-        view: value,
-        add: value,
-        update: value,
-        remove: value,
-        notification: value
-      }
-    })
-    setPermissions(updatedPermissions)
-  }
 
   const onSubmit = async data => {
     try {
@@ -184,7 +190,7 @@ const AddRole = ({ onUpdate, onClose }) => {
               type='checkbox'
               checked={selectAll}
               style={{ marginLeft: '5px' }}
-              onChange={e => handleGlobalSelectAllChange(e.target.checked)}
+              onChange={e => handleGlobalSelectAllChange(permissions, setPermissions,setSelectAll,e.target.checked)}
               data-testid='select-all-checkbox'
             />
             <label htmlFor='select-all' className='form-check-label'>
@@ -228,7 +234,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                         type='checkbox'
                         checked={permissions[item.u_id]?.view || false}
                         disabled={selectAll}
-                        onChange={e => handlePermissionChange(item.u_id, 'view', e.target.checked)}
+                        onChange={e => handlePermissionChange(permissions, setPermissions,item.u_id, 'view', e.target.checked)}
                         data-testid={`view-checkbox-${item.u_id}`} // Test id for view checkbox of each module
                       />
                     </TableCell>
@@ -237,7 +243,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                         className='form-check-input'
                         type='checkbox'
                         checked={permissions[item.u_id]?.add || false}
-                        onChange={e => handlePermissionChange(item.u_id, 'add', e.target.checked)}
+                        onChange={e => handlePermissionChange(permissions, setPermissions,item.u_id, 'add', e.target.checked)}
                         disabled={!permissions[item.u_id]?.view || selectAll}
                         data-testid={`add-checkbox-${item.u_id}`} // Test id for add checkbox of each module
                       />
@@ -247,7 +253,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                         className='form-check-input'
                         type='checkbox'
                         checked={permissions[item.u_id]?.update || false}
-                        onChange={e => handlePermissionChange(item.u_id, 'update', e.target.checked)}
+                        onChange={e => handlePermissionChange(permissions, setPermissions,item.u_id, 'update', e.target.checked)}
                         disabled={!permissions[item.u_id]?.view || selectAll}
                         data-testid={`update-checkbox-${item.u_id}`} // Test id for update checkbox of each module
                       />
@@ -257,7 +263,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                         className='form-check-input'
                         type='checkbox'
                         checked={permissions[item.u_id]?.remove || false}
-                        onChange={e => handlePermissionChange(item.u_id, 'delete', e.target.checked)}
+                        onChange={e => handlePermissionChange(permissions, setPermissions,item.u_id, 'delete', e.target.checked)}
                         disabled={!permissions[item.u_id]?.view || selectAll}
                         data-testid={`delete-checkbox-${item.u_id}`} // Test id for delete checkbox of each module
                       />
@@ -267,7 +273,7 @@ const AddRole = ({ onUpdate, onClose }) => {
                         className='form-check-input'
                         type='checkbox'
                         checked={permissions[item.u_id]?.notification || false}
-                        onChange={e => handlePermissionChange(item.u_id, 'notification', e.target.checked)}
+                        onChange={e => handlePermissionChange(permissions, setPermissions,item.u_id, 'notification', e.target.checked)}
                         disabled={!permissions[item.u_id]?.view || selectAll}
                         data-testid={`notification-checkbox-${item.u_id}`} // Test id for notification checkbox of each module
                       />

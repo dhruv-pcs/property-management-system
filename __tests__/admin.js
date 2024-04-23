@@ -240,21 +240,25 @@ describe('Admin Add Component', () => {
   }; 
 
   beforeEach(() => {
-    mock.reset();
-    mock.onGet(`${process.env.NEXT_PUBLIC_API_URL}/api/role`).reply(200, {
-      data: [
-        { u_id: 'ROL1000000001', name: 'super-admin' },
-        { u_id: 'ROL1000000009', name: 'Owner' },
-        { u_id: 'ROL1000000010', name: 'admin' },
-      ]
+    
+    axios.get = jest.fn().mockResolvedValue({
+
+      data: {
+        data: [
+          { u_id: 'ROL1000000001', name: 'super-admin' },
+          { u_id: 'ROL1000000009', name: 'Owner' },
+          { u_id: 'ROL1000000010', name: 'admin' },
+        ]
+      }
     });
   });
 
   test('Add New Admin Success', async () => {
-    const mockResponse = { status: 201 }
-    axios.patch = jest.fn().mockResolvedValue(mockResponse)
+    axios.post = jest.fn().mockResolvedValue( { data: { statusCode: 201}} )
     const onUpdate = jest.fn();
     const handelAddbutton = jest.fn();
+
+  
 
     render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
     
@@ -274,25 +278,102 @@ describe('Admin Add Component', () => {
 
         act(() => {
           fireEvent.click(saveButton)
+
         })
 
         await waitFor(() => {
-          expect(screen.getByText("Admin Can't be created")).toBeInTheDocument()
+          expect(onUpdate).toHaveBeenCalled()
+          expect(handelAddbutton).toHaveBeenCalled()
+          expect(screen.getByText('Admin added successfully')).toBeInTheDocument()
         })
   
   });
 
-  describe('Password Visibility Toggle', () => {
-    test('toggles the password visibility on button click', () => {
-      render(<AddAdmin />);
-     
-    const toggleButton = screen.getByLabelText('Show password');
-    fireEvent.click(toggleButton);
-     expect(screen.getByTestId('visibility-off-icon')).toBeInTheDocument();
+  test('Add New Admin Error', async () => {
+    axios.post = jest.fn().mockRejectedValue( { data: { statusCode: 500}} )
+    const onUpdate = jest.fn();
+    const handelAddbutton = jest.fn();
 
-    fireEvent.click(toggleButton);
-    expect(screen.getByTestId('visibility-icon')).toBeInTheDocument();
+  
 
-    });
+    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    
+      fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
+      fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })
+      fireEvent.change(screen.getByLabelText('Email address'), { target: { value: admin.email } })
+      fireEvent.change(screen.getByLabelText('Password'), { target: { value: admin.password } })
+      fireEvent.change(screen.getByLabelText('Role'), { target: { value: admin.role_u_id } })
+      fireEvent.change(screen.getByLabelText('Phone number'), { target: { value: admin.phone } })
+      fireEvent.change(screen.getByLabelText('Alternative Phone No:'), { target: { value: admin.alternate_phone } })
+      fireEvent.change(screen.getByLabelText('City'),{ target: { value: admin.city } })
+      fireEvent.change(screen.getByLabelText('State'), { target: { value: admin.state } })
+      fireEvent.change(screen.getByLabelText('Country'), { target: { value: admin.country } })
+      fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: admin.pincode } })
+
+      const saveButton = screen.getByTestId('add-admin-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+
+        })
+
+        await waitFor(() => {
+          expect(onUpdate).not.toHaveBeenCalled()
+          expect(handelAddbutton).not.toHaveBeenCalled()
+          expect(screen.getByText('Admin cannot be created')).toBeInTheDocument()
+        })
+  
   });
+
+
+   test('Add New Admin to enter empty Fields to get Validation Error', async () => {
+    const mockResponse = { status: 201 }
+    axios.patch = jest.fn().mockResolvedValue(mockResponse)
+    const onUpdate = jest.fn();
+    const handelAddbutton = jest.fn();
+
+
+    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
+    
+      fireEvent.change(screen.getByLabelText('First name'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Last name'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Email address'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Password'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Role'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Phone number'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Alternative Phone No:'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('City'),{ target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('State'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Country'), { target: { value: "" } })
+      fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: "" } })
+
+      const saveButton = screen.getByTestId('add-admin-button')
+
+        act(() => {
+          fireEvent.click(saveButton)
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText("First name is required")).toBeInTheDocument()
+          expect(screen.getByText("Last name is required")).toBeInTheDocument()
+          expect(screen.getByText("Email is required")).toBeInTheDocument()
+          expect(screen.getByText("Phone number is required")).toBeInTheDocument()
+        })
+  
+  })
+  
 })
+
+describe('Password Visibility Toggle', () => {
+  test('toggles the password visibility on button click', () => {
+    render(<AddAdmin />);
+   
+  const toggleButton = screen.getByLabelText('Show password');
+  fireEvent.click(toggleButton);
+   expect(screen.getByTestId('visibility-off-icon')).toBeInTheDocument();
+
+  fireEvent.click(toggleButton);
+  expect(screen.getByTestId('visibility-icon')).toBeInTheDocument();
+
+  });
+});
