@@ -4,7 +4,6 @@ import '@testing-library/jest-dom'
 import App from 'src/pages/_app'
 import Topbar from '@components/topbar/topbar'
 import Footer from '@components/footer/footer'
-import GoToTopButton from '@components/go-to-top-button/go-to-top-button'
 import { ColorModeContext } from '@theme/theme'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import Login from 'src/pages/login'
@@ -56,7 +55,6 @@ describe('App component layout', () => {
             Component={() => <div data-testid='mock-component'>Mock Component</div>}
             pageProps={pageProps}
           />
-          <GoToTopButton />
           <Footer />
         </ProSidebarProvider>
       </ColorModeContext.Provider>

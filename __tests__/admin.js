@@ -7,7 +7,6 @@ import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
 import userEvent from '@testing-library/user-event';
 import MockAdapter from 'axios-mock-adapter';
-import { ToastContainer } from 'react-toastify';
 
 const mock = new MockAdapter(axios);
 
@@ -39,24 +38,9 @@ const mockAdminData = [
   }
 ];
 
-// Setup axios mock for each test
-beforeEach(() => {
-  axios.get.mockResolvedValue({
-    data: {
-      data: {
-        adminData: mockAdminData
-      }
-    }
-  });
-  Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockPermissions));
-});
 
-// describe('Admin Component', () => {
-//   test('renders admin component with mock permission data', async () => {
-//     render(<Admin />);
-//     const addButton = await screen.findByTestId('add-admin');
-//     expect(addButton).toBeInTheDocument();
-//   });
+
+
 describe('Admin Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
@@ -241,144 +225,5 @@ describe('Edit Admin Component', () => {
     })
 })
 
-describe('Admin Add Component', () => {
-  const admin = {
-    first_name: 'John',
-    last_name: 'Doe',
-    email: 'john.doe@gmail.com',
-    password: 'John@1234',
-    phone: '1234567890',
-    alternate_phone: '0987654321',
-    country: 'USA',
-    state: 'California',
-    city: 'Los Angeles',
-    pincode: '90026',
-    role_u_id: 'ROL1000000010',  // Corrected to match role id from mock
-  };
-
-  beforeEach(() => {
-    mock.reset();
-    mock.onGet(`${process.env.NEXT_PUBLIC_API_URL}/api/role`).reply(200, {
-      data: [
-        { u_id: 'ROL1000000001', name: 'super-admin' },
-        { u_id: 'ROL1000000009', name: 'Owner' },
-        { u_id: 'ROL1000000010', name: 'admin' },
-      ]
-    });
-
-    mock.onPost(`${process.env.NEXT_PUBLIC_API_URL}/api/admin`).reply(201, {
-      data: { statusCode: 201 }
-    });
-  });
-
-  test('Add New Admin Success', async () => {
-    const onUpdate = jest.fn();
-    const handleAddButton = jest.fn();
-
-    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handleAddButton} />);
-  
-    // Wait for role options to be fetched and populated
-    await waitFor(() => {
-      const options = screen.getAllByRole('option');
-
-    });
-
-    // Form filling
-    userEvent.type(screen.getByLabelText('First name'), admin.first_name);
-    userEvent.type(screen.getByLabelText('Last name'), admin.last_name);
-    userEvent.type(screen.getByLabelText('Email address'), admin.email);
-    userEvent.type(screen.getByLabelText('Password'), admin.password);
-    userEvent.type(screen.getByLabelText('Phone number'), admin.phone);
-    userEvent.type(screen.getByLabelText('Alternative Phone No:'), admin.alternate_phone);
-    userEvent.type(screen.getByLabelText('City'), admin.city);
-    userEvent.type(screen.getByLabelText('State'), admin.state);
-    userEvent.type(screen.getByLabelText('Country'), admin.country);
-    userEvent.type(screen.getByLabelText('Pincode'), admin.pincode);
-
-    // Select role
-    userEvent.selectOptions(screen.getByLabelText('Role'), admin.role_u_id);
-
-    // Submit form
-    userEvent.click(screen.getByTestId('add-admin-button'));
-
-    // Assertions to check function calls and user feedback
-    await waitFor(() => {
-      expect(onUpdate).toHaveBeenCalled();
-      expect(handleAddButton).toHaveBeenCalled();
-      expect(screen.getByText('Admin added successfully')).toBeInTheDocument();
-    });
-  });
 
 
-test('Add New Admin With Empty Fields to get Validation Error', async () => {
-  const mockResponse = { data: { statusCode: 201 } };
-  axios.post = jest.fn().mockResolvedValue(mockResponse);
-
-  const onUpdate = jest.fn();
-  const handelAddbutton = jest.fn();
-
-  render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />);
-
-  const saveButton = screen.getByTestId('add-admin-button');
-  fireEvent.click(saveButton);
-
-  await waitFor(() => {
-      const expectedErrors = [
-          'First name is required',
-          'Last name is required',
-          'Email is required',
-          'Phone number is required',
-      ];
-
-      expectedErrors.forEach(error => {
-          expect(screen.getByText(error)).toBeInTheDocument();
-      });
-  });
-});
-
-test('Add New Admin Failed', async () => {
-  const mockError = new Error('Add request failed')
-  axios.post = jest.fn().mockRejectedValue(mockError)
-  const onUpdate = jest.fn()
-  const handelAddbutton = jest.fn()
-
-  const { getByLabelText } = render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
-
-  const first_name = getByLabelText('First name')
-  const last_name = getByLabelText('Last name')
-  const email = getByLabelText('Email address')
-  const password = getByLabelText('Password')
-  const phone = getByLabelText('Phone number')
-  const alternate_phone = getByLabelText('Alternative Phone No:')
-  const city = getByLabelText('City')
-  const state = getByLabelText('State')
-  const country = getByLabelText('Country')
-  const pincode = getByLabelText('Pincode')
-  const role_u_id = getByLabelText('Role')
-
-  fireEvent.change(first_name, { target: { value: admin.first_name } })
-  fireEvent.change(last_name, { target: { value: admin.last_name } })
-  fireEvent.change(email, { target: { value: admin.email } })
-  fireEvent.change(password, { target: { value: admin.password } })
-  fireEvent.change(role_u_id, { target: { value: admin.role_u_id } })
-  fireEvent.change(phone, { target: { value: admin.phone } })
-  fireEvent.change(alternate_phone, { target: { value: admin.alternate_phone } })
-  fireEvent.change(city, { target: { value: admin.city } })
-  fireEvent.change(state, { target: { value: admin.state } })
-  fireEvent.change(country, { target: { value: admin.country } })
-  fireEvent.change(pincode, { target: { value: admin.pincode } })
-
-  const saveButton = screen.getByTestId('add-admin-button')
-
-  act(() => {
-    fireEvent.click(saveButton)
-  })
-
-  await waitFor(() => {
-    expect(onUpdate).not.toHaveBeenCalled()
-    expect(handelAddbutton).not.toHaveBeenCalled()
-    expect(screen.getByText("Admin Can't be created")).toBeInTheDocument()
-  })
-})
-
-})

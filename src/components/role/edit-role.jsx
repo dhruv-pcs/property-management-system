@@ -119,45 +119,36 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
       setModuleData(moduleData)
     }
     fetchModuleData()
-  }, [roleData,setValue])
+  }, [roleData, setValue])
 
   const onSubmit = async () => {
-    try {
-      setFormSubmitted(true)
-      const permissionsPayload = []
-      Object.keys(permissions).forEach(moduleId => {
-        const moduleData = permissions[moduleId]
-        permissionsPayload.push({
-          u_id: moduleId,
-          view: moduleData.view,
-          add: moduleData.add,
-          update: moduleData.update,
-          remove: moduleData.remove,
-          notification: moduleData.notification
-        })
+    setFormSubmitted(true)
+    const permissionsPayload = []
+    Object.keys(permissions).forEach(moduleId => {
+      const moduleData = permissions[moduleId]
+      permissionsPayload.push({
+        u_id: moduleId,
+        view: moduleData.view,
+        add: moduleData.add,
+        update: moduleData.update,
+        remove: moduleData.remove,
+        notification: moduleData.notification
       })
+    })
 
-      const payload = {
-        roleName: roleName.trim() || roleName,
-        permissions: permissionsPayload
-      }
+    const payload = {
+      roleName: roleName.trim() || roleName,
+      permissions: permissionsPayload
+    }
 
-      if (roleName.trim() === '') {
-        return
-      }
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, payload, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
 
-      const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, payload, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-
-      if (response.status === 201) {
-        onUpdate()
-        onClose()
-        toast.success('Role updated successfully!')
-      }
-    } catch (error) {
-      toast.error('Error updating role. Please try again later.')
-      console.log('Error:', error)
+    if (response.status === 201) {
+      onUpdate()
+      onClose()
+      toast.success('Role updated successfully!')
     }
   }
 

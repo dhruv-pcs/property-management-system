@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import AddRole from '@components/role/add-role'
@@ -20,14 +20,26 @@ describe('AddRole component', () => {
     })
   })
 
+  test('renders with crashing', async () => {
+    axios.get = jest.fn().mockRejectedValue(new Error('Error fetching data'))
+
+    await act(async () => render(<AddRole />));
+
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalled()
+      expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
+    })
+
+  })
+
   test('renders the component properly', async () => {
-    render(<AddRole />)
+  await act(async () => render(<AddRole />));
     expect(await screen.findByText('Role Name')).toBeInTheDocument()
     expect(screen.getByText('Save Permissions')).toBeInTheDocument()
   })
 
   test('submits form without role name to get Validation error', async () => {
-    render(<AddRole />)
+  await act(async () => render(<AddRole />));
     const saveButton = screen.getByTestId('save-permissions')
 
     fireEvent.click(saveButton)
@@ -38,7 +50,7 @@ describe('AddRole component', () => {
   })
 
   test('handlePermissionChange updates permissions correctly', async () => {
-    render(<AddRole />)
+  await act(async () => render(<AddRole />));
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -49,6 +61,7 @@ describe('AddRole component', () => {
     const addCheckbox = screen.getByTestId('add-checkbox-1')
     const notificationCheckBox = screen.getByTestId('notification-checkbox-1')
     const selectAllCheckbox = screen.getByTestId('select-all-checkbox-1')
+    const selectAllGlobalCheckbox = screen.getByTestId('select-all-checkbox')
 
     fireEvent.click(viewCheckbox)
     fireEvent.click(addCheckbox)
@@ -56,6 +69,7 @@ describe('AddRole component', () => {
     fireEvent.click(deleteCheckbox)
     fireEvent.click(selectAllCheckbox)
     fireEvent.click(notificationCheckBox)
+    fireEvent.click(selectAllGlobalCheckbox)
 
     await waitFor(() => {
       expect(screen.getByTestId('view-checkbox-1')).toBeInTheDocument()
@@ -63,30 +77,36 @@ describe('AddRole component', () => {
       expect(screen.getByTestId('add-checkbox-1')).toBeInTheDocument()
       expect(screen.getByTestId('delete-checkbox-1')).toBeInTheDocument()
       expect(screen.getByTestId('notification-checkbox-1')).toBeInTheDocument()
+      expect(screen.getByTestId('select-all-checkbox-1')).toBeInTheDocument()
+      expect(screen.getByTestId('select-all-checkbox')).toBeInTheDocument()
     })
   })
 
-  test('submits form with role name and permissions successfully', async () => {
-    axios.post.mockResolvedValueOnce({ status: 201 })
+   test('submits form and updates role successfully', async () => {
+    axios.post = jest.fn().mockResolvedValue({ status: 201 })
+    const onUpdate = jest.fn()
+    const onClose = jest.fn()
+     
+    await act(async () => render(<AddRole onUpdate={onUpdate} onClose={onClose} />));
 
-    render(<AddRole />)
-    const roleNameInput = screen.getByTestId('role-name-input')
-    const saveButton = screen.getByTestId('save-permissions')
-    const selectAllCheckbox = screen.getByTestId('select-all-checkbox')
-    fireEvent.change(roleNameInput, { target: { value: 'Asadasddmin' } })
-    fireEvent.click(selectAllCheckbox)
-    fireEvent.click(saveButton)
+    const saveButton = screen.getByTestId('save-permissions');
+    const roleName = screen.getByLabelText('Role Name');
+
+    fireEvent.change(roleName, { target: { value: 'Admin' } });
+    fireEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalled()
-      expect(screen.getByText('Failed to create role')).toBeInTheDocument()
-    })
-  })
+      expect(axios.post).toHaveBeenCalled();
+      expect(onUpdate).toHaveBeenCalled();
+      expect(onClose).toHaveBeenCalled();
+      expect(screen.getByText('Role created successfully')).toBeInTheDocument();
+    });
+  }); 
 
   test('handles error on form submission', async () => {
     axios.post.mockRejectedValueOnce(new Error('Failed to create role'))
 
-    render(<AddRole />)
+  await act(async () => render(<AddRole />));
     const roleNameInput = screen.getByTestId('role-name-input')
     const saveButton = screen.getByTestId('save-permissions')
 
@@ -99,5 +119,7 @@ describe('AddRole component', () => {
     })
   })
 
-  
+
+
 })
+

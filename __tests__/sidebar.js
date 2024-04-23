@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import MyProSidebar from 'src/components/sidebar/sidebar'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 
@@ -39,6 +39,12 @@ global.matchMedia = jest.fn().mockImplementation(query => {
   }
 })
 
+jest.mock('@components/sidebar/sidebarItem', () => ({
+  __esModule: true,
+  default: jest.fn(() => [
+    { title: 'Admin', to: '/', icon: 'mdi:home-outline', subject: 'admin', path: '/' },
+  ]),
+}));
 
 
 global.localStorage = mockLocalStorage
@@ -68,4 +74,33 @@ describe('MyProSidebar component', () => {
 
     expect(screen.queryByTestId('Admin')).toBeNull()
   })
+  
+  test('collapses the sidebar when the collapse button is clicked', () => {
+    render(
+      <ProSidebarProvider>
+        <MyProSidebar />
+      </ProSidebarProvider>
+    );
+
+    const collapseButton = screen.getByTestId('collapse-sidebar');
+    fireEvent.click(collapseButton);
+
+  });
+
+
+  test('renders items based on navigation and user data', () => {
+    // Mocking the user data
+    const mockUserData = [{ view: true, module: { alias_name: 'Admin' } }];
+    const mockUserDataString = JSON.stringify(mockUserData);
+    global.localStorage.setItem('user', mockUserDataString);
+
+    render(
+      <ProSidebarProvider>
+        <MyProSidebar />
+      </ProSidebarProvider>
+    );
+
+    expect(screen.getAllByTestId('Dashboard')).toHaveLength(1); 
+  });
+
 })

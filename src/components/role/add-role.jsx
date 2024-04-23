@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useForm } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
 
+
 const AddRole = ({ onUpdate, onClose }) => {
   const [data, setData] = useState([])
   const [permissions, setPermissions] = useState({})
@@ -52,7 +53,7 @@ const AddRole = ({ onUpdate, onClose }) => {
       })
       setPermissions(initialPermissions)
     } catch (error) {
-      console.error(error)
+      toast.error('Error Fetching Data')
     }
   }
 
@@ -146,10 +147,6 @@ const AddRole = ({ onUpdate, onClose }) => {
         modules: permissionsPayload
       }
 
-      if (data.roleName.trim() === '') {
-        // If role name is empty, prevent form submission
-        return
-      }
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -161,7 +158,6 @@ const AddRole = ({ onUpdate, onClose }) => {
       }
     } catch (error) {
       toast.error('Failed to create role')
-      console.log('Error:', error)
     }
   }
 

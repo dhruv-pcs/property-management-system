@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, waitFor, act } from '@testing-library/react'
+import { render, fireEvent, waitFor, act, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Profile from 'src/pages/profile'
 import axios from 'axios'
@@ -11,8 +11,8 @@ jest.mock('../../public/images/profile/Img1.png', () => '/../../public/images/pr
 
 
 describe('Profile Component', () => {
-  test('renders without crashing', () => {
-    render(<Profile />)
+  test('renders without crashing', async() => {
+   await act(() => render(<Profile />))
   })
 
   test('fetches user data on mount', async () => {
@@ -59,7 +59,7 @@ describe('Profile Component', () => {
 
     axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } })
 
-    const { getByTestId } = render(<Profile />)
+    const { getByTestId } = await act(async () => render(<Profile />))
 
     await waitFor(() => {
       expect(getByTestId('profile-name')).toHaveTextContent('John Doe')
@@ -81,16 +81,16 @@ describe('Profile Component', () => {
       state: 'NY',
       country: 'USA',
       pincode: '10001',
-      role_u_id: 'ROL1000000001'
+      role_u_id: 'ROL1000000002'
 
     }
 
     axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } })
 
-    const { getByText } = render(<Profile />)
+    await act(() => render(<Profile />))
 
     await waitFor(() => {
-      fireEvent.click(getByText('Edit'))
+      fireEvent.click(screen.getByText('Edit'))
     })
 
     fireEvent.change(document.querySelector('[name="first_name"]'), { target: { value: 'Jane' } })
@@ -114,15 +114,16 @@ describe('Profile Component', () => {
       state: 'NY',
       country: 'USA',
       pincode: '10001',
-      role_u_id: 'ROL1000000001'
+      role_u_id: 'ROL1000000002'
     };
 
     axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } });
 
-    const { getByText, findByText } = render(<Profile />);
+    await act(() => render(<Profile />));
 
-
-      fireEvent.click(getByText('Edit'))
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Edit'))
+    })
 
     fireEvent.change(document.querySelector('[name="first_name"]'), { target: { value: '' } });
     fireEvent.change(document.querySelector('[name="last_name"]'), { target: { value: '' } });
@@ -130,11 +131,16 @@ describe('Profile Component', () => {
 
     fireEvent.change(document.querySelector('[name="phone"]'), { target: { value: '' } });
 
-    fireEvent.click(getByText('Save changes'));
+    const formElement = document.querySelector('form');
 
-    await findByText('First name is required');
-    await findByText('Last name is required');
-    await findByText('Email is required');
+    fireEvent.submit(formElement);
+
+    await waitFor(() => {
+      expect(screen.getByText('First name is required')).toBeInTheDocument();
+      expect(screen.getByText('Last name is required')).toBeInTheDocument();
+      expect(screen.getByText('Email is required')).toBeInTheDocument();
+    })
+
 
   });
 

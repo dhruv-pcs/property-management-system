@@ -72,7 +72,6 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
       }
     } catch (error) {
       toast.error('Error updating property')
-      console.log('error', error.response ? error.response.data : error)
     }
   }
 
@@ -309,7 +308,6 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
                   </Col>
                 </Row>
                 <Row className='gx-3 mb-3'>
-                  {console.log(property?.is_verified)}
                   <Col md={6}>
                     <Form.Group className='mb-1'>
                       <Form.Label>Is Property Verified??</Form.Label>

@@ -56,9 +56,9 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(userData.permissionData))
       localStorage.setItem('token', userData.token)
       localStorage.setItem('Role', userData.roleID)
-      setCookie('token', userData.token, 1)
-      setCookie('user', JSON.stringify(userData.permissionData), 1)
-      setCookie('Role', userData.roleID, 1)
+      setCookie('token', userData.token, 365)
+      setCookie('user', JSON.stringify(userData.permissionData), 365)
+      setCookie('Role', userData.roleID, 365)
       router.push('/')
     } catch (error) {
       toast.error('Invalid Credentials')

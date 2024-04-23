@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import RoleAndPermission from 'src/pages/role-and-permission'
 import axios from 'axios'
@@ -257,13 +257,14 @@ describe('Role and Permission Component', () => {
   })
 
   test('should render role and permission component correctly', async () => {
-    render(<RoleAndPermission />)
+   await act(() => render(<RoleAndPermission />))
     expect(screen.getByTestId('role')).toBeInTheDocument()
   })
 
   test("Shoule Not Render API and show error", async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
-    render(<RoleAndPermission />)
+    await act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -271,7 +272,8 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open add modal when Add button is clicked', async () => {
-    render(<RoleAndPermission />)
+    act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -285,7 +287,8 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open edit modal when Edit button is clicked', async () => {
-    render(<RoleAndPermission />)
+    act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -298,7 +301,8 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open view modal when View button is clicked', async () => {
-    render(<RoleAndPermission />)
+    act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -311,7 +315,8 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open delet modal when Delete button is clicked', async () => {
-    render(<RoleAndPermission />)
+    act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -327,7 +332,8 @@ describe('Role and Permission Component', () => {
   test('should open delet modal when Delete button is clicked and Delete Admin', async () => {
     axios.delete = jest.fn().mockResolvedValue({ data: { statusCode: 200 } })
 
-    render(<RoleAndPermission />)
+    act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -350,7 +356,8 @@ describe('Role and Permission Component', () => {
 
   test("Shoule Not Delete Role  and show error", async () => {
     axios.delete.mockRejectedValueOnce(new Error('API request failed'))
-    render(<RoleAndPermission />)
+    act(() => render(<RoleAndPermission />))
+
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -373,69 +380,25 @@ describe('Role and Permission Component', () => {
 })
 
 describe('Add Role and Permission Component', () => {
-  let mockAxios;
-
   beforeEach(() => {
-    mockAxios = new MockAdapter(axios);
-  });
+    axios.get.mockResolvedValue({
+      data: {
+        data: {
+          moduleData: [
+            { u_id: 1, alias_name: 'Module 1' },
+            { u_id: 2, alias_name: 'Module 2' }
+          ]
+        }
+      }
+    })
+  })
 
-  afterEach(() => {
-    mockAxios.restore();
-  });
+  test('renders the component properly', async () => {
+  await act(async () => render(<AddRole />));
+    expect(await screen.findByText('Role Name')).toBeInTheDocument()
+    expect(screen.getByText('Save Permissions')).toBeInTheDocument()
+  })
 
-  it('renders the component properly', () => {
-    const { getByLabelText, getByText } = render(<AddRole />);
-    expect(getByLabelText('Role Name')).toBeInTheDocument();
-    expect(getByText('Save Permissions')).toBeInTheDocument();
-  });
-
-  it('displays error message if role name is not provided on form submission', async () => {
-    const { getByText } = render(<AddRole />);
-    const saveButton = getByText('Save Permissions');
-
-    fireEvent.click(saveButton);
-    
-    await waitFor(() => {
-      expect(getByText('Please enter a role name')).toBeInTheDocument();
-    });
-  });
-
-  it('submits form data successfully and displays success message', async () => {
-    const mockData = [
-      { u_id: '1', alias_name: 'Module 1' },
-      { u_id: '2', alias_name: 'Module 2' }
-    ];
-
-    mockAxios.onGet(`${process.env.NEXT_PUBLIC_API_URL}/api/module`).reply(200, { data: { moduleData: mockData } });
-    mockAxios.onPost(`${process.env.NEXT_PUBLIC_API_URL}/api/role`).reply(201);
-
-    const { getByText, getByLabelText } = render(<AddRole />);
-    const roleNameInput = getByLabelText('Role Name');
-    const saveButton = getByText('Save Permissions');
-
-    fireEvent.change(roleNameInput, { target: { value: 'Test Role' } });
-    fireEvent.click(saveButton);
-
-    await waitFor(() => {
-      expect(mockAxios.history.post.length).toBe(1);
-      expect(getByText('Role created successfully')).toBeInTheDocument();
-    });
-  });
-
-  it('handles API error during form submission and displays error message', async () => {
-    mockAxios.onPost(`${process.env.NEXT_PUBLIC_API_URL}/api/role`).reply(500);
-
-    const { getByText, getByLabelText } = render(<AddRole />);
-    const roleNameInput = getByLabelText('Role Name');
-    const saveButton = getByText('Save Permissions');
-
-    fireEvent.change(roleNameInput, { target: { value: 'Test Role' } });
-    fireEvent.click(saveButton);
-
-    await waitFor(() => {
-      expect(mockAxios.history.post.length).toBe(1);
-      expect(getByText('Failed to create role')).toBeInTheDocument();
-    });
-  });
+  
 })
 

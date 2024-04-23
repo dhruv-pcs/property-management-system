@@ -1,13 +1,11 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import EditRole from '@components/role/edit-role'
 import { handlePermissionChange, handleGlobalSelectAllChange } from '@components/role/edit-role'
 
-
 jest.mock('axios')
-
 
 process.env.NEXT_PUBLIC_API_URL = 'https://pms.codenticsoftware.in'
 
@@ -56,13 +54,14 @@ describe('EditRole component', () => {
   })
 
   test('renders the component properly', async () => {
-    render(<EditRole roleData={{ u_id: 1 }} />)
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
+
     expect(await screen.findByText('Role Name')).toBeInTheDocument()
     expect(screen.getByText('Save Permissions')).toBeInTheDocument()
   })
 
   test('submits form without role name to get Validation error', async () => {
-    render(<EditRole roleData={{ u_id: 1 }} />)
+   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
 
     const saveButton = screen.getByTestId('save-permissions')
     const roleName = screen.getByLabelText('Role Name')
@@ -76,20 +75,37 @@ describe('EditRole component', () => {
   })
 
   test('handlePermissionChange updates permissions correctly', async () => {
-    render(<EditRole roleData={{ u_id: 1 }} />)
+   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
 
     const viewCheckbox = screen.getByTestId('view-checkbox-1')
     const addCheckbox = screen.getByTestId('add-checkbox-1')
+    const notificationCheckBox = screen.getByTestId('notification-checkbox-1')
+    const selectAllCheckbox = screen.getByTestId('select-all-checkbox-1')
+    const selectAllGlobalCheckbox = screen.getByTestId('select-all-checkbox')
+    const deleteCheckbox = screen.getByTestId('remove-checkbox-1')
+    const editCheckbox = screen.getByTestId('update-checkbox-1')
+
 
     fireEvent.click(viewCheckbox)
     fireEvent.click(addCheckbox)
+    fireEvent.click(editCheckbox)
+    fireEvent.click(deleteCheckbox)
+    fireEvent.click(notificationCheckBox)
+    fireEvent.click(selectAllCheckbox)
+    fireEvent.click(selectAllGlobalCheckbox)
+
 
     await waitFor(() => {
       expect(screen.getByTestId('view-checkbox-1')).toBeInTheDocument()
       expect(screen.getByTestId('add-checkbox-1')).toBeInTheDocument()
+      expect(screen.getByTestId('notification-checkbox-1')).toBeInTheDocument()
+      expect(screen.getByTestId('select-all-checkbox-1')).toBeInTheDocument()
+      expect(screen.getByTestId('select-all-checkbox')).toBeInTheDocument()
+      expect(screen.getByTestId('remove-checkbox-1')).toBeInTheDocument()
+      expect(screen.getByTestId('update-checkbox-1')).toBeInTheDocument()
     })
   })
 
@@ -149,7 +165,7 @@ describe('EditRole component', () => {
     })
   })
 
-  test('updates permissions for global selectAll correctly', () => {
+  test('updates permissions for global selectAll correctly', async() => {
     const setPermissionsMock = jest.fn()
 
     const moduleData = [
@@ -172,94 +188,46 @@ describe('EditRole component', () => {
     expect(setPermissionsMock).toHaveBeenCalledWith(expectedPermissions)
   })
 
-  test('updates permissions for global selectAll correctly', () => {
-    render(<EditRole roleData={{ u_id: 1 }} />)
+  test('updates permissions for global selectAll correctly', async() => {
+   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
 
     const selectAll = screen.getByTestId('select-all-checkbox')
 
     fireEvent.click(selectAll)
   })
 
-  test('Update Role Name', () => {
-    render(<EditRole roleData={{ u_id: 1 }} />)
+  test('Update Role Name', async() => {
+
+
+
+   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
 
     const roleName = screen.getByLabelText('Role Name')
-    
-    fireEvent.change(roleName, { target: { value: 'Admin' } })
 
+    fireEvent.change(roleName, { target: { value: 'Admin' } })
   })
+
+  test('submits form and updates role successfully', async () => {
+    axios.patch = jest.fn().mockResolvedValue({ status: 201 })
+    const onUpdate = jest.fn()
+    const onClose = jest.fn()
+     
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} onUpdate={onUpdate} onClose={onClose} />));
+
+    const saveButton = screen.getByTestId('save-permissions');
+    const roleName = screen.getByLabelText('Role Name');
+
+    fireEvent.change(roleName, { target: { value: 'Admin' } });
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(axios.patch).toHaveBeenCalled();
+      expect(onUpdate).toHaveBeenCalled();
+      expect(onClose).toHaveBeenCalled();
+      expect(screen.getByText('Role updated successfully!')).toBeInTheDocument();
+    });
+  }); 
+  
 
 })
 
-// describe('onSubmit function', () => {
-//     let onCloseMock, toastSuccessMock, toastErrorMock, onUpdateMock;
-  
-//     beforeEach(() => {
-//       onCloseMock = jest.fn();
-//       toastSuccessMock = jest.fn();
-//       toastErrorMock = jest.fn();
-//       onUpdateMock = jest.fn();
-//     });
-  
-    // test('submits form with valid data', async () => {
-    //     const roleName = 'Test Role';
-    
-    //     const permissions = {
-    //       1: { view: true, add: true, update: true, remove: true, notification: true }
-    //     };
-    //     const roleData = { u_id: 1 };
-    
-    //     axios.patch.mockResolvedValueOnce({ status: 201 });
-    //     global.localStorage.setItem('token', 'dummy-token');
-        
-    //     act(() => {
-    //         render(<EditRole roleData={roleData} onUpdate={onUpdateMock} onClose={onCloseMock} toast={toastSuccessMock} />);
-    //     })
-    
-    //     const roleNameInput = screen.getByLabelText('Role Name');
-    //     const saveButton = screen.getByText('Save Permissions');
-    
-    //     fireEvent.change(roleNameInput, { target: { value: roleName } });
-    //     fireEvent.click(saveButton);
-    
-    //     await waitFor(() => {
-    //       expect(axios.patch).toHaveBeenCalledWith(
-    //         `${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`,
-    //         {
-    //           roleName: roleName,
-    //           permissions: [
-    //             { u_id: 1, view: true, add: true, update: true, remove: true, notification: true }
-    //           ]
-    //         },
-    //         { headers: { Authorization: 'Bearer dummy-token' } }
-    //       );
-    //     });
-    
-    //     expect(onUpdateMock).toHaveBeenCalled();
-    //     expect(onCloseMock).toHaveBeenCalled();
-    // });
-    
-    
-  
-    // test('does not submit form with empty roleName', async () => {
-    //   const roleName = '';
-    //   const permissions = {
-    //     1: { view: true, add: true, update: true, remove: true, notification: true }
-    //   };
-    //   const roleData = { u_id: 1 };
-  
-    //   render(<EditRole roleData={roleData} onUpdate={onUpdateMock} onClose={onCloseMock} toast={toastErrorMock} />);
-  
-    //   const saveButton = screen.getByText('Save Permissions');
-  
-    //   fireEvent.click(saveButton);
-  
-    //   await waitFor(() => {
-    //     expect(axios.patch).not.toHaveBeenCalled();
-    //   });
-  
-    //   expect(onUpdateMock).not.toHaveBeenCalled();
-    //   expect(onCloseMock).not.toHaveBeenCalled();
-    //   expect(toastErrorMock).toHaveBeenCalledWith('Error updating role. Please try again later.');
-    // });
-//   });
