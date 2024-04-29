@@ -54,7 +54,7 @@ const Topbar = () => {
       }
     } catch (error) {
       toast.error('Error Logging Out')
-      console.error(error)
+    
     }
   }
 
