@@ -84,12 +84,7 @@ const Topbar = () => {
                 <MenuOutlinedIcon />
               </IconButton>
             )}
-            <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
-              <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
-              <IconButton aria-label='Search' type='button'>
-                <SearchIcon />
-              </IconButton>
-            </Box>
+           
           </Box>
           <Box display='flex'>
             <IconButton aria-label='Mode' onClick={colorMode.toggleColorMode}>

@@ -11,10 +11,13 @@ import EditRole from '@components/role/edit-role'
 import Head from 'next/head'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch } from 'react-redux'
+import { setRoles } from 'src/redux/features/roleSlice'
 
 const Role_Permission = () => {
-  const [role, setRole] = useState([])
   const theme = useTheme()
+  const dispatch = useDispatch();
+  const [role, setRole] = useState([])
   const colors = tokens(theme.palette.mode)
   const [selectedRow, setSelectedRow] = useState(null)
   const [openAdd, setOpenAdd] = useState(false)
@@ -46,6 +49,7 @@ const Role_Permission = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setRole(response.data.data)
+      dispatch(setRoles(response.data.data));
     } catch (error) {
       toast.error('Error Fetching Data')
     }
@@ -53,6 +57,7 @@ const Role_Permission = () => {
 
   useEffect(() => {
     fetchData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleFetch = async () => {
