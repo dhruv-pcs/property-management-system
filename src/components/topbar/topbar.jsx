@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { ColorModeContext, tokens } from '@theme/theme'
-import { useTheme, Box, IconButton, InputBase } from '@mui/material'
+import { useTheme, Box, IconButton } from '@mui/material'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import SearchIcon from '@mui/icons-material/Search'
 import { useProSidebar } from 'react-pro-sidebar'
 import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -54,7 +53,6 @@ const Topbar = () => {
       }
     } catch (error) {
       toast.error('Error Logging Out')
-      console.error(error)
     }
   }
 
@@ -78,18 +76,11 @@ const Topbar = () => {
                 data-testid='menu'
                 aria-label='Menu'
                 sx={{ margin: '0 6 0 2' }}
-              
                 onClick={() => toggleSidebar()}
               >
                 <MenuOutlinedIcon />
               </IconButton>
             )}
-            <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
-              <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
-              <IconButton aria-label='Search' type='button'>
-                <SearchIcon />
-              </IconButton>
-            </Box>
           </Box>
           <Box display='flex'>
             <IconButton aria-label='Mode' onClick={colorMode.toggleColorMode}>

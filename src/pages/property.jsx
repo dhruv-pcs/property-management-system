@@ -10,8 +10,11 @@ import { tokens } from '@theme/theme'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch } from 'react-redux'
+import { setProperties } from 'src/redux/features/propertySlice'
 
 const Property = () => {
+  const dispatch = useDispatch()
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [propertyData, setPropertyData] = useState([])
@@ -33,6 +36,7 @@ const Property = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setPropertyData(response.data.data.adminData)
+      dispatch(setProperties(response.data.data.adminData))
     } catch (error) {
       toast.error('Error Fetching Data')
     }
@@ -40,6 +44,8 @@ const Property = () => {
 
   useEffect(() => {
     fetchData()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handelAddbutton = () => {

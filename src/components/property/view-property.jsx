@@ -4,19 +4,13 @@ import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 
-
-
-
 const ViewProperty = ({ property }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const editable = false
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const {
-    register,
-    control
-  } = useForm()
+  const { register, control } = useForm()
 
   return (
     <Row style={{ width: isSmallScreen ? '100%' : '550px' }}>

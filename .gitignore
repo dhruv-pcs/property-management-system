@@ -35,6 +35,7 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 package-lock.json
+bun.lockb
 
 # local env files
 .env.local

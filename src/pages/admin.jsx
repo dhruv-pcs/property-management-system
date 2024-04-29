@@ -12,9 +12,12 @@ import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch } from 'react-redux'
+import { setAdmin } from 'src/redux/features/adminSlice'
 
 const Admin = () => {
   const theme = useTheme()
+  const dispatch = useDispatch()
   const colors = tokens(theme.palette.mode)
   const [adminData, setAdminData] = useState([])
   const [selectedRow, setSelectedRow] = useState(null)
@@ -36,12 +39,14 @@ const Admin = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setAdminData(response.data.data.adminData)
+      dispatch(setAdmin(response.data.data.adminData))
     } catch (error) {
       toast.error('Error Fetching Data')
     }
   }
   useEffect(() => {
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleDelete = async row => {

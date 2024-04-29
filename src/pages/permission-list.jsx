@@ -6,6 +6,8 @@ import DataTable from 'react-data-table-component'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch } from 'react-redux'
+import { setPermission } from 'src/redux/features/permissionSlice'
 
 export const getRoleBackgroundColor = (role, colors) => {
   const Role = role.toLowerCase()
@@ -27,6 +29,7 @@ const Permission = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [permissionData, setPermissionData] = useState([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,11 +38,13 @@ const Permission = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
         setPermissionData(response.data.data.permissionData)
+        dispatch(setPermission(response.data.data.permissionData))
       } catch (error) {
         toast.error('Error Fetching Data')
       }
     }
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const columns = [
