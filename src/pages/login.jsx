@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { useDispatch } from 'react-redux'
-import { setRole, setToken, setUser } from 'src/redux/feactures/authSlice'
+import { setRole, setToken, setUser } from 'src/redux/features/authSlice'
 
 const setCookie = (name, value, days) => {
   var expires = ''
