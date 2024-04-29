@@ -38,7 +38,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               justifyContent='center'
@@ -57,7 +57,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               justifyContent='center'
@@ -76,7 +76,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               height='200px'
@@ -95,7 +95,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               justifyContent='center'
