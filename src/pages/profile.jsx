@@ -10,7 +10,6 @@ import * as Yup from 'yup'
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { act } from '@testing-library/react'
 
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -26,8 +25,6 @@ const Profile = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [userData, setUserData] = useState({})
-
-  // const [showPassword, setShowPassword] = useState(false);
   const [editable, setEditable] = useState(false)
 
   const {
@@ -46,18 +43,18 @@ const Profile = () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        act(() => {
-          setUserData(response.data.data.data)
-          setValue('first_name', response.data.data.data.first_name)
-          setValue('last_name', response.data.data.data.last_name)
-          setValue('email', response.data.data.data.email)
-          setValue('phone', response.data.data.data.phone)
-          setValue('alternate_phone', response.data.data.data.alternate_phone)
-          setValue('city', response.data.data.data.city)
-          setValue('country', response.data.data.data.country)
-          setValue('pincode', response.data.data.data.pincode)
-          setValue('state', response.data.data.data.state)
-        })
+        console.log('hi')
+        setUserData(response.data.data.data)
+
+        setValue('first_name', response.data.data.data.first_name)
+        setValue('last_name', response.data.data.data.last_name)
+        setValue('email', response.data.data.data.email)
+        setValue('phone', response.data.data.data.phone)
+        setValue('alternate_phone', response.data.data.data.alternate_phone)
+        setValue('city', response.data.data.data.city)
+        setValue('country', response.data.data.data.country)
+        setValue('pincode', response.data.data.data.pincode)
+        setValue('state', response.data.data.data.state)
       } catch (error) {
         toast.error('Error Fetching Data')
       }
