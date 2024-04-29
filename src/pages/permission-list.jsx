@@ -29,7 +29,7 @@ const Permission = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [permissionData, setPermissionData] = useState([])
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +44,7 @@ const Permission = () => {
       }
     }
     fetchData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const columns = [

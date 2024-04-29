@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux'
 import { setCustomer } from 'src/redux/features/customerSlice'
 
 const Customer = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [customerData, setCustomerData] = useState([])
@@ -48,7 +48,7 @@ const Customer = () => {
 
   useEffect(() => {
     fetchData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handelEditbutton = row => {

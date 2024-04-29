@@ -15,7 +15,6 @@ export function middleware(req) {
       return NextResponse.next()
     }
   } catch (error) {
-
     return NextResponse.error()
   }
 }

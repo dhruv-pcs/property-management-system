@@ -11,10 +11,10 @@ import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useDispatch } from 'react-redux'
-import { setOwner} from  'src/redux/features/ownerSlice';
+import { setOwner } from 'src/redux/features/ownerSlice'
 
 const Owner = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [ownerData, setOwnerData] = useState([])
@@ -47,10 +47,8 @@ const Owner = () => {
 
   useEffect(() => {
     fetchData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  
 
   const handelEditbutton = row => {
     setOpenEdit(!openEdit)

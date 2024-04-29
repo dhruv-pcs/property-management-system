@@ -15,10 +15,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useDispatch } from 'react-redux'
 import { setAdmin } from 'src/redux/features/adminSlice'
 
-
 const Admin = () => {
   const theme = useTheme()
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const colors = tokens(theme.palette.mode)
   const [adminData, setAdminData] = useState([])
   const [selectedRow, setSelectedRow] = useState(null)
@@ -40,7 +39,7 @@ const Admin = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setAdminData(response.data.data.adminData)
-      dispatch(setAdmin(response.data.data.adminData));
+      dispatch(setAdmin(response.data.data.adminData))
     } catch (error) {
       toast.error('Error Fetching Data')
     }

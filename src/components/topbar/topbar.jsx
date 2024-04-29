@@ -53,7 +53,6 @@ const Topbar = () => {
       }
     } catch (error) {
       toast.error('Error Logging Out')
-    
     }
   }
 
@@ -77,13 +76,11 @@ const Topbar = () => {
                 data-testid='menu'
                 aria-label='Menu'
                 sx={{ margin: '0 6 0 2' }}
-              
                 onClick={() => toggleSidebar()}
               >
                 <MenuOutlinedIcon />
               </IconButton>
             )}
-           
           </Box>
           <Box display='flex'>
             <IconButton aria-label='Mode' onClick={colorMode.toggleColorMode}>

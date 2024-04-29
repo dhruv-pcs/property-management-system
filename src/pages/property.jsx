@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux'
 import { setProperties } from 'src/redux/features/propertySlice'
 
 const Property = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [propertyData, setPropertyData] = useState([])
@@ -45,7 +45,7 @@ const Property = () => {
   useEffect(() => {
     fetchData()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handelAddbutton = () => {

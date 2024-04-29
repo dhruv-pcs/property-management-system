@@ -16,7 +16,7 @@ import { setRoles } from 'src/redux/features/roleSlice'
 
 const Role_Permission = () => {
   const theme = useTheme()
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [role, setRole] = useState([])
   const colors = tokens(theme.palette.mode)
   const [selectedRow, setSelectedRow] = useState(null)
@@ -49,7 +49,7 @@ const Role_Permission = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setRole(response.data.data)
-      dispatch(setRoles(response.data.data));
+      dispatch(setRoles(response.data.data))
     } catch (error) {
       toast.error('Error Fetching Data')
     }
@@ -57,7 +57,7 @@ const Role_Permission = () => {
 
   useEffect(() => {
     fetchData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleFetch = async () => {

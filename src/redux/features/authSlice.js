@@ -4,7 +4,7 @@ const initialState = {
   user: null,
   token: null,
   role: null,
-  isLoggedIn: false,
+  isLoggedIn: false
 }
 
 const authSlice = createSlice({
@@ -26,8 +26,8 @@ const authSlice = createSlice({
       state.token = null
       state.role = null
       state.isLoggedIn = false
-    },
-  },
+    }
+  }
 })
 
 export const { setUser, setToken, setRole, logout } = authSlice.actions
