@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 // ** Redux Imports **
 import { useDispatch } from 'react-redux'
-import { setPermission } from 'src/redux/features/permissionSlice'
+import { setPermission } from 'src/redux/features/permission-slice'
 
 // ** API Imports **
 import axios from 'axios'

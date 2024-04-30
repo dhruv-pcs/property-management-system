@@ -18,7 +18,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 // ** Redux Imports **
 import { useDispatch } from 'react-redux'
-import { setOwner } from 'src/redux/features/ownerSlice'
+import { setOwner } from 'src/redux/features/owner-slice'
 
 // ** API Imports **
 import axios from 'axios'

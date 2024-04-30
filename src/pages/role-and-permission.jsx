@@ -19,7 +19,7 @@ import { toast, ToastContainer } from 'react-toastify'
 
 // ** Redux Imports **
 import { useDispatch } from 'react-redux'
-import { setRoles } from 'src/redux/features/roleSlice'
+import { setRoles } from 'src/redux/features/role-slice'
 
 // ** API Imports **
 import axios from 'axios'

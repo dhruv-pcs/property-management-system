@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 
 // ** Custom Components **
-import Layout from 'src/layout/blank_layout'
+import Layout from 'src/layout/blank-layout'
 import { tokens } from '@theme/theme'
 
 // ** Third Party Imports **

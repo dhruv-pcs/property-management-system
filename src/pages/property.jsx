@@ -11,7 +11,7 @@ import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useDispatch } from 'react-redux'
-import { setProperties } from 'src/redux/features/propertySlice'
+import { setProperties } from 'src/redux/features/property-slice'
 
 const Property = () => {
   const dispatch = useDispatch()

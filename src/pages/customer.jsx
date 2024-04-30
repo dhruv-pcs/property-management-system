@@ -19,7 +19,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 // ** Redux Imports **
 import { useDispatch } from 'react-redux'
-import { setCustomer } from 'src/redux/features/customerSlice'
+import { setCustomer } from 'src/redux/features/customer-slice'
 
 // ** API Imports **
 import axios from 'axios'
