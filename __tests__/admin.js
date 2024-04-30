@@ -5,6 +5,8 @@ import axios from 'axios'
 import Admin from 'src/pages/admin'
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('axios')
 
@@ -37,7 +39,11 @@ describe('Admin Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
     axios.get = jest.fn().mockResolvedValue({ data: { data: { adminData: mockAdminData } } })
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -58,7 +64,11 @@ describe('Admin Component', () => {
   })
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
     })
@@ -99,7 +109,11 @@ describe('Admin Component', () => {
   test('clicking Delete button and then click confirm delete button to delete admin - Success', async () => {
     const mockResponseData = { data: { statusCode: 200 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     const deleteAdmin = screen.getByTestId('delete-admin')
     fireEvent.click(deleteAdmin)
     expect(screen.getByText('Delete Admin')).toBeInTheDocument()
@@ -112,7 +126,11 @@ describe('Admin Component', () => {
   })
   test('handles error when deleting admin', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     const deleteAdmin = screen.getByTestId('delete-admin')
     fireEvent.click(deleteAdmin)
     expect(screen.getByText('Delete Admin')).toBeInTheDocument()

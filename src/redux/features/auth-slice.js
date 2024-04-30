@@ -20,12 +20,6 @@ const authSlice = createSlice({
     },
     setRole(state, action) {
       state.role = action.payload
-    },
-    logout(state) {
-      state.user = null
-      state.token = null
-      state.role = null
-      state.isLoggedIn = false
     }
   }
 })

@@ -4,6 +4,8 @@ import '@testing-library/jest-dom'
 import Permission from 'src/pages/permission-list'
 import axios from 'axios'
 import { getRoleBackgroundColor } from 'src/pages/permission-list'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('axios')
 
@@ -36,7 +38,11 @@ describe('Permission component', () => {
 
     axios.get.mockResolvedValueOnce({ data: { data: { permissionData } } })
 
-    render(<Permission />)
+    render(
+      <Provider store={store}>
+        <Permission />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByTestId('permission-list')).toBeInTheDocument()
@@ -50,7 +56,11 @@ describe('Permission component', () => {
   test('renders error message when data fetching fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('Error fetching data'))
 
-    render(<Permission />)
+    render(
+      <Provider store={store}>
+        <Permission />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -60,7 +70,11 @@ describe('Permission component', () => {
   test('renders no data message when permissionData is empty', async () => {
     axios.get.mockResolvedValueOnce({ data: { data: { permissionData: [] } } })
 
-    render(<Permission />)
+    render(
+      <Provider store={store}>
+        <Permission />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('There is No Data Available')).toBeInTheDocument()

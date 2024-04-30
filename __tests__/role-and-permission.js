@@ -4,6 +4,8 @@ import '@testing-library/jest-dom'
 import RoleAndPermission from 'src/pages/role-and-permission'
 import axios from 'axios'
 import AddRole from '@components/role/add-role'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 const mockPermissions = [
   {
@@ -255,13 +257,25 @@ describe('Role and Permission Component', () => {
   })
 
   test('should render role and permission component correctly', async () => {
-    await act(() => render(<RoleAndPermission />))
+    await act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
     expect(screen.getByTestId('role')).toBeInTheDocument()
   })
 
   test('Should Not Render API and show error', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
-    await act(() => render(<RoleAndPermission />))
+    await act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
@@ -270,7 +284,13 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open add modal when Add button is clicked', async () => {
-    act(() => render(<RoleAndPermission />))
+    act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
@@ -285,7 +305,13 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open edit modal when Edit button is clicked', async () => {
-    act(() => render(<RoleAndPermission />))
+    act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
@@ -299,7 +325,13 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open view modal when View button is clicked', async () => {
-    act(() => render(<RoleAndPermission />))
+    act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
@@ -313,7 +345,13 @@ describe('Role and Permission Component', () => {
   })
 
   test('should open delete modal when Delete button is clicked', async () => {
-    act(() => render(<RoleAndPermission />))
+    act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
@@ -330,7 +368,13 @@ describe('Role and Permission Component', () => {
   test('should open delete modal when Delete button is clicked and Delete Admin', async () => {
     axios.delete = jest.fn().mockResolvedValue({ data: { statusCode: 200 } })
 
-    act(() => render(<RoleAndPermission />))
+    act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
@@ -353,7 +397,13 @@ describe('Role and Permission Component', () => {
 
   test('Should Not Delete Role  and show error', async () => {
     axios.delete.mockRejectedValueOnce(new Error('API request failed'))
-    act(() => render(<RoleAndPermission />))
+    act(() =>
+      render(
+        <Provider store={store}>
+          <RoleAndPermission />
+        </Provider>
+      )
+    )
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()

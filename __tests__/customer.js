@@ -6,6 +6,8 @@ import axios from 'axios'
 import ViewCustomer from '@components/customer/view-customer'
 import EditCustomer from '@components/customer/edit-customer'
 import AddCustomer from '@components/customer/add-customer'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
@@ -43,7 +45,11 @@ describe('Customer Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
     axios.get = jest.fn().mockResolvedValue({ data: { data: { customerData: mockCustomerData } } })
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -70,7 +76,11 @@ describe('Customer Component', () => {
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
 
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -125,7 +135,11 @@ describe('Customer Component', () => {
     const mockResponseData = { data: { statusCode: 201 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
 
     const deleteCustomer = screen.getByTestId('delete-customer')
     fireEvent.click(deleteCustomer)
@@ -146,7 +160,11 @@ describe('Customer Component', () => {
 
   test('handles error when deleting customer', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
     const deleteOwner = screen.getByTestId('delete-customer')
     fireEvent.click(deleteOwner)
     expect(screen.getByText('Delete Customer')).toBeInTheDocument()
@@ -190,7 +208,11 @@ describe('Customer Component', () => {
 
     axios.get = jest.fn().mockResolvedValue({ data: { data: { customerData: mockCustomerDataFalse } } })
 
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByTestId('not-verified')).toBeInTheDocument()

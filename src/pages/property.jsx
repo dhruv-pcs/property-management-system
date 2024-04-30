@@ -17,17 +17,22 @@ import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import DataTable from 'react-data-table-component'
 import { ToastContainer, toast } from 'react-toastify'
 
+// ** Redux Imports **
+import { useDispatch } from 'react-redux'
+
 // ** API Imports **
 import axios from 'axios'
 
 // ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
+import { setProperties } from 'src/redux/features/property-slice'
 
 const Property = () => {
   // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const userPermissions = JSON.parse(localStorage.getItem('user'))
+  const dispatch = useDispatch()
 
   const property_permission = userPermissions
     ?.filter(permission => permission.module.alias_name === 'Property')
@@ -244,6 +249,7 @@ const Property = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       setPropertyData(response.data.data.adminData)
+      dispatch(setProperties(response.data.data.adminData))
     } catch (error) {
       toast.error('Error Fetching Data')
     }

@@ -6,6 +6,8 @@ import axios from 'axios'
 import EditOwner from '@components/owner/edit-owner'
 import AddOwner from '@components/owner/add-owner'
 import ViewOwner from '@components/owner/view-owner'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
@@ -44,7 +46,11 @@ describe('Owner Component', () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
     localStorage.setItem('token', '5645654545564564')
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerData } } })
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -69,7 +75,11 @@ describe('Owner Component', () => {
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
 
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -124,7 +134,11 @@ describe('Owner Component', () => {
     const mockResponseData = { data: { statusCode: 200 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
 
     const deleteOwner = screen.getByTestId('delete-owner')
     fireEvent.click(deleteOwner)
@@ -142,7 +156,11 @@ describe('Owner Component', () => {
 
   test('handles error when deleting owner', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
     const deleteOwner = screen.getByTestId('delete-owner')
     fireEvent.click(deleteOwner)
     expect(screen.getByText('Delete Owner')).toBeInTheDocument()
@@ -170,7 +188,11 @@ describe('Owner Component', () => {
 
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerDataFalse } } })
 
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByTestId('not-verified')).toBeInTheDocument()

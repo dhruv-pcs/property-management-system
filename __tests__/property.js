@@ -5,6 +5,8 @@ import '@testing-library/jest-dom'
 import axios from 'axios'
 import EditProperty from '@components/property/edit-property'
 import AddProperty from '@components/property/add-property'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
@@ -45,7 +47,11 @@ describe('Property Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
     axios.get = jest.fn().mockResolvedValue({ data: { data: { adminData: mockPropertyData } } })
-    render(<Property />)
+    render(
+      <Provider store={store}>
+        <Property />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -70,7 +76,11 @@ describe('Property Component', () => {
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
 
-    render(<Property />)
+    render(
+      <Provider store={store}>
+        <Property />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -125,7 +135,11 @@ describe('Property Component', () => {
     const mockResponseData = { data: { statusCode: 200 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
-    render(<Property />)
+    render(
+      <Provider store={store}>
+        <Property />
+      </Provider>
+    )
 
     const deleteProperty = screen.getByTestId('delete-property')
     fireEvent.click(deleteProperty)
@@ -143,7 +157,11 @@ describe('Property Component', () => {
 
   test('handles error when deleting property', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Property />)
+    render(
+      <Provider store={store}>
+        <Property />
+      </Provider>
+    )
     const deleteProperty = screen.getByTestId('delete-property')
     fireEvent.click(deleteProperty)
     expect(screen.getByText('Delete Property')).toBeInTheDocument()
