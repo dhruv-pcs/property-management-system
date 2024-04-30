@@ -4,15 +4,12 @@ import '@testing-library/jest-dom'
 import Profile from 'src/pages/profile'
 import axios from 'axios'
 
-
 jest.mock('axios')
-jest.mock('../../public/images/profile/Img1.png', () => '/../../public/images/profile/Img1.png');
-
-
+jest.mock('../../public/images/profile/Img1.png', () => '/../../public/images/profile/Img1.png')
 
 describe('Profile Component', () => {
-  test('renders without crashing', async() => {
-   await act(() => render(<Profile />))
+  test('renders without crashing', async () => {
+    await act(() => render(<Profile />))
   })
 
   test('fetches user data on mount', async () => {
@@ -32,14 +29,14 @@ describe('Profile Component', () => {
     axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } })
 
     await act(async () => {
-        render(<Profile />)
-      });
+      render(<Profile />)
+    })
 
-      await waitFor(() => {
-        expect(axios.get).toHaveBeenCalledWith(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
+    })
   })
 
   test('renders user profile data', async () => {
@@ -82,7 +79,6 @@ describe('Profile Component', () => {
       country: 'USA',
       pincode: '10001',
       role_u_id: 'ROL1000000002'
-
     }
 
     axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } })
@@ -96,11 +92,9 @@ describe('Profile Component', () => {
     fireEvent.change(document.querySelector('[name="first_name"]'), { target: { value: 'Jane' } })
     fireEvent.change(document.querySelector('[name="last_name"]'), { target: { value: 'Doe' } })
 
-    const formElement = document.querySelector('form');
+    const formElement = document.querySelector('form')
 
-    fireEvent.submit(formElement);
-
-
+    fireEvent.submit(formElement)
   })
 
   test('displays error messages for all required fields', async () => {
@@ -115,34 +109,30 @@ describe('Profile Component', () => {
       country: 'USA',
       pincode: '10001',
       role_u_id: 'ROL1000000002'
-    };
+    }
 
-    axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } });
+    axios.get.mockResolvedValueOnce({ data: { data: { data: mockUserData } } })
 
-    await act(() => render(<Profile />));
+    await act(() => render(<Profile />))
 
     await waitFor(() => {
       fireEvent.click(screen.getByText('Edit'))
     })
 
-    fireEvent.change(document.querySelector('[name="first_name"]'), { target: { value: '' } });
-    fireEvent.change(document.querySelector('[name="last_name"]'), { target: { value: '' } });
-    fireEvent.change(document.querySelector('[name="email"]'), { target: { value: '' } });
+    fireEvent.change(document.querySelector('[name="first_name"]'), { target: { value: '' } })
+    fireEvent.change(document.querySelector('[name="last_name"]'), { target: { value: '' } })
+    fireEvent.change(document.querySelector('[name="email"]'), { target: { value: '' } })
 
-    fireEvent.change(document.querySelector('[name="phone"]'), { target: { value: '' } });
+    fireEvent.change(document.querySelector('[name="phone"]'), { target: { value: '' } })
 
-    const formElement = document.querySelector('form');
+    const formElement = document.querySelector('form')
 
-    fireEvent.submit(formElement);
+    fireEvent.submit(formElement)
 
     await waitFor(() => {
-      expect(screen.getByText('First name is required')).toBeInTheDocument();
-      expect(screen.getByText('Last name is required')).toBeInTheDocument();
-      expect(screen.getByText('Email is required')).toBeInTheDocument();
+      expect(screen.getByText('First name is required')).toBeInTheDocument()
+      expect(screen.getByText('Last name is required')).toBeInTheDocument()
+      expect(screen.getByText('Email is required')).toBeInTheDocument()
     })
-
-
-  });
-
-
+  })
 })

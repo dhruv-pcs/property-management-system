@@ -474,22 +474,6 @@ describe('Add Customer Component', () => {
       expect(screen.getByText('Phone number is required')).toBeInTheDocument()
       expect(screen.getByText('Aadhar Card No is required')).toBeInTheDocument()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
       expect(screen.getByText('City is required')).toBeInTheDocument()
       expect(screen.getByText('State is required')).toBeInTheDocument()
       expect(

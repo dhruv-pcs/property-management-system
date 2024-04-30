@@ -43,41 +43,38 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe('App component layout', () => {
   test('renders the layout correctly', async () => {
-    const pageProps = {};
-    const theme = {};
-    const colorMode = 'light';
+    const pageProps = {}
+    const theme = {}
+    const colorMode = 'light'
 
     render(
       <ColorModeContext.Provider value={colorMode}>
         <ProSidebarProvider theme={theme}>
           <Topbar />
-          <App
-            Component={() => <div data-testid='mock-component'>Mock Component</div>}
-            pageProps={pageProps}
-          />
+          <App Component={() => <div data-testid='mock-component'>Mock Component</div>} pageProps={pageProps} />
           <Footer />
         </ProSidebarProvider>
       </ColorModeContext.Provider>
-    );
+    )
 
     await waitFor(() => {
-      const topBars = screen.getAllByTestId('topbar');
-      expect(topBars.length).toBeGreaterThan(0); // Ensure there are top bars
+      const topBars = screen.getAllByTestId('topbar')
+      expect(topBars.length).toBeGreaterThan(0) // Ensure there are top bars
 
-      topBars.forEach((topBar) => {
-        expect(topBar).toBeInTheDocument();
-      });
+      topBars.forEach(topBar => {
+        expect(topBar).toBeInTheDocument()
+      })
 
-      const footer = screen.getAllByTestId('footer');
-      expect(footer.length).toBeGreaterThan(0); // Ensure there are footers
+      const footer = screen.getAllByTestId('footer')
+      expect(footer.length).toBeGreaterThan(0) // Ensure there are footers
 
-      footer.forEach((foot) => {
-        expect(foot).toBeInTheDocument();
-      });
+      footer.forEach(foot => {
+        expect(foot).toBeInTheDocument()
+      })
 
-      expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    });
-  });
+      expect(screen.getByTestId('sidebar')).toBeInTheDocument()
+    })
+  })
 
   test('404 page renders correctly', async () => {
     jest.mock('next/router', () => ({
@@ -87,12 +84,11 @@ describe('App component layout', () => {
       })
     }))
 
-    const pageProps = {};
+    const pageProps = {}
 
     act(() => {
       render(<App Component={() => <Notfound />} pageProps={pageProps} />)
     })
-
   })
 
   test('login page renders correctly', async () => {
@@ -103,14 +99,10 @@ describe('App component layout', () => {
       })
     }))
 
-    const pageProps = {};
+    const pageProps = {}
 
     act(() => {
       render(<App Component={() => <Login />} pageProps={pageProps} />)
     })
   })
- 
-
-  
-
-});
+})

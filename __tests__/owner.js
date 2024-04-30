@@ -42,7 +42,7 @@ Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockPermissions))
 describe('Owner Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
-    localStorage.setItem('token', "5645654545564564")
+    localStorage.setItem('token', '5645654545564564')
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerData } } })
     render(<Owner />)
     await waitFor(() => {
@@ -164,7 +164,7 @@ describe('Owner Component', () => {
         phone: '1234567890',
         aadhar_card_no: '123456789012',
         is_verified: false,
-        status: false 
+        status: false
       }
     ]
 
@@ -194,7 +194,7 @@ describe('Owner Component', () => {
 
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerDataFalse } } })
 
-    render(<ViewOwner owner={mockOwnerDataFalse[0]}  />)
+    render(<ViewOwner owner={mockOwnerDataFalse[0]} />)
   })
 })
 
@@ -521,14 +521,14 @@ describe('Owner Add Component', () => {
       expect(
         screen.getByText('pincode must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
       ).toBeInTheDocument()
-      expect( 
+      expect(
         screen.getByText(
           'alternate_phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).'
         )
       ).toBeInTheDocument()
     })
   })
-  
+
   test('Add New Owner', async () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)
