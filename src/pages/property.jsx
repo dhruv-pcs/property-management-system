@@ -42,24 +42,24 @@ const Property = () => {
   const [openEdit, setOpenEdit] = useState(false)
 
   //** Open Add Modal */
-  const handelAddbutton = () => {
+  const handelAddButton = () => {
     setOpenAdd(!openAdd)
   }
 
   // ** Open View Modal **
-  const handelViewbutton = row => {
+  const handelViewButton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
   }
 
   // ** Open Edit Modal **
-  const handelEditbutton = row => {
+  const handelEditButton = row => {
     setOpenEdit(!openEdit)
     setSelectedRow(row)
   }
 
-    // ** Open Delete Modal **
-  const handelDeletebutton = async row => {
+  // ** Open Delete Modal **
+  const handelDeleteButton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
   }

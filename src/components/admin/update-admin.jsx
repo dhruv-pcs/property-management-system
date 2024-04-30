@@ -1,13 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client'
-
-//  ** React Imports **
-import React, { useEffect } from 'react'
-
-// ** API Imports **
 import axios from 'axios'
-
-// ** Third Party Imports **
+import React, { useEffect } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { tokens } from '@theme/theme'
 import { useTheme, useMediaQuery } from '@mui/material'
@@ -15,11 +8,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
-
-//** Styles */
 import 'react-toastify/dist/ReactToastify.css'
 
-//** Validations */
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -69,10 +59,8 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditButton }) => {
       setValue('pincode', admin.pincode)
       setValue('state', admin.state)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
 
-  //** Edit Admin on update */
   const onSubmit = async data => {
     try {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {

@@ -1,26 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-'use client'
-
-//  ** React Imports **
-import React, { useState, useEffect } from 'react'
-
-// ** API Imports **
-import axios from 'axios'
-
-// ** Third Party Imports **
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import React, { useState, useEffect } from 'react'
 import { tokens } from '@theme/theme'
+import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
-
-//** Styles */
 import 'react-toastify/dist/ReactToastify.css'
 
-//** Validations */
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -49,7 +38,6 @@ const AddAdmin = ({ onUpdate, handelAddButton }) => {
     resolver: yupResolver(schema)
   })
 
-  //** Add Admin */
   const onSubmit = async data => {
     data.language = 'English'
     try {
@@ -66,7 +54,6 @@ const AddAdmin = ({ onUpdate, handelAddButton }) => {
     }
   }
 
-  //** Fetch roles for Role Field */
   useEffect(() => {
     const fetchRoles = async () => {
       try {

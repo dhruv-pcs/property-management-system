@@ -22,11 +22,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = ({ Component, pageProps }) => {
   // ** Vars **
-  const colors = tokens(theme.palette.mode)
+  const [theme, colorMode] = useMode()
   const router = useRouter()
+  const isBlankPage = router.pathname === '/login' || router.pathname === '/404'
+  const colors = tokens(theme.palette.mode)
 
   // ** State **
-  const [theme, colorMode] = useMode()
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -37,38 +38,34 @@ const App = ({ Component, pageProps }) => {
     return null
   }
 
-  // Check if the current route is the login page
-  const isBlankPage = router.pathname === '/login' || router.pathname === '/404';
-
   return (
     <ColorModeContext.Provider value={colorMode}>
+      <Provider store={store}>
         {isBlankPage && <Component {...pageProps} />}
         {!isBlankPage && (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ProSidebarProvider theme={theme}>
-          <MyProSidebarProvider>
-           
-          
-              <div style={{ height: '100%', width: '100%' }}>
-                <Topbar />
-                <main
-                  className='card m-2 p-2 shadow-sm'
-                  style={{
-                    backgroundColor: colors.primary[1000],
-                    color: colors.grey[100],
-                    minHeight: '83vh'
-                  }}
-                >
-                  <Component {...pageProps} />
-                </main>
-                <Footer />
-              </div>
-         
-          </MyProSidebarProvider>
-        </ProSidebarProvider>
-      </ThemeProvider>
-          )}
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <ProSidebarProvider theme={theme}>
+              <MyProSidebarProvider>
+                <div style={{ height: '100%', width: '100%' }}>
+                  <TopBar />
+                  <main
+                    className='card m-2 p-2 shadow-sm'
+                    style={{
+                      backgroundColor: colors.primary[1000],
+                      color: colors.grey[100],
+                      minHeight: '83vh'
+                    }}
+                  >
+                    <Component {...pageProps} />
+                  </main>
+                  <Footer />
+                </div>
+              </MyProSidebarProvider>
+            </ProSidebarProvider>
+          </ThemeProvider>
+        )}
+      </Provider>
     </ColorModeContext.Provider>
   )
 }

@@ -1,13 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-'use client'
-
-//  ** React Imports **
 import React from 'react'
-
-// ** API Imports **
-import axios from 'axios'
-
-// ** Third Party Imports **
 import { useTheme, Button, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
@@ -15,12 +6,10 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
 import * as Yup from 'yup'
+import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-
-//** Styles */
 import 'react-toastify/dist/ReactToastify.css'
 
-//** Validations */
 const schema = Yup.object().shape({
   name: Yup.string().required('First name is required'),
   rent: Yup.string().required('Rent is required'),
@@ -35,7 +24,7 @@ const schema = Yup.object().shape({
 })
 
 const EditProperty = ({ property, onUpdate, handelEditButton }) => {
-  //** Vars */
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -71,7 +60,6 @@ const EditProperty = ({ property, onUpdate, handelEditButton }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
 
-  //** Edit Property on update */
   const onSubmit = async data => {
     try {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${property.u_id}`, data, {
@@ -363,7 +351,6 @@ const EditProperty = ({ property, onUpdate, handelEditButton }) => {
           </Card>
         </Col>
       </Row>
-
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )

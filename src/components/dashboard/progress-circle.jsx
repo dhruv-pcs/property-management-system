@@ -1,7 +1,4 @@
-//  ** React Imports **
 import React from 'react'
-
-// ** Third Party Imports **
 import { Box } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'

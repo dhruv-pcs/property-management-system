@@ -34,7 +34,14 @@ const Role_Permission = () => {
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const userPermissions = JSON.parse(localStorage.getItem('user'))
-  const randomIndex = Math.floor(Math.random() * images.length)
+
+  // ** States **
+  const [role, setRole] = useState([])
+  const [selectedRow, setSelectedRow] = useState(null)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openView, setOpenView] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
 
   const images = [
     '/images/user1.jpg',
@@ -44,18 +51,11 @@ const Role_Permission = () => {
     '/images/user5.jpg',
     '/images/user6.jpg'
   ]
+  const randomIndex = Math.floor(Math.random() * images.length)
 
   const role_permission = userPermissions
     ?.filter(permission => permission.module.alias_name === 'Role And Permission')
     .map(permission => permission)
-
-  // ** States **
-  const [role, setRole] = useState([])
-  const [selectedRow, setSelectedRow] = useState(null)
-  const [openAdd, setOpenAdd] = useState(false)
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openView, setOpenView] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
 
   // ** Fetch Data **
   const handleFetch = async () => {

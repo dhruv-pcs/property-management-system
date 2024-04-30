@@ -1,25 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-'use client'
-
-//  ** React Imports **
 import React from 'react'
-
-// ** API Imports **
-import axios from 'axios'
-
-// ** Third Party Imports **
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-
-//** Styles */
 import 'react-toastify/dist/ReactToastify.css'
 
-//** Validations */
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -43,7 +32,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const AddOwner = ({ onUpdate, handelAddbutton }) => {
+const AddOwner = ({ onUpdate, handelAddButton }) => {
   //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
@@ -58,7 +47,6 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
     resolver: yupResolver(schema)
   })
 
-  //** Add Owner*/
   const onSubmit = async data => {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, data, {

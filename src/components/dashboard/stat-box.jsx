@@ -1,13 +1,9 @@
-//  ** React Imports **
 import React from 'react'
-
-// ** Third Party Imports **
 import { Box, Typography, useTheme } from '@mui/material'
 import { tokens } from '@theme/theme'
 import ProgressCircle from './progress-circle'
 
 const StatBox = ({ title, subtitle, progress, increase, icon }) => {
-  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
