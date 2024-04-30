@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   latitude: Yup.string().required('Rent is required')
 })
 
-const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
+const EditProperty = ({ property, onUpdate, handelEditButton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -66,7 +66,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
       })
 
       if (response.status === 201) {
-        handelEditbutton()
+        handelEditButton()
         onUpdate()
         toast.success('Property updated successfully')
       }

@@ -258,9 +258,9 @@ describe('EditProperty Component', () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditProperty property={property} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditProperty property={property} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('Save changes')
 
@@ -270,7 +270,7 @@ describe('EditProperty Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelEditbutton).toHaveBeenCalled()
+      expect(handelEditButton).toHaveBeenCalled()
       expect(screen.getByText('Property updated successfully')).toBeInTheDocument()
     })
   })
@@ -279,16 +279,16 @@ describe('EditProperty Component', () => {
     const mockError = new Error('Update request failed')
     axios.patch = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditProperty property={property} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditProperty property={property} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('Save changes')
     fireEvent.click(saveButton)
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelEditbutton).not.toHaveBeenCalled()
+      expect(handelEditButton).not.toHaveBeenCalled()
       expect(screen.getByText('Error updating property')).toBeInTheDocument()
     })
   })
@@ -329,9 +329,9 @@ describe('Property Add Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const name = getByLabelText('Name')
     const address = getByLabelText('Address')
@@ -397,7 +397,7 @@ describe('Property Add Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelAddbutton).toHaveBeenCalled()
+      expect(handelAddButton).toHaveBeenCalled()
       expect(screen.getByText('Property added successfully')).toBeInTheDocument()
     })
   })
@@ -453,9 +453,9 @@ describe('Property Add Component', () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const name = getByLabelText('Name')
     const address = getByLabelText('Address')
@@ -521,7 +521,7 @@ describe('Property Add Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelAddbutton).not.toHaveBeenCalled()
+      expect(handelAddButton).not.toHaveBeenCalled()
       expect(screen.getByText('Error adding property')).toBeInTheDocument()
     })
   })
@@ -531,9 +531,9 @@ describe('Property Add Component', () => {
 //   const mockResponse = { data: { statusCode: 201 } }
 //   axios.post = jest.fn().mockResolvedValue(mockResponse)
 //   const onUpdate = jest.fn()
-//   const handelAddbutton = jest.fn()
+//   const handelAddButton = jest.fn()
 
-//   const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+//   const { getByLabelText } = render(<AddProperty onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
 //   const name = getByLabelText('Name');
 //   const address = getByLabelText('Address');

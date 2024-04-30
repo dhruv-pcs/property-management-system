@@ -269,8 +269,8 @@ describe('Edit Customer Component', () => {
 
   test('Update Customer With out Empty Fields to get Validation Error', async () => {
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
-    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    const handelEditButton = jest.fn()
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const first_name = screen.getByTestId('first_name')
     const last_name = screen.getByTestId('last_name')
@@ -314,9 +314,9 @@ describe('Edit Customer Component', () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('save')
 
@@ -326,7 +326,7 @@ describe('Edit Customer Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelEditbutton).toHaveBeenCalled()
+      expect(handelEditButton).toHaveBeenCalled()
       expect(screen.getByText('Customer updated successfully')).toBeInTheDocument()
     })
   })
@@ -335,16 +335,16 @@ describe('Edit Customer Component', () => {
     const mockError = new Error('Update request failed')
     axios.patch = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('save')
     fireEvent.click(saveButton)
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelEditbutton).not.toHaveBeenCalled()
+      expect(handelEditButton).not.toHaveBeenCalled()
       expect(screen.getByText('Customer cannot be updated')).toBeInTheDocument()
     })
   })
@@ -372,9 +372,9 @@ describe('Add Customer Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -414,7 +414,7 @@ describe('Add Customer Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelAddbutton).toHaveBeenCalled()
+      expect(handelAddButton).toHaveBeenCalled()
       expect(screen.getByText('Customer added successfully')).toBeInTheDocument()
     })
   })
@@ -423,9 +423,9 @@ describe('Add Customer Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -486,9 +486,9 @@ describe('Add Customer Component', () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -528,7 +528,7 @@ describe('Add Customer Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelAddbutton).not.toHaveBeenCalled()
+      expect(handelAddButton).not.toHaveBeenCalled()
       expect(screen.getByText('customer cannot be added')).toBeInTheDocument()
     })
   })

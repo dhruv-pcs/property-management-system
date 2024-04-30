@@ -48,16 +48,16 @@ const Property = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handelAddbutton = () => {
+  const handelAddButton = () => {
     setOpenAdd(!openAdd)
   }
 
-  const handelEditbutton = row => {
+  const handelEditButton = row => {
     setOpenEdit(!openEdit)
     setSelectedRow(row)
   }
 
-  const handelViewbutton = row => {
+  const handelViewButton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
   }
@@ -66,7 +66,7 @@ const Property = () => {
     await fetchData()
   }
 
-  const handelDeletebutton = async row => {
+  const handelDeleteButton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
   }
@@ -117,7 +117,7 @@ const Property = () => {
               data-testid='view-property'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelViewbutton(row)}
+              onClick={() => handelViewButton(row)}
             >
               <Visibility />
             </button>
@@ -127,7 +127,7 @@ const Property = () => {
               data-testid='edit-property'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelEditbutton(row)}
+              onClick={() => handelEditButton(row)}
             >
               <Edit />
             </button>
@@ -137,7 +137,7 @@ const Property = () => {
               data-testid='delete-property'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
-              onClick={() => handelDeletebutton(row)}
+              onClick={() => handelDeleteButton(row)}
             >
               <Delete />
             </button>
@@ -273,7 +273,7 @@ const Property = () => {
             property_permission[0].add && (
               <Button
                 data-testid='add-property'
-                onClick={handelAddbutton}
+                onClick={handelAddButton}
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
               >
@@ -287,7 +287,7 @@ const Property = () => {
       <Dialog
         data-testid='add-property-modal'
         className='z-3'
-        onClose={handelAddbutton}
+        onClose={handelAddButton}
         aria-labelledby='customized-dialog-title'
         open={openAdd}
       >
@@ -300,7 +300,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelAddbutton}
+          onClick={handelAddButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -315,13 +315,13 @@ const Property = () => {
           className='d-flex justify-content-center'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <AddProperty handelAddbutton={handelAddbutton} onUpdate={handlePropertyDataUpdate} />
+          <AddProperty handelAddButton={handelAddButton} onUpdate={handlePropertyDataUpdate} />
         </DialogContent>
       </Dialog>
 
       <Dialog
         data-testid='edit-property-modal'
-        onClose={handelEditbutton}
+        onClose={handelEditButton}
         aria-labelledby='customized-dialog-title'
         open={openEdit}
       >
@@ -334,7 +334,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelEditbutton}
+          onClick={handelEditButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -350,7 +350,7 @@ const Property = () => {
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <EditProperty
-            handelEditbutton={handelEditbutton}
+            handelEditButton={handelEditButton}
             property={selectedRow}
             onUpdate={handlePropertyDataUpdate}
           />
@@ -359,7 +359,7 @@ const Property = () => {
 
       <Dialog
         data-testid='view-property-modal'
-        onClose={handelViewbutton}
+        onClose={handelViewButton}
         aria-labelledby='customized-dialog-title'
         open={openView}
       >
@@ -372,7 +372,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelViewbutton}
+          onClick={handelViewButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -393,7 +393,7 @@ const Property = () => {
 
       <Dialog
         data-testid='delete-property-modal'
-        onClose={handelDeletebutton}
+        onClose={handelDeleteButton}
         aria-labelledby='customized-dialog-title'
         open={openDelete}
       >
@@ -406,7 +406,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelDeletebutton}
+          onClick={handelDeleteButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -425,7 +425,7 @@ const Property = () => {
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
-              onClick={handelDeletebutton}
+              onClick={handelDeleteButton}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
             >

@@ -41,7 +41,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const AddCustomer = ({ onUpdate, handelAddbutton }) => {
+const AddCustomer = ({ onUpdate, handelAddButton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -64,7 +64,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Customer added successfully')
       }
     } catch (error) {

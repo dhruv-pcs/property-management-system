@@ -20,7 +20,7 @@ const schema = Yup.object().shape({
   pincode: Yup.number()
 })
 
-const AddAdmin = ({ onUpdate, handelAddbutton }) => {
+const AddAdmin = ({ onUpdate, handelAddButton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [showPassword, setShowPassword] = useState(false)
@@ -45,7 +45,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Admin added successfully')
       }
     } catch (error) {

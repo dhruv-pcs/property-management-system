@@ -32,7 +32,7 @@ const schema = Yup.object().shape({
   is_verified: Yup.boolean().required('Verification status is required')
 })
 
-const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
+const EditOwner = ({ owner, onUpdate, handelEditButton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -71,7 +71,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
-      handelEditbutton()
+      handelEditButton()
       onUpdate()
       toast.success('Owner updated successfully')
     } catch (err) {

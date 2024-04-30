@@ -50,17 +50,17 @@ const Owner = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handelEditbutton = row => {
+  const handelEditButton = row => {
     setOpenEdit(!openEdit)
     setSelectedRow(row)
   }
 
-  const handelViewbutton = row => {
+  const handelViewButton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
   }
 
-  const handelDeletebutton = async row => {
+  const handelDeleteButton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
   }
@@ -69,7 +69,7 @@ const Owner = () => {
     await fetchData()
   }
 
-  const handelAddbutton = () => {
+  const handelAddButton = () => {
     setOpenAdd(!openAdd)
   }
 
@@ -173,7 +173,7 @@ const Owner = () => {
               aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelViewbutton(row)}
+              onClick={() => handelViewButton(row)}
             >
               <Visibility />
             </button>
@@ -184,7 +184,7 @@ const Owner = () => {
               aria-label='Edit'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelEditbutton(row)}
+              onClick={() => handelEditButton(row)}
             >
               <Edit />
             </button>
@@ -195,7 +195,7 @@ const Owner = () => {
               aria-label='Delete'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
-              onClick={() => handelDeletebutton(row)}
+              onClick={() => handelDeleteButton(row)}
             >
               <Delete />
             </button>
@@ -331,7 +331,7 @@ const Owner = () => {
               <Button
                 data-testid='add-owner'
                 aria-label='Add'
-                onClick={handelAddbutton}
+                onClick={handelAddButton}
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
               >
@@ -345,7 +345,7 @@ const Owner = () => {
       <Dialog
         data-testid='edit-owner-modal'
         fullScreen={isSmallScreen}
-        onClose={handelEditbutton}
+        onClose={handelEditButton}
         aria-labelledby='customized-dialog-title'
         open={openEdit}
       >
@@ -358,7 +358,7 @@ const Owner = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelEditbutton}
+          onClick={handelEditButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -373,14 +373,14 @@ const Owner = () => {
           className='d-flex justify-content-center'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <EditOwner handelEditbutton={handelEditbutton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
+          <EditOwner handelEditButton={handelEditButton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>
       </Dialog>
 
       <Dialog
         data-testid='view-owner-modal'
         fullScreen={isSmallScreen}
-        onClose={handelViewbutton}
+        onClose={handelViewButton}
         aria-labelledby='customized-dialog-title'
         open={openView}
       >
@@ -393,7 +393,7 @@ const Owner = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelViewbutton}
+          onClick={handelViewButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -416,7 +416,7 @@ const Owner = () => {
         data-testid='add-owner-modal'
         fullScreen={isSmallScreen}
         className='z-3'
-        onClose={handelAddbutton}
+        onClose={handelAddButton}
         aria-labelledby='customized-dialog-title'
         open={openAdd}
       >
@@ -429,7 +429,7 @@ const Owner = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelAddbutton}
+          onClick={handelAddButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -444,13 +444,13 @@ const Owner = () => {
           className='d-flex justify-content-center'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <AddOwner handelAddbutton={handelAddbutton} onUpdate={handleOwnerDataUpdate} />
+          <AddOwner handelAddButton={handelAddButton} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>
       </Dialog>
 
       <Dialog
         data-testid='delete-owner-modal'
-        onClose={handelDeletebutton}
+        onClose={handelDeleteButton}
         aria-labelledby='customized-dialog-title'
         open={openDelete}
       >
@@ -463,7 +463,7 @@ const Owner = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelDeletebutton}
+          onClick={handelDeleteButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -482,7 +482,7 @@ const Owner = () => {
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
-              onClick={handelDeletebutton}
+              onClick={handelDeleteButton}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
             >

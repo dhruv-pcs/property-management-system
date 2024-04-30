@@ -32,7 +32,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const AddOwner = ({ onUpdate, handelAddbutton }) => {
+const AddOwner = ({ onUpdate, handelAddButton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -53,7 +53,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Owner added successfully')
       }
     } catch (error) {

@@ -30,7 +30,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
+const UpdateAdmin = ({ admin, onUpdate, handelEditButton }) => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -67,7 +67,7 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
       })
 
       if (response.status === 201) {
-        handelEditbutton()
+        handelEditButton()
         onUpdate()
         toast.success('Admin updated successfully')
       }

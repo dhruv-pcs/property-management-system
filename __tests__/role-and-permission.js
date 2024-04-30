@@ -259,7 +259,7 @@ describe('Role and Permission Component', () => {
     expect(screen.getByTestId('role')).toBeInTheDocument()
   })
 
-  test('Shoule Not Render API and show error', async () => {
+  test('Should Not Render API and show error', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
     await act(() => render(<RoleAndPermission />))
 
@@ -312,7 +312,7 @@ describe('Role and Permission Component', () => {
     })
   })
 
-  test('should open delet modal when Delete button is clicked', async () => {
+  test('should open delete modal when Delete button is clicked', async () => {
     act(() => render(<RoleAndPermission />))
 
     await waitFor(() => {
@@ -327,7 +327,7 @@ describe('Role and Permission Component', () => {
     })
   })
 
-  test('should open delet modal when Delete button is clicked and Delete Admin', async () => {
+  test('should open delete modal when Delete button is clicked and Delete Admin', async () => {
     axios.delete = jest.fn().mockResolvedValue({ data: { statusCode: 200 } })
 
     act(() => render(<RoleAndPermission />))
@@ -351,7 +351,7 @@ describe('Role and Permission Component', () => {
     })
   })
 
-  test('Shoule Not Delete Role  and show error', async () => {
+  test('Should Not Delete Role  and show error', async () => {
     axios.delete.mockRejectedValueOnce(new Error('API request failed'))
     act(() => render(<RoleAndPermission />))
 
