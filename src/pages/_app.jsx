@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 // ** Custom Components **
 import Footer from '@components/footer/footer'
-import TopBar from '@components/topBar/topBar'
+import Topbar from '@components/topBar/topBar'
 import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
 import { ColorModeContext, tokens, useMode } from '@theme/theme'
 
