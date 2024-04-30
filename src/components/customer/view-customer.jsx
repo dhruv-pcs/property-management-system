@@ -1,11 +1,17 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
+//  ** React Imports **
+import React, { useEffect } from 'react'
+
+// ** Third Party Imports **
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
 
 const ViewCustomer = ({ customer }) => {
+  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))

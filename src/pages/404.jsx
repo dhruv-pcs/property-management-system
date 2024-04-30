@@ -16,7 +16,7 @@ const Notfound = () => {
         <title>Page Not Found</title>
         <meta name='description' content='Page Not Found' />
       </Head>
-      <div data-testid='notfound' className='position-absolute top-50 start-50 translate-middle' >
+      <div data-testid='notfound' className='position-absolute top-50 start-50 translate-middle'>
         <h1 className=''>Page Not Found</h1>
         <Link
           name='return to dashboard'

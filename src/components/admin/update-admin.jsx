@@ -1,5 +1,13 @@
-import axios from 'axios'
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
+//  ** React Imports **
 import React, { useEffect } from 'react'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Third Party Imports **
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { tokens } from '@theme/theme'
 import { useTheme, useMediaQuery } from '@mui/material'
@@ -7,8 +15,11 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
+
+//** Styles */
 import 'react-toastify/dist/ReactToastify.css'
 
+//** Validations */
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -31,6 +42,7 @@ const schema = Yup.object().shape({
 })
 
 const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
+  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -60,6 +72,7 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
 
+  //** Edit Admin on update */
   const onSubmit = async data => {
     try {
       const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${admin?.u_id}`, data, {

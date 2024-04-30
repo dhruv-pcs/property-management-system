@@ -1,10 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
+//  ** React Imports **
 import React from 'react'
+
+// ** Third Party Imports **
 import { FormControl, FormControlLabel, Radio, RadioGroup, useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 
 const ViewOwner = ({ owner }) => {
+  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const editable = false

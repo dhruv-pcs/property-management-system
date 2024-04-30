@@ -1,19 +1,39 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
+//  ** React Imports **
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import Head from 'next/head'
+
+// ** Custom Components **
 import EditProperty from '@components/property/edit-property'
 import AddProperty from '@components/property/add-property'
 import ViewProperty from '@components/property/view-property'
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme } from '@mui/material'
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import DataTable from 'react-data-table-component'
-import { tokens } from '@theme/theme'
-import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
 const Property = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+
+  const property_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Property')
+    .map(permission => permission)
+
+  // ** States **
   const [propertyData, setPropertyData] = useState([])
   const [openAdd, setOpenAdd] = useState(false)
   const [openView, setOpenView] = useState(false)
@@ -21,50 +41,35 @@ const Property = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
 
-  const userPermissions = JSON.parse(localStorage.getItem('user'))
-
-  const property_permission = userPermissions
-    ?.filter(permission => permission.module.alias_name === 'Property')
-    .map(permission => permission)
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      setPropertyData(response.data.data.adminData)
-    } catch (error) {
-      toast.error('Error Fetching Data')
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+  // ** Open Add Modal **
   const handelAddbutton = () => {
     setOpenAdd(!openAdd)
   }
 
-  const handelEditbutton = row => {
-    setOpenEdit(!openEdit)
-    setSelectedRow(row)
+  //  ** Fetch Data After Update  **
+  const handlePropertyDataUpdate = async () => {
+    await fetchData()
   }
 
+  // ** Open View Modal **
   const handelViewbutton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
   }
 
-  const handlePropertyDataUpdate = async () => {
-    await fetchData()
+  // ** Open Edit Modal **
+  const handelEditbutton = row => {
+    setOpenEdit(!openEdit)
+    setSelectedRow(row)
   }
 
+  // ** Open Delete Modal **
   const handelDeletebutton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
   }
 
+  // ** Delete Property **
   const handelDeleteConfirmation = async selectedRow => {
     try {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${selectedRow.u_id}`, {
@@ -81,6 +86,7 @@ const Property = () => {
     }
   }
 
+  // ** Columns **
   const columns = [
     {
       name: 'Name',
@@ -141,7 +147,7 @@ const Property = () => {
     }
   ]
 
-  // Your tableCustomStyles remains unchanged
+  // ** Table Custom Styles **
   const tableCustomStyles = {
     head: {
       style: {
@@ -236,6 +242,22 @@ const Property = () => {
     }
   }
 
+  // ** Fetch Data  **
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      setPropertyData(response.data.data.adminData)
+    } catch (error) {
+      toast.error('Error Fetching Data')
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <>
       <Head>
@@ -277,7 +299,7 @@ const Property = () => {
           }
         />
       </div>
-
+      {/* ** Add Property Modal ** */}
       <Dialog
         data-testid='add-property-modal'
         className='z-3'
@@ -313,6 +335,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
+      {/* ** Edit Property Modal ** */}
       <Dialog
         data-testid='edit-property-modal'
         onClose={handelEditbutton}
@@ -351,6 +374,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
+      {/* ** View Property Modal ** */}
       <Dialog
         data-testid='view-property-modal'
         onClose={handelViewbutton}
@@ -385,6 +409,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
+      {/* ** Delete Property Modal ** */}
       <Dialog
         data-testid='delete-property-modal'
         onClose={handelDeletebutton}
@@ -437,6 +462,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
+      {/* ** Toast ** */}
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )

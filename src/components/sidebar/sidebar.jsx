@@ -45,8 +45,6 @@ const MyProSidebar = () => {
   const Local = JSON.parse(LocalData)
   const [isMounted, setIsMounted] = useState(false)
 
-
-
   useEffect(() => {
     setIsMounted(true)
 
@@ -96,8 +94,7 @@ const MyProSidebar = () => {
       <Sidebar breakPoint='md' backgroundColor={colors.primary[400]}>
         <Menu iconshape='square'>
           <MenuItem
-           
-            icon={<MenuOutlinedIcon  data-testid='collapse-sidebar' onClick={() => collapseSidebar()} />}
+            icon={<MenuOutlinedIcon data-testid='collapse-sidebar' onClick={() => collapseSidebar()} />}
             style={{
               margin: '10px 0 20px 0',
               color: colors.grey[100],

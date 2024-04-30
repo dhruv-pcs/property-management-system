@@ -1,14 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
+//  ** React Imports **
 import React from 'react'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Third Party Imports **
 import { useTheme, useMediaQuery } from '@mui/material'
 import { tokens } from '@theme/theme'
 import { Card, Col, Row, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
+// ** Validations **
 const schema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   address: Yup.string().required('Address is required'),
@@ -40,6 +51,7 @@ const schema = Yup.object().shape({
 })
 
 const AddProperty = ({ onUpdate, handelAddbutton }) => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -53,6 +65,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
     resolver: yupResolver(schema)
   })
 
+  // ** Add Property **
   const onSubmit = async data => {
     data.pin_code = Number(data.pin_code)
     data.no_of_balconies = Number(data.no_of_balconies)

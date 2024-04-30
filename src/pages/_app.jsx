@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }) => {
   const [theme, colorMode] = useMode()
   const colors = tokens(theme.palette.mode)
   const [isClient, setIsClient] = useState(false)
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
     setIsClient(true)
@@ -24,18 +24,16 @@ const App = ({ Component, pageProps }) => {
   }
 
   // Check if the current route is the login page
-  const isBlankPage = router.pathname === '/login' || router.pathname === '/404';
+  const isBlankPage = router.pathname === '/login' || router.pathname === '/404'
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-        {isBlankPage && <Component {...pageProps} />}
-        {!isBlankPage && (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ProSidebarProvider theme={theme}>
-          <MyProSidebarProvider>
-           
-          
+      {isBlankPage && <Component {...pageProps} />}
+      {!isBlankPage && (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ProSidebarProvider theme={theme}>
+            <MyProSidebarProvider>
               <div style={{ height: '100%', width: '100%' }}>
                 <Topbar />
                 <main
@@ -50,11 +48,10 @@ const App = ({ Component, pageProps }) => {
                 </main>
                 <Footer />
               </div>
-         
-          </MyProSidebarProvider>
-        </ProSidebarProvider>
-      </ThemeProvider>
-          )}
+            </MyProSidebarProvider>
+          </ProSidebarProvider>
+        </ThemeProvider>
+      )}
     </ColorModeContext.Provider>
   )
 }
