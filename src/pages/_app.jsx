@@ -22,12 +22,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = ({ Component, pageProps }) => {
   // ** Vars **
+  const [theme, colorMode] = useMode()
+  const router = useRouter()
   const isBlankPage = router.pathname === '/login' || router.pathname === '/404'
   const colors = tokens(theme.palette.mode)
-  const router = useRouter()
 
   // ** State **
-  const [theme, colorMode] = useMode()
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {

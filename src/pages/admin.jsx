@@ -34,10 +34,6 @@ const Admin = () => {
   const colors = tokens(theme.palette.mode)
   const userPermissions = JSON.parse(localStorage.getItem('user'))
 
-  const admin_permission = userPermissions
-    ?.filter(permission => permission.module.alias_name === 'Admin')
-    .map(permission => permission)
-
   // ** States **
   const [adminData, setAdminData] = useState([])
   const [selectedRow, setSelectedRow] = useState(null)
@@ -46,6 +42,10 @@ const Admin = () => {
   const [openView, setOpenView] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const admin_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Admin')
+    .map(permission => permission)
 
   // ** Delete Admin **
   const handleDelete = async row => {

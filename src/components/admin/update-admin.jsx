@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
@@ -58,7 +59,6 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditButton }) => {
       setValue('pincode', admin.pincode)
       setValue('state', admin.state)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setValue])
 
   const onSubmit = async data => {

@@ -13,7 +13,7 @@ import { tokens } from '@theme/theme'
 import { useTheme } from '@mui/material'
 
 const Notfound = () => {
-  // ** Vars
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 
