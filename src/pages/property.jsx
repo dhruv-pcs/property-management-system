@@ -249,6 +249,11 @@ const Property = () => {
     }
   }
 
+  // ** Handle Property Data Update **
+  const handlePropertyDataUpdate = () => {
+    fetchData()
+  }
+
   useEffect(() => {
     fetchData()
   }, [])
