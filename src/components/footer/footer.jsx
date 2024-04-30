@@ -1,12 +1,20 @@
+// ** React Imports **
 import React from 'react'
+import Link from 'next/link'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
+import { Box, useTheme } from '@mui/material'
+
+// ** Icons Imports
 import Facebook from '@mui/icons-material/Facebook'
 import Instagram from '@mui/icons-material/Instagram'
 import LinkedIn from '@mui/icons-material/LinkedIn'
-import { Box, useTheme } from '@mui/material'
-import { tokens } from '@theme/theme'
-import Link from 'next/link'
 
 const Footer = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 

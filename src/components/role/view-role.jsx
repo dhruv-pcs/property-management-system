@@ -1,5 +1,10 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import {
   useTheme,
   Table,
@@ -12,15 +17,20 @@ import {
   TextField,
   useMediaQuery
 } from '@mui/material'
-import { tokens } from '@theme/theme'
+
+// ** API Imports **
+import axios from 'axios'
 
 const ViewRole = ({ roleData }) => {
-  const [moduleData, setModuleData] = useState([])
-  const [permissions, setPermissions] = useState({})
-  const [roleName, setRoleName] = useState('')
+  // ** Vars **
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const colors = tokens(theme.palette.mode)
+
+  // ** State **
+  const [moduleData, setModuleData] = useState([])
+  const [permissions, setPermissions] = useState({})
+  const [roleName, setRoleName] = useState('')
 
   useEffect(() => {
     const fetchModuleData = async () => {

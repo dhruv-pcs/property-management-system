@@ -1,9 +1,14 @@
+// ** React Imports **
 import React, { useState, createContext, useContext } from 'react'
+
+// ** Custom Components **
 import MyProSidebar from './sidebar'
 
+// ** Contexts **
 const SidebarContext = createContext({})
 
 export const MyProSidebarProvider = ({ children }) => {
+  // ** States **
   const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState(undefined)
 
   return (

@@ -1,5 +1,10 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import {
   useTheme,
   Table,
@@ -11,12 +16,17 @@ import {
   Button,
   useMediaQuery
 } from '@mui/material'
-import { tokens } from '@theme/theme'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { useForm } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
 
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
+import 'react-toastify/dist/ReactToastify.css'
+
+// ** Function to handle permission change **
 export const handlePermissionChange = (permissions, setPermissions, permission) => {
   const { module_u_id: moduleId, permissionType, value } = permission
 
@@ -57,6 +67,7 @@ export const handlePermissionChange = (permissions, setPermissions, permission) 
   }
 }
 
+// ** Function to handle global select all change **
 export const handleGlobalSelectAllChange = (value, permissions, setPermissions, moduleData) => {
   const updatedPermissions = {}
   moduleData.forEach(item => {
@@ -74,13 +85,16 @@ export const handleGlobalSelectAllChange = (value, permissions, setPermissions, 
 }
 
 const EditRole = ({ roleData, onUpdate, onClose }) => {
+  // ** Vars **
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const colors = tokens(theme.palette.mode)
+
+  // ** State **
   const [moduleData, setModuleData] = useState([])
   const [permissions, setPermissions] = useState({})
   const [roleName, setRoleName] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const colors = tokens(theme.palette.mode)
 
   const {
     register,
@@ -88,6 +102,38 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     formState: { errors },
     setValue
   } = useForm()
+
+  // ** Funcation to update role **
+  const onSubmit = async () => {
+    setFormSubmitted(true)
+    const permissionsPayload = []
+    Object.keys(permissions).forEach(moduleId => {
+      const moduleData = permissions[moduleId]
+      permissionsPayload.push({
+        u_id: moduleId,
+        view: moduleData.view,
+        add: moduleData.add,
+        update: moduleData.update,
+        remove: moduleData.remove,
+        notification: moduleData.notification
+      })
+    })
+
+    const payload = {
+      roleName: roleName.trim() || roleName,
+      permissions: permissionsPayload
+    }
+
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, payload, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
+
+    if (response.status === 201) {
+      onUpdate()
+      onClose()
+      toast.success('Role updated successfully!')
+    }
+  }
 
   useEffect(() => {
     const fetchModuleData = async () => {
@@ -121,37 +167,6 @@ const EditRole = ({ roleData, onUpdate, onClose }) => {
     fetchModuleData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const onSubmit = async () => {
-    setFormSubmitted(true)
-    const permissionsPayload = []
-    Object.keys(permissions).forEach(moduleId => {
-      const moduleData = permissions[moduleId]
-      permissionsPayload.push({
-        u_id: moduleId,
-        view: moduleData.view,
-        add: moduleData.add,
-        update: moduleData.update,
-        remove: moduleData.remove,
-        notification: moduleData.notification
-      })
-    })
-
-    const payload = {
-      roleName: roleName.trim() || roleName,
-      permissions: permissionsPayload
-    }
-
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${roleData.u_id}`, payload, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
-
-    if (response.status === 201) {
-      onUpdate()
-      onClose()
-      toast.success('Role updated successfully!')
-    }
-  }
 
   return (
     <>

@@ -1,40 +1,45 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+// ** Custom Components **
 import { ColorModeContext, tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import { useTheme, Box, IconButton } from '@mui/material'
+import { useProSidebar } from 'react-pro-sidebar'
+import { ToastContainer, toast } from 'react-toastify'
+
+// ** Icons Imports
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import { useProSidebar } from 'react-pro-sidebar'
-import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
+
+// ** API Imports **
 import axios from 'axios'
-import { useRouter } from 'next/router'
-import { ToastContainer, toast } from 'react-toastify'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
 const TopBar = () => {
-  const [isMounted, setIsMounted] = useState(false)
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const colorMode = useContext(ColorModeContext)
   const { toggleSidebar, broken } = useProSidebar()
   const router = useRouter()
 
-  useEffect(() => {
-    setIsMounted(true)
+  // ** Contexts **
+  const colorMode = useContext(ColorModeContext)
 
-    return () => {
-      setIsMounted(false)
-    }
-  }, [])
+  // ** State **
+  const [isMounted, setIsMounted] = useState(false)
 
-  if (!isMounted) {
-    return null
-  }
-
-  const handleLogout = async () => {
+  // ** Logout Function **
+  const handleLogOut = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -54,6 +59,18 @@ const TopBar = () => {
     } catch (error) {
       toast.error('Error Logging Out')
     }
+  }
+
+  useEffect(() => {
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [])
+
+  if (!isMounted) {
+    return null
   }
 
   return (
@@ -92,7 +109,7 @@ const TopBar = () => {
               </IconButton>
             </Link>
 
-            <IconButton data-testid='logout' aria-label='Logout' onClick={() => handleLogout()}>
+            <IconButton data-testid='logout' aria-label='Logout' onClick={() => handleLogOut()}>
               <LogoutIcon />
             </IconButton>
           </Box>
