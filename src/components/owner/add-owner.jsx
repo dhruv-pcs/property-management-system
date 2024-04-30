@@ -32,7 +32,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const AddOwner = ({ onUpdate, handelAddbutton }) => {
+const AddOwner = ({ onUpdate, handelAddButton }) => {
   //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
