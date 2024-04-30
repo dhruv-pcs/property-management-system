@@ -17,7 +17,7 @@ const schema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .test('len', 'Phone number must be exactly 10 digits', val => val && val.toString().length === 10),
-  pincode: Yup.number()
+  PinCode: Yup.number()
 })
 
 const AddAdmin = ({ onUpdate, handelAddButton }) => {
@@ -230,13 +230,13 @@ const AddAdmin = ({ onUpdate, handelAddButton }) => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
+                      <Form.Label htmlFor='PinCode'>PinCode</Form.Label>
                       <Form.Control
-                        id='pincode'
-                        data-testid='pincode'
+                        id='PinCode'
+                        data-testid='PinCode'
                         type='text'
-                        placeholder='Enter your pincode'
-                        {...register('pincode')}
+                        placeholder='Enter your PinCode'
+                        {...register('PinCode')}
                       />
                     </Form.Group>
                   </Col>

@@ -52,7 +52,7 @@ const EditProperty = ({ property, onUpdate, handelEditButton }) => {
     setValue('property_number', property.property_number)
     setValue('city', property.city)
     setValue('district', property.district)
-    setValue('pincode', property.pin_code)
+    setValue('PinCode', property.pin_code)
     setValue('latitude', property.latitude)
     setValue('longitude', property.longitude)
     setValue('description', property.description)
@@ -265,12 +265,12 @@ const EditProperty = ({ property, onUpdate, handelEditButton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor='pin_code'>Pincode</Form.Label>
+                      <Form.Label htmlFor='pin_code'>PinCode</Form.Label>
                       <Form.Control
                         id='pin_code'
                         data-testid='pin_code'
                         type='tel'
-                        placeholder='Enter Pincode'
+                        placeholder='Enter PinCode'
                         {...register('pin_code')}
                         defaultValue={property?.pin_code}
                       />

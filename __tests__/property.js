@@ -207,7 +207,7 @@ describe('EditProperty Component', () => {
     expect(getByLabelText('Property Number')).toHaveValue(property.property_number)
     expect(getByLabelText('City')).toHaveValue(property.city)
     expect(getByLabelText('District')).toHaveValue(property.district)
-    expect(getByLabelText('Pincode')).toHaveValue(property.pin_code)
+    expect(getByLabelText('PinCode')).toHaveValue(property.pin_code)
     expect(getByLabelText('Latitude')).toHaveValue(property.latitude.toString())
     expect(getByLabelText('Longitude')).toHaveValue(property.longitude.toString())
     expect(getByTestId('verified')).toBeChecked()
@@ -230,7 +230,7 @@ describe('EditProperty Component', () => {
     expect(getByLabelText('Property Number')).toHaveValue(property.property_number)
     expect(getByLabelText('City')).toHaveValue(property.city)
     expect(getByLabelText('District')).toHaveValue(property.district)
-    expect(getByLabelText('Pincode')).toHaveValue(property.pin_code)
+    expect(getByLabelText('PinCode')).toHaveValue(property.pin_code)
     expect(getByLabelText('Latitude')).toHaveValue(property.latitude.toString())
     expect(getByLabelText('Longitude')).toHaveValue(property.longitude.toString())
     expect(getByTestId('not_verified')).toBeChecked()
@@ -368,7 +368,7 @@ describe('Property Add Component', () => {
     const no_of_bedrooms = getByLabelText('No. of Bedrooms')
     const no_of_kitchen = getByLabelText('No. of Kitchen')
     const no_of_rooms = getByLabelText('No. of Rooms')
-    const pin_code = getByLabelText('Pincode')
+    const pin_code = getByLabelText('PinCode')
     const property_age = getByLabelText('Property Age')
     const property_area = getByLabelText('Property Area')
     const property_number = getByLabelText('Property Number')
@@ -492,7 +492,7 @@ describe('Property Add Component', () => {
     const no_of_bedrooms = getByLabelText('No. of Bedrooms')
     const no_of_kitchen = getByLabelText('No. of Kitchen')
     const no_of_rooms = getByLabelText('No. of Rooms')
-    const pin_code = getByLabelText('Pincode')
+    const pin_code = getByLabelText('PinCode')
     const property_age = getByLabelText('Property Age')
     const property_area = getByLabelText('Property Area')
     const property_number = getByLabelText('Property Number')
@@ -570,7 +570,7 @@ describe('Property Add Component', () => {
 //   const no_of_bedrooms = getByLabelText('No. of Bedrooms');
 //   const no_of_kitchen = getByLabelText('No. of Kitchen');
 //   const no_of_rooms = getByLabelText('No. of Rooms');
-//   const pin_code = getByLabelText('Pincode');
+//   const pin_code = getByLabelText('PinCode');
 //   const property_age = getByLabelText('Property Age');
 //   const property_area = getByLabelText('Property Area');
 //   const property_number = getByLabelText('Property Number');

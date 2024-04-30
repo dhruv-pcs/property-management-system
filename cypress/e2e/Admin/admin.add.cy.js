@@ -23,7 +23,7 @@ describe('Admin', () => {
     cy.get('#city').type('baroda')
     cy.get('#state').type('gujrat')
     cy.get('#country').type('india')
-    cy.get('#pincode').type('321123')
+    cy.get('#PinCode').type('321123')
 
     cy.get('button').contains('Add Admin').click()
     cy.wait(500)

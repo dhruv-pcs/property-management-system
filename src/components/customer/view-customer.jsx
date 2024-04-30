@@ -20,7 +20,7 @@ const ViewCustomer = ({ customer }) => {
     setValue('alternate_phone', customer.alternate_phone)
     setValue('city', customer.city)
     setValue('country', customer.country)
-    setValue('pincode', customer.pincode)
+    setValue('PinCode', customer.PinCode)
     setValue('state', customer.state)
     setValue('aadhar_card_no', customer.aadhar_card_no)
     setValue('address', customer.address)
@@ -164,12 +164,12 @@ const ViewCustomer = ({ customer }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label>PinCode</Form.Label>
                       <Form.Control
                         type='text'
-                        defaultValue={customer?.pincode}
-                        placeholder='Enter your pincode'
-                        {...register('pincode')}
+                        defaultValue={customer?.PinCode}
+                        placeholder='Enter your PinCode'
+                        {...register('PinCode')}
                         readOnly
                       />
                     </Form.Group>

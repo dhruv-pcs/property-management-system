@@ -79,7 +79,7 @@ const Profile = () => {
         setValue('alternate_phone', response.data.data.data.alternate_phone)
         setValue('city', response.data.data.data.city)
         setValue('country', response.data.data.data.country)
-        setValue('pincode', response.data.data.data.pincode)
+        setValue('PinCode', response.data.data.data.PinCode)
         setValue('state', response.data.data.data.state)
       } catch (error) {
         toast.error('Error Fetching Data')
@@ -269,14 +269,14 @@ const Profile = () => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label>Pincode</Form.Label>
+                      <Form.Label>PinCode</Form.Label>
                       <Form.Control
                         type='text'
-                        data-testid='pincode'
-                        name='pincode'
-                        defaultValue={userData?.pincode}
-                        placeholder='Enter your pincode'
-                        {...register('pincode')}
+                        data-testid='PinCode'
+                        name='PinCode'
+                        defaultValue={userData?.PinCode}
+                        placeholder='Enter your PinCode'
+                        {...register('PinCode')}
                         readOnly={!editable}
                       />
                     </Form.Group>

@@ -235,7 +235,7 @@ describe('Owner Edit Component', () => {
     street: 'Main Street',
     city: 'City',
     state: 'State',
-    pincode: '123456',
+    PinCode: '123456',
     country: 'Country',
     status: true,
     is_verified: true
@@ -252,7 +252,7 @@ describe('Owner Edit Component', () => {
     expect(getByLabelText('City')).toHaveValue(owner.city)
     expect(getByLabelText('State')).toHaveValue(owner.state)
     expect(getByLabelText('Country')).toHaveValue(owner.country)
-    expect(getByLabelText('Pincode')).toHaveValue(owner.pincode)
+    expect(getByLabelText('PinCode')).toHaveValue(owner.PinCode)
     expect(getByLabelText('Aadhar Card No')).toHaveValue(owner.aadhar_card_no)
     expect(getByLabelText('Address')).toHaveValue(owner.address)
     expect(getByLabelText('GST No')).toHaveValue(owner.gst_no)
@@ -278,7 +278,7 @@ describe('Owner Edit Component', () => {
     expect(getByLabelText('City')).toHaveValue(owner.city)
     expect(getByLabelText('State')).toHaveValue(owner.state)
     expect(getByLabelText('Country')).toHaveValue(owner.country)
-    expect(getByLabelText('Pincode')).toHaveValue(owner.pincode)
+    expect(getByLabelText('PinCode')).toHaveValue(owner.PinCode)
     expect(getByLabelText('Aadhar Card No')).toHaveValue(owner.aadhar_card_no)
     expect(getByLabelText('Address')).toHaveValue(owner.address)
     expect(getByLabelText('GST No')).toHaveValue(owner.gst_no)
@@ -388,7 +388,7 @@ describe('Owner Add Component', () => {
     street: 'Main Street',
     city: 'City',
     state: 'State',
-    pincode: '123456',
+    PinCode: '123456',
     country: 'Country'
   }
 
@@ -408,7 +408,7 @@ describe('Owner Add Component', () => {
     const city = getByLabelText('City')
     const state = getByLabelText('State')
     const country = getByLabelText('Country')
-    const pincode = getByLabelText('Pincode')
+    const PinCode = getByLabelText('PinCode')
     const aadhar_card_no = getByLabelText('Aadhar Card No')
     const address = getByLabelText('Address')
     const gst_no = getByLabelText('GST No')
@@ -423,7 +423,7 @@ describe('Owner Add Component', () => {
     fireEvent.change(city, { target: { value: owner.city } })
     fireEvent.change(state, { target: { value: owner.state } })
     fireEvent.change(country, { target: { value: owner.country } })
-    fireEvent.change(pincode, { target: { value: owner.pincode } })
+    fireEvent.change(PinCode, { target: { value: owner.PinCode } })
     fireEvent.change(aadhar_card_no, { target: { value: owner.aadhar_card_no } })
     fireEvent.change(address, { target: { value: owner.address } })
     fireEvent.change(gst_no, { target: { value: owner.gst_no } })
@@ -457,7 +457,7 @@ describe('Owner Add Component', () => {
     //     street: 'Main Street',
     //     city: 'City',
     //     state: 'State',
-    //     pincode: '123456',
+    //     PinCode: '123456',
     //     country: 'Country'
     //   },
     //   expect.any(Object)
@@ -470,7 +470,7 @@ describe('Owner Add Component', () => {
     // expect(getByLabelText('City')).toBeInTheDocument();
     // expect(getByLabelText('State')).toBeInTheDocument();
     // expect(getByLabelText('Country')).toBeInTheDocument();
-    // expect(getByLabelText('Pincode')).toBeInTheDocument();
+    // expect(getByLabelText('PinCode')).toBeInTheDocument();
     // expect(getByLabelText('Aadhar Card No')).toBeInTheDocument();
     // expect(getByLabelText('Address')).toBeInTheDocument();
     // expect(getByLabelText('GST No')).toBeInTheDocument();
@@ -494,7 +494,7 @@ describe('Owner Add Component', () => {
     const city = getByLabelText('City')
     const state = getByLabelText('State')
     const country = getByLabelText('Country')
-    const pincode = getByLabelText('Pincode')
+    const PinCode = getByLabelText('PinCode')
     const aadhar_card_no = getByLabelText('Aadhar Card No')
     const address = getByLabelText('Address')
     const gst_no = getByLabelText('GST No')
@@ -509,7 +509,7 @@ describe('Owner Add Component', () => {
     fireEvent.change(city, { target: { value: '' } })
     fireEvent.change(state, { target: { value: '' } })
     fireEvent.change(country, { target: { value: '' } })
-    fireEvent.change(pincode, { target: { value: '' } })
+    fireEvent.change(PinCode, { target: { value: '' } })
     fireEvent.change(aadhar_card_no, { target: { value: '' } })
     fireEvent.change(address, { target: { value: '' } })
     fireEvent.change(gst_no, { target: { value: '' } })
@@ -541,7 +541,7 @@ describe('Owner Add Component', () => {
       expect(screen.getByText('City is required')).toBeInTheDocument()
       expect(screen.getByText('State is required')).toBeInTheDocument()
       expect(
-        screen.getByText('pincode must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
+        screen.getByText('PinCode must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
       ).toBeInTheDocument()
       expect(
         screen.getByText(
@@ -567,7 +567,7 @@ describe('Owner Add Component', () => {
     const city = getByLabelText('City')
     const state = getByLabelText('State')
     const country = getByLabelText('Country')
-    const pincode = getByLabelText('Pincode')
+    const PinCode = getByLabelText('PinCode')
     const aadhar_card_no = getByLabelText('Aadhar Card No')
     const address = getByLabelText('Address')
     const gst_no = getByLabelText('GST No')
@@ -582,7 +582,7 @@ describe('Owner Add Component', () => {
     fireEvent.change(city, { target: { value: owner.city } })
     fireEvent.change(state, { target: { value: owner.state } })
     fireEvent.change(country, { target: { value: owner.country } })
-    fireEvent.change(pincode, { target: { value: owner.pincode } })
+    fireEvent.change(PinCode, { target: { value: owner.PinCode } })
     fireEvent.change(aadhar_card_no, { target: { value: owner.aadhar_card_no } })
     fireEvent.change(address, { target: { value: owner.address } })
     fireEvent.change(gst_no, { target: { value: owner.gst_no } })

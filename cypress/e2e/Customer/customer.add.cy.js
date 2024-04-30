@@ -22,7 +22,7 @@ describe('Add Customer', () => {
     cy.get('#city').type('City')
     cy.get('#state').type('State')
     cy.get('#country').type('Country')
-    cy.get('#pincode').type('123456')
+    cy.get('#PinCode').type('123456')
     cy.get('#aadhar_card_no').type('656565656565')
     cy.get('#address').type('123 Main St')
     cy.get('#landmark').type('Near Park')
