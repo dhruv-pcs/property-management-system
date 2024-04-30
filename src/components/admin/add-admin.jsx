@@ -31,7 +31,7 @@ const schema = Yup.object().shape({
   pincode: Yup.number()
 })
 
-const AddAdmin = ({ onUpdate, handelAddbutton }) => {
+const AddAdmin = ({ onUpdate, handelAddButton }) => {
   //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)

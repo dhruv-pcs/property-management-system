@@ -34,7 +34,7 @@ const schema = Yup.object().shape({
   latitude: Yup.string().required('Rent is required')
 })
 
-const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
+const EditProperty = ({ property, onUpdate, handelEditButton }) => {
   //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)

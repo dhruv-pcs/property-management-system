@@ -43,7 +43,7 @@ const schema = Yup.object().shape({
   is_verified: Yup.boolean().required('Verification status is required')
 })
 
-const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
+const EditOwner = ({ owner, onUpdate, handelEditButton }) => {
   //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)

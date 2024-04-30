@@ -41,7 +41,7 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Country is required')
 })
 
-const UpdateAdmin = ({ admin, onUpdate, handelEditbutton }) => {
+const UpdateAdmin = ({ admin, onUpdate, handelEditButton }) => {
   //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
