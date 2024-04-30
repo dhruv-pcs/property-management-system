@@ -1,18 +1,39 @@
-import React from 'react'
-import { Box, useTheme, useMediaQuery } from '@mui/material'
-import Grid from '@mui/material/Unstable_Grid2'
+'use client'
+
+// ** React Imports **
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import EmailIcon from '@mui/icons-material/Email'
-import PersonAddIcon from '@mui/icons-material/PersonAdd'
-import AddHome from '@mui/icons-material/AddHome'
+
+// ** Custom Components **
 import Header from '@components/dashboard/header'
 import StatBox from '@components/dashboard/stat-box'
 import { tokens } from '@theme/theme'
 
+// ** Third Party Imports **
+import { Box, useTheme, useMediaQuery } from '@mui/material'
+
+// ** Icons **
+import Grid from '@mui/material/Unstable_Grid2'
+import EmailIcon from '@mui/icons-material/Email'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import AddHome from '@mui/icons-material/AddHome'
+
 const Dashboard = () => {
+  // ** Vars **
   const theme = useTheme()
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'))
   const colors = tokens(theme.palette.mode)
+
+  // ** States **
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   return (
     <>
@@ -38,7 +59,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               justifyContent='center'
@@ -57,7 +78,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               justifyContent='center'
@@ -76,7 +97,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               height='200px'
@@ -95,7 +116,7 @@ const Dashboard = () => {
             <Box
               width='100%'
               className='d-flex justify-content-center align-items-center rounded-2'
-              backgroundColor={colors.primary[500]}
+              backgroundColor={colors.primary[1100]}
               display='flex'
               alignItems='center'
               justifyContent='center'

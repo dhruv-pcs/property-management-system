@@ -1,5 +1,10 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import {
   useTheme,
   Table,
@@ -11,12 +16,17 @@ import {
   Button,
   useMediaQuery
 } from '@mui/material'
-import { tokens } from '@theme/theme'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { useForm } from 'react-hook-form'
 import { Form } from 'react-bootstrap'
 
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
+import 'react-toastify/dist/ReactToastify.css'
+
+// ** handlePermissionChange function **
 export const handlePermissionChange = (permissions, setPermissions, moduleName, permissionType, value) => {
   if (permissionType === 'view' && !value) {
     const updatedPermissions = {
@@ -38,6 +48,7 @@ export const handlePermissionChange = (permissions, setPermissions, moduleName, 
   }
 }
 
+// ** handleGlobalSelectAllChange function **
 export const handleGlobalSelectAllChange = (permissions, setPermissions, setSelectAll, value) => {
   setSelectAll(value)
 
@@ -57,13 +68,16 @@ export const handleGlobalSelectAllChange = (permissions, setPermissions, setSele
 }
 
 const AddRole = ({ onUpdate, onClose }) => {
+  // ** Vars **
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const colors = tokens(theme.palette.mode)
+
+  // ** States **
   const [data, setData] = useState([])
   const [permissions, setPermissions] = useState({})
   const [selectAll, setSelectAll] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const colors = tokens(theme.palette.mode)
 
   const {
     register,
@@ -71,6 +85,7 @@ const AddRole = ({ onUpdate, onClose }) => {
     formState: { errors }
   } = useForm()
 
+  // ** Function to fetch data **
   const fetchData = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/module`, {
@@ -95,10 +110,7 @@ const AddRole = ({ onUpdate, onClose }) => {
     }
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+  // ** Function to Select All Permissions **
   const handleSelectAllChange = (moduleName, value) => {
     setPermissions(prevPermissions => ({
       ...prevPermissions,
@@ -114,6 +126,7 @@ const AddRole = ({ onUpdate, onClose }) => {
     }))
   }
 
+  // ** Function to Submit Form **
   const onSubmit = async data => {
     try {
       setFormSubmitted(true)
@@ -152,6 +165,10 @@ const AddRole = ({ onUpdate, onClose }) => {
       toast.error('Failed to create role')
     }
   }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <>

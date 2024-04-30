@@ -3,6 +3,8 @@ import { render, fireEvent, waitFor, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
 import Login from 'src/pages/login'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('axios')
 jest.mock('react-toastify/dist/ReactToastify.css', () => ({}))
@@ -27,11 +29,19 @@ describe('Login Component', () => {
   })
 
   test('renders login form correctly', async () => {
-    render(<Login />)
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    )
   })
 
   test('displays error on empty credentials', async () => {
-    render(<Login />)
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    )
 
     fireEvent.click(screen.getByRole('button', { name: 'Login' }))
 
@@ -39,11 +49,14 @@ describe('Login Component', () => {
       expect(screen.getByText('Email address is required')).toBeInTheDocument()
       expect(screen.getByText('Password is required')).toBeInTheDocument()
     })
-
   })
 
   test('displays error on invalid credentials', async () => {
-    render(<Login />)
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    )
 
     fireEvent.change(screen.getByLabelText('Email address'), { target: { value: 'test@example.com' } })
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'invalidPassword' } })
@@ -55,7 +68,11 @@ describe('Login Component', () => {
   })
 
   test('login Successfully', async () => {
-    render(<Login />)
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    )
 
     axios.post.mockResolvedValueOnce({
       data: {

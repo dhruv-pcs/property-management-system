@@ -1,9 +1,15 @@
+// ** React Imports **
 import React from 'react'
-import { useTheme } from '@mui/material'
-import { tokens } from '@theme/theme'
 import Link from 'next/link'
 
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
+import { useTheme } from '@mui/material'
+
 export default function Unauthorized() {
+  // ** Vars
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 

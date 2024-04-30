@@ -82,7 +82,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Property added successfully')
       }
     } catch (error) {

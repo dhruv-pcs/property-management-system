@@ -4,7 +4,6 @@ import '@testing-library/jest-dom'
 import RoleAndPermission from 'src/pages/role-and-permission'
 import axios from 'axios'
 import AddRole from '@components/role/add-role'
-import MockAdapter from 'axios-mock-adapter'
 
 const mockPermissions = [
   {
@@ -17,7 +16,6 @@ const mockPermissions = [
     add: true
   }
 ]
-
 
 const mockRoleData = [
   {
@@ -257,11 +255,11 @@ describe('Role and Permission Component', () => {
   })
 
   test('should render role and permission component correctly', async () => {
-   await act(() => render(<RoleAndPermission />))
+    await act(() => render(<RoleAndPermission />))
     expect(screen.getByTestId('role')).toBeInTheDocument()
   })
 
-  test("Shoule Not Render API and show error", async () => {
+  test('Should Not Render API and show error', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
     await act(() => render(<RoleAndPermission />))
 
@@ -314,7 +312,7 @@ describe('Role and Permission Component', () => {
     })
   })
 
-  test('should open delet modal when Delete button is clicked', async () => {
+  test('should open delete modal when Delete button is clicked', async () => {
     act(() => render(<RoleAndPermission />))
 
     await waitFor(() => {
@@ -329,7 +327,7 @@ describe('Role and Permission Component', () => {
     })
   })
 
-  test('should open delet modal when Delete button is clicked and Delete Admin', async () => {
+  test('should open delete modal when Delete button is clicked and Delete Admin', async () => {
     axios.delete = jest.fn().mockResolvedValue({ data: { statusCode: 200 } })
 
     act(() => render(<RoleAndPermission />))
@@ -353,8 +351,7 @@ describe('Role and Permission Component', () => {
     })
   })
 
-
-  test("Shoule Not Delete Role  and show error", async () => {
+  test('Should Not Delete Role  and show error', async () => {
     axios.delete.mockRejectedValueOnce(new Error('API request failed'))
     act(() => render(<RoleAndPermission />))
 
@@ -372,10 +369,9 @@ describe('Role and Permission Component', () => {
     const confirmDelete = screen.getByTestId('confirm-delete')
     fireEvent.click(confirmDelete)
 
-   await waitFor(() => {
-       
-       expect(screen.getByText('Error Deleting Role')).toBeInTheDocument()
-   })
+    await waitFor(() => {
+      expect(screen.getByText('Error Deleting Role')).toBeInTheDocument()
+    })
   })
 })
 
@@ -394,11 +390,8 @@ describe('Add Role and Permission Component', () => {
   })
 
   test('renders the component properly', async () => {
-  await act(async () => render(<AddRole />));
+    await act(async () => render(<AddRole />))
     expect(await screen.findByText('Role Name')).toBeInTheDocument()
     expect(screen.getByText('Save Permissions')).toBeInTheDocument()
   })
-
-  
 })
-

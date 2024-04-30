@@ -1,72 +1,80 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
+// ** React Imports **
+import React, { useEffect, useState } from 'react'
+import Head from 'next/head'
+
+// ** Custom Components **
 import AddOwner from '@components/owner/add-owner'
 import EditOwner from '@components/owner/edit-owner'
 import ViewOwner from '@components/owner/view-owner'
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material'
-import { tokens } from '@theme/theme'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
+
+// ** Redux Imports **
+import { useDispatch } from 'react-redux'
+import { setOwner } from 'src/redux/features/owner-slice'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
 const Owner = () => {
+  // ** Vars **
+  const dispatch = useDispatch()
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const [ownerData, setOwnerData] = useState([])
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openView, setOpenView] = useState(false)
-  const [openAdd, setOpenAdd] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-  const [selectedRow, setSelectedRow] = useState('121')
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
   const userPermissions = JSON.parse(localStorage.getItem('user'))
 
   const owner_permission = userPermissions
     ?.filter(permission => permission.module.alias_name === 'Owner')
     .map(permission => permission)
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
+  // ** States **
+  const [ownerData, setOwnerData] = useState([])
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openView, setOpenView] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+  const [selectedRow, setSelectedRow] = useState('121')
 
-      setOwnerData(response.data.data.ownerData)
-    } catch (error) {
-      toast.error('Error Fetching Data')
-    }
+  // ** Open Add Modal **
+  const handelAddButton = () => {
+    setOpenAdd(!openAdd)
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const handelEditbutton = row => {
+  // ** Open Edit Modal **
+  const handelEditButton = row => {
     setOpenEdit(!openEdit)
     setSelectedRow(row)
   }
 
-  const handelViewbutton = row => {
+  // ** Open View Modal **
+  const handelViewButton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
   }
 
-  const handelDeletebutton = async row => {
+  // ** Open Delete Modal  **
+  const handelDeleteButton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
   }
 
+  // ** Fetch Owner Data **
   const handleOwnerDataUpdate = async () => {
     await fetchData()
   }
 
-  const handelAddbutton = () => {
-    setOpenAdd(!openAdd)
-  }
-
+  // ** Delete Confirmation  **
   const handelDeleteConfirmation = async selectedRow => {
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/owner/${selectedRow.u_id}`, {
@@ -81,15 +89,7 @@ const Owner = () => {
     }
   }
 
-  // const handlePageChange = page => {
-  //   setCurrentPage(page)
-  // }
-
-  // const handlePerRowsChange = async (newPerPage, page) => {
-  //   setPerPage(newPerPage)
-  //   setCurrentPage(page)
-  // }
-
+  // ** Columns **
   const columns = [
     {
       name: 'Name',
@@ -167,7 +167,7 @@ const Owner = () => {
               aria-label='View'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelViewbutton(row)}
+              onClick={() => handelViewButton(row)}
             >
               <Visibility />
             </button>
@@ -178,7 +178,7 @@ const Owner = () => {
               aria-label='Edit'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelEditbutton(row)}
+              onClick={() => handelEditButton(row)}
             >
               <Edit />
             </button>
@@ -189,7 +189,7 @@ const Owner = () => {
               aria-label='Delete'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
-              onClick={() => handelDeletebutton(row)}
+              onClick={() => handelDeleteButton(row)}
             >
               <Delete />
             </button>
@@ -199,6 +199,7 @@ const Owner = () => {
     }
   ]
 
+  // ** Table Custom Styles **
   const tableCustomStyles = {
     head: {
       style: {
@@ -293,6 +294,25 @@ const Owner = () => {
     }
   }
 
+  // ** Fetch Data  **
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/owner`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+
+      setOwnerData(response.data.data.ownerData)
+
+      dispatch(setOwner(response.data.data.ownerData))
+    } catch (error) {
+      toast.error('Error Fetching Data')
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <>
       <Head>
@@ -325,7 +345,7 @@ const Owner = () => {
               <Button
                 data-testid='add-owner'
                 aria-label='Add'
-                onClick={handelAddbutton}
+                onClick={handelAddButton}
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
               >
@@ -336,23 +356,25 @@ const Owner = () => {
         />
       </div>
 
+      {/* Add Owner Modal  */}
       <Dialog
-        data-testid='edit-owner-modal'
+        data-testid='add-owner-modal'
         fullScreen={isSmallScreen}
-        onClose={handelEditbutton}
+        className='z-3'
+        onClose={handelAddButton}
         aria-labelledby='customized-dialog-title'
-        open={openEdit}
+        open={openAdd}
       >
         <DialogTitle
           sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
           className='fw-bold fs-3'
           id='customized-dialog-title'
         >
-          Edit Owner
+          Add Owner
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelEditbutton}
+          onClick={handelAddButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -367,14 +389,51 @@ const Owner = () => {
           className='d-flex justify-content-center'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <EditOwner handelEditbutton={handelEditbutton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
+          <AddOwner handelAddButton={handelAddButton} onUpdate={handleOwnerDataUpdate} />
         </DialogContent>
       </Dialog>
 
+      {/* Edit Owner Modal */}
+      <Dialog
+        data-testid='edit-owner-modal'
+        fullScreen={isSmallScreen}
+        onClose={handelEditButton}
+        aria-labelledby='customized-dialog-title'
+        open={openEdit}
+      >
+        <DialogTitle
+          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
+          className='fw-bold fs-3'
+          id='customized-dialog-title'
+        >
+          Edit Owner
+        </DialogTitle>
+        <IconButton
+          aria-label='close'
+          onClick={handelEditButton}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 20,
+            color: colors.grey[100]
+          }}
+        >
+          <Close />
+        </IconButton>
+        <DialogContent
+          dividers
+          className='d-flex justify-content-center'
+          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
+        >
+          <EditOwner handelEditButton={handelEditButton} owner={selectedRow} onUpdate={handleOwnerDataUpdate} />
+        </DialogContent>
+      </Dialog>
+
+      {/* View Owner Modal  */}
       <Dialog
         data-testid='view-owner-modal'
         fullScreen={isSmallScreen}
-        onClose={handelViewbutton}
+        onClose={handelViewButton}
         aria-labelledby='customized-dialog-title'
         open={openView}
       >
@@ -387,7 +446,7 @@ const Owner = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelViewbutton}
+          onClick={handelViewButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -406,45 +465,10 @@ const Owner = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        data-testid='add-owner-modal'
-        fullScreen={isSmallScreen}
-        className='z-3'
-        onClose={handelAddbutton}
-        aria-labelledby='customized-dialog-title'
-        open={openAdd}
-      >
-        <DialogTitle
-          sx={{ m: 0, p: 2, backgroundColor: colors.primary[400], color: colors.grey[100] }}
-          className='fw-bold fs-3'
-          id='customized-dialog-title'
-        >
-          Add Owner
-        </DialogTitle>
-        <IconButton
-          aria-label='close'
-          onClick={handelAddbutton}
-          sx={{
-            position: 'absolute',
-            right: 16,
-            top: 20,
-            color: colors.grey[100]
-          }}
-        >
-          <Close />
-        </IconButton>
-        <DialogContent
-          dividers
-          className='d-flex justify-content-center'
-          sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
-        >
-          <AddOwner handelAddbutton={handelAddbutton} onUpdate={handleOwnerDataUpdate} />
-        </DialogContent>
-      </Dialog>
-
+      {/* Delete Owner Modal */}
       <Dialog
         data-testid='delete-owner-modal'
-        onClose={handelDeletebutton}
+        onClose={handelDeleteButton}
         aria-labelledby='customized-dialog-title'
         open={openDelete}
       >
@@ -457,7 +481,7 @@ const Owner = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelDeletebutton}
+          onClick={handelDeleteButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -476,7 +500,7 @@ const Owner = () => {
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
-              onClick={handelDeletebutton}
+              onClick={handelDeleteButton}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
             >
@@ -493,6 +517,8 @@ const Owner = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Toast */}
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )

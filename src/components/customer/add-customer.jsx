@@ -77,7 +77,7 @@ const AddCustomer = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Customer added successfully')
       }
     } catch (error) {

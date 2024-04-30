@@ -1,41 +1,45 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+// ** Custom Components **
 import { ColorModeContext, tokens } from '@theme/theme'
-import { useTheme, Box, IconButton, InputBase } from '@mui/material'
+
+// ** Third Party Imports **
+import { useTheme, Box, IconButton } from '@mui/material'
+import { useProSidebar } from 'react-pro-sidebar'
+import { ToastContainer, toast } from 'react-toastify'
+
+// ** Icons Imports
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import SearchIcon from '@mui/icons-material/Search'
-import { useProSidebar } from 'react-pro-sidebar'
-import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout'
+
+// ** API Imports **
 import axios from 'axios'
-import { useRouter } from 'next/router'
-import { ToastContainer, toast } from 'react-toastify'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
-const Topbar = () => {
-  const [isMounted, setIsMounted] = useState(false)
+const TopBar = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const colorMode = useContext(ColorModeContext)
   const { toggleSidebar, broken } = useProSidebar()
   const router = useRouter()
 
-  useEffect(() => {
-    setIsMounted(true)
+  // ** Contexts **
+  const colorMode = useContext(ColorModeContext)
 
-    return () => {
-      setIsMounted(false)
-    }
-  }, [])
+  // ** State **
+  const [isMounted, setIsMounted] = useState(false)
 
-  if (!isMounted) {
-    return null
-  }
-
-  const handleLogout = async () => {
+  // ** Logout Function **
+  const handleLogOut = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -54,8 +58,19 @@ const Topbar = () => {
       }
     } catch (error) {
       toast.error('Error Logging Out')
-      console.error(error)
     }
+  }
+
+  useEffect(() => {
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [])
+
+  if (!isMounted) {
+    return null
   }
 
   return (
@@ -83,12 +98,6 @@ const Topbar = () => {
                 <MenuOutlinedIcon />
               </IconButton>
             )}
-            <Box display='flex' backgroundColor={colors.primary[400]} p={0.2} borderRadius={1}>
-              <InputBase sx={{ ml: 1, flex: 1 }} placeholder='Search' />
-              <IconButton aria-label='Search' type='button'>
-                <SearchIcon />
-              </IconButton>
-            </Box>
           </Box>
           <Box display='flex'>
             <IconButton aria-label='Mode' onClick={colorMode.toggleColorMode}>
@@ -100,7 +109,7 @@ const Topbar = () => {
               </IconButton>
             </Link>
 
-            <IconButton data-testid='logout' aria-label='Logout' onClick={() => handleLogout()}>
+            <IconButton data-testid='logout' aria-label='Logout' onClick={() => handleLogOut()}>
               <LogoutIcon />
             </IconButton>
           </Box>
@@ -111,4 +120,4 @@ const Topbar = () => {
   )
 }
 
-export default Topbar
+export default TopBar

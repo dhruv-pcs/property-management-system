@@ -84,7 +84,7 @@ const EditOwner = ({ owner, onUpdate, handelEditbutton }) => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
 
-      handelEditbutton()
+      handelEditButton()
       onUpdate()
       toast.success('Owner updated successfully')
     } catch (err) {

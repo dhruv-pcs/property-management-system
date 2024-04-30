@@ -79,7 +79,7 @@ const EditProperty = ({ property, onUpdate, handelEditbutton }) => {
       })
 
       if (response.status === 201) {
-        handelEditbutton()
+        handelEditButton()
         onUpdate()
         toast.success('Property updated successfully')
       }

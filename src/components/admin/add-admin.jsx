@@ -58,7 +58,7 @@ const AddAdmin = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Admin added successfully')
       }
     } catch (error) {

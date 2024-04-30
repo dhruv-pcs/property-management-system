@@ -54,14 +54,14 @@ describe('EditRole component', () => {
   })
 
   test('renders the component properly', async () => {
-    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />))
 
     expect(await screen.findByText('Role Name')).toBeInTheDocument()
     expect(screen.getByText('Save Permissions')).toBeInTheDocument()
   })
 
   test('submits form without role name to get Validation error', async () => {
-   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />))
 
     const saveButton = screen.getByTestId('save-permissions')
     const roleName = screen.getByLabelText('Role Name')
@@ -75,7 +75,7 @@ describe('EditRole component', () => {
   })
 
   test('handlePermissionChange updates permissions correctly', async () => {
-   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />))
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -88,7 +88,6 @@ describe('EditRole component', () => {
     const deleteCheckbox = screen.getByTestId('remove-checkbox-1')
     const editCheckbox = screen.getByTestId('update-checkbox-1')
 
-
     fireEvent.click(viewCheckbox)
     fireEvent.click(addCheckbox)
     fireEvent.click(editCheckbox)
@@ -96,7 +95,6 @@ describe('EditRole component', () => {
     fireEvent.click(notificationCheckBox)
     fireEvent.click(selectAllCheckbox)
     fireEvent.click(selectAllGlobalCheckbox)
-
 
     await waitFor(() => {
       expect(screen.getByTestId('view-checkbox-1')).toBeInTheDocument()
@@ -165,7 +163,7 @@ describe('EditRole component', () => {
     })
   })
 
-  test('updates permissions for global selectAll correctly', async() => {
+  test('updates permissions for global selectAll correctly', async () => {
     const setPermissionsMock = jest.fn()
 
     const moduleData = [
@@ -188,19 +186,16 @@ describe('EditRole component', () => {
     expect(setPermissionsMock).toHaveBeenCalledWith(expectedPermissions)
   })
 
-  test('updates permissions for global selectAll correctly', async() => {
-   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
+  test('updates permissions for global selectAll correctly', async () => {
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />))
 
     const selectAll = screen.getByTestId('select-all-checkbox')
 
     fireEvent.click(selectAll)
   })
 
-  test('Update Role Name', async() => {
-
-
-
-   await act(async () => render(<EditRole roleData={{ u_id: 1 }} />));
+  test('Update Role Name', async () => {
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} />))
 
     const roleName = screen.getByLabelText('Role Name')
 
@@ -211,23 +206,20 @@ describe('EditRole component', () => {
     axios.patch = jest.fn().mockResolvedValue({ status: 201 })
     const onUpdate = jest.fn()
     const onClose = jest.fn()
-     
-    await act(async () => render(<EditRole roleData={{ u_id: 1 }} onUpdate={onUpdate} onClose={onClose} />));
 
-    const saveButton = screen.getByTestId('save-permissions');
-    const roleName = screen.getByLabelText('Role Name');
+    await act(async () => render(<EditRole roleData={{ u_id: 1 }} onUpdate={onUpdate} onClose={onClose} />))
 
-    fireEvent.change(roleName, { target: { value: 'Admin' } });
-    fireEvent.click(saveButton);
+    const saveButton = screen.getByTestId('save-permissions')
+    const roleName = screen.getByLabelText('Role Name')
+
+    fireEvent.change(roleName, { target: { value: 'Admin' } })
+    fireEvent.click(saveButton)
 
     await waitFor(() => {
-      expect(axios.patch).toHaveBeenCalled();
-      expect(onUpdate).toHaveBeenCalled();
-      expect(onClose).toHaveBeenCalled();
-      expect(screen.getByText('Role updated successfully!')).toBeInTheDocument();
-    });
-  }); 
-  
-
+      expect(axios.patch).toHaveBeenCalled()
+      expect(onUpdate).toHaveBeenCalled()
+      expect(onClose).toHaveBeenCalled()
+      expect(screen.getByText('Role updated successfully!')).toBeInTheDocument()
+    })
+  })
 })
-

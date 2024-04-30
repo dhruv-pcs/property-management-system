@@ -15,8 +15,6 @@ export function middleware(req) {
       return NextResponse.next()
     }
   } catch (error) {
-    console.error('Error in middleware:', error)
-
     return NextResponse.error()
   }
 }

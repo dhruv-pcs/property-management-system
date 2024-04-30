@@ -88,7 +88,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
       })
 
       if (response.status === 201) {
-        handelEditbutton()
+        handelEditButton()
         onUpdate()
         toast.success('Customer updated successfully')
       }

@@ -23,7 +23,6 @@ jest.spyOn(Math, 'random').mockReturnValue(0.5) // Example: always return 0.5 fo
 const originalFloor = Math.floor
 jest.spyOn(Math, 'floor').mockImplementation(originalFloor)
 
-
 describe('Permission component', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -89,15 +88,13 @@ describe('Permission component', () => {
     const result = getRoleBackgroundColor(role, colors)
     expect(result).toEqual('#FF0000')
   })
-  test('returns random background color for other roles', async() => {
+  test('returns random background color for other roles', async () => {
     jest.spyOn(Math, 'random').mockReturnValueOnce(0.5)
-    const parseIntSpy = jest.spyOn(global, 'parseInt');
+    const parseIntSpy = jest.spyOn(global, 'parseInt')
     const role = 'manager'
     const result = getRoleBackgroundColor(role, null)
 
-    
     await waitFor(() => {
-
       expect(parseIntSpy).toHaveBeenCalledWith('3da58a', 16)
       expect(parseIntSpy).toHaveBeenCalledWith('4cceac', 16)
       expect(/^#[0-9A-F]{6}$/i.test(result)).toBeTruthy()

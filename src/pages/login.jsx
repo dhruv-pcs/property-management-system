@@ -1,40 +1,84 @@
 'use client'
+
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { TextField, Button, FormControl, InputAdornment, IconButton, Typography } from '@mui/material'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+
+// ** Third Party Imports **
+import { useForm, Controller } from 'react-hook-form'
+import { TextField, Button, FormControl, InputAdornment, IconButton, Typography } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
+// ** Icons Imports **
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
-const setCookie = (name, value, days) => {
-  var expires = ''
-  if (days) {
-    var date = new Date()
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-    expires = '; expires=' + date.toUTCString()
-  }
-  document.cookie = name + '=' + value + expires + '; path=/'
-}
+// ** Redux Imports **
+import { useDispatch } from 'react-redux'
+import { setRole, setToken, setUser } from 'src/redux/features/auth-slice'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = () => {
+  // ** Vars **
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  // ** State **
+  const [showPassword, setShowPassword] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
   const {
     control,
     handleSubmit,
     formState: { errors }
   } = useForm()
 
-  const [showPassword, setShowPassword] = useState(false)
-  const router = useRouter()
-
+  // ** Toggle Password Visibility **
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
 
-  const [isMounted, setIsMounted] = useState(false)
+  // ** Set Cookie **
+  const setCookie = (name, value, days) => {
+    var expires = ''
+    if (days) {
+      var date = new Date()
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+      expires = '; expires=' + date.toUTCString()
+    }
+    document.cookie = name + '=' + value + expires + '; path=/'
+  }
+
+  // ** Login Submit **
+  const onSubmit = async data => {
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data)
+
+      const userData = response.data.data
+
+      dispatch(setUser(userData.permissionData))
+      dispatch(setToken(userData.token))
+      dispatch(setRole(userData.roleID))
+
+      localStorage.setItem('user', JSON.stringify(userData.permissionData))
+      localStorage.setItem('token', userData.token)
+      localStorage.setItem('Role', userData.roleID)
+
+      setCookie('token', userData.token, 365)
+      setCookie('user', JSON.stringify(userData.permissionData), 365)
+      setCookie('Role', userData.roleID, 365)
+
+      router.push('/')
+    } catch (error) {
+      toast.error('Invalid Credentials')
+    }
+  }
 
   useEffect(() => {
     setIsMounted(true)
@@ -46,23 +90,6 @@ const Login = () => {
 
   if (!isMounted) {
     return null
-  }
-
-  const onSubmit = async data => {
-    try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data)
-
-      const userData = response.data.data
-      localStorage.setItem('user', JSON.stringify(userData.permissionData))
-      localStorage.setItem('token', userData.token)
-      localStorage.setItem('Role', userData.roleID)
-      setCookie('token', userData.token, 365)
-      setCookie('user', JSON.stringify(userData.permissionData), 365)
-      setCookie('Role', userData.roleID, 365)
-      router.push('/')
-    } catch (error) {
-      toast.error('Invalid Credentials')
-    }
   }
 
   return (

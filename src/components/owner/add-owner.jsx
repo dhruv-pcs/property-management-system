@@ -66,7 +66,7 @@ const AddOwner = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Owner added successfully')
       }
     } catch (error) {
