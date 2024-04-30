@@ -22,7 +22,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = ({ Component, pageProps }) => {
   // ** Vars **
-  const isBlankPage = router.pathname === '/login' || router.pathname === '/404'
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
 

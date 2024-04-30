@@ -22,8 +22,6 @@ import axios from 'axios'
 
 // ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
-import { useDispatch } from 'react-redux'
-import { setProperties } from 'src/redux/features/property-slice'
 
 const Property = () => {
   // ** Vars **
@@ -43,36 +41,12 @@ const Property = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
 
-  const userPermissions = JSON.parse(localStorage.getItem('user'))
-
-  const property_permission = userPermissions
-    ?.filter(permission => permission.module.alias_name === 'Property')
-    .map(permission => permission)
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      setPropertyData(response.data.data.adminData)
-    } catch (error) {
-      toast.error('Error Fetching Data')
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+  //** Open Add Modal */
   const handelAddbutton = () => {
     setOpenAdd(!openAdd)
   }
 
-  const handelEditbutton = row => {
-    setOpenEdit(!openEdit)
-    setSelectedRow(row)
-  }
-
+  // ** Open View Modal **
   const handelViewbutton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
@@ -84,6 +58,7 @@ const Property = () => {
     setSelectedRow(row)
   }
 
+    // ** Open Delete Modal **
   const handelDeletebutton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
