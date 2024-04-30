@@ -1,21 +1,34 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import '@styles-page/globals.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { CssBaseline, ThemeProvider } from '@mui/material'
-import { ColorModeContext, tokens, useMode } from '@theme/theme'
-import Topbar from '@components/topbar/topbar'
-import { ProSidebarProvider } from 'react-pro-sidebar'
-import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
-import Footer from '@components/footer/footer'
 import { useRouter } from 'next/router'
+
+// ** Custom Components **
+import Footer from '@components/footer/footer'
+import TopBar from '@components/topBar/topBar'
+import { MyProSidebarProvider } from '@components/sidebar/sidebar-context'
+import { ColorModeContext, tokens, useMode } from '@theme/theme'
+
+// ** Third Party Imports **
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import { ProSidebarProvider } from 'react-pro-sidebar'
+
+// ** Redux Imports **
 import { Provider } from 'react-redux'
 import { store } from 'src/redux/store'
 
+// ** Styles **
+import '@styles-page/globals.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 const App = ({ Component, pageProps }) => {
-  const [theme, colorMode] = useMode()
+  // ** Vars **
+  const isBlankPage = router.pathname === '/login' || router.pathname === '/404'
   const colors = tokens(theme.palette.mode)
-  const [isClient, setIsClient] = useState(false)
   const router = useRouter()
+
+  // ** State **
+  const [theme, colorMode] = useMode()
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
@@ -24,8 +37,6 @@ const App = ({ Component, pageProps }) => {
   if (!isClient) {
     return null
   }
-
-  const isBlankPage = router.pathname === '/login' || router.pathname === '/404'
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -37,7 +48,7 @@ const App = ({ Component, pageProps }) => {
             <ProSidebarProvider theme={theme}>
               <MyProSidebarProvider>
                 <div style={{ height: '100%', width: '100%' }}>
-                  <Topbar />
+                  <TopBar />
                   <main
                     className='card m-2 p-2 shadow-sm'
                     style={{

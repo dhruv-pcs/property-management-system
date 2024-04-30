@@ -1,16 +1,26 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import { useTheme } from '@mui/material'
-import { tokens } from '@theme/theme'
-import axios from 'axios'
+import Head from 'next/head'
 import Image from 'next/image'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
+import { useTheme } from '@mui/material'
+import { ToastContainer, toast } from 'react-toastify'
 import { Button, Card, Col, Row, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import Head from 'next/head'
-import { ToastContainer, toast } from 'react-toastify'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
+// ** Validation Schema **
 const schema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
@@ -22,8 +32,11 @@ const schema = Yup.object().shape({
 })
 
 const Profile = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+
+  // ** States **
   const [userData, setUserData] = useState({})
   const [editable, setEditable] = useState(false)
 
@@ -37,13 +50,26 @@ const Profile = () => {
     resolver: yupResolver(schema)
   })
 
+  // ** Submit Form **
+  const onSubmit = async data => {
+    try {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      toast.success('Profile updated successfully')
+      setEditable(false)
+      await fetchData()
+    } catch (error) {
+      toast.error('Error While Updating Profile')
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        console.log('hi')
         setUserData(response.data.data.data)
 
         setValue('first_name', response.data.data.data.first_name)
@@ -64,19 +90,6 @@ const Profile = () => {
   }, [setValue])
 
   useEffect(() => {}, [userData])
-
-  const onSubmit = async data => {
-    try {
-      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/${userData?.u_id}`, data, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      toast.success('Profile updated successfully')
-      setEditable(false)
-      await fetchData()
-    } catch (error) {
-      toast.error('Error While Updating Profile')
-    }
-  }
 
   return (
     <>
@@ -174,24 +187,6 @@ const Profile = () => {
                       {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                     </Form.Group>
                   </Col>
-
-                  {/* <Col md={6}>
-                    <Form.Group className='mb-1'>
-                      <Form.Label>Password</Form.Label>
-                      <div className='input-group'>
-                        <Form.Control
-                          type={showPassword ? 'text' : 'password'}
-                          placeholder='Password'
-                          {...register('password')}
-                          readOnly={!editable}
-                        />
-                        <Button variant='outline-secondary' onClick={() => setShowPassword(!showPassword)}>
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </Button>
-                      </div>
-                      {errors.password && <span className='text-danger'>{errors.password.message}</span>}
-                    </Form.Group>
-                  </Col> */}
                 </Row>
                 <Row className='gx-3 mb-3'>
                   <Col md={6}>
@@ -324,6 +319,7 @@ const Profile = () => {
         </Col>
       </Row>
 
+      {/* Toast */}
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )

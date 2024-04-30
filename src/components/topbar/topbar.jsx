@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const Topbar = () => {
+const TopBar = () => {
   const [isMounted, setIsMounted] = useState(false)
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
@@ -103,4 +103,4 @@ const Topbar = () => {
   )
 }
 
-export default Topbar
+export default TopBar

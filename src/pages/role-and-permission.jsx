@@ -1,36 +1,40 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { tokens } from '@theme/theme'
 import Image from 'next/image'
-import { Icon } from '@iconify/react'
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme, useMediaQuery } from '@mui/material'
-import { Close } from '@mui/icons-material'
+import Head from 'next/head'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
 import ViewRole from '@components/role/view-role'
 import AddRole from '@components/role/add-role'
 import EditRole from '@components/role/edit-role'
-import Head from 'next/head'
+
+// ** Third Party Imports **
+import { Icon } from '@iconify/react'
+import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme, useMediaQuery } from '@mui/material'
+import { Close } from '@mui/icons-material'
 import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
+// ** Redux Imports **
 import { useDispatch } from 'react-redux'
 import { setRoles } from 'src/redux/features/roleSlice'
 
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
+import 'react-toastify/dist/ReactToastify.css'
+
 const Role_Permission = () => {
+  // ** Vars **
   const theme = useTheme()
   const dispatch = useDispatch()
-  const [role, setRole] = useState([])
   const colors = tokens(theme.palette.mode)
-  const [selectedRow, setSelectedRow] = useState(null)
-  const [openAdd, setOpenAdd] = useState(false)
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openView, setOpenView] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
   const userPermissions = JSON.parse(localStorage.getItem('user'))
-
-  const role_permission = userPermissions
-    ?.filter(permission => permission.module.alias_name === 'Role And Permission')
-    .map(permission => permission)
+  const randomIndex = Math.floor(Math.random() * images.length)
 
   const images = [
     '/images/user1.jpg',
@@ -41,48 +45,47 @@ const Role_Permission = () => {
     '/images/user6.jpg'
   ]
 
-  const randomIndex = Math.floor(Math.random() * images.length)
+  const role_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Role And Permission')
+    .map(permission => permission)
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      setRole(response.data.data)
-      dispatch(setRoles(response.data.data))
-    } catch (error) {
-      toast.error('Error Fetching Data')
-    }
-  }
+  // ** States **
+  const [role, setRole] = useState([])
+  const [selectedRow, setSelectedRow] = useState(null)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openView, setOpenView] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
 
-  useEffect(() => {
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+  // ** Fetch Data **
   const handleFetch = async () => {
     await fetchData()
   }
 
+  // ** Open View Modal **
   const handleViewButton = Data => {
     setOpenView(!openView)
     setSelectedRow(Data)
   }
 
+  // ** Open Delete Modal **
   const handleDeleteButton = Id => {
     setOpenDelete(!openDelete)
     setSelectedRow(Id)
   }
 
+  // ** Open Add Modal **
   const handleAddButton = () => {
     setOpenAdd(!openAdd)
   }
 
+  // ** Open Edit Modal **
   const handleEditButton = Data => {
     setOpenEdit(!openEdit)
     setSelectedRow(Data)
   }
 
+  // ** Delete Confirmation **
   const handelDeleteConfirmation = async Data => {
     try {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/role/${Data.u_id}`, {
@@ -98,6 +101,22 @@ const Role_Permission = () => {
       toast.error('Error Deleting Role')
     }
   }
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/role`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      setRole(response.data.data)
+      dispatch(setRoles(response.data.data))
+    } catch (error) {
+      toast.error('Error Fetching Data')
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -204,6 +223,7 @@ const Role_Permission = () => {
         </div>
       </div>
 
+      {/* Delete Modal */}
       <Dialog
         data-testid='delete-role-modal'
         onClose={handleDeleteButton}
@@ -256,6 +276,7 @@ const Role_Permission = () => {
         </DialogContent>
       </Dialog>
 
+      {/* View Modal */}
       <Dialog
         data-testid='view-role-modal'
         fullScreen={isSmallScreen}
@@ -287,6 +308,7 @@ const Role_Permission = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Add Modal */}
       <Dialog
         data-testid='add-role-modal'
         fullScreen={isSmallScreen}
@@ -322,6 +344,7 @@ const Role_Permission = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Edit Modal */}
       <Dialog
         data-testid='edit-role-modal'
         fullScreen={isSmallScreen}
@@ -357,6 +380,7 @@ const Role_Permission = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Toast */}
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )

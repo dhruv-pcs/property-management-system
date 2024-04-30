@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import Topbar from 'src/components/topbar/topbar'
+import Topbar from '@components/topBar/topBar'
 import { waitFor } from '@testing-library/react'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import axios from 'axios'

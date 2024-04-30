@@ -1,14 +1,26 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import { useTheme } from '@mui/material'
-import { tokens } from '@theme/theme'
-import axios from 'axios'
-import DataTable from 'react-data-table-component'
 import Head from 'next/head'
+
+// ** Custom Components **
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
+import { useTheme } from '@mui/material'
+import DataTable from 'react-data-table-component'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
+// ** Redux Imports **
 import { useDispatch } from 'react-redux'
 import { setPermission } from 'src/redux/features/permissionSlice'
 
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
+import 'react-toastify/dist/ReactToastify.css'
+
+// ** Get Role Background Color **
 export const getRoleBackgroundColor = (role, colors) => {
   const Role = role.toLowerCase()
 
@@ -26,27 +38,15 @@ export const getRoleBackgroundColor = (role, colors) => {
 }
 
 const Permission = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const [permissionData, setPermissionData] = useState([])
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/permission`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        setPermissionData(response.data.data.permissionData)
-        dispatch(setPermission(response.data.data.permissionData))
-      } catch (error) {
-        toast.error('Error Fetching Data')
-      }
-    }
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // ** States **
+  const [permissionData, setPermissionData] = useState([])
 
+  // ** Table Columns **
   const columns = [
     {
       name: 'Name',
@@ -70,6 +70,7 @@ const Permission = () => {
     }
   ]
 
+  // ** Table Custom Styles **
   const tableCustomStyles = {
     head: {
       style: {
@@ -164,6 +165,22 @@ const Permission = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/permission`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        setPermissionData(response.data.data.permissionData)
+        dispatch(setPermission(response.data.data.permissionData))
+      } catch (error) {
+        toast.error('Error Fetching Data')
+      }
+    }
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <Head>
@@ -186,6 +203,8 @@ const Permission = () => {
           }
         />
       </div>
+
+      {/* Toast */}
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )
