@@ -24,6 +24,7 @@ const schema = Yup.object().shape({
 })
 
 const EditProperty = ({ property, onUpdate, handelEditButton }) => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))

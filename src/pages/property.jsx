@@ -14,10 +14,11 @@ import { useDispatch } from 'react-redux'
 import { setProperties } from 'src/redux/features/property-slice'
 
 const Property = () => {
-  const dispatch = useDispatch()
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [propertyData, setPropertyData] = useState([])
+  const dispatch = useDispatch()
   const [openAdd, setOpenAdd] = useState(false)
   const [openView, setOpenView] = useState(false)
   const [selectedRow, setSelectedRow] = useState('121')
@@ -44,8 +45,6 @@ const Property = () => {
 
   useEffect(() => {
     fetchData()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handelAddButton = () => {

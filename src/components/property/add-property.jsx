@@ -40,6 +40,7 @@ const schema = Yup.object().shape({
 })
 
 const AddProperty = ({ onUpdate, handelAddButton }) => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))

@@ -21,6 +21,7 @@ const schema = Yup.object().shape({
 })
 
 const AddAdmin = ({ onUpdate, handelAddButton }) => {
+  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [showPassword, setShowPassword] = useState(false)

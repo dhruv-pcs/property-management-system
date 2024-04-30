@@ -42,6 +42,7 @@ const schema = Yup.object().shape({
 })
 
 const AddCustomer = ({ onUpdate, handelAddButton }) => {
+  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
