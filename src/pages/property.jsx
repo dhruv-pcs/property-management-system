@@ -58,7 +58,7 @@ const Property = () => {
     setSelectedRow(row)
   }
 
-    // ** Open Delete Modal **
+  // ** Open Delete Modal **
   const handelDeleteButton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
