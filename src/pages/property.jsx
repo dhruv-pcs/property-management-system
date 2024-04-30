@@ -64,6 +64,11 @@ const Property = () => {
     setSelectedRow(row)
   }
 
+  // ** Fetch Property Data **
+  const handlePropertyDataUpdate = async () => {
+    await fetchData()
+  }
+
   // ** Delete Property **
   const handelDeleteConfirmation = async selectedRow => {
     try {
