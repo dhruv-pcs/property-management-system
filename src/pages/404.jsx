@@ -1,12 +1,19 @@
 'use client'
+
+// ** React Imports
 import React from 'react'
-import { useTheme } from '@mui/material'
-import { tokens } from '@theme/theme'
 import Link from 'next/link'
 import Head from 'next/head'
-import Layout from 'src/layout/blank_layout'
+
+// ** Custom Components **
+import Layout from 'src/layout/blank-layout'
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
+import { useTheme } from '@mui/material'
 
 const Notfound = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
 

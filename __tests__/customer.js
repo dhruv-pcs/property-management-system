@@ -6,6 +6,8 @@ import axios from 'axios'
 import ViewCustomer from '@components/customer/view-customer'
 import EditCustomer from '@components/customer/edit-customer'
 import AddCustomer from '@components/customer/add-customer'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
@@ -43,7 +45,11 @@ describe('Customer Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
     axios.get = jest.fn().mockResolvedValue({ data: { data: { customerData: mockCustomerData } } })
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -70,7 +76,11 @@ describe('Customer Component', () => {
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
 
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -125,7 +135,11 @@ describe('Customer Component', () => {
     const mockResponseData = { data: { statusCode: 201 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
 
     const deleteCustomer = screen.getByTestId('delete-customer')
     fireEvent.click(deleteCustomer)
@@ -146,7 +160,11 @@ describe('Customer Component', () => {
 
   test('handles error when deleting customer', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
     const deleteOwner = screen.getByTestId('delete-customer')
     fireEvent.click(deleteOwner)
     expect(screen.getByText('Delete Customer')).toBeInTheDocument()
@@ -190,7 +208,11 @@ describe('Customer Component', () => {
 
     axios.get = jest.fn().mockResolvedValue({ data: { data: { customerData: mockCustomerDataFalse } } })
 
-    render(<Customer />)
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByTestId('not-verified')).toBeInTheDocument()
@@ -269,8 +291,8 @@ describe('Edit Customer Component', () => {
 
   test('Update Customer With out Empty Fields to get Validation Error', async () => {
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
-    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    const handelEditButton = jest.fn()
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const first_name = screen.getByTestId('first_name')
     const last_name = screen.getByTestId('last_name')
@@ -314,9 +336,9 @@ describe('Edit Customer Component', () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('save')
 
@@ -326,7 +348,7 @@ describe('Edit Customer Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelEditbutton).toHaveBeenCalled()
+      expect(handelEditButton).toHaveBeenCalled()
       expect(screen.getByText('Customer updated successfully')).toBeInTheDocument()
     })
   })
@@ -335,16 +357,16 @@ describe('Edit Customer Component', () => {
     const mockError = new Error('Update request failed')
     axios.patch = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditCustomer customer={customer} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('save')
     fireEvent.click(saveButton)
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelEditbutton).not.toHaveBeenCalled()
+      expect(handelEditButton).not.toHaveBeenCalled()
       expect(screen.getByText('Customer cannot be updated')).toBeInTheDocument()
     })
   })
@@ -372,9 +394,9 @@ describe('Add Customer Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -414,7 +436,7 @@ describe('Add Customer Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelAddbutton).toHaveBeenCalled()
+      expect(handelAddButton).toHaveBeenCalled()
       expect(screen.getByText('Customer added successfully')).toBeInTheDocument()
     })
   })
@@ -423,9 +445,9 @@ describe('Add Customer Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -474,22 +496,6 @@ describe('Add Customer Component', () => {
       expect(screen.getByText('Phone number is required')).toBeInTheDocument()
       expect(screen.getByText('Aadhar Card No is required')).toBeInTheDocument()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
       expect(screen.getByText('City is required')).toBeInTheDocument()
       expect(screen.getByText('State is required')).toBeInTheDocument()
       expect(
@@ -502,9 +508,9 @@ describe('Add Customer Component', () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddCustomer onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -544,7 +550,7 @@ describe('Add Customer Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelAddbutton).not.toHaveBeenCalled()
+      expect(handelAddButton).not.toHaveBeenCalled()
       expect(screen.getByText('customer cannot be added')).toBeInTheDocument()
     })
   })

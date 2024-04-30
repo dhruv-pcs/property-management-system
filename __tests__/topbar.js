@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import Topbar from 'src/components/topbar/topbar'
+import Topbar from '@components/topBar/topBar'
 import { waitFor } from '@testing-library/react'
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import axios from 'axios'
@@ -16,13 +16,12 @@ const useMockProSidebar = () => ({
   collapseSidebar: jest.fn(),
   toggleSidebar: jest.fn(),
   broken: true
-});
-
+})
 
 jest.mock('react-pro-sidebar', () => ({
   ...jest.requireActual('react-pro-sidebar'),
   useProSidebar: useMockProSidebar
-}));
+}))
 
 jest.mock('axios')
 
@@ -87,48 +86,45 @@ describe('Topbar Component', () => {
   })
 
   jest.mock('next/router', () => {
-    const mockPush = jest.fn();
+    const mockPush = jest.fn()
 
     return {
       useRouter: () => ({
-        push: mockPush,
-      }),
-    };
-  });
-  
+        push: mockPush
+      })
+    }
+  })
+
   test('should handle non-200 status codes without redirecting', async () => {
-    axios.get.mockResolvedValue({ data: { statusCode: 401 } });
-  
+    axios.get.mockResolvedValue({ data: { statusCode: 401 } })
+
     render(
       <ProSidebarProvider>
         <Topbar />
       </ProSidebarProvider>
-    );
-  
+    )
+
     await waitFor(() => {
-      const logout = screen.getByTestId('logout');
-      fireEvent.click(logout);
-    });
-  
-    const { useRouter } = require('next/router');
-    expect(useRouter().push).not.toHaveBeenCalledWith('/login');
-  });
+      const logout = screen.getByTestId('logout')
+      fireEvent.click(logout)
+    })
+
+    const { useRouter } = require('next/router')
+    expect(useRouter().push).not.toHaveBeenCalledWith('/login')
+  })
 
   test('toggle Sidebar in mobile view', async () => {
-    axios.get.mockResolvedValue({ data: { statusCode: 401 } });
-  
+    axios.get.mockResolvedValue({ data: { statusCode: 401 } })
+
     render(
       <ProSidebarProvider>
         <Topbar />
       </ProSidebarProvider>
-    );
-  
-    await waitFor(() => {
-      const logout = screen.getByTestId('menu');
-      fireEvent.click(logout);
-    });
-  
-  
-  });
+    )
 
+    await waitFor(() => {
+      const logout = screen.getByTestId('menu')
+      fireEvent.click(logout)
+    })
+  })
 })

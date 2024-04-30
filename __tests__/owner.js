@@ -6,6 +6,8 @@ import axios from 'axios'
 import EditOwner from '@components/owner/edit-owner'
 import AddOwner from '@components/owner/add-owner'
 import ViewOwner from '@components/owner/view-owner'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
@@ -42,9 +44,13 @@ Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockPermissions))
 describe('Owner Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
-    localStorage.setItem('token', "5645654545564564")
+    localStorage.setItem('token', '5645654545564564')
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerData } } })
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -69,7 +75,11 @@ describe('Owner Component', () => {
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
 
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
@@ -124,7 +134,11 @@ describe('Owner Component', () => {
     const mockResponseData = { data: { statusCode: 200 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
 
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
 
     const deleteOwner = screen.getByTestId('delete-owner')
     fireEvent.click(deleteOwner)
@@ -142,7 +156,11 @@ describe('Owner Component', () => {
 
   test('handles error when deleting owner', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
     const deleteOwner = screen.getByTestId('delete-owner')
     fireEvent.click(deleteOwner)
     expect(screen.getByText('Delete Owner')).toBeInTheDocument()
@@ -164,13 +182,17 @@ describe('Owner Component', () => {
         phone: '1234567890',
         aadhar_card_no: '123456789012',
         is_verified: false,
-        status: false 
+        status: false
       }
     ]
 
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerDataFalse } } })
 
-    render(<Owner />)
+    render(
+      <Provider store={store}>
+        <Owner />
+      </Provider>
+    )
 
     await waitFor(() => {
       expect(screen.getByTestId('not-verified')).toBeInTheDocument()
@@ -194,7 +216,7 @@ describe('Owner Component', () => {
 
     axios.get = jest.fn().mockResolvedValue({ data: { data: { ownerData: mockOwnerDataFalse } } })
 
-    render(<ViewOwner owner={mockOwnerDataFalse[0]}  />)
+    render(<ViewOwner owner={mockOwnerDataFalse[0]} />)
   })
 })
 
@@ -268,8 +290,8 @@ describe('Owner Edit Component', () => {
 
   test('Update Owner With out Empty Fields to get Validation Error', async () => {
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
-    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    const handelEditButton = jest.fn()
+    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const first_name = screen.getByTestId('first_name')
     const last_name = screen.getByTestId('last_name')
@@ -316,9 +338,9 @@ describe('Owner Edit Component', () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('save')
 
@@ -328,7 +350,7 @@ describe('Owner Edit Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelEditbutton).toHaveBeenCalled()
+      expect(handelEditButton).toHaveBeenCalled()
       expect(screen.getByText('Owner updated successfully')).toBeInTheDocument()
     })
   })
@@ -337,16 +359,16 @@ describe('Owner Edit Component', () => {
     const mockError = new Error('Update request failed')
     axios.patch = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
+    const handelEditButton = jest.fn()
 
-    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    render(<EditOwner owner={owner} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
 
     const saveButton = screen.getByLabelText('save')
     fireEvent.click(saveButton)
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelEditbutton).not.toHaveBeenCalled()
+      expect(handelEditButton).not.toHaveBeenCalled()
       expect(screen.getByText('Error updating owner')).toBeInTheDocument()
     })
   })
@@ -374,9 +396,9 @@ describe('Owner Add Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -416,7 +438,7 @@ describe('Owner Add Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelAddbutton).toHaveBeenCalled()
+      expect(handelAddButton).toHaveBeenCalled()
       expect(screen.getByText('Owner added successfully')).toBeInTheDocument()
     })
 
@@ -460,9 +482,9 @@ describe('Owner Add Component', () => {
     const mockResponse = { data: { statusCode: 201 } }
     axios.post = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -521,21 +543,21 @@ describe('Owner Add Component', () => {
       expect(
         screen.getByText('pincode must be a `number` type, but the final value was: `NaN` (cast from the value `""`).')
       ).toBeInTheDocument()
-      expect( 
+      expect(
         screen.getByText(
           'alternate_phone must be a `number` type, but the final value was: `NaN` (cast from the value `""`).'
         )
       ).toBeInTheDocument()
     })
   })
-  
+
   test('Add New Owner', async () => {
     const mockError = new Error('Add request failed')
     axios.post = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    const { getByLabelText } = render(<AddOwner onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     const first_name = getByLabelText('First name')
     const last_name = getByLabelText('Last name')
@@ -575,7 +597,7 @@ describe('Owner Add Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelAddbutton).not.toHaveBeenCalled()
+      expect(handelAddButton).not.toHaveBeenCalled()
       expect(screen.getByText('Owner cannot be added')).toBeInTheDocument()
     })
   })

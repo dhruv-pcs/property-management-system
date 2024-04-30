@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import axios from 'axios'
-import AddRole, { handleGlobalSelectAllChange, handlePermissionChange } from '@components/role/add-role'
+import AddRole, { handlePermissionChange } from '@components/role/add-role'
 
 jest.mock('axios')
 
@@ -23,23 +23,22 @@ describe('AddRole component', () => {
   test('renders with crashing', async () => {
     axios.get = jest.fn().mockRejectedValue(new Error('Error fetching data'))
 
-    await act(async () => render(<AddRole />));
+    await act(async () => render(<AddRole />))
 
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
     })
-
   })
 
   test('renders the component properly', async () => {
-  await act(async () => render(<AddRole />));
+    await act(async () => render(<AddRole />))
     expect(await screen.findByText('Role Name')).toBeInTheDocument()
     expect(screen.getByText('Save Permissions')).toBeInTheDocument()
   })
 
   test('submits form without role name to get Validation error', async () => {
-  await act(async () => render(<AddRole />));
+    await act(async () => render(<AddRole />))
     const saveButton = screen.getByTestId('save-permissions')
 
     fireEvent.click(saveButton)
@@ -50,7 +49,7 @@ describe('AddRole component', () => {
   })
 
   test('handlePermissionChange updates permissions correctly', async () => {
-  await act(async () => render(<AddRole />));
+    await act(async () => render(<AddRole />))
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -82,51 +81,51 @@ describe('AddRole component', () => {
     })
   })
 
-   test('submits form and updates role successfully', async () => {
+  test('submits form and updates role successfully', async () => {
     axios.post = jest.fn().mockResolvedValue({ status: 201 })
     const onUpdate = jest.fn()
     const onClose = jest.fn()
-     
-    await act(async () => render(<AddRole onUpdate={onUpdate} onClose={onClose} />));
 
-    const saveButton = screen.getByTestId('save-permissions');
-    const roleName = screen.getByLabelText('Role Name');
+    await act(async () => render(<AddRole onUpdate={onUpdate} onClose={onClose} />))
 
-    fireEvent.change(roleName, { target: { value: 'Admin' } });
-    fireEvent.click(saveButton);
+    const saveButton = screen.getByTestId('save-permissions')
+    const roleName = screen.getByLabelText('Role Name')
+
+    fireEvent.change(roleName, { target: { value: 'Admin' } })
+    fireEvent.click(saveButton)
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalled();
-      expect(onUpdate).toHaveBeenCalled();
-      expect(onClose).toHaveBeenCalled();
-      expect(screen.getByText('Role created successfully')).toBeInTheDocument();
-    });
-  }); 
+      expect(axios.post).toHaveBeenCalled()
+      expect(onUpdate).toHaveBeenCalled()
+      expect(onClose).toHaveBeenCalled()
+      expect(screen.getByText('Role created successfully')).toBeInTheDocument()
+    })
+  })
 
   test('submits form and updates role successfully but onClose and onUpdate not called', async () => {
     axios.post = jest.fn().mockResolvedValue({ status: 202 })
     const onUpdate = jest.fn()
     const onClose = jest.fn()
-     
-    await act(async () => render(<AddRole onUpdate={onUpdate} onClose={onClose} />));
 
-    const saveButton = screen.getByTestId('save-permissions');
-    const roleName = screen.getByLabelText('Role Name');
+    await act(async () => render(<AddRole onUpdate={onUpdate} onClose={onClose} />))
 
-    fireEvent.change(roleName, { target: { value: 'Admin' } });
-    fireEvent.click(saveButton);
+    const saveButton = screen.getByTestId('save-permissions')
+    const roleName = screen.getByLabelText('Role Name')
+
+    fireEvent.change(roleName, { target: { value: 'Admin' } })
+    fireEvent.click(saveButton)
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalled();
-      expect(onUpdate).not.toHaveBeenCalled();
-      expect(onClose).not.toHaveBeenCalled();
-    });
-  }); 
+      expect(axios.post).toHaveBeenCalled()
+      expect(onUpdate).not.toHaveBeenCalled()
+      expect(onClose).not.toHaveBeenCalled()
+    })
+  })
 
   test('handles error on form submission', async () => {
     axios.post.mockRejectedValueOnce(new Error('Failed to create role'))
 
-  await act(async () => render(<AddRole />));
+    await act(async () => render(<AddRole />))
     const roleNameInput = screen.getByTestId('role-name-input')
     const saveButton = screen.getByTestId('save-permissions')
 
@@ -139,15 +138,31 @@ describe('AddRole component', () => {
     })
   })
 
-
   test('updates view permission correctly', () => {
-  const setPermissionsMock = jest.fn();
-  const moduleName = 1;
-  const permissionType = 'view';
-  const value = false;
+    const setPermissionsMock = jest.fn()
+    const moduleName = 1
+    const permissionType = 'view'
+    const value = false
 
-  handlePermissionChange(
-    {
+    handlePermissionChange(
+      {
+        1: {
+          module_u_id: 1,
+          selectAll: false,
+          view: false,
+          add: false,
+          update: false,
+          remove: false,
+          notification: false
+        }
+      },
+      setPermissionsMock,
+      moduleName,
+      permissionType,
+      value
+    )
+
+    expect(setPermissionsMock).toHaveBeenCalledWith({
       1: {
         module_u_id: 1,
         selectAll: false,
@@ -157,25 +172,6 @@ describe('AddRole component', () => {
         remove: false,
         notification: false
       }
-    },
-    setPermissionsMock,
-    moduleName,
-    permissionType,
-    value
-  );
-
-  expect(setPermissionsMock).toHaveBeenCalledWith({
-    1: { module_u_id: 1, selectAll: false, view: false, add: false, update: false, remove: false, notification: false }
-  });
-});
-
-
-
-  
-
- 
-
-
-
+    })
+  })
 })
-

@@ -39,7 +39,8 @@ const schema = Yup.object().shape({
   ready_to_move: Yup.boolean().required('This field is required')
 })
 
-const AddProperty = ({ onUpdate, handelAddbutton }) => {
+const AddProperty = ({ onUpdate, handelAddButton }) => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -69,7 +70,7 @@ const AddProperty = ({ onUpdate, handelAddbutton }) => {
       })
       if (response.data.statusCode === 201) {
         onUpdate()
-        handelAddbutton()
+        handelAddButton()
         toast.success('Property added successfully')
       }
     } catch (error) {

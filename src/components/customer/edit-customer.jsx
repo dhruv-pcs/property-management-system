@@ -35,7 +35,8 @@ const schema = Yup.object().shape({
   is_verified: Yup.boolean().required('Verification status is required')
 })
 
-const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
+const EditCustomer = ({ customer, onUpdate, handelEditButton }) => {
+  //** Vars */
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -75,7 +76,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditbutton }) => {
       })
 
       if (response.status === 201) {
-        handelEditbutton()
+        handelEditButton()
         onUpdate()
         toast.success('Customer updated successfully')
       }

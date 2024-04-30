@@ -5,6 +5,8 @@ import axios from 'axios'
 import Admin from 'src/pages/admin'
 import UpdateAdmin from '@components/admin/update-admin'
 import AddAdmin from '@components/admin/add-admin'
+import { Provider } from 'react-redux'
+import { store } from 'src/redux/store'
 
 jest.mock('axios')
 
@@ -37,7 +39,11 @@ describe('Admin Component', () => {
   beforeEach(async () => {
     localStorage.setItem('user', JSON.stringify(mockPermissions))
     axios.get = jest.fn().mockResolvedValue({ data: { data: { adminData: mockAdminData } } })
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     await waitFor(() => {
       expect(axios.get).toHaveBeenCalled()
     })
@@ -58,7 +64,11 @@ describe('Admin Component', () => {
   })
   test('handles error when API request fails', async () => {
     axios.get.mockRejectedValueOnce(new Error('API request failed'))
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     await waitFor(() => {
       expect(screen.getByText('Error Fetching Data')).toBeInTheDocument()
     })
@@ -99,7 +109,11 @@ describe('Admin Component', () => {
   test('clicking Delete button and then click confirm delete button to delete admin - Success', async () => {
     const mockResponseData = { data: { statusCode: 200 } }
     jest.spyOn(axios, 'delete').mockResolvedValue(mockResponseData)
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     const deleteAdmin = screen.getByTestId('delete-admin')
     fireEvent.click(deleteAdmin)
     expect(screen.getByText('Delete Admin')).toBeInTheDocument()
@@ -112,7 +126,11 @@ describe('Admin Component', () => {
   })
   test('handles error when deleting admin', async () => {
     jest.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Delete request failed'))
-    render(<Admin />)
+    render(
+      <Provider store={store}>
+        <Admin />
+      </Provider>
+    )
     const deleteAdmin = screen.getByTestId('delete-admin')
     fireEvent.click(deleteAdmin)
     expect(screen.getByText('Delete Admin')).toBeInTheDocument()
@@ -195,15 +213,15 @@ describe('Edit Admin Component', () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
-    render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    const handelEditButton = jest.fn()
+    render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
     const saveButton = screen.getByLabelText('save')
     act(() => {
       fireEvent.click(saveButton)
     })
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelEditbutton).toHaveBeenCalled()
+      expect(handelEditButton).toHaveBeenCalled()
       expect(screen.getByText('Admin updated successfully')).toBeInTheDocument()
     })
   })
@@ -211,13 +229,13 @@ describe('Edit Admin Component', () => {
     const mockError = new Error('Update request failed')
     axios.patch = jest.fn().mockRejectedValue(mockError)
     const onUpdate = jest.fn()
-    const handelEditbutton = jest.fn()
-    render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditbutton={handelEditbutton} />)
+    const handelEditButton = jest.fn()
+    render(<UpdateAdmin admin={admin} onUpdate={onUpdate} handelEditButton={handelEditButton} />)
     const saveButton = screen.getByLabelText('save')
     fireEvent.click(saveButton)
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelEditbutton).not.toHaveBeenCalled()
+      expect(handelEditButton).not.toHaveBeenCalled()
       expect(screen.getByText('Error updating admin')).toBeInTheDocument()
     })
   })
@@ -253,9 +271,9 @@ describe('Admin Add Component', () => {
   test('Add New Admin Success', async () => {
     axios.post = jest.fn().mockResolvedValue({ data: { statusCode: 201 } })
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    render(<AddAdmin onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
     fireEvent.change(screen.getByLabelText('Last name'), { target: { value: admin.last_name } })
@@ -277,7 +295,7 @@ describe('Admin Add Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).toHaveBeenCalled()
-      expect(handelAddbutton).toHaveBeenCalled()
+      expect(handelAddButton).toHaveBeenCalled()
       expect(screen.getByText('Admin added successfully')).toBeInTheDocument()
     })
   })
@@ -285,10 +303,10 @@ describe('Admin Add Component', () => {
   test('Add New Admin Error', async () => {
     axios.post = jest.fn().mockRejectedValue({ data: { statusCode: 500 } })
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
     act(() => {
-      render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+      render(<AddAdmin onUpdate={onUpdate} handelAddButton={handelAddButton} />)
     })
 
     fireEvent.change(screen.getByLabelText('First name'), { target: { value: admin.first_name } })
@@ -311,7 +329,7 @@ describe('Admin Add Component', () => {
 
     await waitFor(() => {
       expect(onUpdate).not.toHaveBeenCalled()
-      expect(handelAddbutton).not.toHaveBeenCalled()
+      expect(handelAddButton).not.toHaveBeenCalled()
       expect(screen.getByText('Admin cannot be created')).toBeInTheDocument()
     })
   })
@@ -320,9 +338,9 @@ describe('Admin Add Component', () => {
     const mockResponse = { status: 201 }
     axios.patch = jest.fn().mockResolvedValue(mockResponse)
     const onUpdate = jest.fn()
-    const handelAddbutton = jest.fn()
+    const handelAddButton = jest.fn()
 
-    render(<AddAdmin onUpdate={onUpdate} handelAddbutton={handelAddbutton} />)
+    render(<AddAdmin onUpdate={onUpdate} handelAddButton={handelAddButton} />)
 
     fireEvent.change(screen.getByLabelText('First name'), { target: { value: '' } })
     fireEvent.change(screen.getByLabelText('Last name'), { target: { value: '' } })

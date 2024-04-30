@@ -1,16 +1,23 @@
+// ** React Imports **
 import React from 'react'
-import { Card, Col, Row, Form } from 'react-bootstrap'
+
+// ** Custom Components **
 import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
+import { Card, Col, Row, Form } from 'react-bootstrap'
 import { useTheme, useMediaQuery } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
+
+// ** Styles **
 import 'react-toastify/dist/ReactToastify.css'
 
 const ViewAdmin = ({ admin }) => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const editable = false
-
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const { register, control } = useForm()

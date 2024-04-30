@@ -1,19 +1,28 @@
+// ** React Imports **
 import React, { useEffect, useState } from 'react'
-import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
+import { useRouter } from 'next/router'
+
+// ** Custom Components **
 import { tokens } from '@theme/theme'
+import navigation from '@components/sidebar/sidebarItem'
+
+// ** Third Party Imports **
+import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
+
+// ** Icons Imports **
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import { useRouter } from 'next/router'
-import navigation from '@components/sidebar/sidebarItem'
 import { Icon } from '@iconify/react'
 
 export const Item = ({ title, to, icon, setSelected }) => {
+  // ** Vars
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const router = useRouter()
   const path = router.pathname
 
+  // ** Redirect to route **
   const handleItemClick = () => {
     setSelected(title)
     router.push(to)
@@ -36,13 +45,16 @@ export const Item = ({ title, to, icon, setSelected }) => {
 }
 
 const MyProSidebar = () => {
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const [selected, setSelected] = useState('')
   const { collapseSidebar, toggleSidebar, broken } = useProSidebar()
   const navItem = navigation()
   const LocalData = localStorage.getItem('user')
   const Local = JSON.parse(LocalData)
+
+  // ** States **
+  const [selected, setSelected] = useState('')
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {

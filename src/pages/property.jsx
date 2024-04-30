@@ -1,22 +1,44 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
+//  ** React Imports **
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import Head from 'next/head'
+
+// ** Custom Components **
 import EditProperty from '@components/property/edit-property'
 import AddProperty from '@components/property/add-property'
 import ViewProperty from '@components/property/view-property'
+import { tokens } from '@theme/theme'
+
+// ** Third Party Imports **
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, useTheme } from '@mui/material'
 import { Close, Delete, Edit, Visibility } from '@mui/icons-material'
 import DataTable from 'react-data-table-component'
-import { tokens } from '@theme/theme'
-import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
+// ** Redux Imports **
 import { useDispatch } from 'react-redux'
-import { setProperties } from 'src/redux/features/propertySlice'
+
+// ** API Imports **
+import axios from 'axios'
+
+// ** Styles **
+import 'react-toastify/dist/ReactToastify.css'
+import { setProperties } from 'src/redux/features/property-slice'
 
 const Property = () => {
-  const dispatch = useDispatch()
+  // ** Vars **
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
+  const userPermissions = JSON.parse(localStorage.getItem('user'))
+  const dispatch = useDispatch()
+
+  const property_permission = userPermissions
+    ?.filter(permission => permission.module.alias_name === 'Property')
+    .map(permission => permission)
+
+  // ** States **
   const [propertyData, setPropertyData] = useState([])
   const [openAdd, setOpenAdd] = useState(false)
   const [openView, setOpenView] = useState(false)
@@ -24,53 +46,30 @@ const Property = () => {
   const [openDelete, setOpenDelete] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
 
-  const userPermissions = JSON.parse(localStorage.getItem('user'))
-
-  const property_permission = userPermissions
-    ?.filter(permission => permission.module.alias_name === 'Property')
-    .map(permission => permission)
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
-      setPropertyData(response.data.data.adminData)
-      dispatch(setProperties(response.data.data.adminData))
-    } catch (error) {
-      toast.error('Error Fetching Data')
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handelAddbutton = () => {
+  //** Open Add Modal */
+  const handelAddButton = () => {
     setOpenAdd(!openAdd)
   }
 
-  const handelEditbutton = row => {
-    setOpenEdit(!openEdit)
-    setSelectedRow(row)
-  }
-
-  const handelViewbutton = row => {
+  // ** Open View Modal **
+  const handelViewButton = row => {
     setOpenView(!openView)
     setSelectedRow(row)
   }
 
-  const handlePropertyDataUpdate = async () => {
-    await fetchData()
+  // ** Open Edit Modal **
+  const handelEditButton = row => {
+    setOpenEdit(!openEdit)
+    setSelectedRow(row)
   }
 
-  const handelDeletebutton = async row => {
+  // ** Open Delete Modal **
+  const handelDeleteButton = async row => {
     setOpenDelete(!openDelete)
     setSelectedRow(row)
   }
 
+  // ** Delete Property **
   const handelDeleteConfirmation = async selectedRow => {
     try {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/property/${selectedRow.u_id}`, {
@@ -87,6 +86,7 @@ const Property = () => {
     }
   }
 
+  // ** Columns **
   const columns = [
     {
       name: 'Name',
@@ -117,7 +117,7 @@ const Property = () => {
               data-testid='view-property'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelViewbutton(row)}
+              onClick={() => handelViewButton(row)}
             >
               <Visibility />
             </button>
@@ -127,7 +127,7 @@ const Property = () => {
               data-testid='edit-property'
               className='btn p-0 m-0 bg-none'
               style={{ color: colors.grey[100] }}
-              onClick={() => handelEditbutton(row)}
+              onClick={() => handelEditButton(row)}
             >
               <Edit />
             </button>
@@ -137,7 +137,7 @@ const Property = () => {
               data-testid='delete-property'
               className='btn p-0  m-0 bg-none'
               style={{ color: colors.redAccent[600] }}
-              onClick={() => handelDeletebutton(row)}
+              onClick={() => handelDeleteButton(row)}
             >
               <Delete />
             </button>
@@ -147,7 +147,7 @@ const Property = () => {
     }
   ]
 
-  // Your tableCustomStyles remains unchanged
+  // ** Table Custom Styles **
   const tableCustomStyles = {
     head: {
       style: {
@@ -242,6 +242,28 @@ const Property = () => {
     }
   }
 
+  // ** Fetch Data  **
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/property`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+      setPropertyData(response.data.data.adminData)
+      dispatch(setProperties(response.data.data.adminData))
+    } catch (error) {
+      toast.error('Error Fetching Data')
+    }
+  }
+
+  // ** Handle Property Data Update **
+  const handlePropertyDataUpdate = () => {
+    fetchData()
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <>
       <Head>
@@ -273,7 +295,7 @@ const Property = () => {
             property_permission[0].add && (
               <Button
                 data-testid='add-property'
-                onClick={handelAddbutton}
+                onClick={handelAddButton}
                 className='btn fs-5 p-0 m-0'
                 style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
               >
@@ -283,11 +305,11 @@ const Property = () => {
           }
         />
       </div>
-
+      {/* ** Add Property Modal ** */}
       <Dialog
         data-testid='add-property-modal'
         className='z-3'
-        onClose={handelAddbutton}
+        onClose={handelAddButton}
         aria-labelledby='customized-dialog-title'
         open={openAdd}
       >
@@ -300,7 +322,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelAddbutton}
+          onClick={handelAddButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -315,13 +337,14 @@ const Property = () => {
           className='d-flex justify-content-center'
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
-          <AddProperty handelAddbutton={handelAddbutton} onUpdate={handlePropertyDataUpdate} />
+          <AddProperty handelAddButton={handelAddButton} onUpdate={handlePropertyDataUpdate} />
         </DialogContent>
       </Dialog>
 
+      {/* ** Edit Property Modal ** */}
       <Dialog
         data-testid='edit-property-modal'
-        onClose={handelEditbutton}
+        onClose={handelEditButton}
         aria-labelledby='customized-dialog-title'
         open={openEdit}
       >
@@ -334,7 +357,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelEditbutton}
+          onClick={handelEditButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -350,16 +373,17 @@ const Property = () => {
           sx={{ backgroundColor: colors.primary[400], color: colors.grey[100] }}
         >
           <EditProperty
-            handelEditbutton={handelEditbutton}
+            handelEditButton={handelEditButton}
             property={selectedRow}
             onUpdate={handlePropertyDataUpdate}
           />
         </DialogContent>
       </Dialog>
 
+      {/* ** View Property Modal ** */}
       <Dialog
         data-testid='view-property-modal'
-        onClose={handelViewbutton}
+        onClose={handelViewButton}
         aria-labelledby='customized-dialog-title'
         open={openView}
       >
@@ -372,7 +396,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelViewbutton}
+          onClick={handelViewButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -391,9 +415,10 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
+      {/* ** Delete Property Modal ** */}
       <Dialog
         data-testid='delete-property-modal'
-        onClose={handelDeletebutton}
+        onClose={handelDeleteButton}
         aria-labelledby='customized-dialog-title'
         open={openDelete}
       >
@@ -406,7 +431,7 @@ const Property = () => {
         </DialogTitle>
         <IconButton
           aria-label='close'
-          onClick={handelDeletebutton}
+          onClick={handelDeleteButton}
           sx={{
             position: 'absolute',
             right: 16,
@@ -425,7 +450,7 @@ const Property = () => {
 
           <div className='d-flex justify-content-between mt-5'>
             <Button
-              onClick={handelDeletebutton}
+              onClick={handelDeleteButton}
               className='btn fs-5 px-2 m-0'
               style={{ color: colors.grey[100], backgroundColor: colors.blueAccent[600] }}
             >
@@ -443,6 +468,7 @@ const Property = () => {
         </DialogContent>
       </Dialog>
 
+      {/* ** Toast ** */}
       <ToastContainer draggable closeOnClick={true} position='top-right' autoClose={3000} />
     </>
   )

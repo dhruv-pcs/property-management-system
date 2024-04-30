@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './features/authSlice'
-import ownerReducer from './features/ownerSlice'
-import customerReducer from './features/customerSlice'
-import permissionReducer from './features/permissionSlice'
-import propertyReducer from './features/propertySlice'
-import adminReducer from './features/adminSlice'
-import roleReducer from './features/roleSlice'
+import authReducer from './features/auth-slice'
+import ownerReducer from './features/owner-slice'
+import customerReducer from './features/customer-slice'
+import permissionReducer from './features/permission-slice'
+import propertyReducer from './features/property-slice'
+import adminReducer from './features/admin-slice'
+import roleReducer from './features/role-slice'
 
 export const store = configureStore({
   reducer: {
