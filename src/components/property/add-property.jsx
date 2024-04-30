@@ -219,12 +219,12 @@ const AddProperty = ({ onUpdate, handelAddButton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor='pin_code'>Pincode</Form.Label>
+                      <Form.Label htmlFor='pin_code'>PinCode</Form.Label>
                       <Form.Control
                         id='pin_code'
                         data-testid='pin_code'
                         type='text'
-                        placeholder='Enter your pincode'
+                        placeholder='Enter your PinCode'
                         {...register('pin_code')}
                       />
                       {errors.pin_code && <span className='text-danger'>{errors.pin_code.message}</span>}

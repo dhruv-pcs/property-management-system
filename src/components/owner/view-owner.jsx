@@ -145,12 +145,12 @@ const ViewOwner = ({ owner }) => {
 
                 <Col md={6}>
                   <Form.Group className='mb-1'>
-                    <Form.Label>Pincode</Form.Label>
+                    <Form.Label>PinCode</Form.Label>
                     <Form.Control
                       type='text'
-                      defaultValue={owner?.pincode}
-                      placeholder='Enter your pincode'
-                      {...register('pincode')}
+                      defaultValue={owner?.PinCode}
+                      placeholder='Enter your PinCode'
+                      {...register('PinCode')}
                       readOnly={!editable}
                     />
                   </Form.Group>

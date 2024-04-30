@@ -151,7 +151,7 @@ describe('Edit Admin Component', () => {
     country: 'USA',
     state: 'California',
     city: 'Los Angeles',
-    pincode: '900260',
+    PinCode: '900260',
     status: true
   }
   test('renders admin details with correct values', () => {
@@ -164,7 +164,7 @@ describe('Edit Admin Component', () => {
     expect(getByLabelText('Country')).toHaveValue(admin.country)
     expect(getByLabelText('State')).toHaveValue(admin.state)
     expect(getByLabelText('City')).toHaveValue(admin.city)
-    expect(getByLabelText('Pincode')).toHaveValue(admin.pincode)
+    expect(getByLabelText('PinCode')).toHaveValue(admin.PinCode)
     expect(getByTestId('active')).toBeChecked()
   })
   test('Update Admin With Empty Fields to Get Validation Error', async () => {
@@ -182,7 +182,7 @@ describe('Edit Admin Component', () => {
     fireEvent.change(first_name, { target: { value: '' } })
     fireEvent.change(state, { target: { value: '' } })
     fireEvent.change(city, { target: { value: '' } })
-    fireEvent.change(pincode, { target: { value: '' } })
+    fireEvent.change(PinCode, { target: { value: '' } })
     fireEvent.change(last_name, { target: { value: '' } })
     fireEvent.change(email, { target: { value: '' } })
     fireEvent.change(phone, { target: { value: '' } })
@@ -252,7 +252,7 @@ describe('Admin Add Component', () => {
     country: 'USA',
     state: 'California',
     city: 'Los Angeles',
-    pincode: '90026',
+    PinCode: '90026',
     role_u_id: 'ROL10000000010'
   }
 
@@ -285,7 +285,7 @@ describe('Admin Add Component', () => {
     fireEvent.change(screen.getByLabelText('City'), { target: { value: admin.city } })
     fireEvent.change(screen.getByLabelText('State'), { target: { value: admin.state } })
     fireEvent.change(screen.getByLabelText('Country'), { target: { value: admin.country } })
-    fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: admin.pincode } })
+    fireEvent.change(screen.getByLabelText('PinCode'), { target: { value: admin.PinCode } })
 
     const saveButton = screen.getByTestId('add-admin-button')
 
@@ -319,7 +319,7 @@ describe('Admin Add Component', () => {
     fireEvent.change(screen.getByLabelText('City'), { target: { value: admin.city } })
     fireEvent.change(screen.getByLabelText('State'), { target: { value: admin.state } })
     fireEvent.change(screen.getByLabelText('Country'), { target: { value: admin.country } })
-    fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: admin.pincode } })
+    fireEvent.change(screen.getByLabelText('PinCode'), { target: { value: admin.PinCode } })
 
     const saveButton = screen.getByTestId('add-admin-button')
 
@@ -352,7 +352,7 @@ describe('Admin Add Component', () => {
     fireEvent.change(screen.getByLabelText('City'), { target: { value: '' } })
     fireEvent.change(screen.getByLabelText('State'), { target: { value: '' } })
     fireEvent.change(screen.getByLabelText('Country'), { target: { value: '' } })
-    fireEvent.change(screen.getByLabelText('Pincode'), { target: { value: '' } })
+    fireEvent.change(screen.getByLabelText('PinCode'), { target: { value: '' } })
 
     const saveButton = screen.getByTestId('add-admin-button')
 

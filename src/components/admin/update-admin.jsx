@@ -27,7 +27,7 @@ const schema = Yup.object().shape({
   status: Yup.boolean().required('Admin status is required'),
   state: Yup.string().required('State is required'),
   city: Yup.string().required('City is required'),
-  pincode: Yup.string().required('Pincode is required'),
+  PinCode: Yup.string().required('PinCode is required'),
   country: Yup.string().required('Country is required')
 })
 
@@ -56,7 +56,7 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditButton }) => {
       setValue('alternate_phone', admin.alternate_phone)
       setValue('city', admin.city)
       setValue('country', admin.country)
-      setValue('pincode', admin.pincode)
+      setValue('PinCode', admin.PinCode)
       setValue('state', admin.state)
     }
   }, [setValue])
@@ -231,16 +231,16 @@ const UpdateAdmin = ({ admin, onUpdate, handelEditButton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
+                      <Form.Label htmlFor='PinCode'>PinCode</Form.Label>
                       <Form.Control
-                        id='pincode'
-                        data-testid='pincode'
+                        id='PinCode'
+                        data-testid='PinCode'
                         type='text'
-                        defaultValue={admin?.pincode}
-                        placeholder='Enter your pincode'
-                        {...register('pincode')}
+                        defaultValue={admin?.PinCode}
+                        placeholder='Enter your PinCode'
+                        {...register('PinCode')}
                       />
-                      {errors.pincode && <span className='text-danger'>{errors.pincode.message}</span>}
+                      {errors.PinCode && <span className='text-danger'>{errors.PinCode.message}</span>}
                     </Form.Group>
                   </Col>
                 </Row>

@@ -29,7 +29,7 @@ const schema = Yup.object().shape({
   street: Yup.string().required('Street is required'),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
-  pincode: Yup.string().required('Pincode is required'),
+  PinCode: Yup.string().required('PinCode is required'),
   country: Yup.string().required('Country is required'),
   status: Yup.boolean().required('Admin status is required'),
   is_verified: Yup.boolean().required('Verification status is required')
@@ -59,7 +59,7 @@ const EditCustomer = ({ customer, onUpdate, handelEditButton }) => {
     setValue('alternate_phone', customer.alternate_phone)
     setValue('city', customer.city)
     setValue('country', customer.country)
-    setValue('pincode', customer.pincode)
+    setValue('PinCode', customer.PinCode)
     setValue('state', customer.state)
     setValue('aadhar_card_no', customer.aadhar_card_no)
     setValue('address', customer.address)
@@ -234,14 +234,14 @@ const EditCustomer = ({ customer, onUpdate, handelEditButton }) => {
 
                   <Col md={6}>
                     <Form.Group className='mb-1'>
-                      <Form.Label htmlFor='pincode'>Pincode</Form.Label>
+                      <Form.Label htmlFor='PinCode'>PinCode</Form.Label>
                       <Form.Control
                         type='text'
-                        id='pincode'
-                        data-testid='pincode'
-                        defaultValue={customer?.pincode}
-                        placeholder='Enter your pincode'
-                        {...register('pincode')}
+                        id='PinCode'
+                        data-testid='PinCode'
+                        defaultValue={customer?.PinCode}
+                        placeholder='Enter your PinCode'
+                        {...register('PinCode')}
                       />
                     </Form.Group>
                   </Col>

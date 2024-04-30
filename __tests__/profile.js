@@ -22,7 +22,7 @@ describe('Profile Component', () => {
       city: 'New York',
       state: 'NY',
       country: 'USA',
-      pincode: '10001',
+      PinCode: '10001',
       role_u_id: 'ROL1000000001'
     }
 
@@ -49,7 +49,7 @@ describe('Profile Component', () => {
       city: 'New York',
       state: 'NY',
       country: 'USA',
-      pincode: '10001',
+      PinCode: '10001',
       role: { name: 'Admin' },
       status: true
     }
@@ -77,7 +77,7 @@ describe('Profile Component', () => {
       city: 'New York',
       state: 'NY',
       country: 'USA',
-      pincode: '10001',
+      PinCode: '10001',
       role_u_id: 'ROL1000000002'
     }
 
@@ -107,7 +107,7 @@ describe('Profile Component', () => {
       city: 'New York',
       state: 'NY',
       country: 'USA',
-      pincode: '10001',
+      PinCode: '10001',
       role_u_id: 'ROL1000000002'
     }
 

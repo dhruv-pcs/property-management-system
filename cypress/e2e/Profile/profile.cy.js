@@ -30,6 +30,6 @@ describe('Profile Page', () => {
     cy.get('input[name="city"]').should('not.have.value', '')
     cy.get('input[name="state"]').should('not.have.value', '')
     cy.get('input[name="country"]').should('not.have.value', '')
-    cy.get('input[name="pincode"]').should('not.have.value', '')
+    cy.get('input[name="PinCode"]').should('not.have.value', '')
   })
 })
